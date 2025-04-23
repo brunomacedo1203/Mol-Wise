@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Esconde overlays/portais do Next.js em DEV */
+.nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-toast] *,
+[data-nextjs-dialog] {
+  display: none !important;
+}
