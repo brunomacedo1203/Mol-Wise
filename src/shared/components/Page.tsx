@@ -14,7 +14,7 @@ export default function Page(props: PageProps) {
   const year = new Date().getFullYear();
   return (
     <div className=" flex h-screen bg-zinc-100">
-      <SideArea title="Menu" color="#f3f4f6">
+      <SideArea title="Menu" color="#e5e7eb">
         {null}
       </SideArea>
       <div className=" flex flex-col flex-1">
