@@ -4,7 +4,8 @@ import MolecularFormulaInput from "@/features/calculators/components/MolecularFo
 
 export default function MolarMassCalculatorPage() {
   const {
-    setFormula,
+    formula,
+    handleFormulaChange,
     molarMass,
     errorMessage,
     calculate,
@@ -20,7 +21,8 @@ export default function MolarMassCalculatorPage() {
           Enter a Chemical Formula or Element Symbol
         </span>
         <MolecularFormulaInput
-          onChange={setFormula}
+          value={formula}
+          onChange={handleFormulaChange}
           onEnterPress={calculate}
         />
         <div className="flex justify-center items-center">

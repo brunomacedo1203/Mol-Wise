@@ -3,15 +3,15 @@ import { validateFormula, normalizeFormula } from "@/shared/utils/validateAndNor
 import { calculateMolarMassFromFormula } from "@/features/calculators/services/molarMass";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
-/**
- * Hook customizado para encapsular a lógica de cálculo de massa molar,
- * incluindo validação, normalização e gerenciamento de estados.
- * Pode ser reutilizado em qualquer componente/calculadora que precise dessa lógica.
- */
 export function useMolarMassCalculator() {
   const [formula, setFormula] = useState("");
   const [molarMass, setMolarMass] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  // Handler dedicado para mudança da fórmula
+  const handleFormulaChange = (val: string) => {
+    setFormula(val);
+  };
 
   const calculate = () => {
     const validationError = validateFormula(formula);
@@ -33,7 +33,7 @@ export function useMolarMassCalculator() {
 
   return {
     formula,
-    setFormula,
+    handleFormulaChange,
     molarMass,
     errorMessage,
     calculate,
