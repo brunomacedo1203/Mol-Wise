@@ -13,7 +13,7 @@ export default function MenuItem(props: MenuItemProps) {
       href={props.url}
       className={`
         flex items-center gap-4 
-        text-base w-full px-4 py-2 rounded-md
+        text-base w-full px-2 py-2 rounded-md
         hover:bg-zinc-300
         hover:rounded-lg
      `}

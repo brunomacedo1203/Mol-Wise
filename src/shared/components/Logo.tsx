@@ -3,13 +3,15 @@ import Link from "next/link";
 
 export interface LogoProps {
   collapsed: boolean;
+  onClick?: () => void;
 }
 
-export default function Logo({ collapsed }: LogoProps) {
+export default function Logo({ collapsed, onClick }: LogoProps) {
   return (
     <Link
       href="/"
       className="flex items-center justify-center w-full h-16"
+      onClick={onClick}
     >
       <span
         className={`text-lm font-black text-xl ${

@@ -2,20 +2,21 @@
 
 import React from "react";
 import Logo from '@/shared/components/Logo';
-import Menu from '@/shared/components/Menu';
 import { useCollapsedMenu } from '@/shared/hooks/useCollapsedMenu';
 import { IconLayoutSidebarLeftCollapseFilled, IconLayoutSidebarRightCollapseFilled } from "@tabler/icons-react";
 
 export interface SideAreaProps {
   title: string;
-  color: string;
+  bgClass: string;
   children?: React.ReactNode;
+  className?: string;
 }
 
 export default function SideArea({
   title,
-  color,
+  bgClass,
   children,
+  className,
 }: SideAreaProps) {
   const { collapsed, toggleCollapsed } = useCollapsedMenu();
 
@@ -23,11 +24,13 @@ export default function SideArea({
     <aside
       className={`flex flex-col gap-5 custom-shadow mr-2 transition-width duration-300 ${
         collapsed ? "w-16" : "w-70"
-      } border-r border-zinc-300 shadow-md`}
-      style={{ backgroundColor: color }}
+      } border-r border-zinc-300 shadow-md ${bgClass} ${className}`}
     >
       <div className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 shadow-md">
-        <Logo collapsed={collapsed} />
+        <Logo 
+          collapsed={collapsed} 
+          onClick={typeof window !== "undefined" && window.__molwiseSetSectionHome ? window.__molwiseSetSectionHome : undefined} 
+        />
         <button
           className="text-xl p-0 rounded-md"
           onClick={toggleCollapsed}
@@ -40,8 +43,8 @@ export default function SideArea({
           )}
         </button>
       </div>
-      <Menu collapsed={collapsed} />
-      <h1>{title}</h1>
+      {/* Remover Menu daqui, pois agora é passado como children */}
+      {/* <Menu collapsed={collapsed} /> */}
       <div>{children}</div>
     </aside>
   );
