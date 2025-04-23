@@ -6,6 +6,7 @@ import Footer from "@/shared/components/Footer";
 import SideArea from "@/shared/components/SideArea";
 import Menu from "@/shared/components/Menu";
 import { useSectionTitle } from "@/shared/hooks/useSectionTitle";
+import { useCollapsedMenu } from "@/shared/hooks/useCollapsedMenu";
 
 export interface PageProps {
   title: string;
@@ -16,6 +17,10 @@ export interface PageProps {
 export default function Page(props: PageProps) {
   const year = new Date().getFullYear();
   const sectionTitle = useSectionTitle();
+  const { collapsed, toggleCollapsed } = useCollapsedMenu();
+
+  // Só renderiza SideArea/Menu quando collapsed está definido
+  if (collapsed === undefined) return null;
 
   // Expor função globalmente para SideArea/Logo
   if (typeof window !== 'undefined') {
@@ -24,8 +29,8 @@ export default function Page(props: PageProps) {
 
   return (
     <div className=" flex h-screen bg-zinc-100">
-      <SideArea title="Menu" bgClass="bg-zinc-150">
-        <Menu collapsed={false} />
+      <SideArea title="Menu" bgClass="bg-zinc-150" collapsed={collapsed} onToggleCollapsed={toggleCollapsed}>
+        <Menu collapsed={collapsed} />
       </SideArea>
       <div className=" flex flex-col flex-1">
         <Header

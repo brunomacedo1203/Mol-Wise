@@ -1,6 +1,16 @@
 import { useRef } from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
+interface ElementData {
+  symbol: string;
+  molarMass: number;
+}
+
+/**
+ * Input especializado para fórmulas químicas (ex: H2O, C6H12O6).
+ * Formata números como subscritos e aciona callbacks ao digitar e pressionar Enter.
+ * Reutilizável em qualquer contexto que exija input de fórmula molecular.
+ */
 const MolecularFormulaInput = ({
   onChange,
   onEnterPress,
