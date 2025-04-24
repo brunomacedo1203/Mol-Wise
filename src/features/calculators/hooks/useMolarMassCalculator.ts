@@ -24,7 +24,7 @@ export function useMolarMassCalculator() {
     try {
       const totalMolarMass = calculateMolarMassFromFormula(formattedFormula);
       setMolarMass(
-        `The molar mass of ${formatWithSub(formattedFormula)} is: ${totalMolarMass.toFixed(2)} g/mol`
+        `The molar mass of "${formatWithSub(formattedFormula)}" is: ${totalMolarMass.toFixed(2)} g/mol`
       );
       setErrorMessage("");
     } catch (error: any) {
