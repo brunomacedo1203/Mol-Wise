@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { validateFormula, normalizeFormula } from "@/shared/utils/validateAndNormalizeFormula";
 import { calculateMolarMassFromFormula } from "@/features/calculators/services/molarMass";

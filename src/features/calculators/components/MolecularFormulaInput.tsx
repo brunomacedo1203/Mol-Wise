@@ -1,3 +1,4 @@
+"use client";
 import { useRef, useEffect } from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
@@ -31,6 +32,7 @@ const MolecularFormulaInput = ({
       const formatted = formatWithSub(value);
       if (contentRef.current.innerHTML !== formatted) {
         contentRef.current.innerHTML = formatted;
+        setCaretToEnd(contentRef.current);
       }
     }
   }, [value]);
@@ -38,11 +40,13 @@ const MolecularFormulaInput = ({
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
     const rawText = e.currentTarget.textContent || "";
     onChange(rawText);
-
-    const formattedText = formatWithSub(rawText);
-    if (contentRef.current && contentRef.current.innerHTML !== formattedText) {
-      contentRef.current.innerHTML = formattedText;
-      setCaretToEnd(contentRef.current);
+    // Atualiza a visualização formatada imediatamente
+    if (contentRef.current) {
+      const formatted = formatWithSub(rawText);
+      if (contentRef.current.innerHTML !== formatted) {
+        contentRef.current.innerHTML = formatted;
+        setCaretToEnd(contentRef.current);
+      }
     }
   };
 

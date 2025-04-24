@@ -1,56 +1,47 @@
-import { useRef } from "react";
-import { formatWithSub } from "@/shared/utils/formatWithSub";
+"use client";
+import { useMolarMassCalculator } from "@/features/calculators/hooks/useMolarMassCalculator";
+import MolecularFormulaInput from "@/features/calculators/components/MolecularFormulaInput";
 
-const MolecularFormulaInput = ({
-  onChange,
-  onEnterPress,
-}: {
-  onChange: (val: string) => void;
-  onEnterPress: () => void;
-}) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const rawText = e.currentTarget.textContent || "";
-    onChange(rawText);
-
-    const formattedText = formatWithSub(rawText);
-
-    if (contentRef.current && contentRef.current.innerHTML !== formattedText) {
-      contentRef.current.innerHTML = formattedText;
-      setCaretToEnd(contentRef.current);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onEnterPress();
-    }
-  };
-
-  const setCaretToEnd = (el: HTMLDivElement) => {
-    const range = document.createRange();
-    const sel = window.getSelection();
-    if (sel) {
-      range.selectNodeContents(el);
-      range.collapse(false);
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-  };
+/**
+ * Componente reutilizável de Calculadora de Massa Molar.
+ * Pode ser usado em qualquer página ou contexto React.
+ */
+export default function MolarMassCalculator() {
+  const {
+    formula,
+    handleFormulaChange,
+    molarMass,
+    errorMessage,
+    calculate,
+  } = useMolarMassCalculator();
 
   return (
-    <div
-      ref={contentRef}
-      contentEditable
-      suppressContentEditableWarning
-      onInput={handleInput}
-      onKeyDown={handleKeyDown}
-      className="border border-gray-300 p-2 min-w-[200px] font-sans text-black rounded-md focus:outline-none focus:border-blue-400"
-      spellCheck="false"
-    />
+    <div className="flex flex-col gap-5 p-4 max-w-lg w-full">
+      <h1 className="text-xl text-zinc-800">
+        Molar Mass Calculator
+      </h1>
+      <span className="text-zinc-800">
+        Enter a Chemical Formula or Element Symbol
+      </span>
+      <MolecularFormulaInput
+        value={formula}
+        onChange={handleFormulaChange}
+        onEnterPress={calculate}
+      />
+      <div className="flex justify-center items-center">
+        <button
+          className="btn-calculate w-40 h-12 text-zinc-800"
+          onClick={calculate}
+        >
+          <span className="text-2xl text-center">Calculate</span>
+        </button>
+      </div>
+      <span className="flex justify-center items-center text-zinc-800 text-center text-2xl">
+        {molarMass && <div dangerouslySetInnerHTML={{ __html: molarMass }} />}
+      </span>
+      <span className="flex justify-center items-center text-zinc-800 text-center text-2xl">
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+      </span>
+    </div>
   );
-};
-
-export default MolecularFormulaInput;
+}
