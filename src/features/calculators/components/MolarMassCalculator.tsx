@@ -22,6 +22,8 @@ export default function MolarMassCalculator() {
           value={formula}
           onChange={handleFormulaChange}
           onEnterPress={calculate}
+          errorMessage={errorMessage}
+          resultHtml={molarMass === null ? undefined : molarMass}
         />
       }
       actions={
@@ -29,14 +31,7 @@ export default function MolarMassCalculator() {
           <Button onClick={calculate}>Calculate</Button>
         </div>
       }
-      >
-        <div className="flex justify-center items-center text-zinc-800 text-center text-xl">
-          {molarMass && <div dangerouslySetInnerHTML={{ __html: molarMass }} />}
-        </div>
-        <div className="flex justify-center items-center text-zinc-800 text-center text-sm">
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-        </div>
-      </CalculatorContainer>
+      />
     
   );
 }

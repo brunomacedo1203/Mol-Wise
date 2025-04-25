@@ -19,13 +19,7 @@ export default function Page(props: PageProps) {
   const sectionTitle = useSectionTitle();
   const { collapsed, toggleCollapsed } = useCollapsedMenu();
 
-  // Só renderiza SideArea/Menu quando collapsed está definido
   if (collapsed === undefined) return null;
-
-  // Expor função globalmente para SideArea/Logo
-  if (typeof window !== 'undefined') {
-    (window as any).__molwiseSetSectionHome = () => {};
-  }
 
   return (
     <div className=" flex h-screen bg-zinc-100">

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Resizable } from "re-resizable";
+import { Rnd } from "react-rnd";
 
 interface CalculatorContainerProps {
   title: string;
@@ -7,24 +7,38 @@ interface CalculatorContainerProps {
   input: ReactNode;
   actions: ReactNode;
   children?: ReactNode;
+  errorMessage?: string;
 }
 
-export default function CalculatorContainer({ title, subtitle, input, actions, children }: CalculatorContainerProps) {
+export default function CalculatorContainer({ title, subtitle, input, actions, children, errorMessage }: CalculatorContainerProps) {
   return (
-    <Resizable
+    <Rnd
       minWidth={250}
-      minHeight={250}
-      defaultSize={{ width: 400, height: 300 }}
+      maxWidth={600}
+      defaultSize={{ width: 400, height: 'auto' }}
+      enable={{ right: true }}
+      bounds="#main-content-area"
+      className="calculator-resizable"
     >
-      <div className="flex flex-col gap-4 p-4 max-w-lg w-full border-2 border-zinc-300 rounded-2xl bg-white/80 backdrop-blur-sm shadow-[8px_12px_32px_4px_rgba(0,0,0,0.18)]">
-        <div className="flex flex-col items-center mb-1">
+      <div
+        className="calculator-container p-6 bg-white rounded-xl flex flex-col"
+        style={{ boxShadow: '16px 10px 20px 0px rgba(0,0,0,0.18)' }}
+      >
+        <div className="mb-2">
           <h1 className="text-3xl font-semibold text-zinc-800 mb-1 text-center">{title}</h1>
-          {subtitle && (<span className="text-xs text-zinc-600 text-center">{subtitle}</span>)}
+          {subtitle && (
+            <span className="text-xs text-zinc-600 text-center block w-full">{subtitle}</span>
+          )}
         </div>
-        <div className="calculator-input">{input}</div>
-        <div className="calculator-actions">{actions}</div>
+        <div className="calculator-input mb-2">{input}</div>
+        <div className="calculator-actions mb-2">{actions}</div>
         {children}
+        {errorMessage && (
+          <div className="flex justify-center items-center text-zinc-800 text-center text-sm">
+            <div className="error-message">{errorMessage}</div>
+          </div>
+        )}
       </div>
-    </Resizable>
+    </Rnd>
   );
 }

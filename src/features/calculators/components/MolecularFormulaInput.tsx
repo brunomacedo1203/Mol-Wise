@@ -6,12 +6,16 @@ interface MolecularFormulaInputProps {
   value?: string;
   onChange: (val: string) => void;
   onEnterPress: () => void;
+  errorMessage?: string;
+  resultHtml?: string;
 }
 
 const MolecularFormulaInput = ({
   value,
   onChange,
   onEnterPress,
+  errorMessage,
+  resultHtml,
 }: MolecularFormulaInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -58,15 +62,40 @@ const MolecularFormulaInput = ({
   };
 
   return (
-    <div
-      ref={contentRef}
-      contentEditable
-      suppressContentEditableWarning
-      onInput={handleInput}
-      onKeyDown={handleKeyDown}
-      className="border border-gray-300 p-2 min-w-[200px] font-sans text-black rounded-md focus:outline-none focus:border-blue-400"
-      spellCheck="false"
-    />
+    <div>
+      {/* O input propriamente dito (contenteditable) */}
+      <div
+        ref={contentRef}
+        className="molecular-formula-input"
+        contentEditable
+        suppressContentEditableWarning
+        onInput={handleInput}
+        onKeyDown={handleKeyDown}
+        spellCheck={false}
+        style={{ minHeight: 32, border: '1px solid #ccc', borderRadius: 4, padding: '4px 8px', color: '#27272a' }}
+      />
+      {/* Resultado formatado (massa molar) */}
+      {resultHtml && (
+        <div
+          className="result-html text-zinc-800 text-center text-xl"
+          style={{
+            marginTop: 20, 
+            maxWidth: '100%',
+            wordBreak: 'break-all',
+            overflowWrap: 'anywhere',
+            textAlign: 'center',
+            display: 'block'
+          }}
+          dangerouslySetInnerHTML={{ __html: resultHtml }}
+        />
+      )}
+      {/* Mensagem de erro associada ao input */}
+      {errorMessage && (
+        <div className="error-message" style={{ color: 'red', marginTop: 4, textAlign: 'center', fontSize: '0.85rem', fontWeight: 500 }}>
+          {errorMessage}
+        </div>
+      )}
+    </div>
   );
 };
 
