@@ -3,6 +3,7 @@ import { useMolarMassCalculator } from "@/features/calculators/hooks/useMolarMas
 import MolecularFormulaInput from "@/features/calculators/components/MolecularFormulaInput";
 import Button from "@/shared/components/Button";
 import CalculatorContainer from "./CalculatorContainer";
+import KeyboardBtn from "@/shared/components/KeyboardBtn";
 
 export default function MolarMassCalculator() {
   const {
@@ -29,9 +30,9 @@ export default function MolarMassCalculator() {
       actions={
         <div className="flex justify-center items-center mt-2">
           <Button onClick={calculate}>Calculate</Button>
+          <KeyboardBtn onClick={calculate}>X</KeyboardBtn>
         </div>
       }
-      />
-    
+    />
   );
 }
