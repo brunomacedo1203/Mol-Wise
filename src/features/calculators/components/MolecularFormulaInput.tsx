@@ -2,23 +2,12 @@
 import { useRef, useEffect } from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
-interface ElementData {
-  symbol: string;
-  molarMass: number;
-}
-
 interface MolecularFormulaInputProps {
   value?: string;
   onChange: (val: string) => void;
   onEnterPress: () => void;
 }
 
-/**
- * Input especializado para fórmulas químicas (ex: H2O, C6H12O6).
- * Formata números como subscritos e aciona callbacks ao digitar e pressionar Enter.
- * Reutilizável em qualquer contexto que exija input de fórmula molecular.
- * Agora suporta modo controlado via prop value.
- */
 const MolecularFormulaInput = ({
   value,
   onChange,
@@ -26,21 +15,8 @@ const MolecularFormulaInput = ({
 }: MolecularFormulaInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Atualiza o conteúdo do input quando value muda (modo controlado)
-  useEffect(() => {
-    if (typeof value === "string" && contentRef.current) {
-      const formatted = formatWithSub(value);
-      if (contentRef.current.innerHTML !== formatted) {
-        contentRef.current.innerHTML = formatted;
-        setCaretToEnd(contentRef.current);
-      }
-    }
-  }, [value]);
-
-  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const rawText = e.currentTarget.textContent || "";
-    onChange(rawText);
-    // Atualiza a visualização formatada imediatamente
+  // Função utilitária para atualizar o conteúdo formatado
+  const updateFormattedContent = (rawText: string) => {
     if (contentRef.current) {
       const formatted = formatWithSub(rawText);
       if (contentRef.current.innerHTML !== formatted) {
@@ -48,6 +24,19 @@ const MolecularFormulaInput = ({
         setCaretToEnd(contentRef.current);
       }
     }
+  };
+
+  // Atualiza o conteúdo do input quando value muda (modo controlado)
+  useEffect(() => {
+    if (typeof value === "string") {
+      updateFormattedContent(value);
+    }
+  }, [value]);
+
+  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+    const rawText = e.currentTarget.textContent || "";
+    onChange(rawText);
+    updateFormattedContent(rawText);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
