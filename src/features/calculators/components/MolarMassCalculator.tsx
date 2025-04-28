@@ -4,6 +4,7 @@ import MolecularFormulaInput from "@/features/calculators/components/MolecularFo
 import Button from "@/shared/components/Button";
 import CalculatorContainer from "./CalculatorContainer";
 import KeyboardBtn from "@/shared/components/KeyboardBtn";
+import KeyboardCalculate from "@/features/calculators/components/KeyboardCalculate";
 
 export default function MolarMassCalculator() {
   const {
@@ -13,6 +14,25 @@ export default function MolarMassCalculator() {
     errorMessage,
     calculate,
   } = useMolarMassCalculator();
+
+  // Funções auxiliares locais
+  const resetFormula = () => handleFormulaChange("");
+  const backspace = () => handleFormulaChange(formula.slice(0, -1));
+
+  function handleKeyPress(key: string) {
+    if (key === "⌫") backspace();
+    else if (key === "⇧") {/* implementar caps lock se quiser */}
+    else handleFormulaChange(formula + key);
+  }
+
+  function handleFormulaBtn(value: string) {
+    handleFormulaChange(value);
+    // Opcional: calculate();
+  }
+
+  function handleParenthesis(paren: string) {
+    handleFormulaChange(formula + paren);
+  }
 
   return (
     <CalculatorContainer
@@ -28,10 +48,14 @@ export default function MolarMassCalculator() {
         />
       }
       actions={
-        <div className="flex justify-center items-center mt-2">
-          <Button onClick={calculate}>Calculate</Button>
-          <KeyboardBtn onClick={calculate}>X</KeyboardBtn>
-        </div>
+        <KeyboardCalculate
+          onKeyPress={handleKeyPress}
+          onFormulaClick={handleFormulaBtn}
+          onReset={resetFormula}
+          onParenthesis={handleParenthesis}
+          onCalculate={calculate}
+          onBackspace={backspace}
+        />
       }
     />
   );

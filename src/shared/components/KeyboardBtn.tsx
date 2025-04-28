@@ -17,7 +17,7 @@ const KeyboardBtn = ({
   type = "button",
 }: KeyboardBtnProps) => {
   const estilosBase =
-    "w-12 h-12 px-2 py-1 text-black bg-white hover:bg-gray-200 " +
+    "w-12 h-12 px-2 py-1 text-black hover:bg-gray-200 " +
     "border border-gray-300 rounded-lg shadow font-semibold text-lg " +
     "transition duration-150 active:translate-y-0.5 active:shadow-none text-center";
 
