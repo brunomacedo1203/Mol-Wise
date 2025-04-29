@@ -14,6 +14,12 @@ export function useMolarMassCalculator() {
     setFormula(val);
   };
 
+  const reset = () => {
+    setFormula("");
+    setMolarMass(null);
+    setErrorMessage("");
+  };
+
   const calculate = () => {
     const validationError = validateFormula(formula);
     if (validationError) {
@@ -27,8 +33,12 @@ export function useMolarMassCalculator() {
         `The molar mass of "${formatWithSub(formattedFormula)}" is: ${totalMolarMass.toFixed(2)} g/mol`
       );
       setErrorMessage("");
-    } catch (error: any) {
-      setErrorMessage(error.message);
+    } catch (error) {
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Ocorreu um erro ao calcular a massa molar';
+      setErrorMessage(errorMessage);
+      setMolarMass(null);
     }
   };
 
@@ -38,5 +48,6 @@ export function useMolarMassCalculator() {
     molarMass,
     errorMessage,
     calculate,
+    reset,
   };
 }

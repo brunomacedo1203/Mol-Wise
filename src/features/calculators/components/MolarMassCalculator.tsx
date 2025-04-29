@@ -11,19 +11,20 @@ export default function MolarMassCalculator() {
     molarMass,
     errorMessage,
     calculate,
+    reset,
   } = useMolarMassCalculator();
 
-  const resetFormula = () => handleFormulaChange("");
   const backspace = () => handleFormulaChange(formula.slice(0, -1));
 
   function handleKeyPress(key: string) {
     if (key === "⌫") backspace();
-    else if (key === "⇧") {/* implementar caps lock se quiser */}
-    else handleFormulaChange(formula + key);
+    else if (key === "⇧") {
+      /* implementar caps lock se quiser */
+    } else handleFormulaChange(formula + key);
   }
 
   function handleFormulaBtn(value: string) {
-    handleFormulaChange(value);
+    handleFormulaChange(formula + value);
   }
 
   function handleParenthesis(paren: string) {
@@ -47,7 +48,7 @@ export default function MolarMassCalculator() {
         <KeyboardCalculate
           onKeyPress={handleKeyPress}
           onFormulaClick={handleFormulaBtn}
-          onReset={resetFormula}
+          onReset={reset}
           onParenthesis={handleParenthesis}
           onCalculate={calculate}
           onBackspace={backspace}

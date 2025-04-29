@@ -5,12 +5,7 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -31,4 +26,22 @@ body {
 [data-nextjs-toast] *,
 [data-nextjs-dialog] {
   display: none !important;
+}
+
+/* Estilos para o input de fórmula molecular */
+.molecular-formula-input[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.molecular-formula-input[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.molecular-formula-input[contenteditable]:empty[data-placeholder*="Please enter"]:before {
+  color: #ef4444;
+  font-style: normal;
 }
