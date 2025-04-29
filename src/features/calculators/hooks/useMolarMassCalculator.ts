@@ -33,7 +33,7 @@ export function useMolarMassCalculator() {
         `The molar mass of "${formatWithSub(formattedFormula)}" is: ${totalMolarMass.toFixed(2)} g/mol`
       );
       setErrorMessage("");
-    } catch (error) {
+    } catch (error: unknown) {
       const errorMessage = error instanceof Error 
         ? error.message 
         : 'Ocorreu um erro ao calcular a massa molar';
