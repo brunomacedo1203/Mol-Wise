@@ -13,8 +13,8 @@ export default function Content(props: ContentProps) {
       className={`
          flex p-4 items-start flex-1 
          bg-zinc-100
-         text-3xl overflow-auto`}
-      style={{ position: 'relative' }}
+         text-3xl overflow-auto
+         relative`}
     >
       {props.children}
     </div>

@@ -1,9 +1,7 @@
 "use client";
 import { useMolarMassCalculator } from "@/features/calculators/hooks/useMolarMassCalculator";
 import MolecularFormulaInput from "@/features/calculators/components/MolecularFormulaInput";
-import Button from "@/shared/components/Button";
 import CalculatorContainer from "./CalculatorContainer";
-import KeyboardBtn from "@/shared/components/KeyboardBtn";
 import KeyboardCalculate from "@/features/calculators/components/KeyboardCalculate";
 
 export default function MolarMassCalculator() {
@@ -15,7 +13,6 @@ export default function MolarMassCalculator() {
     calculate,
   } = useMolarMassCalculator();
 
-  // Funções auxiliares locais
   const resetFormula = () => handleFormulaChange("");
   const backspace = () => handleFormulaChange(formula.slice(0, -1));
 
@@ -27,7 +24,6 @@ export default function MolarMassCalculator() {
 
   function handleFormulaBtn(value: string) {
     handleFormulaChange(value);
-    // Opcional: calculate();
   }
 
   function handleParenthesis(paren: string) {

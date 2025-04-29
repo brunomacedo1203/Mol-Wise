@@ -19,7 +19,6 @@ const MolecularFormulaInput = ({
 }: MolecularFormulaInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Função utilitária para atualizar o conteúdo formatado
   const updateFormattedContent = (rawText: string) => {
     if (contentRef.current) {
       const formatted = formatWithSub(rawText);
@@ -30,7 +29,6 @@ const MolecularFormulaInput = ({
     }
   };
 
-  // Atualiza o conteúdo do input quando value muda (modo controlado)
   useEffect(() => {
     if (typeof value === "string") {
       updateFormattedContent(value);
@@ -63,35 +61,21 @@ const MolecularFormulaInput = ({
 
   return (
     <div>
-      {/* O input propriamente dito (contenteditable) */}
       <div
         ref={contentRef}
-        className="molecular-formula-input"
+        className="molecular-formula-input border border-gray-300 rounded p-2 text-gray-900"
         contentEditable
         suppressContentEditableWarning
         onInput={handleInput}
         onKeyDown={handleKeyDown}
         spellCheck={false}
-        style={{ minHeight: 32, border: '1px solid #ccc', borderRadius: 4, padding: '4px 8px', color: '#27272a' }}
       />
-      {/* Resultado formatado (massa molar) */}
-      {resultHtml && (
-        <div
-          className="result-html text-zinc-800 text-center text-xl"
-          style={{
-            marginTop: 20, 
-            maxWidth: '100%',
-            wordBreak: 'break-all',
-            overflowWrap: 'anywhere',
-            textAlign: 'center',
-            display: 'block'
-          }}
-          dangerouslySetInnerHTML={{ __html: resultHtml }}
-        />
-      )}
-      {/* Mensagem de erro associada ao input */}
+      <div
+        className="result-html text-zinc-800 text-center text-xl min-h-8 flex items-center justify-center mt-3 -mb-2 max-w-full break-all break-words"
+        dangerouslySetInnerHTML={resultHtml ? { __html: resultHtml } : undefined}
+      />
       {errorMessage && (
-        <div className="error-message" style={{ color: 'red', marginTop: 4, textAlign: 'center', fontSize: '0.85rem', fontWeight: 500 }}>
+        <div className="error-message text-red-500 mt-1 text-center text-xs font-medium">
           {errorMessage}
         </div>
       )}

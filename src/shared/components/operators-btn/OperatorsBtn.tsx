@@ -12,12 +12,12 @@ export default function OperatorsBtn({
   onBackspace?: () => void;
 }) {
   return (
-    <div className="flex gap-2 mt-2 items-center justify-center w-full">
+    <div className="flex gap-1 mt-1 items-center justify-center w-full">
       <KeyboardBtn onClick={onReset} className="bg-white">↻</KeyboardBtn>
       <KeyboardBtn onClick={() => onParenthesis?.("(")} className="bg-white"> ( </KeyboardBtn>
       <KeyboardBtn
         onClick={onCalculate}
-        className="bg-green-500 text-black w-40 h-12 text-xl font-bold shadow-2xl border-black border-2 mx-2"
+        className="bg-green-400 hover:bg-green-600 text-black w-35 h-8 text-2sm font-bold shadow-2xl border-black border-2 mx-2"
       >
         CALCULATE
       </KeyboardBtn>
