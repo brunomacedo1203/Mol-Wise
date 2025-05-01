@@ -27,15 +27,15 @@ export default function CalculatorContainer({
 
   return (
     <Rnd
-      minWidth={460}
-      maxWidth={500}
-      defaultSize={{ width: 480, height: "auto" }}
+      minWidth={450}
+      maxWidth={800}
+      defaultSize={{ width: 450, height: "auto" }}
       enable={{ right: true }}
       bounds="#main-content-area"
       className="calculator-resizable"
     >
-      <div className="calculator-container p-6 bg-white rounded-2xl flex flex-col shadow-2xl">
-        <div className="mb-2">
+      <div className="calculator-container p-5 pb-2 bg-white rounded-2xl flex flex-col shadow-2xl">
+        <div className="mb-2 max-w-[450px] mx-auto w-full">
           <h1 className="text-3xl font-semibold text-zinc-800 mb-1 text-center">
             {title}
           </h1>
@@ -45,11 +45,27 @@ export default function CalculatorContainer({
             </span>
           )}
         </div>
-        <div className="calculator-input mb-2">{input}</div>
+        <div className="calculator-input mb-2 max-w-[450px] mx-auto w-full">
+          {input}
+        </div>
+
+        {/* Área de ações colapsável */}
+        {!collapsed && (
+          <div className="calculator-actions mb-2 max-w-[450px] mx-auto w-full">
+            {actions}
+          </div>
+        )}
+        {children}
+        {errorMessage && (
+          <div className="flex justify-center items-center text-zinc-800 text-center text-sm mb-2 max-w-[450px] mx-auto w-full">
+            <div className="error-message">{errorMessage}</div>
+          </div>
+        )}
+
         {/* Botão de colapso */}
         <div className="w-full flex justify-center">
           <button
-            className="mb-2 text-xs text-zinc-600 hover:text-zinc-900 flex items-center gap-1"
+            className="text-xs text-zinc-600 hover:text-zinc-900 flex items-center gap-1"
             onClick={() => setCollapsed((c) => !c)}
           >
             <IconKeyboard size={20} />
@@ -61,14 +77,6 @@ export default function CalculatorContainer({
             )}
           </button>
         </div>
-        {/* Área de ações colapsável */}
-        {!collapsed && <div className="calculator-actions mb-2">{actions}</div>}
-        {children}
-        {errorMessage && (
-          <div className="flex justify-center items-center text-zinc-800 text-center text-sm">
-            <div className="error-message">{errorMessage}</div>
-          </div>
-        )}
       </div>
     </Rnd>
   );
