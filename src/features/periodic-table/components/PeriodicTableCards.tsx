@@ -78,17 +78,7 @@ export default function PeriodicTableCards() {
 
   return (
     <div className="relative overflow-x-auto">
-      {/* Painel de detalhes como overlay absoluto e centralizado */}
-      {hoveredElement && (
-        <div
-          className="absolute left-1/2 top-[60px] z-20"
-          style={{ transform: "translateX(-50%)" }}
-        >
-          <ElementDetailsPanel element={hoveredElement} />
-        </div>
-      )}
       <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px]">
-        {/* Primeira linha: números das colunas */}
         {Array.from({ length: 18 }, (_, i) => (
           <div
             key={`colnum-${i}`}
@@ -97,7 +87,14 @@ export default function PeriodicTableCards() {
             {i + 1}
           </div>
         ))}
-        {/* As próximas linhas: cards dos elementos, placeholders, etc. */}
+      </div>
+
+      {hoveredElement && (
+        <div className="flex justify-center w-full min-w-[1440px]">
+          <ElementDetailsPanel element={hoveredElement} />
+        </div>
+      )}
+      <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px]">
         {matrix.flat().map((element, idx) =>
           isLegendCard(element) ? (
             <LegendCard key={`legend-${idx}`} />
