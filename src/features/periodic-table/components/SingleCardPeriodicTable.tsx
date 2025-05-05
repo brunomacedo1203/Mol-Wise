@@ -13,39 +13,27 @@ export default function SingleCardPeriodicTable({
   molarMass,
   showColummNumber,
 }: SingleCardPeriodicTableProps) {
-  console.log(showColummNumber);
-
   const columnNumberClass = showColummNumber
-    ? "before:content-[attr(data-columm-number)] before:absolute before:top-[-35px] before:w-full before:text-center before:text-cyan-600 hidden xl:block"
+    ? "before:content-[attr(data-columm-number)] before:absolute before:top-[-35px] before:w-full before:text-center before:text-cyan-600"
     : "";
-
-  // Determina o tamanho da fonte baseado no comprimento do nome
-  const getNameFontSize = (name: string) => {
-    if (name.length > 12) return "text-[0.5rem]";
-    if (name.length > 8) return "text-[0.6rem]";
-    return "text-[0.65rem]";
-  };
 
   return (
     <div
       data-columm-number={showColummNumber}
-      className={`${columnNumberClass} relative w-18 h-18 border-2 border-black items-center justify-center bg-gray-100`}
+      className={`${columnNumberClass} relative w-[80px] h-[80px] border-2 border-black bg-gray-100 flex flex-col items-center justify-center text-center overflow-hidden text-xs`}
     >
-      <span className="absolute top-0.5 left-1 text-black text-xs font-bold hidden lg:block">
+      <span className="absolute top-0.5 left-1 text-black text-xs font-bold">
         {atomicNumber}
       </span>
-      <div className="flex flex-col items-center p-2.5">
+      <div className="flex flex-col items-center justify-center h-full px-1">
         <span className="text-2xl font-bold text-black">{symbol}</span>
         <span
-          className={`hidden xl:inline ${getNameFontSize(
-            name
-          )} text-zinc-800 text-center w-full leading-tight`}
+          className="text-[10px] text-zinc-800 truncate w-full leading-tight"
+          title={name}
         >
           {name}
         </span>
-        <span className="hidden xl:inline text-xs text-black">
-          {molarMass?.toFixed(2)}
-        </span>
+        <span className="text-[10px] text-black">{molarMass?.toFixed(2)}</span>
       </div>
     </div>
   );

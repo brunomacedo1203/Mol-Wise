@@ -1,26 +1,44 @@
 import SingleCardPeriodicTable from "./SingleCardPeriodicTable";
-import elementsData from "../services/elementsData";
+import { generatePeriodicTableMatrix } from "@/features/periodic-table/utils/periodicTableMatrix";
 
 export default function PeriodicTableCards() {
+  const matrix = generatePeriodicTableMatrix();
+
   return (
-    <div className="grid grid-cols-18 grid-rows-[repeat(10,_minmax(50px,_1fr))] gap-1 p-5">
-      {elementsData.map((e) => (
-        <div
-          key={e.atomicNumber}
-          style={{
-            gridColumn: e.column,
-            gridRow: e.row,
-          }}
-        >
-          <SingleCardPeriodicTable
-            atomicNumber={e.atomicNumber}
-            symbol={e.symbol}
-            name={e.name}
-            molarMass={e.molarMass}
-            showColummNumber={e.showColummNumber}
-          />
-        </div>
-      ))}
+    <div className="overflow-x-auto">
+      <div className="flex min-w-[1440px] pb-5">
+        {Array.from({ length: 18 }, (_, i) => (
+          <div
+            key={i}
+            className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-2base "
+          >
+            {i + 1}
+          </div>
+        ))}
+      </div>
+
+      {/* Grid dos elementos */}
+      <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px]">
+        {matrix.map((row, rowIndex) =>
+          row.map((element, colIndex) =>
+            element ? (
+              <SingleCardPeriodicTable
+                key={element.atomicNumber}
+                atomicNumber={element.atomicNumber}
+                symbol={element.symbol}
+                name={element.name}
+                molarMass={element.molarMass}
+                showColummNumber={element.showColummNumber}
+              />
+            ) : (
+              <div
+                key={`empty-${rowIndex}-${colIndex}`}
+                className="w-[80px] h-[80px]"
+              />
+            )
+          )
+        )}
+      </div>
     </div>
   );
 }

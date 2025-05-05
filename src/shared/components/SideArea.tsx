@@ -3,10 +3,7 @@
 import React from "react";
 import Logo from "@/shared/components/Logo";
 import { useCollapsedMenu } from "@/shared/hooks/useCollapsedMenu";
-import {
-  IconLayoutSidebarLeftCollapseFilled,
-  IconLayoutSidebarRightCollapseFilled,
-} from "@tabler/icons-react";
+import { IconChevronUp, IconChevronDown } from "@tabler/icons-react";
 
 export interface SideAreaProps {
   bgClass: string;
@@ -14,6 +11,7 @@ export interface SideAreaProps {
   className?: string;
   collapsed?: boolean;
   onToggleCollapsed?: () => void;
+  title?: string;
 }
 
 export default function SideArea({
@@ -44,17 +42,9 @@ export default function SideArea({
           aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {isCollapsed ? (
-            <IconLayoutSidebarRightCollapseFilled
-              size={30}
-              stroke={1}
-              color="black"
-            />
+            <IconChevronDown size={30} stroke={1} color="black" />
           ) : (
-            <IconLayoutSidebarLeftCollapseFilled
-              size={30}
-              stroke={1}
-              color="black"
-            />
+            <IconChevronUp size={30} stroke={1} color="black" />
           )}
         </button>
       </div>
