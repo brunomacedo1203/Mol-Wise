@@ -28,7 +28,7 @@ export default function SingleCardPeriodicTable({
       <div className="flex flex-col items-center justify-center h-full px-1">
         <span className="text-2xl font-bold text-black">{symbol}</span>
         <span
-          className="text-[10px] text-zinc-800 truncate w-full leading-tight"
+          className="text-[12px] text-zinc-800 truncate w-full leading-tight"
           title={name}
         >
           {name}

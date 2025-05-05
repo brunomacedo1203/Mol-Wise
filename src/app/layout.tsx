@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Page title="Mol Wise" subtitle="Welcome!">
+        <Page title="Mol Wise" subtitle="Hover over an element to see details">
           {children}
         </Page>
       </body>
