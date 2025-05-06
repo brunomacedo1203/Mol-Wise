@@ -14,11 +14,19 @@ import LegendCard from "./cards/LegendCard";
 import LanthanidesLabelCard from "./cards/LanthanidesLabelCard";
 import ActinidesLabelCard from "./cards/ActinidesLabelCard";
 import ElementCardWrapper from "./cards/ElementCardWrapper";
+import elementsData from "../services/elementsData";
+
+// Elemento padrão: Hidrogênio
+const defaultElement = elementsData.find((e) => e.symbol === "H");
+if (!defaultElement)
+  throw new Error("Elemento padrão (Hidrogênio) não encontrado!");
 
 export default function PeriodicTableCards() {
-  // Gera a matriz da tabela periódica, incluindo elementos, legendas e placeholders
+  // Estado agora é sempre um elemento, nunca null
+  const [selectedElement, setSelectedElement] = useState<Element>(
+    defaultElement!
+  );
   const matrix = generatePeriodicTableMatrix();
-  const [hoveredElement, setHoveredElement] = useState<Element | null>(null);
 
   return (
     <div className="relative overflow-x-auto">
@@ -34,14 +42,12 @@ export default function PeriodicTableCards() {
         ))}
       </div>
 
-      {/* Painel de detalhes do elemento, exibido ao passar o mouse ou focar em um card */}
-      {hoveredElement && (
-        <div className="absolute left-[22%] top-9 z-50 w-[500px] flex justify-center">
-          <ElementDetailsPanel element={hoveredElement} />
-        </div>
-      )}
+      {/* Painel sempre visível */}
+      <div className="absolute left-[22%] top-9 z-50 w-[500px] flex justify-center">
+        <ElementDetailsPanel element={selectedElement} />
+      </div>
       {/* Grid principal da tabela periódica */}
-      <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px]">
+      <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px] mt-4">
         {matrix.flat().map((element, idx) =>
           // Renderiza o card de legenda no canto inferior esquerdo
           isLegendCard(element) ? (
@@ -57,8 +63,7 @@ export default function PeriodicTableCards() {
             <ElementCardWrapper
               key={element.atomicNumber}
               element={element}
-              hoveredElement={hoveredElement}
-              setHoveredElement={setHoveredElement}
+              setSelectedElement={setSelectedElement}
             />
           ) : (
             // Renderiza um espaço vazio para células sem conteúdo
