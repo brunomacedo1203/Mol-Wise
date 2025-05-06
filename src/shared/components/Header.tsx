@@ -1,4 +1,5 @@
 import React from "react";
+import { useSubtitle } from "@/shared/contexts/SubtitleContext";
 
 export interface HeaderProps {
   title: string;
@@ -7,6 +8,7 @@ export interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
+  const subtitle = useSubtitle();
   return (
     <div
       className={`flex flex-col justify-center px-5 border-b border-zinc-400 mb-2 shadow-md ${
@@ -14,8 +16,8 @@ export default function Header(props: HeaderProps) {
       }`}
     >
       <h1 className="text-xl font-black text-zinc-900">{props.title}</h1>
-      {props.subtitle && (
-        <h2 className="text-sm text-zinc-700">{props.subtitle}</h2>
+      {(subtitle || props.subtitle) && (
+        <h2 className="text-sm text-zinc-700">{subtitle || props.subtitle}</h2>
       )}
     </div>
   );
