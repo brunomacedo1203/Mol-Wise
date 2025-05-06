@@ -90,7 +90,7 @@ export default function PeriodicTableCards() {
       </div>
 
       {hoveredElement && (
-        <div className="flex justify-center w-full min-w-[1440px]">
+        <div className="absolute left-[22%] top-9 z-50 w-[500px] flex justify-center">
           <ElementDetailsPanel element={hoveredElement} />
         </div>
       )}

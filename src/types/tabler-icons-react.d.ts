@@ -11,4 +11,6 @@ declare module '@tabler/icons-react' {
   export const IconKeyboard: TablerIcon;
   export const IconChevronDown: TablerIcon;
   export const IconChevronUp: TablerIcon;
+  export const IconLayoutSidebarLeftCollapse: TablerIcon;
+  export const IconLayoutSidebarRightCollapse: TablerIcon;
 } 

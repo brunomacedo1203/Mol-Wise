@@ -18,6 +18,8 @@ interface ElementDetailsPanelProps {
     density?: string;
     yearDiscovered?: string;
     category?: string;
+    group?: string;
+    period?: string;
   } | null;
 }
 
@@ -25,110 +27,79 @@ export default function ElementDetailsPanel({
   element,
 }: ElementDetailsPanelProps) {
   if (!element) {
-    return (
-      <div className="w-full h-[120px] flex items-center justify-center text-zinc-400 text-xl mb-4">
-        Passe o mouse sobre um elemento para ver detalhes
-      </div>
-    );
+    return null;
   }
   return (
-    <div
-      className="absolute left-1/2 top-[110px] z-30 w-[700px] h-[220px] bg-white border-2 border-cyan-600 rounded-lg shadow-lg flex overflow-hidden"
-      style={{ transform: "translateX(-50%)" }}
-    >
+    <div className="w-[500px] h-auto bg-white border-2 border-cyan-600 rounded-lg shadow-lg flex overflow-hidden">
       {/* Coluna do símbolo */}
-      <div className="flex flex-col items-center justify-center w-[180px] h-full bg-cyan-50 border-r border-cyan-200">
-        <span className="text-7xl font-extrabold text-cyan-600 leading-none">
+      <div className="flex flex-col items-center justify-center w-[120px] bg-cyan-50 border-r border-cyan-200 py-4">
+        <span className="text-5xl font-extrabold text-cyan-600 leading-none">
           {element.symbol}
         </span>
-        <span className="text-base text-zinc-700 font-semibold mt-2">
+        <span className="text-sm text-zinc-700 font-semibold mt-2">
           {element.name}
         </span>
       </div>
       {/* Coluna das informações */}
-      <div className="flex-1 flex flex-col justify-center px-6 py-4 text-zinc-800 text-[15px]">
-        <div className="flex flex-wrap gap-x-8 gap-y-1">
-          <div className="w-1/2">
-            <span className="font-semibold">Número Atômico:</span>{" "}
-            {element.atomicNumber}
-          </div>
-          <div className="w-1/2">
-            <span className="font-semibold">Massa Atômica:</span>{" "}
-            {element.molarMass}
-          </div>
+      <div className="flex-1 flex flex-col justify-center px-4 py-2 text-zinc-800 text-[15px]">
+        <ul className="flex flex-col gap-y-0.5">
+          {element.symbol && (
+            <li>
+              <span className="font-semibold">Symbol:</span> {element.symbol}
+            </li>
+          )}
+          {element.name && (
+            <li>
+              <span className="font-semibold">Name:</span> {element.name}
+            </li>
+          )}
+          {element.atomicNumber !== undefined && (
+            <li>
+              <span className="font-semibold">Atomic number:</span>{" "}
+              {element.atomicNumber}
+            </li>
+          )}
+          {element.molarMass !== undefined && (
+            <li>
+              <span className="font-semibold">Molar mass:</span>{" "}
+              {element.molarMass}
+            </li>
+          )}
           {element.category && (
-            <div className="w-1/2">
-              <span className="font-semibold">Categoria:</span>{" "}
+            <li>
+              <span className="font-semibold">Category:</span>{" "}
               {element.category}
-            </div>
+            </li>
           )}
           {element.standardState && (
-            <div className="w-1/2">
-              <span className="font-semibold">Estado padrão:</span>{" "}
+            <li>
+              <span className="font-semibold">Standard state:</span>{" "}
               {element.standardState}
-            </div>
+            </li>
           )}
           {element.electronConfiguration && (
-            <div className="w-full">
-              <span className="font-semibold">Configuração eletrônica:</span>{" "}
+            <li>
+              <span className="font-semibold">Electron configuration:</span>{" "}
               <span className="break-all">{element.electronConfiguration}</span>
-            </div>
+            </li>
           )}
           {element.oxidationStates && (
-            <div className="w-1/2">
-              <span className="font-semibold">Estados de oxidação:</span>{" "}
+            <li>
+              <span className="font-semibold">Oxidation states:</span>{" "}
               {element.oxidationStates}
-            </div>
+            </li>
           )}
-          {element.electronegativity !== undefined && (
-            <div className="w-1/2">
-              <span className="font-semibold">Eletronegatividade:</span>{" "}
-              {element.electronegativity}
-            </div>
+          {element.group !== undefined && (
+            <li>
+              <span className="font-semibold">Group:</span> {element.group}
+            </li>
           )}
-          {element.atomicRadius && (
-            <div className="w-1/2">
-              <span className="font-semibold">Raio atômico:</span>{" "}
-              {element.atomicRadius}
-            </div>
+          {element.period !== undefined && (
+            <li>
+              <span className="font-semibold">Period:</span> {element.period}
+            </li>
           )}
-          {element.ionizationEnergy && (
-            <div className="w-1/2">
-              <span className="font-semibold">Energia de ionização:</span>{" "}
-              {element.ionizationEnergy}
-            </div>
-          )}
-          {element.electronAffinity && (
-            <div className="w-1/2">
-              <span className="font-semibold">Afinidade eletrônica:</span>{" "}
-              {element.electronAffinity}
-            </div>
-          )}
-          {element.meltingPoint && (
-            <div className="w-1/2">
-              <span className="font-semibold">Ponto de fusão:</span>{" "}
-              {element.meltingPoint}
-            </div>
-          )}
-          {element.boilingPoint && (
-            <div className="w-1/2">
-              <span className="font-semibold">Ponto de ebulição:</span>{" "}
-              {element.boilingPoint}
-            </div>
-          )}
-          {element.density && (
-            <div className="w-1/2">
-              <span className="font-semibold">Densidade:</span>{" "}
-              {element.density}
-            </div>
-          )}
-          {element.yearDiscovered && (
-            <div className="w-1/2">
-              <span className="font-semibold">Ano de descoberta:</span>{" "}
-              {element.yearDiscovered}
-            </div>
-          )}
-        </div>
+        </ul>
       </div>
     </div>
   );
