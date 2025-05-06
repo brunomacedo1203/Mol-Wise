@@ -1,26 +1,8 @@
 import React from "react";
+import { Element } from "../types/element";
 
 interface ElementDetailsPanelProps {
-  element: {
-    symbol: string;
-    name: string;
-    atomicNumber: number;
-    molarMass: number;
-    standardState?: string;
-    electronConfiguration?: string;
-    oxidationStates?: string;
-    electronegativity?: number;
-    atomicRadius?: string;
-    ionizationEnergy?: string;
-    electronAffinity?: string;
-    meltingPoint?: string;
-    boilingPoint?: string;
-    density?: string;
-    yearDiscovered?: string;
-    category?: string;
-    group?: string;
-    period?: string;
-  } | null;
+  element: Element | null;
 }
 
 export default function ElementDetailsPanel({
