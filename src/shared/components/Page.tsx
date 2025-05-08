@@ -23,20 +23,18 @@ export default function Page(props: PageProps) {
 
   return (
     <div className=" flex h-screen bg-zinc-100">
-      <SideArea title="Menu" bgClass="bg-zinc-150" collapsed={collapsed} onToggleCollapsed={toggleCollapsed}>
+      <SideArea
+        title="Menu"
+        bgClass="bg-zinc-150"
+        collapsed={collapsed}
+        onToggleCollapsed={toggleCollapsed}
+      >
         <Menu collapsed={collapsed} />
       </SideArea>
       <div className=" flex flex-col flex-1">
-        <Header
-          title={sectionTitle}
-          subtitle={props.subtitle}
-          className="h-16 bg-zinc-100"
-        />
+        <Header title={sectionTitle} className="h-16 bg-zinc-100" />
         <Content title={props.title}>{props.children}</Content>
-        <Footer
-          leftText="Email Contact"
-          rightText={`Developed in ${year}`}
-        />
+        <Footer leftText="Email Contact" rightText={`Developed in ${year}`} />
       </div>
     </div>
   );

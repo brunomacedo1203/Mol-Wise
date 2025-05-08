@@ -3,7 +3,6 @@ import { useSubtitle } from "@/shared/contexts/SubtitleContext";
 
 export interface HeaderProps {
   title: string;
-  subtitle?: string;
   className?: string;
 }
 
@@ -16,9 +15,7 @@ export default function Header(props: HeaderProps) {
       }`}
     >
       <h1 className="text-xl font-black text-zinc-900">{props.title}</h1>
-      {(subtitle || props.subtitle) && (
-        <h2 className="text-sm text-zinc-700">{subtitle || props.subtitle}</h2>
-      )}
+      {subtitle && <h2 className="text-sm text-zinc-700">{subtitle}</h2>}
     </div>
   );
 }
