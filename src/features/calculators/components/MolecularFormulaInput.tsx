@@ -61,18 +61,29 @@ const MolecularFormulaInput = ({
 
   return (
     <div className="w-full">
-      <div
-        ref={contentRef}
-        className={`molecular-formula-input border ${
-          errorMessage ? "border-red-500" : "border-gray-300"
-        } rounded p-2 text-gray-900 relative text-xl`}
-        contentEditable
-        suppressContentEditableWarning
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        spellCheck={false}
-        data-placeholder={errorMessage || "Ex: Al, H₂O..."}
-      />
+      <div className="relative w-full min-h-[2.5rem] max-h-32">
+        <div
+          ref={contentRef}
+          className={`molecular-formula-input border ${
+            errorMessage ? "border-red-500" : "border-gray-300"
+          } rounded p-2 text-gray-900 text-xl min-h-[2.5rem] max-h-32 overflow-auto`}
+          contentEditable
+          suppressContentEditableWarning
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+          spellCheck={false}
+          aria-label="Chemical formula input"
+        />
+        {(!value || value.length === 0) && (
+          <span
+            className={`absolute inset-0 w-full h-full flex items-start pl-2 pt-2 pointer-events-none select-none text-xl font-sans whitespace-pre-wrap break-words ${
+              errorMessage ? "text-red-500" : "text-gray-400"
+            }`}
+          >
+            {errorMessage || "Ex: Al, H₂O..."}
+          </span>
+        )}
+      </div>
       <div
         className="result-html text-blue-600 text-left text-lg min-h-8 mt-3 -mb-2 w-full overflow-hidden break-words"
         style={{ wordWrap: "break-word", hyphens: "auto" }}

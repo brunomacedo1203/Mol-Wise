@@ -1,6 +1,6 @@
-import Keyboard from "@/shared/components/keyboard/Keyboard";
-import FormulasBtn from "@/shared/components/formulas-btn/FormulasBtn";
-import OperatorsBtn from "@/shared/components/operators-btn/OperatorsBtn";
+import Keyboard from "@/shared/components/Keyboard";
+import FormulasBtn from "@/shared/components/FormulasBtn";
+import OperatorsBtn from "@/shared/components/OperatorsBtn";
 
 interface KeyboardCalculateProps {
   onKeyPress: (key: string) => void;
@@ -29,7 +29,7 @@ export default function KeyboardCalculate({
       </div>
       <div className="w-full flex justify-center">
         <OperatorsBtn
-          onReset={onReset}
+          onClear={onReset}
           onParenthesis={onParenthesis}
           onCalculate={onCalculate}
           onBackspace={onBackspace}

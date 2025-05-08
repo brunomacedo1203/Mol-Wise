@@ -12,6 +12,7 @@ export function useMolarMassCalculator() {
   // Handler dedicado para mudança da fórmula
   const handleFormulaChange = (val: string) => {
     setFormula(val);
+    setErrorMessage(""); // Limpa o erro quando o usuário digita
   };
 
   const reset = () => {
@@ -34,10 +35,12 @@ export function useMolarMassCalculator() {
       );
       setErrorMessage("");
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error 
-        ? error.message 
-        : 'Ocorreu um erro ao calcular a massa molar';
-      setErrorMessage(errorMessage);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+        setFormula(""); // Clear input to show error message in placeholder
+      } else {
+        setErrorMessage('An error occurred while calculating the molar mass');
+      }
       setMolarMass(null);
     }
   };

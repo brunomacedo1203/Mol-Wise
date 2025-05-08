@@ -47,7 +47,7 @@ export function calculateMolarMassFromFormula(formula: string): number {
         totalMolarMass += elementSymbol.molarMass * item.count;
       } else {
         throw new Error(
-          `The element with the symbol "${item.element}" was not found in the periodic table`
+          `The symbol "${item.element}" was not found.`
         );
       }
     }

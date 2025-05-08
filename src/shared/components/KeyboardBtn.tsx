@@ -7,6 +7,7 @@ export interface KeyboardBtnProps {
   className?: string;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
+  title?: string;
 }
 
 const KeyboardBtn = ({
@@ -15,6 +16,7 @@ const KeyboardBtn = ({
   className = "",
   disabled = false,
   type = "button",
+  title,
 }: KeyboardBtnProps) => {
   const estilosBase =
     "w-9 h-9 flex items-center justify-center " +
@@ -34,6 +36,7 @@ const KeyboardBtn = ({
       className={`${estilosBase} ${className}`}
       onClick={onClick}
       disabled={disabled}
+      title={title}
     >
       {children}
     </button>

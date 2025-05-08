@@ -23,7 +23,7 @@ export default function FormulasBtn({
         <KeyboardBtn
           key={f.label}
           onClick={() => onFormulaClick?.(f.value)}
-          className="w-12"
+          className="w-12 font-sans text-xl"
         >
           {f.label}
         </KeyboardBtn>

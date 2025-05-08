@@ -1,6 +1,6 @@
 export function validateFormula(formula: string): string | null {
   if (!formula || formula.trim() === "") {
-    return "Please enter an element symbol or a formula.";
+    return "Enter an element symbol or a formula.";
   }
   return null;
 }
