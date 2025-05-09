@@ -18,24 +18,13 @@ const MolecularFormulaInput = ({
   resultHtml,
 }: MolecularFormulaInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const setCaretToEnd = (el: HTMLDivElement) => {
-    const range = document.createRange();
-    const sel = window.getSelection();
-    if (sel) {
-      range.selectNodeContents(el);
-      range.collapse(false);
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-  };
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const updateFormattedContent = useCallback((rawText: string) => {
     if (contentRef.current) {
       const formatted = formatWithSub(rawText);
       if (contentRef.current.innerHTML !== formatted) {
         contentRef.current.innerHTML = formatted;
-        setCaretToEnd(contentRef.current);
       }
     }
   }, []);
@@ -46,13 +35,13 @@ const MolecularFormulaInput = ({
     }
   }, [value, updateFormattedContent]);
 
-  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const rawText = e.currentTarget.textContent || "";
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawText = e.target.value;
     onChange(rawText);
     updateFormattedContent(rawText);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       onEnterPress();
@@ -62,17 +51,21 @@ const MolecularFormulaInput = ({
   return (
     <div className="w-full">
       <div className="relative w-full min-h-[2.5rem] max-h-32">
+        <input
+          ref={inputRef}
+          type="text"
+          value={value}
+          onChange={handleInput}
+          onKeyDown={handleKeyDown}
+          className={`w-full h-full absolute inset-0 opacity-0 z-10`}
+          spellCheck={false}
+          aria-label="Chemical formula input"
+        />
         <div
           ref={contentRef}
           className={`molecular-formula-input border ${
             errorMessage ? "border-red-500" : "border-gray-300"
-          } rounded p-2 text-gray-900 text-xl min-h-[2.5rem] max-h-32 overflow-auto`}
-          contentEditable
-          suppressContentEditableWarning
-          onInput={handleInput}
-          onKeyDown={handleKeyDown}
-          spellCheck={false}
-          aria-label="Chemical formula input"
+          } rounded p-2 text-gray-900 text-xl min-h-[2.5rem] max-h-32 overflow-auto pointer-events-none`}
         />
         {(!value || value.length === 0) && (
           <span
