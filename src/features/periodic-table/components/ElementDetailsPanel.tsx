@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Element } from "../types/element";
 import elementsData from "../services/elementsData";
+import { formatWithSup } from "@/shared/utils/formatWithSup";
 
-// Mapeamento de nomes em português para símbolo
 const ptNameToSymbol: Record<string, string> = {
   hidrogenio: "H",
   helio: "He",
@@ -37,32 +37,28 @@ const ptNameToSymbol: Record<string, string> = {
   manganes: "Mn",
   niquel: "Ni",
   cobalto: "Co",
-  // ... adicione outros conforme necessário
 };
 
 function normalize(str: string) {
   return str
     .normalize("NFD")
-    .replace(/\u0300-\u036f/g, "") // Remove acentos
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/[^a-z0-9]/g, ""); // Remove caracteres especiais
+    .replace(/[^a-z0-9]/g, "");
 }
 
 function searchElement(term: string): Element | undefined {
   const normalized = normalize(term);
   if (!normalized) return undefined;
 
-  // Busca por símbolo (começo)
   let found = elementsData.find((el) =>
     normalize(el.symbol).startsWith(normalized)
   );
   if (found) return found;
 
-  // Busca por nome em inglês (contém)
   found = elementsData.find((el) => normalize(el.name).includes(normalized));
   if (found) return found;
 
-  // Busca por nome em português (mapeado)
   const symbol = ptNameToSymbol[normalized];
   if (symbol) {
     found = elementsData.find((el) => el.symbol === symbol);
@@ -85,7 +81,9 @@ export default function ElementDetailsPanel({
 
   if (!elementToShow) return null;
 
-  // Lista de campos a exibir
+  // LOG para depuração do valor da configuração eletrônica
+  console.log("DADO NO PAINEL:", elementToShow.electronConfiguration);
+
   const fields: { label: string; value?: React.ReactNode }[] = [
     { label: "Atomic number", value: elementToShow.atomicNumber },
     {
@@ -100,7 +98,12 @@ export default function ElementDetailsPanel({
     {
       label: "Electron configuration",
       value: (
-        <span className="break-all">{elementToShow.electronConfiguration}</span>
+        <span
+          className="break-all"
+          dangerouslySetInnerHTML={{
+            __html: formatWithSup(elementToShow.electronConfiguration || ""),
+          }}
+        />
       ),
     },
     { label: "Oxidation states", value: elementToShow.oxidationStates },

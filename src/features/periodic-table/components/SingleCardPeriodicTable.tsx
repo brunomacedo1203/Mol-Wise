@@ -25,7 +25,7 @@ export default function SingleCardPeriodicTable({
       <span className="absolute top-0.5 left-1 text-black text-xs font-bold">
         {atomicNumber}
       </span>
-      <div className="flex flex-col items-center justify-center h-full px-1">
+      <div className="flex flex-col items-center justify-center h-full px-1 mt-1">
         <span className="text-2xl font-bold text-black">{symbol}</span>
         <span
           className="text-[12px] text-zinc-800 truncate w-full leading-tight"
@@ -33,7 +33,9 @@ export default function SingleCardPeriodicTable({
         >
           {name}
         </span>
-        <span className="text-[10px] text-black">{molarMass?.toFixed(2)}</span>
+        <span className="font-bold text-[10px] text-black mt-1">
+          {molarMass?.toFixed(2)}
+        </span>
       </div>
     </div>
   );
