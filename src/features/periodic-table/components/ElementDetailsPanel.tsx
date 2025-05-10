@@ -135,7 +135,7 @@ export default function ElementDetailsPanel({
         </div>
         {/* Coluna das informações */}
         <div className="flex-1 flex flex-col justify-center px-4 py-2 text-zinc-800 text-[15px]">
-          <ul className="flex flex-col gap-y-0.5">
+          <ul className="flex flex-col gap-y-0 leading-tight">
             {fields.map(
               ({ label, value }) =>
                 value !== undefined &&

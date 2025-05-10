@@ -18,7 +18,7 @@ export default function FormulasBtn({
   onFormulaClick?: (value: string) => void;
 }) {
   return (
-    <div className="flex gap-2 rounded-lg px-2 py-2 shadow-inner justify-center flex-wrap">
+    <div className="flex gap-3 rounded-lg px-2 py-2 shadow-inner justify-center flex-wrap">
       {formulas.map((f) => (
         <KeyboardBtn
           key={f.label}

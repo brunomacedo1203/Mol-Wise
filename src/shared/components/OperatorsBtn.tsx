@@ -30,7 +30,7 @@ export default function OperatorsBtn({
       </KeyboardBtn>
       <KeyboardBtn
         onClick={onCalculate}
-        className="!bg-green-400 !hover:bg-green-500 text-white font-semibold w-24 h-10"
+        className="!bg-green-400 !hover:bg-green-500 text-white font-semibold w-16 h-10 px-20"
       >
         CALCULATE
       </KeyboardBtn>

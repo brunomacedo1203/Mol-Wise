@@ -17,12 +17,12 @@ export default function Keyboard({
     isUpperCase ? char.toUpperCase() : char.toLowerCase();
 
   return (
-    <div className="flex flex-col items-center bg-black p-2 rounded-xl mb-2">
+    <div className="flex flex-col items-center bg-zinc-900 dark:bg-zinc-800 p-2 rounded-xl mb-2">
       <div className="flex gap-2 mb-2">
         {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((key) => (
           <KeyboardBtn
             key={key}
-            className="bg-white"
+            className="bg-white dark:bg-zinc-700 text-black dark:text-white"
             onClick={() => onKeyPress?.(key)}
           >
             {key}
@@ -33,7 +33,7 @@ export default function Keyboard({
         {lettersRow1.map((key) => (
           <KeyboardBtn
             key={key}
-            className="bg-white"
+            className="bg-white dark:bg-zinc-700 text-black dark:text-white"
             onClick={() => onKeyPress?.(display(key))}
           >
             {display(key)}
@@ -43,14 +43,14 @@ export default function Keyboard({
       <div className="flex gap-2 mb-2">
         <KeyboardBtn
           onClick={() => setIsUpperCase((u) => !u)}
-          className="bg-white"
+          className="bg-white dark:bg-zinc-700 text-black dark:text-white"
         >
           ⇧
         </KeyboardBtn>
         {lettersRow2.map((key) => (
           <KeyboardBtn
             key={key}
-            className="bg-white"
+            className="bg-white dark:bg-zinc-700 text-black dark:text-white"
             onClick={() => onKeyPress?.(display(key))}
           >
             {display(key)}
@@ -61,13 +61,16 @@ export default function Keyboard({
         {lettersRow3.map((key) => (
           <KeyboardBtn
             key={key}
-            className="bg-white"
+            className="bg-white dark:bg-zinc-700 text-black dark:text-white"
             onClick={() => onKeyPress?.(display(key))}
           >
             {display(key)}
           </KeyboardBtn>
         ))}
-        <KeyboardBtn className="bg-white" onClick={() => onKeyPress?.(".")}>
+        <KeyboardBtn
+          className="bg-white dark:bg-zinc-700 text-black dark:text-white"
+          onClick={() => onKeyPress?.(".")}
+        >
           .
         </KeyboardBtn>
       </div>
