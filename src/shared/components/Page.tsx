@@ -22,17 +22,20 @@ export default function Page(props: PageProps) {
   if (collapsed === undefined) return null;
 
   return (
-    <div className=" flex h-screen bg-zinc-100">
+    <div className="flex h-screen bg-zinc-100 dark:bg-zinc-700 dark:border-zinc-700">
       <SideArea
         title="Menu"
-        bgClass="bg-zinc-150"
+        bgClass="bg-zinc-150 dark:bg-zinc-900"
         collapsed={collapsed}
         onToggleCollapsed={toggleCollapsed}
       >
         <Menu collapsed={collapsed} />
       </SideArea>
-      <div className=" flex flex-col flex-1">
-        <Header title={sectionTitle} className="h-16 bg-zinc-100" />
+      <div className="flex flex-col flex-1">
+        <Header
+          title={sectionTitle}
+          className="h-16 bg-zinc-100 dark:bg-zinc-800"
+        />
         <Content title={props.title}>{props.children}</Content>
         <Footer leftText="Email Contact" rightText={`Developed in ${year}`} />
       </div>

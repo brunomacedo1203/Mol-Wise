@@ -43,8 +43,9 @@ const MolecularFormulaInput = ({
         if (isFocused) {
           const cursorSpan = document.createElement("span");
           cursorSpan.className = cursorVisible
-            ? "inline-block w-px h-5 bg-black align-middle ml-px"
+            ? "inline-block w-px h-5 bg-black dark:bg-white align-middle ml-px"
             : "inline-block w-px h-5 bg-transparent align-middle ml-px";
+
           contentRef.current.appendChild(cursorSpan);
         }
       }
@@ -114,7 +115,7 @@ const MolecularFormulaInput = ({
           ref={contentRef}
           className={`molecular-formula-input border ${
             errorMessage ? "border-red-500" : "border-gray-300"
-          } rounded p-2 text-gray-900 text-xl min-h-[2.5rem] max-h-32 overflow-auto cursor-text ${
+          } rounded pt-1.5 pb-1.4 px-2 text-gray-900 dark:text-white text-xl min-h-[2.5rem] max-h-48 cursor-text transition-none whitespace-pre-wrap break-words overflow-y-auto ${
             isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""
           }`}
         />

@@ -29,13 +29,13 @@ export default function PeriodicTableCards() {
   const matrix = generatePeriodicTableMatrix();
 
   return (
-    <div className="relative overflow-x-auto">
+    <div className="relative overflow-x-auto dark:bg-black dark:text-white">
       {/* Renderiza os números das colunas (grupos) no topo da tabela */}
       <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px]">
         {Array.from({ length: 18 }, (_, i) => (
           <div
             key={`colnum-${i}`}
-            className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100"
+            className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100 dark:bg-zinc-800 dark:text-white"
           >
             {i + 1}
           </div>
@@ -67,7 +67,10 @@ export default function PeriodicTableCards() {
             />
           ) : (
             // Renderiza um espaço vazio para células sem conteúdo
-            <div key={`empty-${idx}`} className="w-[80px] h-[80px]" />
+            <div
+              key={`empty-${idx}`}
+              className="w-[80px] h-[80px] dark:bg-zinc-800"
+            />
           )
         )}
       </div>

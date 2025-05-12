@@ -13,6 +13,7 @@ module.exports = {
     extend: {
       width: {
         13: "3.25rem",
+        13_5: "3.375rem",
         14: "3.5rem",
         15: "3.75rem",
         16: "4rem",

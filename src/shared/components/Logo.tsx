@@ -10,7 +10,7 @@ export default function Logo({ collapsed, onClick }: LogoProps) {
   return (
     <Link
       href="/"
-      className="flex items-center justify-center w-full h-16"
+      className="text-xs text-zinc-600 hover:text-zinc-900 flex items-center gap-1"
       onClick={onClick}
     >
       <span

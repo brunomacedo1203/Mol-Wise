@@ -11,11 +11,14 @@ export default function Menu({ collapsed, onSectionSelect }: MenuProps) {
   return (
     <div
       className={`
-        text-3xl pl-2 gap-2
-        flex flex-col justify-start items-start
-        ${collapsed ? "w-16" : "w-70"} 
-        text-zinc-900 
-      `}
+            text-3xl pl-2 gap-2
+            flex flex-col justify-start items-start
+            ${collapsed ? "w-16" : "w-70"} 
+            text-zinc-900 
+            dark:text-zinc-100
+        
+            
+          `}
     >
       <div onClick={() => onSectionSelect && onSectionSelect("periodic")}>
         <MenuItem
@@ -39,34 +42,34 @@ export default function Menu({ collapsed, onSectionSelect }: MenuProps) {
         />
       </div>
       {/* <div onClick={() => onSectionSelect && onSectionSelect("calculator")}> 
-          <MenuItem
-            icone={<IconScale />}
-            label={collapsed ? "" : "Standard calculator"}
-            url="/StandardCalculator"
-          />
-        </div>
-        */}
+              <MenuItem
+                icone={<IconScale />}
+                label={collapsed ? "" : "Standard calculator"}
+                url="/StandardCalculator"
+              />
+            </div>
+            */}
       {/*<div onClick={() => onSectionSelect && onSectionSelect("concentration")}> 
-          <MenuItem
-            icone={<IconCalculator />}
-            label={collapsed ? "" : "Concentration calculator"}
-            url="/ConcentrationCalculator"
-          />
-        </div>
-        <div onClick={() => onSectionSelect && onSectionSelect("dilution")}> 
-          <MenuItem
-            icone={<IconRulerMeasure />}
-            label={collapsed ? "" : "Dilution calculator"}
-            url="/DilutionCalculator"
-          />
-        </div>
-        <div onClick={() => onSectionSelect && onSectionSelect("study_organization")}> 
-          <MenuItem
-            icone={<IconSitemap />}
-            label={collapsed ? "" : "Study Organization"}
-            url="/study_organization"
-          />
-        </div>*/}
+              <MenuItem
+                icone={<IconCalculator />}
+                label={collapsed ? "" : "Concentration calculator"}
+                url="/ConcentrationCalculator"
+              />
+            </div>
+            <div onClick={() => onSectionSelect && onSectionSelect("dilution")}> 
+              <MenuItem
+                icone={<IconRulerMeasure />}
+                label={collapsed ? "" : "Dilution calculator"}
+                url="/DilutionCalculator"
+              />
+            </div>
+            <div onClick={() => onSectionSelect && onSectionSelect("study_organization")}> 
+              <MenuItem
+                icone={<IconSitemap />}
+                label={collapsed ? "" : "Study Organization"}
+                url="/study_organization"
+              />
+            </div>*/}
     </div>
   );
 }

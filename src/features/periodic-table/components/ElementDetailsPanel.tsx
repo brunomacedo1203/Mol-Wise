@@ -112,29 +112,44 @@ export default function ElementDetailsPanel({
   ];
 
   return (
-    <div className="w-[500px] h-auto bg-white border-2 border-cyan-600 rounded-lg shadow-lg flex overflow-hidden flex-col">
+    <div
+      className="w-[500px] h-auto bg-white border-2 border-cyan-600 rounded-lg shadow-lg flex overflow-hidden flex-col dark:border-zinc-700 
+dark:bg-zinc-900"
+    >
       {/* Campo de pesquisa no topo */}
-      <div className="w-full px-4 pt-2 pb-2 bg-white border-b border-cyan-100">
+      <div
+        className="w-full px-4 pt-2 pb-2 bg-white border-b border-cyan-100 dark:border-zinc-700 
+dark:bg-zinc-900"
+      >
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by symbol or name (EN/PT)..."
-          className="w-full px-3 py-2 border border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base text-black"
+          className="w-full px-3 py-2 border border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base text-black bg-white dark:text-white dark:bg-black"
         />
       </div>
-      <div className="flex flex-row flex-1 overflow-hidden">
+      <div
+        className="flex flex-row flex-1 overflow-hidden dark:border-zinc-700 
+dark:bg-zinc-900 "
+      >
         {/* Coluna do símbolo */}
-        <div className="flex flex-col items-center justify-center w-[120px] bg-cyan-50 border-r border-cyan-200 py-4">
-          <span className="text-5xl font-extrabold text-cyan-600 leading-none">
+        <div
+          className="flex flex-col items-center justify-center w-[120px] bg-cyan-50 border-r border-cyan-200 py-4 dark:border-zinc-700 
+dark:bg-zinc-900 "
+        >
+          <span className="text-5xl font-extrabold text-cyan-600 leading-none ">
             {elementToShow.symbol}
           </span>
-          <span className="text-sm text-zinc-700 font-semibold mt-2">
+          <span className="text-sm text-zinc-700 font-semibold mt-2 dark:text-zinc-100">
             {elementToShow.name}
           </span>
         </div>
         {/* Coluna das informações */}
-        <div className="flex-1 flex flex-col justify-center px-4 py-2 text-zinc-800 text-[15px]">
+        <div
+          className="flex-1 flex flex-col justify-center px-4 py-2 text-zinc-800 text-[15px] dark:border-zinc-700 
+dark:bg-zinc-900 dark:text-zinc-100"
+        >
           <ul className="flex flex-col gap-y-0 leading-tight">
             {fields.map(
               ({ label, value }) =>

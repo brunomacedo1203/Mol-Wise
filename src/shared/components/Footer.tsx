@@ -12,6 +12,8 @@ export default function Footer(props: FooterProps) {
         flex justify-between items-center   
         h-16 text-base px-10 bg-zinc-100
         border-t border-zinc-400 text-zinc-500
+        dark:border-zinc-700 
+dark:bg-zinc-900
           `}
     >
       <span>{props.leftText}</span>

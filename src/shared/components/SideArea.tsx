@@ -37,7 +37,10 @@ export default function SideArea({
         isCollapsed ? "w-16" : "w-70"
       } border-r border-zinc-300 shadow-md ${bgClass} ${className}`}
     >
-      <div className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 shadow-md">
+      <div
+        className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 shadow-md     dark:border-zinc-700 
+            dark:bg-zinc-900"
+      >
         <Logo collapsed={isCollapsed ?? false} />
         <button
           className="text-xl p-0 rounded-md"
@@ -48,10 +51,14 @@ export default function SideArea({
             <IconLayoutSidebarRightCollapse
               size={30}
               stroke={1}
-              color="black"
+              className="text-black dark:text-white"
             />
           ) : (
-            <IconLayoutSidebarLeftCollapse size={30} stroke={1} color="black" />
+            <IconLayoutSidebarLeftCollapse
+              size={30}
+              stroke={1}
+              className="text-black dark:text-white"
+            />
           )}
         </button>
       </div>

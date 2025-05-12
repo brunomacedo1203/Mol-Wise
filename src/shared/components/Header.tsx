@@ -27,3 +27,10 @@ export default function Header(props: HeaderProps) {
     </div>
   );
 }
+
+/*
+dark:border-zinc-700 
+dark:bg-zinc-900
+dark:text-zinc-100
+
+*/
