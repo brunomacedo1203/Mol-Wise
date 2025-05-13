@@ -10,7 +10,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-export default [
+const config = [
   ...compat.extends(
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended"
@@ -31,7 +31,9 @@ export default [
         },
       ],
       "react-hooks/exhaustive-deps": "warn",
-      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
 ];
+
+export default config;
