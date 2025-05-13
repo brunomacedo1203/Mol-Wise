@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Mol Wise",
-  description: "A chemical calculator and periodic table",
+  description:
+    "This application designed to help students and teachers with chemical calculations, data visualization, and content organization.",
 };
 
 export default function RootLayout({

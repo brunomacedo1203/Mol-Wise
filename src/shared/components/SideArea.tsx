@@ -34,7 +34,7 @@ export default function SideArea({
   return (
     <aside
       className={`flex flex-col gap-5 custom-shadow mr-1 transition-width duration-300 ${
-        isCollapsed ? "w-16" : "w-70"
+        isCollapsed ? "w-16" : "w-64  min-w-64"
       } border-r border-zinc-300 shadow-md ${bgClass} ${className}`}
     >
       <div
