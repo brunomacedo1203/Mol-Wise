@@ -11,23 +11,25 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-function getInitialTheme(): Theme {
-  if (typeof window !== "undefined") {
-    const savedTheme = localStorage.getItem("theme") as Theme;
-    if (savedTheme) return savedTheme;
-    // Se não houver tema salvo, use a preferência do sistema
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-  }
-  return "light";
-}
-
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  // Inicia como light para evitar SSR mismatch
+  const [theme, setTheme] = useState<Theme>("light");
+
+  // Sincroniza com localStorage após montagem
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as Theme | null;
+
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      setTheme(prefersDark ? "dark" : "light");
+    }
+  }, []);
 
   useEffect(() => {
-    // Sempre que o tema mudar, sincronize localStorage e classe do <html>
     localStorage.setItem("theme", theme);
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -49,7 +51,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;

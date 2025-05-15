@@ -18,7 +18,6 @@ export interface SideAreaProps {
 }
 
 export default function SideArea({
-  bgClass = "bg-zinc-800 dark:bg-zinc-900",
   children,
   className = "",
   collapsed = false,
@@ -33,7 +32,7 @@ export default function SideArea({
 
   return (
     <aside
-      className={`flex flex-col gap-5 custom-shadow mr-1 transition-width duration-300 ${
+      className={`flex flex-col gap-5 custom-shadow mr-1 ${
         isCollapsed ? "w-16" : "w-64 min-w-64"
       } bg-zinc-100 dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-800 shadow-md ${className}`}
     >

@@ -20,17 +20,17 @@ export default function Page(props: PageProps) {
   const sectionTitle = useSectionTitle();
   const { collapsed, toggleCollapsed } = useCollapsedMenu();
 
-  if (collapsed === undefined) return null;
+  const isCollapsed = collapsed ?? false;
 
   return (
     <div className="flex h-screen bg-zinc-100 dark:bg-zinc-800">
       <SideArea
         title="Menu"
         bgClass="bg-zinc-800 dark:bg-zinc-900"
-        collapsed={collapsed}
+        collapsed={isCollapsed}
         onToggleCollapsed={toggleCollapsed}
       >
-        <Menu collapsed={collapsed} />
+        <Menu collapsed={isCollapsed} />
       </SideArea>
       <div className="flex flex-col flex-1">
         <Header

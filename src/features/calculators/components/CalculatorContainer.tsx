@@ -34,7 +34,7 @@ export default function CalculatorContainer({
       bounds="#main-content-area"
       className="calculator-resizable"
     >
-      <div className="calculator-container p-5 pb-2 bg-white dark:bg-zinc-900 rounded-2xl flex flex-col shadow-2xl border border-gray-300 dark:border-zinc-700">
+      <div className="calculator-container p-5 pb-2 bg-white dark:bg-gray-800 rounded-2xl flex flex-col shadow-2xl border border-gray-350 dark:border-zinc-700">
         <div className="mb-2 max-w-[450px] mx-auto w-full">
           <h1 className="text-3xl font-semibold text-zinc-800 dark:text-zinc-100 mb-1 text-center">
             {title}
