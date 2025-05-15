@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 
 export interface SideAreaProps {
-  bgClass: string;
+  bgClass?: string;
   children?: React.ReactNode;
   className?: string;
   collapsed?: boolean;
@@ -18,9 +18,9 @@ export interface SideAreaProps {
 }
 
 export default function SideArea({
-  bgClass,
+  bgClass = "bg-zinc-800 dark:bg-zinc-900",
   children,
-  className,
+  className = "",
   collapsed = false,
   onToggleCollapsed,
 }: SideAreaProps) {
@@ -34,13 +34,10 @@ export default function SideArea({
   return (
     <aside
       className={`flex flex-col gap-5 custom-shadow mr-1 transition-width duration-300 ${
-        isCollapsed ? "w-16" : "w-64  min-w-64"
-      } border-r border-zinc-300 shadow-md ${bgClass} ${className}`}
+        isCollapsed ? "w-16" : "w-64 min-w-64"
+      } bg-zinc-100 dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-800 shadow-md ${className}`}
     >
-      <div
-        className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 shadow-md     dark:border-zinc-700 
-            dark:bg-zinc-900"
-      >
+      <div className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 dark:border-zinc-700">
         <Logo collapsed={isCollapsed ?? false} />
         <button
           className="text-xl p-0 rounded-md"

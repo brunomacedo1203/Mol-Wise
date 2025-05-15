@@ -11,7 +11,7 @@ export default function Header(props: HeaderProps) {
   const subtitle = useSubtitle();
   return (
     <div
-      className={`flex flex-col justify-center px-5 border-b border-zinc-400 dark:border-zinc-700 mb-2 shadow-md bg-white dark:bg-zinc-900 ${
+      className={`flex flex-col justify-center px-5 border-b border-zinc-400 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-900 ${
         props.className ?? ""
       }`}
     >

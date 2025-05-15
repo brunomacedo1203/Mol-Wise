@@ -126,7 +126,7 @@ dark:bg-zinc-900"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by symbol or name (EN/PT)..."
-          className="w-full px-3 py-2 border border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base text-black bg-white dark:text-white dark:bg-black"
+          className="w-full px-3 py-1 border border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base text-black bg-white dark:text-white dark:bg-black"
         />
       </div>
       <div

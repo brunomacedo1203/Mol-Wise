@@ -22,57 +22,58 @@ if (!defaultElement)
   throw new Error("Elemento padrão (Hidrogênio) não encontrado!");
 
 export default function PeriodicTableCards() {
-  // Estado agora é sempre um elemento, nunca null
   const [selectedElement, setSelectedElement] = useState<Element>(
     defaultElement!
   );
   const matrix = generatePeriodicTableMatrix();
 
   return (
-    <div className="relative overflow-x-auto dark:bg-black dark:text-white">
-      {/* Renderiza os números das colunas (grupos) no topo da tabela */}
-      <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px]">
-        {Array.from({ length: 18 }, (_, i) => (
-          <div
-            key={`colnum-${i}`}
-            className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100 dark:bg-zinc-800 dark:text-white"
-          >
-            {i + 1}
-          </div>
-        ))}
-      </div>
+    <div className="relative overflow-x-auto w-full dark:bg-zinc-800 dark:text-white">
+      <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-4 relative">
+        {/* Details Panel*/}
+        <div className="absolute top-8 left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
+          <ElementDetailsPanel element={selectedElement} />
+        </div>
 
-      {/* Painel sempre visível */}
-      <div className="absolute left-[22%] top-9 z-50 w-[500px] flex justify-center">
-        <ElementDetailsPanel element={selectedElement} />
-      </div>
-      {/* Grid principal da tabela periódica */}
-      <div className="grid grid-cols-[repeat(18,80px)] gap-0 min-w-[1440px] mt-4">
-        {matrix.flat().map((element, idx) =>
-          // Renderiza o card de legenda no canto inferior esquerdo
-          isLegendCard(element) ? (
-            <LegendCard key={`legend-${idx}`} />
-          ) : // Renderiza o card de lantanídeos na posição apropriada
-          isLanthanidesLabel(element) ? (
-            <LanthanidesLabelCard key={`lanthanides-${idx}`} />
-          ) : // Renderiza o card de actinídeos na posição apropriada
-          isActinidesLabel(element) ? (
-            <ActinidesLabelCard key={`actinides-${idx}`} />
-          ) : // Não renderiza nada para placeholders de legenda
-          isLegendPlaceholder(element) ? null : isElementCard(element) ? ( // Renderiza o card de elemento químico padrão
-            <ElementCardWrapper
-              key={element.atomicNumber}
-              element={element}
-              setSelectedElement={setSelectedElement}
-            />
-          ) : (
-            // Renderiza um espaço vazio para células sem conteúdo
+        {/* Column numbers */}
+        <div className="grid grid-cols-[repeat(18,80px)] gap-0">
+          {Array.from({ length: 18 }, (_, i) => (
             <div
-              key={`empty-${idx}`}
-              className="w-[80px] h-[80px] dark:bg-zinc-800"
-            />
-          )
-        )}
+              key={`colnum-${i}`}
+              className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100 dark:bg-zinc-800 dark:text-white"
+            >
+              {i + 1}
+            </div>
+          ))}
+        </div>
+
+        {/* Periodic table */}
+        <div className="grid grid-cols-[repeat(18,80px)] gap-0">
+          {matrix
+            .flat()
+            .map((element, idx) =>
+              isLegendCard(element) ? (
+                <LegendCard key={`legend-${idx}`} />
+              ) : isLanthanidesLabel(element) ? (
+                <LanthanidesLabelCard key={`lanthanides-${idx}`} />
+              ) : isActinidesLabel(element) ? (
+                <ActinidesLabelCard key={`actinides-${idx}`} />
+              ) : isLegendPlaceholder(element) ? null : isElementCard(
+                  element
+                ) ? (
+                <ElementCardWrapper
+                  key={element.atomicNumber}
+                  element={element}
+                  setSelectedElement={setSelectedElement}
+                />
+              ) : (
+                <div
+                  key={`empty-${idx}`}
+                  className="w-[80px] h-[80px] dark:bg-zinc-800"
+                />
+              )
+            )}
+        </div>
       </div>
     </div>
   );

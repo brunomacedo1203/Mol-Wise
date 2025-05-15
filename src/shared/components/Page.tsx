@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Header from "@/shared/components/Header";
 import Content from "@/shared/components/Content";
@@ -22,10 +23,10 @@ export default function Page(props: PageProps) {
   if (collapsed === undefined) return null;
 
   return (
-    <div className="flex h-screen bg-zinc-100 dark:bg-zinc-700 dark:border-zinc-700">
+    <div className="flex h-screen bg-zinc-100 dark:bg-zinc-800">
       <SideArea
         title="Menu"
-        bgClass="bg-zinc-150 dark:bg-zinc-900"
+        bgClass="bg-zinc-800 dark:bg-zinc-900"
         collapsed={collapsed}
         onToggleCollapsed={toggleCollapsed}
       >
