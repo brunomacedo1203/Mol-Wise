@@ -6,7 +6,7 @@ const formulas = [
   { label: "CH₃", value: "CH3" },
   { label: "CH₂", value: "CH2" },
   { label: "CH", value: "CH" },
-  { label: "NO₃", value: "NO3" },
+  { label: "NH₂", value: "NH2" },
   { label: "SO₄", value: "SO4" },
   { label: "PO₄", value: "PO4" },
   { label: "CO₃", value: "CO3" },
@@ -18,12 +18,12 @@ export default function FormulasBtn({
   onFormulaClick?: (value: string) => void;
 }) {
   return (
-    <div className="flex gap-1 rounded-lg px-2 py-2 shadow-inner justify-center flex-wrap">
+    <div className="flex gap-2 justify-center flex-wrap py-2">
       {formulas.map((f) => (
         <KeyboardBtn
           key={f.label}
           onClick={() => onFormulaClick?.(f.value)}
-          className="!w-14 font-sans text-xl"
+          className="!w-14 !h-12 text-lg"
         >
           {f.label}
         </KeyboardBtn>
