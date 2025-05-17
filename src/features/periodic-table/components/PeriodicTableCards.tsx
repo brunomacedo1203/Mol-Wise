@@ -28,7 +28,7 @@ export default function PeriodicTableCards() {
   const matrix = generatePeriodicTableMatrix();
 
   return (
-    <div className="relative overflow-x-auto w-full dark:bg-zinc-800 dark:text-white">
+    <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-4 relative">
         {/* Details Panel*/}
         <div className="absolute top-8 left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
@@ -40,7 +40,7 @@ export default function PeriodicTableCards() {
           {Array.from({ length: 18 }, (_, i) => (
             <div
               key={`colnum-${i}`}
-              className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100 dark:bg-zinc-800 dark:text-white"
+              className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100 dark:bg-neutral-950 dark:text-white"
             >
               {i + 1}
             </div>
@@ -69,7 +69,7 @@ export default function PeriodicTableCards() {
               ) : (
                 <div
                   key={`empty-${idx}`}
-                  className="w-[80px] h-[80px] dark:bg-zinc-800"
+                  className="w-[80px] h-[80px] dark:bg-neutral-950"
                 />
               )
             )}

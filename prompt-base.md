@@ -1,4 +1,4 @@
-# 🧠 Prompt base para o projeto Mol Wise 
+# 🧠 Prompt base para o projeto Mol Wise
 
 Olá! Este chat faz parte do desenvolvimento de um projeto chamado **Mol Wise**, uma aplicação web educacional voltada para o ensino e estudo de **Química**, especialmente para estudantes e professores.
 
@@ -10,7 +10,6 @@ Recupera o histórico de conversa sempre que for necessário e atualize para daq
 Eu uso o sistema operacional Windows, então todos os comandos neste projeto devem ser escritos com base nos comandos do PowerShell.
 Sempre que eu te pedir uma sugestão de commit para atualizar o meu repositório, você vai usar o padrão Conventional Commits em inglês.
 Sempre que eu te pedir sugestão de nome para uma nova branch, você vai usar o padrão Conventional de nome de branchs.
-
 
 ## ✅ Stack e tecnologias
 
@@ -112,8 +111,7 @@ src/
 │       ├── Content.tsx
 │       ├── Footer.tsx
 │       ├── FormulasBtn.tsx
-│       ├── Header.tsx
-│       ├── InputFormula.tsx
+│       ├── Header.tsx│
 │       ├── Keyboard.tsx
 │       ├── KeyboardBtn.tsx
 │       ├── KeyboardCalculate.tsx
@@ -132,6 +130,7 @@ src/
 
 Criar uma aplicação educacional interativa com ferramentas úteis para Química.  
 Funcionalidades atuais:
+
 - ✅ Tabela periódica com busca por símbolo ou nome
 - ✅ Calculadora de massa molar com teclado interativo
 
@@ -157,5 +156,3 @@ Funcionalidades futuras: balanceador de equações, simuladores, experimentos vi
 - ❌ Imports relativos quebrados (use sempre alias `@/`)
 
 ---
-
-

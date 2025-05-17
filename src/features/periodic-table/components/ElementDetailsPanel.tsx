@@ -90,7 +90,7 @@ export default function ElementDetailsPanel({
       label: "Molar mass",
       value:
         elementToShow.molarMass !== undefined
-          ? Number(elementToShow.molarMass).toFixed(3)
+          ? `${Number(elementToShow.molarMass).toFixed(2)} g/mol`
           : undefined,
     },
     { label: "Category", value: elementToShow.category },
@@ -119,7 +119,7 @@ dark:bg-zinc-900"
       {/* Campo de pesquisa no topo */}
       <div
         className="w-full px-4 pt-2 pb-2 bg-white border-b border-cyan-100 dark:border-zinc-700 
-dark:bg-zinc-900"
+        dark:bg-neutral-900/95"
       >
         <input
           type="text"
@@ -131,7 +131,7 @@ dark:bg-zinc-900"
       </div>
       <div
         className="flex flex-row flex-1 overflow-hidden dark:border-zinc-700 
-dark:bg-zinc-900 "
+        dark:bg-neutral-900/95 "
       >
         {/* Coluna do símbolo */}
         <div
@@ -148,7 +148,7 @@ dark:bg-zinc-900 "
         {/* Coluna das informações */}
         <div
           className="flex-1 flex flex-col justify-center px-4 py-2 text-zinc-800 text-[15px] dark:border-zinc-700 
-dark:bg-zinc-900 dark:text-zinc-100"
+          dark:bg-neutral-900/95 dark:text-zinc-100"
         >
           <ul className="flex flex-col gap-y-0 leading-tight">
             {fields.map(

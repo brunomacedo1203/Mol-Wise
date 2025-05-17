@@ -20,7 +20,7 @@ export default function SingleCardPeriodicTable({
   return (
     <div
       data-columm-number={showColummNumber}
-      className={`${columnNumberClass} relative w-[80px] h-[80px] border-2 border-black bg-gray-100 dark:bg-gray-800 dark:border-white flex flex-col items-center justify-center text-center overflow-hidden text-xs`}
+      className={`${columnNumberClass} relative w-[80px] h-[80px] border-2 border-black bg-gray-100 dark:bg-neutral-900/95 dark:border-white flex flex-col items-center justify-center text-center overflow-hidden text-xs`}
     >
       <span className="absolute top-0.5 left-1 text-black dark:text-white text-xs font-bold">
         {atomicNumber}

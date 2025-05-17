@@ -22,14 +22,11 @@ const MolecularFormulaInput = ({
   const [isFocused, setIsFocused] = useState(false);
   const [cursorVisible, setCursorVisible] = useState(true);
 
-  // Efeito para piscar o cursor
   useEffect(() => {
     if (!isFocused) return;
-
     const interval = setInterval(() => {
       setCursorVisible((prev) => !prev);
-    }, 530); // Taxa de piscada padrão para cursores
-
+    }, 530);
     return () => clearInterval(interval);
   }, [isFocused]);
 
@@ -38,14 +35,11 @@ const MolecularFormulaInput = ({
       if (contentRef.current) {
         const formatted = formatWithSub(rawText);
         contentRef.current.innerHTML = formatted;
-
-        // Adiciona o cursor apenas quando estiver focado
         if (isFocused) {
           const cursorSpan = document.createElement("span");
           cursorSpan.className = cursorVisible
             ? "inline-block w-px h-5 bg-black dark:bg-white align-middle ml-px"
             : "inline-block w-px h-5 bg-transparent align-middle ml-px";
-
           contentRef.current.appendChild(cursorSpan);
         }
       }
@@ -84,19 +78,17 @@ const MolecularFormulaInput = ({
   };
 
   const handleContainerClick = () => {
-    // Foca o input quando o usuário clica na área do container
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
 
-  // Apenas mostre o placeholder se NÃO estiver focado E o valor estiver vazio
   const shouldShowPlaceholder = !isFocused && (!value || value.length === 0);
 
   return (
     <div className="w-full">
       <div
-        className="relative w-full min-h-[2.5rem] max-h-32"
+        className="relative w-full min-h-[3rem] max-h-32"
         onClick={handleContainerClick}
       >
         <input
@@ -113,16 +105,25 @@ const MolecularFormulaInput = ({
         />
         <div
           ref={contentRef}
-          className={`molecular-formula-input border ${
-            errorMessage ? "border-red-500" : "border-gray-300"
-          } rounded pt-1.5 pb-1.4 px-2 text-gray-900 dark:text-white text-xl min-h-[2.5rem] max-h-48 cursor-text transition-none whitespace-pre-wrap break-words overflow-y-auto ${
-            isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""
-          }`}
+          className={`molecular-formula-input border 
+        ${
+          errorMessage
+            ? "border-red-500 dark:border-red-400"
+            : "border-gray-300 dark:border-white/20"
+        } 
+        rounded-xl pt-2 pb-2 px-3 text-gray-900 dark:text-white 
+        bg-white dark:bg-white/5
+        text-xl min-h-[3rem] max-h-48 cursor-text
+        transition-all whitespace-pre-wrap break-words overflow-y-auto
+        ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
+      `}
         />
         {shouldShowPlaceholder && (
           <span
-            className={`absolute inset-0 w-full h-full flex items-start pl-2 pt-2 pointer-events-none select-none text-xl font-sans whitespace-pre-wrap break-words ${
-              errorMessage ? "text-red-500" : "text-gray-400"
+            className={`absolute inset-0 w-full h-full flex items-start pl-3 pt-3 pb-3 pointer-events-none select-none text-xl font-sans whitespace-pre-wrap break-words ${
+              errorMessage
+                ? "text-red-500 dark:text-red-400"
+                : "text-gray-400 dark:text-white/40"
             }`}
           >
             {errorMessage || "Ex: Al, H₂O..."}
@@ -130,7 +131,7 @@ const MolecularFormulaInput = ({
         )}
       </div>
       <div
-        className="result-html text-blue-600 text-left text-lg min-h-8 mt-3 -mb-2 w-full overflow-hidden break-words"
+        className="result-html text-blue-600 dark:text-blue-400 text-left text-lg min-h-8 mt-3 -mb-2 w-full overflow-hidden break-words"
         style={{ wordWrap: "break-word", hyphens: "auto" }}
         dangerouslySetInnerHTML={
           resultHtml ? { __html: resultHtml } : undefined

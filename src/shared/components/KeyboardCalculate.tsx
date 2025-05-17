@@ -1,40 +1,33 @@
-"use client";
-import React from "react";
 import Keyboard from "@/shared/components/Keyboard";
 import FormulasBtn from "@/shared/components/FormulasBtn";
 import OperatorsBtn from "@/shared/components/OperatorsBtn";
 
 interface KeyboardCalculateProps {
+  onKeyPress: (key: string) => void;
   onFormulaClick: (value: string) => void;
   onReset: () => void;
+  onParenthesis: (paren: string) => void;
   onCalculate: () => void;
   onBackspace: () => void;
-  onKeyPress: (key: string) => void;
-  onParenthesis: (paren: string) => void;
 }
 
 export default function KeyboardCalculate({
+  onKeyPress,
   onFormulaClick,
   onReset,
+  onParenthesis,
   onCalculate,
   onBackspace,
-  onKeyPress,
-  onParenthesis,
 }: KeyboardCalculateProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col items-center w-full gap-1 py-2">
+      <Keyboard onKeyPress={onKeyPress} />
       <FormulasBtn onFormulaClick={onFormulaClick} />
       <OperatorsBtn
         onClear={onReset}
-        onBackspace={onBackspace}
-        onCalculate={onCalculate}
         onParenthesis={onParenthesis}
-      />
-      <Keyboard
-        onClear={onReset}
-        onBackspace={onBackspace}
         onCalculate={onCalculate}
-        onKeyPress={onKeyPress}
+        onBackspace={onBackspace}
       />
     </div>
   );
