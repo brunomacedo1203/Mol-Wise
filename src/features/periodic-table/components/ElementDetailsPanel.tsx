@@ -90,7 +90,7 @@ export default function ElementDetailsPanel({
       label: "Molar mass",
       value:
         elementToShow.molarMass !== undefined
-          ? Number(elementToShow.molarMass).toFixed(3)
+          ? `${Number(elementToShow.molarMass).toFixed(2)} g/mol`
           : undefined,
     },
     { label: "Category", value: elementToShow.category },

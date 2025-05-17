@@ -30,10 +30,16 @@ export default function OperatorsBtn({
       </KeyboardBtn>
       <KeyboardBtn
         onClick={onCalculate}
-        className="!bg-teal-500 !hover:bg-teal-700 text-white font-semibold w-12 h-10 px-20"
+        noDefaultHover
+        className="
+    bg-teal-500 hover:bg-teal-700 
+    dark:bg-teal-500 dark:hover:bg-teal-700
+    text-white font-semibold w-12 h-10 px-[60px]
+  "
       >
         CALCULATE
       </KeyboardBtn>
+
       <KeyboardBtn
         onClick={() => onParenthesis?.(")")}
         className="bg-white w-10 h-10"
