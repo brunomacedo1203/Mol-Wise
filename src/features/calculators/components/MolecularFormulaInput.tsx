@@ -112,7 +112,7 @@ const MolecularFormulaInput = ({
             : "border-gray-300 dark:border-white/20"
         } 
         rounded-xl pt-2 pb-2 px-3 text-gray-900 dark:text-white 
-        bg-white dark:bg-white/5
+        bg-white dark:bg-white/5 dark:border-white/20
         text-xl min-h-[3rem] max-h-48 cursor-text
         transition-all whitespace-pre-wrap break-words overflow-y-auto
         ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}

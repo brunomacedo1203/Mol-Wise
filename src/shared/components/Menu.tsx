@@ -11,14 +11,12 @@ export default function Menu({ collapsed, onSectionSelect }: MenuProps) {
   return (
     <div
       className={`
-            text-3xl pl-2 gap-2
-            flex flex-col justify-start items-start
-            ${collapsed ? "w-16" : "w-70"} 
-            text-zinc-900 
-            dark:text-zinc-100
-        
-            
-          `}
+    text-3xl pl-2 gap-2
+    flex flex-col justify-start items-start
+    ${collapsed ? "w-16" : "w-70"} 
+    text-zinc-900 
+    dark:text-zinc-100
+  `}
     >
       <div onClick={() => onSectionSelect && onSectionSelect("periodic")}>
         <MenuItem

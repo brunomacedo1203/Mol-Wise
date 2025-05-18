@@ -1,6 +1,6 @@
 import React from "react";
 import { useSubtitle } from "@/shared/contexts/SubtitleContext";
-import ThemeToggle from "./ThemeToggle";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export interface HeaderProps {
   title: string;
@@ -12,28 +12,25 @@ export default function Header(props: HeaderProps) {
   return (
     <div
       className={`
-    flex flex-col justify-center px-5
-    border-b border-zinc-400 dark:border-white/20
-    shadow-md bg-white dark:bg-neutral-900/90 dark:backdrop-blur-sm
-    ${props.className ?? ""}
-  `}
+        flex flex-col justify-center px-5
+        border-b border-zinc-400 dark:border-white/10
+        shadow-md bg-white dark:bg-neutral-900 dark:backdrop-blur-sm
+        ${props.className ?? ""}
+      `}
     >
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-black text-zinc-900 dark:text-zinc-100">
-          {props.title}
-        </h1>
-        <ThemeToggle />
+      <div className="flex justify-between items-start">
+        <div className="flex flex-col">
+          <h1 className="text-xl font-black text-zinc-900 dark:text-zinc-100 mb-0">
+            {props.title}
+          </h1>
+          {subtitle && (
+            <h2 className="text-sm text-zinc-600 dark:text-zinc-300 mt-0 mb-1">
+              {subtitle}
+            </h2>
+          )}
+        </div>
+        <ThemeToggle className="mt-2" />
       </div>
-      {subtitle && (
-        <h2 className="text-sm text-zinc-600 dark:text-zinc-300">{subtitle}</h2>
-      )}
     </div>
   );
 }
-
-/*
-dark:border-zinc-700 
-dark:bg-zinc-900
-dark:text-zinc-100
-
-*/
