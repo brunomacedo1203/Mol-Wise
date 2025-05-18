@@ -27,60 +27,58 @@ export default function CalculatorContainer({
 
   return (
     <Rnd
-      minWidth={450}
-      maxWidth={800}
-      defaultSize={{ width: 450, height: "auto" }}
+      minWidth={500}
+      maxWidth={900}
+      defaultSize={{ width: 750, height: "auto" }}
       enable={{ right: true }}
       bounds="#main-content-area"
       className="calculator-resizable"
     >
-      <div className="calculator-container p-5 pb-2 bg-white dark:bg-gray-800 rounded-2xl flex flex-col shadow-2xl border border-gray-350 dark:border-zinc-700">
-        <div className="mb-2 max-w-[450px] mx-auto w-full">
-          <h1 className="text-3xl font-semibold text-zinc-800 dark:text-zinc-100 mb-1 text-center">
+      <div
+        className="
+          p-2 
+          max-w-xl mx-auto
+          rounded-2xl 
+          border border-zinc-200 shadow-xl
+          bg-white dark:bg-neutral-800/90
+          flex flex-col
+          dark:border-white/20 dark:shadow-none
+        "
+      >
+        <div className="mb-3">
+          <h1 className="text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center ">
             {title}
           </h1>
           {subtitle && (
-            <span className="text-xs text-zinc-600 dark:text-zinc-300 text-center block w-full">
+            <span className="text-base text-zinc-600 dark:text-white/60 text-center block w-full">
               {subtitle}
             </span>
           )}
         </div>
 
-        <div className="calculator-input mb-2 max-w-[450px] mx-auto w-full">
-          {input}
-        </div>
+        <div className="mb-2">{input}</div>
 
-        {!collapsed && (
-          <div className="calculator-actions mb-2 max-w-[450px] mx-auto w-full">
-            {actions}
-          </div>
-        )}
+        {!collapsed && <div className="mb-2 w-full">{actions}</div>}
 
         {children}
 
         {errorMessage && (
-          <div className="flex justify-center items-center text-zinc-800 dark:text-red-300 text-center text-sm mb-2 max-w-[450px] mx-auto w-full">
-            <div className="error-message">{errorMessage}</div>
+          <div className="flex justify-center items-center text-red-500 dark:text-red-400 text-center text-sm mb-2">
+            {errorMessage}
           </div>
         )}
 
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center mt-2">
           <button
-            className="text-xs text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white flex items-center gap-1"
+            className="text-base text-zinc-500 dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-white flex items-center gap-1"
             onClick={() => setCollapsed((c) => !c)}
           >
             <IconKeyboard size={20} />
             <span>{collapsed ? "Show keyboard" : "Hide keyboard"}</span>
             {collapsed ? (
-              <IconChevronDown
-                className="text-zinc-600 dark:text-zinc-200"
-                size={20}
-              />
+              <IconChevronDown size={20} />
             ) : (
-              <IconChevronUp
-                className="text-zinc-600 dark:text-zinc-200"
-                size={16}
-              />
+              <IconChevronUp size={20} />
             )}
           </button>
         </div>

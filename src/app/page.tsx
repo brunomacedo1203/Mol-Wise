@@ -1,10 +1,10 @@
-import Page from "@/shared/components/Page";
+import Content from "@/shared/components/Content";
 import { SubtitleProvider } from "@/shared/contexts/SubtitleContext";
 
 export default function Home() {
   return (
     <SubtitleProvider subtitle="Choose a tool in the sidebar to get started.">
-      <Page title="Mol Wise">
+      <Content title="Mol Wise">
         <div className="flex-1 flex justify-center items-center w-full h-full">
           <div className="flex flex-col items-center justify-center">
             <h1 className="text-6xl font-bold mb-4 text-blue-700">
@@ -15,7 +15,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </Page>
+      </Content>
     </SubtitleProvider>
   );
 }
