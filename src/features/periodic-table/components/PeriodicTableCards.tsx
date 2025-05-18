@@ -30,7 +30,7 @@ export default function PeriodicTableCards() {
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-4 relative">
-        {/* Details Panel*/}
+        {/* Details Panel */}
         <div className="absolute top-8 left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
           <ElementDetailsPanel element={selectedElement} />
         </div>

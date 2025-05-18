@@ -12,13 +12,14 @@ export default function MenuItem(props: MenuItemProps) {
     <Link
       href={props.url}
       className={`
-        flex items-center gap-4 
-        text-base w-full px-2 py-2 rounded-md
-        hover:bg-zinc-300
-        hover:rounded-lg
-     `}
+      flex items-center gap-4 
+      text-base w-full px-2 py-2 rounded-md
+      transition-colors duration-150
+      hover:bg-zinc-300 hover:rounded-lg
+      dark:hover:bg-white/10
+    `}
     >
-      <span> {props.icone}</span>
+      <span>{props.icone}</span>
       <span>{props.label}</span>
     </Link>
   );

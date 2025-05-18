@@ -10,15 +10,20 @@ export default function Logo({ collapsed, onClick }: LogoProps) {
   return (
     <Link
       href="/"
-      className="text-xs text-zinc-600 hover:text-zinc-900 flex items-center gap-1"
+      className="flex items-center justify-center gap-2 h-14 w-full select-none group"
       onClick={onClick}
+      tabIndex={-1}
     >
       <span
-        className={`text-lm font-black text-xl ${
-          collapsed ? "hidden" : "block"
-        } bg-gradient-to-r from-blue-600 to-green-600 text-transparent bg-clip-text`}
+        className={`
+          font-extrabold text-2xl tracking-tight
+          bg-gradient-to-r from-blue-600 to-emerald-500
+          text-transparent bg-clip-text
+          transition-all duration-300
+          ${collapsed ? "hidden" : "block"}
+        `}
       >
-        Mol Wise
+        Mol&nbsp;Wise
       </span>
     </Link>
   );

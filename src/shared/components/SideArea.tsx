@@ -32,9 +32,11 @@ export default function SideArea({
 
   return (
     <aside
-      className={`flex flex-col gap-5 custom-shadow  ${
-        isCollapsed ? "w-16" : "w-64 min-w-64"
-      } bg-zinc-100 dark:bg-neutral-950 border-r border-zinc-300 dark:border-zinc-900 shadow-md ${className}`}
+      className={`flex flex-col gap-5 custom-shadow  
+    ${isCollapsed ? "w-16" : "w-64 min-w-64"}
+    bg-zinc-100 dark:bg-neutral-900 
+    border-r border-zinc-300 dark:border-white/10
+    shadow-md ${className}`}
     >
       <div className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 dark:border-zinc-700">
         <Logo collapsed={isCollapsed ?? false} />
