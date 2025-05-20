@@ -22,7 +22,7 @@ export default function Menu({ collapsed, onSectionSelect }: MenuProps) {
         <MenuItem
           icone={<IconHospital />}
           label={collapsed ? "" : "Periodic Table"}
-          url="/PeriodicTable"
+          url="/periodicTable"
         />
       </div>
 
@@ -36,7 +36,7 @@ export default function Menu({ collapsed, onSectionSelect }: MenuProps) {
         <MenuItem
           icone={<IconScale />}
           label={collapsed ? "" : "Molar Mass calculator"}
-          url="/MolarMassCalculator"
+          url="/molarMassCalculator"
         />
       </div>
       {/* <div onClick={() => onSectionSelect && onSectionSelect("calculator")}> 

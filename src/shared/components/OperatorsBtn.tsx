@@ -32,9 +32,9 @@ export default function OperatorsBtn({
         onClick={onCalculate}
         noDefaultHover
         className="
-    bg-teal-500 hover:bg-teal-700 
+    !bg-teal-400 hover:!bg-teal-600 
     dark:bg-teal-500 dark:hover:bg-teal-700
-    text-white font-semibold w-12 h-10 px-[70px]
+    text-black font-semibold w-12 h-10 px-[70px]
   "
       >
         CALCULATE
