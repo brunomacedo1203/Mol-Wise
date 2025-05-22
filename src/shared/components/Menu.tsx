@@ -21,27 +21,33 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
   const pathname = usePathname();
   const { addCalculator } = useCalculatorInstances();
 
-  // Para animação dos submenus
+  // Animação rápida e suave para submenu
   const submenuVariants = {
-    open: { height: "auto", opacity: 1 },
-    closed: { height: 0, opacity: 0, overflow: "hidden" },
+    open: {
+      opacity: 1,
+      display: "block",
+      transition: { duration: 0.12, ease: "easeOut" },
+    },
+    closed: {
+      opacity: 0,
+      transitionEnd: { display: "none" },
+      transition: { duration: 0.08, ease: "easeIn" },
+    },
   };
 
   return (
     <motion.nav
       className={cn(
-        "sidebar relative flex flex-col h-full border-r",
+        "sidebar relative flex flex-col h-full",
         "bg-zinc-100 dark:bg-neutral-900",
-
         collapsed ? "w-16" : "w-60"
       )}
     >
-      {/* Periodic Table (Tabela Periódica) */}
-
+      {/* Periodic Table */}
       <Link
         href="/periodicTable"
         className={cn(
-          "flex items-center gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition",
+          "flex items-center gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800",
           pathname === "/periodicTable" && "bg-zinc-100 dark:bg-zinc-900"
         )}
       >
@@ -49,14 +55,14 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
         {!collapsed && <span className="text-base">Periodic Table</span>}
       </Link>
 
-      <ScrollArea className="flex-1">
+      <ScrollArea className="flex-1 scrollbar-hide">
         <ul className="flex flex-col pt-4">
           {/* Calculators Accordion */}
           <li>
             <button
               onClick={() => setCalculatorsOpen((open) => !open)}
               className={cn(
-                "flex items-center w-full gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition mt-1",
+                "flex items-center w-full gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 mt-1",
                 calculatorsOpen && "bg-zinc-100 dark:bg-zinc-900"
               )}
               aria-expanded={calculatorsOpen}
@@ -64,7 +70,7 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
               <Calculator className="w-5 h-5" />
               {!collapsed && (
                 <>
-                  <span className="text-base flex-1">Calculators</span>
+                  <span className="text-base">Calculators</span>
                   {calculatorsOpen ? (
                     <ChevronUp className="w-4 h-4" />
                   ) : (
@@ -73,35 +79,42 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
                 </>
               )}
             </button>
-            {/* Submenu */}
-            <motion.ul
+            {/* Submenu destacado */}
+            <motion.div
               variants={submenuVariants}
               initial="closed"
               animate={calculatorsOpen && !collapsed ? "open" : "closed"}
-              className="pl-7 pr-2"
+              className={cn(
+                "ml-6 mt-1",
+                // O submenu só aparece quando aberto e não está colapsado
+                calculatorsOpen && !collapsed ? "block" : "hidden"
+              )}
             >
-              {/* Só uma calculadora agora, mas facilmente extensível */}
-              <li>
-                <button
-                  onClick={() => {
-                    if (pathname === "/calculators") {
-                      addCalculator("molar-mass");
-                    } else {
-                      router.push("/calculators?open=molar-mass");
-                    }
-                  }}
-                  className="flex items-center gap-2 w-full px-2 py-2 rounded-md text-sm hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1 "
-                >
-                  <FlaskConical className="w-4 h-4" />
-                  Molar Mass Calculator
-                </button>
-              </li>
-            </motion.ul>
+              <div className="rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[210px]">
+                <ul className="p-1">
+                  <li>
+                    <button
+                      onClick={() => {
+                        if (pathname === "/calculators") {
+                          addCalculator("molar-mass");
+                        } else {
+                          router.push("/calculators?open=molar-mass");
+                        }
+                      }}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
+                    >
+                      <FlaskConical className="w-4 h-4" />
+                      Molar Mass Calculator
+                    </button>
+                  </li>
+                  {/* Adicione outros calculators aqui */}
+                </ul>
+              </div>
+            </motion.div>
           </li>
         </ul>
       </ScrollArea>
       {/* Footer ou extras */}
-      {/* ... */}
     </motion.nav>
   );
 }

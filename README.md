@@ -1,6 +1,6 @@
 # Mol Wise
 
-Uma aplicação web moderna para cálculos e consultas em química, incluindo uma tabela periódica interativa e calculadora de massa molar.
+Uma aplicação web moderna para cálculos e consultas em química, incluindo uma tabela periódica interativa e **múltiplas calculadoras químicas instanciáveis**.
 
 ## 🚀 Funcionalidades
 
@@ -22,6 +22,14 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 - Exibição formatada de fórmulas com subíndices
 - Tratamento de erros com mensagens em português
 
+### 🆕 Página de Calculadoras (Multi-instância)
+
+- **Abra múltiplas instâncias** da calculadora de massa molar ao mesmo tempo na página `/calculators`
+- Menu lateral moderno com submenu dropdown flutuante e destaque visual
+- Gerenciamento global das instâncias das calculadoras (abrir, fechar, múltiplas ao mesmo tempo)
+- Estrutura pronta para adição de novas calculadoras químicas, como concentração, diluição, estequiometria, etc.
+- Layout responsivo, consistente em todos os temas (claro e escuro)
+
 ## 🛠️ Tecnologias
 
 - React.js
@@ -29,6 +37,9 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 - TypeScript
 - Tailwind CSS
 - React Hooks
+- Context API
+- Framer Motion (animações do menu/submenu)
+- [shadcn/ui](https://ui.shadcn.com/) (ScrollArea e outros utilitários de UI)
 
 ## 💻 Pré-requisitos
 
@@ -39,25 +50,25 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 
 1. Clone o repositório:
 
-```bash
-git clone https://github.com/seu-usuario/mol-wise.git
-```
+   ```bash
+   git clone https://github.com/seu-usuario/mol-wise.git
+   ```
 
 2. Instale as dependências:
 
-```bash
-npm install
-# ou
-yarn install
-```
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
 
 3. Inicie o servidor de desenvolvimento:
 
-```bash
-npm run dev
-# ou
-yarn dev
-```
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
 
 4. Acesse `http://localhost:3000` no seu navegador
 
@@ -69,11 +80,15 @@ A aplicação é totalmente responsiva, adaptando-se a diferentes tamanhos de te
 - Tablet (1024px-1280px): Informações reduzidas
 - Mobile (<1024px): Visualização simplificada com scroll horizontal
 
+## 🎨 Modo Escuro
+
+- Interface adaptada para dark mode, incluindo menu lateral, caixas de diálogo e dropdowns.
+
 ## 🤝 Contribuindo
 
 1. Faça um fork do projeto
 2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+3. Commit suas mudanças (`git commit -m 'feat: add AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
@@ -83,8 +98,15 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## ✨ Próximos Passos
 
-- [ ] Adicionar mais calculadoras químicas
-- [ ] Implementar modo escuro
+- [x] Permitir múltiplas instâncias da calculadora de massa molar (Multi-instância)
+- [x] Implementar modo escuro
+- [x] Menu lateral com submenu dropdown flutuante
+- [ ] Adicionar mais calculadoras químicas (concentração, diluição, etc.)
 - [ ] Adicionar informações detalhadas dos elementos
 - [ ] Suporte para múltiplos idiomas
-- [ ] Adicionar animações e transições
+- [ ] Adicionar animações e transições em mais componentes
+- [ ] Melhorar acessibilidade
+
+---
+
+**Sinta-se à vontade para sugerir melhorias ou contribuir!**
