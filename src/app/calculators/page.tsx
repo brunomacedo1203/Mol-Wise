@@ -5,10 +5,7 @@ import { useCalculatorInstances } from "@/features/calculators/contexts/Calculat
 import MolarMassCalculator from "@/features/calculators/components/MolarMassCalculator";
 
 type CalculatorType = "molar-mass";
-interface CalculatorInstance {
-  id: number;
-  type: CalculatorType;
-}
+
 function CalculatorRenderer({
   type,
   onClose,
