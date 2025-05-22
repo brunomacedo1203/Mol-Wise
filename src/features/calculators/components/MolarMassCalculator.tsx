@@ -4,7 +4,14 @@ import MolecularFormulaInput from "@/features/calculators/components/MolecularFo
 import CalculatorContainer from "./CalculatorContainer";
 import KeyboardCalculate from "@/features/calculators/components/KeyboardCalculate";
 
-export default function MolarMassCalculator() {
+// Adicione o tipo da prop onClose:
+interface MolarMassCalculatorProps {
+  onClose?: () => void;
+}
+
+export default function MolarMassCalculator({
+  onClose,
+}: MolarMassCalculatorProps) {
   const {
     formula,
     handleFormulaChange,
@@ -54,6 +61,7 @@ export default function MolarMassCalculator() {
           onBackspace={backspace}
         />
       }
+      onClose={onClose} // <<<<<<<< repassando a prop!
     />
   );
 }
