@@ -1,0 +1,31 @@
+{
+  "common": {
+    "welcome": "Bem-vindo",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "chooseTool": "Escolha uma ferramenta na barra lateral para começar.",
+    "description": "Este aplicativo foi projetado para ajudar estudantes e professores com cálculos químicos, visualização de dados e organização de conteúdo."
+  },
+  "navigation": {
+    "home": "Início",
+    "about": "Sobre",
+    "contact": "Contato",
+    "calculators": "Calculadoras",
+    "periodicTable": "Tabela Periódica"
+  },
+  "home": {
+    "title": "Mol Wise",
+    "welcome": "Bem-vindo ao Mol Wise!",
+    "subtitle": "Escolha uma ferramenta na barra lateral para começar."
+  },
+  "calculators": {
+    "title": "Calculadoras",
+    "subtitle": "Abra uma ou mais calculadoras no menu.",
+    "molarMass": "Massa Molar"
+  },
+  "periodicTable": {
+    "title": "Tabela Periódica",
+    "subtitle": "Passe o mouse sobre um elemento para ver detalhes"
+  }
+} 

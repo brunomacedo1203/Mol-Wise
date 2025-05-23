@@ -14,12 +14,15 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import { useParams } from "next/navigation";
 
 export default function Menu({ collapsed }: { collapsed: boolean }) {
   const [calculatorsOpen, setCalculatorsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
   const { addCalculator } = useCalculatorInstances();
+  const locale = params.locale as string;
 
   // Animação rápida e suave para submenu
   const submenuVariants = {
@@ -45,10 +48,11 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
     >
       {/* Periodic Table */}
       <Link
-        href="/periodicTable"
+        href={`/${locale}/periodicTable`}
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800",
-          pathname === "/periodicTable" && "bg-zinc-100 dark:bg-zinc-900"
+          pathname === `/${locale}/periodicTable` &&
+            "bg-zinc-100 dark:bg-zinc-900"
         )}
       >
         <Table2 className="w-5 h-5" />
@@ -95,10 +99,10 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
                   <li>
                     <button
                       onClick={() => {
-                        if (pathname === "/calculators") {
+                        if (pathname === `/${locale}/calculators`) {
                           addCalculator("molar-mass");
                         } else {
-                          router.push("/calculators?open=molar-mass");
+                          router.push(`/${locale}/calculators?open=molar-mass`);
                         }
                       }}
                       className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"

@@ -1,0 +1,29 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "chooseTool": "Choose a tool in the sidebar to get started.",
+    "description": "This application is designed to help students and teachers with chemical calculations, data visualization, and content organization."
+  },
+  "navigation": {
+    "home": "Home",
+    "calculators": "Calculators",
+    "periodicTable": "Periodic Table"
+  },
+  "home": {
+    "title": "Mol Wise",
+    "welcome": "Welcome to Mol Wise!",
+    "subtitle": "Choose a tool in the sidebar to get started."
+  },
+  "calculators": {
+    "title": "Calculators",
+    "subtitle": "Open one or more calculators from the menu.",
+    "molarMass": "Molar Mass"
+  },
+  "periodicTable": {
+    "title": "Periodic Table",
+    "subtitle": "Hover over an element to see details"
+  }
+} 
