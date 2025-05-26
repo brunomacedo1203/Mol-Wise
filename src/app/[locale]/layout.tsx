@@ -9,8 +9,23 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/shared/contexts/ThemeContext";
 import { CalculatorInstancesProvider } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Script para evitar flash de tema incorreto
+const themeScript = `
+  (function() {
+    try {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {}
+  })();
+`;
 
 // Função que informa ao Next.js quais locales devem ser pré-renderizados
 export function generateStaticParams() {
@@ -23,7 +38,8 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  const locale = params.locale;
+  // Aguarda a resolução do params
+  const { locale } = await Promise.resolve(params);
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
@@ -52,7 +68,8 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const locale = params.locale;
+  // Aguarda a resolução do params
+  const { locale } = await Promise.resolve(params);
 
   // Garante que o locale recebido é válido
   if (!hasLocale(routing.locales, locale)) {
@@ -63,7 +80,14 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale}>
+      <head>
+        <Script
+          id="theme-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider>
           <CalculatorInstancesProvider>
