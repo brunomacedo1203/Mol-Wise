@@ -100,7 +100,12 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
                     <button
                       onClick={() => {
                         if (pathname === `/${locale}/calculators`) {
-                          addCalculator("molar-mass");
+                          const position = {
+                            x: 100 + Math.random() * 100,
+                            y: 100 + Math.random() * 100,
+                            width: 750
+                          };
+                          addCalculator("molar-mass", position);
                         } else {
                           router.push(`/${locale}/calculators?open=molar-mass`);
                         }

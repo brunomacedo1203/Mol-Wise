@@ -3,9 +3,25 @@
 import React, { createContext, useContext, useState } from "react";
 
 type CalculatorType = "molar-mass";
+
+interface Position {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
+interface CalculatorState {
+  formula?: string;
+  result?: string | null;
+  isKeyboardVisible?: boolean;
+}
+
 interface CalculatorInstance {
   id: number;
   type: CalculatorType;
+  position?: Position;
+  state?: CalculatorState;
 }
 
 interface CalculatorInstancesProviderProps {
@@ -14,25 +30,94 @@ interface CalculatorInstancesProviderProps {
 
 const CalculatorInstancesContext = createContext<{
   calculators: CalculatorInstance[];
-  addCalculator: (type: CalculatorType) => void;
+  addCalculator: (type: CalculatorType, position?: Position) => void;
   removeCalculator: (id: number) => void;
-}>({ calculators: [], addCalculator: () => {}, removeCalculator: () => {} });
+  updateCalculator: (id: number, updates: Partial<CalculatorInstance>) => void;
+}>({ 
+  calculators: [], 
+  addCalculator: () => {}, 
+  removeCalculator: () => {},
+  updateCalculator: () => {} 
+});
 
 export const CalculatorInstancesProvider = ({
   children,
 }: CalculatorInstancesProviderProps) => {
-  const [calculators, setCalculators] = useState<CalculatorInstance[]>([]);
-  const nextId = React.useRef(1);
+  // Initialize nextId from localStorage or default to 1
+  const initialNextId = React.useRef(
+    typeof window !== 'undefined'
+      ? (() => {
+          const saved = localStorage.getItem('calculatorInstances');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            return parsed.nextId || 1;
+          }
+          return 1;
+        })()
+      : 1
+  );
 
-  const addCalculator = (type: CalculatorType) =>
-    setCalculators((prev) => [...prev, { id: nextId.current++, type }]);
+  // Initialize calculators from localStorage or empty array
+  const [calculators, setCalculators] = useState<CalculatorInstance[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('calculatorInstances');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return parsed.calculators || [];
+      }
+    }
+    return [];
+  });
 
-  const removeCalculator = (id: number) =>
-    setCalculators((prev) => prev.filter((calc) => calc.id !== id));
+  const addCalculator = (type: CalculatorType, position?: Position) => {
+    setCalculators((prev) => {
+      const newCalculators = [...prev, { 
+        id: initialNextId.current++, 
+        type,
+        position: position || { x: 100, y: 100 },
+        state: { formula: '', result: null, isKeyboardVisible: true }
+      }];
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('calculatorInstances', JSON.stringify({
+          calculators: newCalculators,
+          nextId: initialNextId.current
+        }));
+      }
+      return newCalculators;
+    });
+  };
+
+  const removeCalculator = (id: number) => {
+    setCalculators((prev) => {
+      const newCalculators = prev.filter((calc) => calc.id !== id);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('calculatorInstances', JSON.stringify({
+          calculators: newCalculators,
+          nextId: initialNextId.current
+        }));
+      }
+      return newCalculators;
+    });
+  };
+
+  const updateCalculator = (id: number, updates: Partial<CalculatorInstance>) => {
+    setCalculators((prev) => {
+      const newCalculators = prev.map(calc => 
+        calc.id === id ? { ...calc, ...updates } : calc
+      );
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('calculatorInstances', JSON.stringify({
+          calculators: newCalculators,
+          nextId: initialNextId.current
+        }));
+      }
+      return newCalculators;
+    });
+  };
 
   return (
     <CalculatorInstancesContext.Provider
-      value={{ calculators, addCalculator, removeCalculator }}
+      value={{ calculators, addCalculator, removeCalculator, updateCalculator }}
     >
       {children}
     </CalculatorInstancesContext.Provider>

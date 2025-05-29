@@ -3,23 +3,59 @@ import { useMolarMassCalculator } from "@/features/calculators/hooks/useMolarMas
 import MolecularFormulaInput from "@/features/calculators/components/MolecularFormulaInput";
 import CalculatorContainer from "./CalculatorContainer";
 import KeyboardCalculate from "@/features/calculators/components/KeyboardCalculate";
+import { useTranslations } from 'next-intl';
 
-// Adicione o tipo da prop onClose:
 interface MolarMassCalculatorProps {
+  id: number;
   onClose?: () => void;
+  initialPosition?: { x: number; y: number; width?: number };
+  onPositionChange?: (position: { x: number; y: number; width: number }) => void;
+  initialFormula?: string;
+  onFormulaChange?: (formula: string) => void;
+  initialResult?: string | null;
+  onResultChange?: (result: string | null) => void;
+  isKeyboardVisible?: boolean;
+  onKeyboardVisibilityChange?: (visible: boolean) => void;
 }
 
 export default function MolarMassCalculator({
+  id,
   onClose,
+  initialPosition,
+  onPositionChange,
+  initialFormula = '',
+  onFormulaChange,
+  initialResult = null,
+  onResultChange,
+  isKeyboardVisible = true,
+  onKeyboardVisibilityChange,
 }: MolarMassCalculatorProps) {
   const {
     formula,
-    handleFormulaChange,
+    handleFormulaChange: _handleFormulaChange,
     molarMass,
     errorMessage,
-    calculate,
-    reset,
-  } = useMolarMassCalculator();
+    calculate: _calculate,
+    reset: _reset,
+  } = useMolarMassCalculator(initialFormula, initialResult);
+
+  // Wrap calculate to notify parent
+  const calculate = () => {
+    _calculate();
+    onResultChange?.(molarMass);
+  };
+
+  // Wrap reset to notify parent
+  const reset = () => {
+    _reset();
+    onResultChange?.(null);
+  };
+
+  // Wrap handleFormulaChange to notify parent
+  const handleFormulaChange = (newFormula: string) => {
+    _handleFormulaChange(newFormula);
+    onFormulaChange?.(newFormula);
+  };
 
   const backspace = () => handleFormulaChange(formula.slice(0, -1));
 
@@ -38,10 +74,17 @@ export default function MolarMassCalculator({
     handleFormulaChange(formula + paren);
   }
 
+  const t = useTranslations('calculators.molarMass');
+
   return (
     <CalculatorContainer
-      title="Molar Mass Calculator"
-      subtitle="Enter a chemical formula or element symbol"
+      id={id}
+      title={t('title')}
+      subtitle={t('subtitle')}
+      initialPosition={initialPosition}
+      onPositionChange={onPositionChange}
+      isKeyboardVisible={isKeyboardVisible}
+      onKeyboardVisibilityChange={onKeyboardVisibilityChange}
       input={
         <MolecularFormulaInput
           value={formula}

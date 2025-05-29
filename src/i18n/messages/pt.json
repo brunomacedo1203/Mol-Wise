@@ -1,3 +1,5 @@
+ 
+
 {
   "common": {
     "welcome": "Bem-vindo",
@@ -5,14 +7,65 @@
     "error": "Erro",
     "success": "Sucesso",
     "chooseTool": "Escolha uma ferramenta na barra lateral para começar.",
-    "description": "Este aplicativo foi projetado para ajudar estudantes e professores com cálculos químicos, visualização de dados e organização de conteúdo."
+    "description": "Este aplicativo foi projetado para ajudar estudantes e professores com cálculos químicos, visualização de dados e organização de conteúdo.",
+    "actions": {
+      "calculate": "Calcular",
+      "reset": "Limpar",
+      "close": "Fechar",
+      "backspace": "Apagar"
+    },
+    "theme": {
+      "light": "Tema Claro",
+      "dark": "Tema Escuro",
+      "toggle": "Alternar tema"
+    },
+    "language": {
+      "en": "Inglês",
+      "pt": "Português",
+      "toggle": "Mudar idioma"
+    },
+    "accessibility": {
+      "formulaInput": "Entrada de fórmula química",
+      "showKeyboard": "Mostrar teclado",
+      "hideKeyboard": "Ocultar teclado"
+    },
+    "formulas": {
+      "common": "Fórmulas Comuns",
+      "examples": {
+        "CH3": "Metila",
+        "CH2": "Metileno",
+        "CH": "Metilidino",
+        "NO3": "Nitrato",
+        "SO4": "Sulfato",
+        "PO4": "Fosfato",
+        "CO3": "Carbonato"
+      }
+    },
+    "placeholders": {
+      "formulaExample": "Ex: Al, H₂O..."
+    },
+    "navigation": {
+      "menu": {
+        "title": "Menu",
+        "expand": "Expandir menu",
+        "collapse": "Recolher menu"
+      }
+    },
+    "footer": {
+      "contact": "Contato",
+      "developed": "Desenvolvido em {year}"
+    }
   },
   "navigation": {
     "home": "Início",
     "about": "Sobre",
     "contact": "Contato",
     "calculators": "Calculadoras",
-    "periodicTable": "Tabela Periódica"
+    "periodicTable": "Tabela Periódica",
+    "menu": {
+      "expand": "Expandir menu",
+      "collapse": "Recolher menu"
+    }
   },
   "home": {
     "title": "Mol Wise",
@@ -22,10 +75,197 @@
   "calculators": {
     "title": "Calculadoras",
     "subtitle": "Abra uma ou mais calculadoras no menu.",
-    "molarMass": "Massa Molar"
+    "molarMass": {
+      "title": "Calculadora de Massa Molar",
+      "subtitle": "Digite uma fórmula química ou símbolo do elemento",
+      "input": {
+        "placeholder": "Digite a fórmula (ex: H2O)",
+        "label": "Fórmula Química"
+      },
+      "keyboard": {
+        "calculate": "Calcular",
+        "reset": "Limpar",
+        "backspace": "Apagar",
+        "parentheses": "Adicionar Parênteses",
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado"
+      },
+      "result": {
+        "prefix": "A massa molar de",
+        "suffix": "é",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "A fórmula não pode estar vazia",
+        "invalidElement": "O símbolo \"{symbol}\" não foi encontrado",
+        "invalidFormula": "Fórmula química inválida",
+        "mismatchedParentheses": "Parênteses não correspondem na fórmula",
+        "generic": "Ocorreu um erro ao calcular a massa molar"
+      }
+    }
   },
   "periodicTable": {
     "title": "Tabela Periódica",
-    "subtitle": "Passe o mouse sobre um elemento para ver detalhes"
+    "subtitle": "Passe o mouse sobre um elemento para ver detalhes",
+    "element": {
+      "atomicNumber": "Número Atômico",
+      "symbol": "Símbolo",
+      "name": "Nome",
+      "atomicMass": "Massa Atômica",
+      "category": "Categoria",
+      "electronConfiguration": "Configuração Eletrônica",
+      "electronegativity": "Eletronegatividade",
+      "atomicRadius": "Raio Atômico",
+      "ionizationEnergy": "Energia de Ionização",
+      "electronAffinity": "Afinidade Eletrônica",
+      "oxidationStates": "Estados de Oxidação",
+      "standardState": "Estado Padrão",
+      "meltingPoint": "Ponto de Fusão",
+      "boilingPoint": "Ponto de Ebulição",
+      "density": "Densidade",
+      "yearDiscovered": "Ano da Descoberta",
+      "discoveredBy": "Descoberto Por",
+      "categories": {
+        "alkaliMetal": "Metal Alcalino",
+        "alkalineEarthMetal": "Metal Alcalino-Terroso",
+        "transitionMetal": "Metal de Transição",
+        "postTransitionMetal": "Metal Pós-Transição",
+        "metalloid": "Semimetal",
+        "nonmetal": "Não Metal",
+        "halogen": "Halogênio",
+        "nobleGas": "Gás Nobre",
+        "lanthanide": "Lantanídeo",
+        "actinide": "Actinídeo"
+      },
+      "standardStates": {
+        "solid": "Sólido",
+        "liquid": "Líquido",
+        "gas": "Gasoso"
+      },
+      "groups": {
+        "lanthanoid": "Lantanídeos",
+        "actinoid": "Actinídeos"
+      }
+    },
+    "elements": {
+      "H": "Hidrogênio",
+      "He": "Hélio",
+      "Li": "Lítio",
+      "Be": "Berílio",
+      "B": "Boro",
+      "C": "Carbono",
+      "N": "Nitrogênio",
+      "O": "Oxigênio",
+      "F": "Flúor",
+      "Ne": "Neônio",
+      "Na": "Sódio",
+      "Mg": "Magnésio",
+      "Al": "Alumínio",
+      "Si": "Silício",
+      "P": "Fósforo",
+      "S": "Enxofre",
+      "Cl": "Cloro",
+      "Ar": "Argônio",
+      "K": "Potássio",
+      "Ca": "Cálcio",
+      "Sc": "Escândio",
+      "Ti": "Titânio",
+      "V": "Vanádio",
+      "Cr": "Cromo",
+      "Mn": "Manganês",
+      "Fe": "Ferro",
+      "Co": "Cobalto",
+      "Ni": "Níquel",
+      "Cu": "Cobre",
+      "Zn": "Zinco",
+      "Ga": "Gálio",
+      "Ge": "Germânio",
+      "As": "Arsênio",
+      "Se": "Selênio",
+      "Br": "Bromo",
+      "Kr": "Criptônio",
+      "Rb": "Rubídio",
+      "Sr": "Estrôncio",
+      "Y": "Ítrio",
+      "Zr": "Zircônio",
+      "Nb": "Nióbio",
+      "Mo": "Molibdênio",
+      "Tc": "Tecnécio",
+      "Ru": "Rutênio",
+      "Rh": "Ródio",
+      "Pd": "Paládio",
+      "Ag": "Prata",
+      "Cd": "Cádmio",
+      "In": "Índio",
+      "Sn": "Estanho",
+      "Sb": "Antimônio",
+      "Te": "Telúrio",
+      "I": "Iodo",
+      "Xe": "Xenônio",
+      "Cs": "Césio",
+      "Ba": "Bário",
+      "La": "Lantânio",
+      "Ce": "Cério",
+      "Pr": "Praseodímio",
+      "Nd": "Neodímio",
+      "Pm": "Promécio",
+      "Sm": "Samário",
+      "Eu": "Európio",
+      "Gd": "Gadolínio",
+      "Tb": "Térbio",
+      "Dy": "Disprósio",
+      "Ho": "Hólmio",
+      "Er": "Érbio",
+      "Tm": "Túlio",
+      "Yb": "Itérbio",
+      "Lu": "Lutécio",
+      "Hf": "Háfnio",
+      "Ta": "Tântalo",
+      "W": "Tungstênio",
+      "Re": "Rênio",
+      "Os": "Ósmio",
+      "Ir": "Irídio",
+      "Pt": "Platina",
+      "Au": "Ouro",
+      "Hg": "Mercúrio",
+      "Tl": "Tálio",
+      "Pb": "Chumbo",
+      "Bi": "Bismuto",
+      "Po": "Polônio",
+      "At": "Astato",
+      "Rn": "Radônio",
+      "Fr": "Frâncio",
+      "Ra": "Rádio",
+      "Ac": "Actínio",
+      "Th": "Tório",
+      "Pa": "Protactínio",
+      "U": "Urânio",
+      "Np": "Neptúnio",
+      "Pu": "Plutônio",
+      "Am": "Amerício",
+      "Cm": "Cúrio",
+      "Bk": "Berquélio",
+      "Cf": "Califórnio",
+      "Es": "Einstênio",
+      "Fm": "Férmio",
+      "Md": "Mendelévio",
+      "No": "Nobélio",
+      "Lr": "Laurêncio",
+      "Rf": "Rutherfórdio",
+      "Db": "Dúbnio",
+      "Sg": "Seabórgio",
+      "Bh": "Bóhrio",
+      "Hs": "Hássio",
+      "Mt": "Meitnério",
+      "Ds": "Darmstádio",
+      "Rg": "Roentgênio",
+      "Cn": "Copernício",
+      "Nh": "Nihônio",
+      "Fl": "Fleróvio",
+      "Mc": "Moscóvio",
+      "Lv": "Livermório",
+      "Ts": "Tenesso",
+      "Og": "Oganessônio"
+    }
   }
 } 

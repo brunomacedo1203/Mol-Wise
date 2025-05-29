@@ -4,9 +4,26 @@ import { validateFormula, normalizeFormula } from "@/shared/utils/validateAndNor
 import { calculateMolarMassFromFormula } from "@/features/calculators/services/molarMass";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
-export function useMolarMassCalculator() {
-  const [formula, setFormula] = useState("");
-  const [molarMass, setMolarMass] = useState<string | null>(null);
+export function useMolarMassCalculator(
+  initialFormula: string = '',
+  initialResult: string | null = null
+) {
+  const [formula, setFormula] = useState(initialFormula);
+  const [molarMass, setMolarMass] = useState<string | null>(() => {
+    if (initialResult) return initialResult;
+    if (!initialFormula) return null;
+
+    const validationError = validateFormula(initialFormula);
+    if (validationError) return null;
+
+    const formattedFormula = normalizeFormula(initialFormula);
+    try {
+      const totalMolarMass = calculateMolarMassFromFormula(formattedFormula);
+      return `The molar mass of "${formatWithSub(formattedFormula)}" is: ${totalMolarMass.toFixed(2)} g/mol`;
+    } catch {
+      return null;
+    }
+  });
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Handler dedicado para mudança da fórmula

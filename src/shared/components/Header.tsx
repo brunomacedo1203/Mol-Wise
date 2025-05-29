@@ -2,6 +2,7 @@ import React from "react";
 import { useSubtitle } from "@/shared/contexts/SubtitleContext";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslations } from 'next-intl';
 
 export interface HeaderProps {
   title: string;

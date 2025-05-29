@@ -90,11 +90,11 @@ export default async function LocaleLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <CalculatorInstancesProvider>
-            <NextIntlClientProvider locale={locale}>
+          <NextIntlClientProvider locale={locale}>
+            <CalculatorInstancesProvider>
               {children}
-            </NextIntlClientProvider>
-          </CalculatorInstancesProvider>
+            </CalculatorInstancesProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>
