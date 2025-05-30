@@ -1,6 +1,6 @@
 import elementsData from "@/features/periodic-table/services/elementsData";
 
-export function calculateMolarMassFromFormula(formula: string): number {
+export function calculateMolarMassFromFormula(formula: string, t: (key: string, params?: any) => string): number {
   if (!formula || formula.trim() === "") {
     throw new Error("The formula cannot be empty");
   }
@@ -12,10 +12,10 @@ export function calculateMolarMassFromFormula(formula: string): number {
   // Remove estados físicos como (s), (l), (g), (aq)
   formula = formula.replace(/\([slgaq]\)/gi, "");
 
-  return parseFormulaWithParentheses(formula);
+  return parseFormulaWithParentheses(formula, t);
 }
 
-function parseFormulaWithParentheses(formula: string): number {
+function parseFormulaWithParentheses(formula: string, t: (key: string, params?: any) => string): number {
   let totalMolarMass = 0;
   let i = 0;
 
@@ -39,7 +39,7 @@ function parseFormulaWithParentheses(formula: string): number {
       }
       const hydratePart = formula.substring(start, i);
       
-      const hydrateMass = parseFormulaWithParentheses(hydratePart);
+      const hydrateMass = parseFormulaWithParentheses(hydratePart, t);
 
       totalMolarMass += hydrateMass * multiplier;
     } 
@@ -66,7 +66,7 @@ function parseFormulaWithParentheses(formula: string): number {
       }
 
       const mult = multiplier ? parseInt(multiplier, 10) : 1;
-      const subMass = parseFormulaWithParentheses(subFormula);
+      const subMass = parseFormulaWithParentheses(subFormula, t);
 
       totalMolarMass += subMass * mult;
       i = j;
@@ -91,7 +91,7 @@ function parseFormulaWithParentheses(formula: string): number {
 
       const elementData = elementsData.find(e => e.symbol === element);
       if (!elementData) {
-        throw new Error(`The symbol "${element}" was not found.`);
+        throw new Error(t('calculators.molarMass.errors.invalidElement', { symbol: element }));
       }
 
       totalMolarMass += elementData.molarMass * elementCount;
