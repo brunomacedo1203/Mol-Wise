@@ -1,19 +1,39 @@
 // Funções utilitárias para identificar tipos de cards na tabela periódica
 
 export function isLegendCard(element: unknown): element is { type: "legend" } {
-  return typeof element === "object" && element !== null && (element as any).type === "legend";
+  return (
+    typeof element === "object" &&
+    element !== null &&
+    'type' in element &&
+    element.type === "legend"
+  );
 }
 
 export function isLanthanidesLabel(element: unknown): element is { type: "lanthanides-label" } {
-  return typeof element === "object" && element !== null && (element as any).type === "lanthanides-label";
+  return (
+    typeof element === "object" &&
+    element !== null &&
+    'type' in element &&
+    element.type === "lanthanides-label"
+  );
 }
 
 export function isActinidesLabel(element: unknown): element is { type: "actinides-label" } {
-  return typeof element === "object" && element !== null && (element as any).type === "actinides-label";
+  return (
+    typeof element === "object" &&
+    element !== null &&
+    'type' in element &&
+    element.type === "actinides-label"
+  );
 }
 
 export function isLegendPlaceholder(element: unknown): element is { type: "legend-placeholder" } {
-  return typeof element === "object" && element !== null && (element as any).type === "legend-placeholder";
+  return (
+    typeof element === "object" &&
+    element !== null &&
+    'type' in element &&
+    element.type === "legend-placeholder"
+  );
 }
 
 export function isElementCard(element: unknown): element is {
@@ -26,6 +46,7 @@ export function isElementCard(element: unknown): element is {
   return (
     typeof element === "object" &&
     element !== null &&
-    typeof (element as any).atomicNumber === "number"
+    'atomicNumber' in element &&
+    typeof element.atomicNumber === "number"
   );
 }
