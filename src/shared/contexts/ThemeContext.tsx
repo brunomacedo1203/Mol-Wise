@@ -23,7 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       return window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
-    } catch (e) {
+    } catch {
       return "light";
     }
   });
@@ -37,8 +37,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       } else {
         document.documentElement.classList.remove("dark");
       }
-    } catch (e) {
-      console.error("Error updating theme:", e);
+    } catch (error) {
+      console.error("Error updating theme:", error);
     }
   }, [theme]);
 

@@ -1,6 +1,6 @@
 import elementsData from "@/features/periodic-table/services/elementsData";
 
-export function calculateMolarMassFromFormula(formula: string, t: (key: string, params?: any) => string): number {
+export function calculateMolarMassFromFormula(formula: string, t: (key: string, params?: Record<string, any> /* eslint-disable-line @typescript-eslint/no-explicit-any */) => string): number {
   if (!formula || formula.trim() === "") {
     throw new Error("The formula cannot be empty");
   }
@@ -15,7 +15,7 @@ export function calculateMolarMassFromFormula(formula: string, t: (key: string, 
   return parseFormulaWithParentheses(formula, t);
 }
 
-function parseFormulaWithParentheses(formula: string, t: (key: string, params?: any) => string): number {
+function parseFormulaWithParentheses(formula: string, t: (key: string, params?: Record<string, any> /* eslint-disable-line @typescript-eslint/no-explicit-any */) => string): number {
   let totalMolarMass = 0;
   let i = 0;
 
