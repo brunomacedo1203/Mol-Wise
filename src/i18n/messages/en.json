@@ -1,5 +1,11 @@
 {
   "common": {
+    "errors": {
+      "emptyFormula": "Please enter a chemical formula"
+    },
+    "results": {
+      "molarMass": "The molar mass of \"{formula}\" is: {mass} g/mol"
+    },
     "welcome": "Welcome",
     "loading": "Loading...",
     "error": "Error",
@@ -71,8 +77,9 @@
   "calculators": {
     "title": "Calculators",
     "subtitle": "Open one or more calculators from the menu.",
+    "closeAll": "Close All",
     "molarMass": {
-      "title": "Molar Mass Calculator",
+      "title": "Molar Mass",
       "subtitle": "Enter a chemical formula or element symbol",
       "input": {
         "placeholder": "Enter formula (e.g., H2O)",

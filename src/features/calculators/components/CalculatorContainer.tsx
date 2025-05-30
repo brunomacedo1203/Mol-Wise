@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Rnd } from "react-rnd";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   IconKeyboard,
   IconChevronDown,
@@ -12,13 +13,7 @@ interface Position {
   y: number;
 }
 
-interface Size {
-  width: number;
-  height: number;
-}
-
 interface CalculatorContainerProps {
-  id: number;
   title: string;
   subtitle?: string;
   input: ReactNode;
@@ -33,7 +28,6 @@ interface CalculatorContainerProps {
 }
 
 export default function CalculatorContainer({
-  id,
   title,
   subtitle,
   input,
@@ -46,10 +40,11 @@ export default function CalculatorContainer({
   isKeyboardVisible = true,
   onKeyboardVisibilityChange,
 }: CalculatorContainerProps) {
+  const t = useTranslations();
   const [collapsed, setCollapsed] = useState(!isKeyboardVisible);
 
   const handleKeyboardToggle = () => {
-    setCollapsed(prev => {
+    setCollapsed((prev) => {
       const newValue = !prev;
       onKeyboardVisibilityChange?.(!newValue);
       return newValue;
@@ -64,15 +59,15 @@ export default function CalculatorContainer({
         x: initialPosition?.x || 100,
         y: initialPosition?.y || 100,
         width: initialPosition?.width || 750,
-        height: "auto"
+        height: "auto",
       }}
       size={{
         width: initialPosition?.width || 750,
-        height: "auto"
+        height: "auto",
       }}
       position={{
         x: initialPosition?.x || 100,
-        y: initialPosition?.y || 100
+        y: initialPosition?.y || 100,
       }}
       enable={{ right: true }}
       bounds="#main-content-area"
@@ -82,7 +77,7 @@ export default function CalculatorContainer({
           const newPosition: Position & { width: number } = {
             x: d.x,
             y: d.y,
-            width: initialPosition?.width || 750
+            width: initialPosition?.width || 750,
           };
           onPositionChange(newPosition);
         }
@@ -92,7 +87,7 @@ export default function CalculatorContainer({
           const newPosition: Position & { width: number } = {
             x: position.x,
             y: position.y,
-            width: ref.offsetWidth
+            width: ref.offsetWidth,
           };
           onPositionChange(newPosition);
         }
@@ -104,7 +99,7 @@ export default function CalculatorContainer({
           max-w-xl mx-auto
           rounded-2xl 
           border border-zinc-200 shadow-xl
-          bg-white dark:bg-neutral-800/90
+          bg-white bg-opacity-90 dark:bg-neutral-800 dark:bg-opacity-80
           flex flex-col
           dark:border-white/20 dark:shadow-none
           relative
@@ -112,7 +107,7 @@ export default function CalculatorContainer({
       >
         <div className=" mb-3 flex items-start justify-between w-full">
           <div className="flex-1 pl-6 ">
-            <h1 className=" py-2 text-3xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full">
+            <h1 className=" py-2 text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full">
               {title}
             </h1>
             {subtitle && (
@@ -165,7 +160,11 @@ export default function CalculatorContainer({
             type="button"
           >
             <IconKeyboard size={20} />
-            <span>{collapsed ? "Show keyboard" : "Hide keyboard"}</span>
+            <span>
+              {collapsed
+                ? t("common.accessibility.showKeyboard")
+                : t("common.accessibility.hideKeyboard")}
+            </span>
             {collapsed ? (
               <IconChevronDown size={20} />
             ) : (

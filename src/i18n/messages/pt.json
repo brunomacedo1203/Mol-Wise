@@ -2,6 +2,12 @@
 
 {
   "common": {
+    "errors": {
+      "emptyFormula": "Por favor, insira uma fórmula química"
+    },
+    "results": {
+      "molarMass": "A massa molar de\"{formula}\" é: {mass} g/mol"
+    },
     "welcome": "Bem-vindo",
     "loading": "Carregando...",
     "error": "Erro",
@@ -74,9 +80,10 @@
   },
   "calculators": {
     "title": "Calculadoras",
-    "subtitle": "Abra uma ou mais calculadoras no menu.",
+    "subtitle": "Abra uma ou mais calculadoras pelo menu.",
+    "closeAll": "Fechar Todas",
     "molarMass": {
-      "title": "Calculadora de Massa Molar",
+      "title": " Massa Molar",
       "subtitle": "Digite uma fórmula química ou símbolo do elemento",
       "input": {
         "placeholder": "Digite a fórmula (ex: H2O)",

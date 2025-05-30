@@ -7,6 +7,7 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconLayoutSidebarRightCollapse,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 export interface SideAreaProps {
   bgClass?: string;
@@ -14,7 +15,6 @@ export interface SideAreaProps {
   className?: string;
   collapsed?: boolean;
   onToggleCollapsed?: () => void;
-  title?: string;
 }
 
 export default function SideArea({
@@ -24,6 +24,7 @@ export default function SideArea({
   onToggleCollapsed,
 }: SideAreaProps) {
   const { collapsed: collapsedState, toggleCollapsed } = useCollapsedMenu();
+  const t = useTranslations("common.navigation.menu");
 
   const isCollapsed =
     typeof collapsed === "boolean" ? collapsed : collapsedState;
@@ -43,7 +44,7 @@ export default function SideArea({
         <button
           className="text-xl p-0 rounded-md"
           onClick={handleToggle}
-          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={isCollapsed ? t("expand") : t("collapse")}
         >
           {isCollapsed ? (
             <IconLayoutSidebarRightCollapse

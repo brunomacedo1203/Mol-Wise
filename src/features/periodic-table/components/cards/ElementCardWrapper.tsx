@@ -1,6 +1,7 @@
 import SingleCardPeriodicTable from "../SingleCardPeriodicTable";
 import { Element } from "../../types/element";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface ElementCardWrapperProps {
   element: Element;
@@ -11,11 +12,18 @@ export default function ElementCardWrapper({
   element,
   setSelectedElement,
 }: ElementCardWrapperProps) {
+  const t = useTranslations("periodicTable");
+  const translatedElementName = t(`elements.${element.symbol}`);
+
   return (
     <div
       tabIndex={0}
       role="button"
-      aria-label={`Elemento ${element.name}, símbolo ${element.symbol}, número atômico ${element.atomicNumber}`}
+      aria-label={t("ariaLabel", {
+        name: translatedElementName,
+        symbol: element.symbol,
+        atomicNumber: element.atomicNumber,
+      })}
       onMouseEnter={() => setSelectedElement(element)}
       onFocus={() => setSelectedElement(element)}
       onKeyDown={(e) => {
@@ -28,7 +36,7 @@ export default function ElementCardWrapper({
       <SingleCardPeriodicTable
         atomicNumber={element.atomicNumber}
         symbol={element.symbol}
-        name={element.name}
+        name={translatedElementName}
         molarMass={element.molarMass}
         showColummNumber={element.showColummNumber}
       />

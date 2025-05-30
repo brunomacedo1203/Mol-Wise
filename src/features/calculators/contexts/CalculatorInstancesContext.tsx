@@ -14,6 +14,7 @@ interface Position {
 interface CalculatorState {
   formula?: string;
   result?: string | null;
+  error?: string | null;
   isKeyboardVisible?: boolean;
 }
 
@@ -33,11 +34,13 @@ const CalculatorInstancesContext = createContext<{
   addCalculator: (type: CalculatorType, position?: Position) => void;
   removeCalculator: (id: number) => void;
   updateCalculator: (id: number, updates: Partial<CalculatorInstance>) => void;
+  clearCalculators: () => void;
 }>({ 
   calculators: [], 
   addCalculator: () => {}, 
   removeCalculator: () => {},
-  updateCalculator: () => {} 
+  updateCalculator: () => {},
+  clearCalculators: () => {}
 });
 
 export const CalculatorInstancesProvider = ({
@@ -115,9 +118,25 @@ export const CalculatorInstancesProvider = ({
     });
   };
 
+  const clearCalculators = () => {
+    setCalculators([]);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('calculatorInstances', JSON.stringify({
+        calculators: [],
+        nextId: initialNextId.current
+      }));
+    }
+  };
+
   return (
     <CalculatorInstancesContext.Provider
-      value={{ calculators, addCalculator, removeCalculator, updateCalculator }}
+      value={{
+        calculators,
+        addCalculator,
+        removeCalculator,
+        updateCalculator,
+        clearCalculators,
+      }}
     >
       {children}
     </CalculatorInstancesContext.Provider>

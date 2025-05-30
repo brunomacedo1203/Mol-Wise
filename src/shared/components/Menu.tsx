@@ -15,6 +15,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Menu({ collapsed }: { collapsed: boolean }) {
   const [calculatorsOpen, setCalculatorsOpen] = useState(false);
@@ -23,6 +24,7 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
   const params = useParams();
   const { addCalculator } = useCalculatorInstances();
   const locale = params.locale as string;
+  const t = useTranslations();
 
   // Animação rápida e suave para submenu
   const submenuVariants = {
@@ -56,7 +58,9 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
         )}
       >
         <Table2 className="w-5 h-5" />
-        {!collapsed && <span className="text-base">Periodic Table</span>}
+        {!collapsed && (
+          <span className="text-base">{t("navigation.periodicTable")}</span>
+        )}
       </Link>
 
       <ScrollArea className="flex-1 scrollbar-hide">
@@ -74,7 +78,9 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
               <Calculator className="w-5 h-5" />
               {!collapsed && (
                 <>
-                  <span className="text-base">Calculators</span>
+                  <span className="text-base">
+                    {t("navigation.calculators")}
+                  </span>
                   {calculatorsOpen ? (
                     <ChevronUp className="w-4 h-4" />
                   ) : (
@@ -103,17 +109,17 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
                           const position = {
                             x: 100 + Math.random() * 100,
                             y: 100 + Math.random() * 100,
-                            width: 750
+                            width: 750,
                           };
                           addCalculator("molar-mass", position);
                         } else {
                           router.push(`/${locale}/calculators?open=molar-mass`);
                         }
                       }}
-                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-2m hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
                     >
                       <FlaskConical className="w-4 h-4" />
-                      Molar Mass Calculator
+                      {t("calculators.molarMass.title")}
                     </button>
                   </li>
                   {/* Adicione outros calculators aqui */}

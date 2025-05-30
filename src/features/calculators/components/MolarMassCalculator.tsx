@@ -43,6 +43,10 @@ export default function MolarMassCalculator({
   const calculate = () => {
     _calculate();
     onResultChange?.(molarMass);
+    // Atualiza o estado com o erro se houver
+    if (onFormulaChange) {
+      onFormulaChange(formula);
+    }
   };
 
   // Wrap reset to notify parent
