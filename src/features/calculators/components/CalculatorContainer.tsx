@@ -54,37 +54,29 @@ export default function CalculatorContainer({
   return (
     <Rnd
       minWidth={500}
-      maxWidth={900}
+      maxWidth={700}
       default={{
-        x: initialPosition?.x || 100,
-        y: initialPosition?.y || 100,
-        width: initialPosition?.width || 750,
+        x: initialPosition?.x ?? 100,
+        y: initialPosition?.y ?? 100,
+        width: 500,
         height: "auto",
       }}
-      size={{
-        width: initialPosition?.width || 750,
-        height: "auto",
-      }}
-      position={{
-        x: initialPosition?.x || 100,
-        y: initialPosition?.y || 100,
-      }}
-      enable={{ right: true }}
       bounds="#main-content-area"
+      enable={{ right: true }}
       className="calculator-resizable"
       onDragStop={(e, d) => {
         if (onPositionChange) {
-          const newPosition: Position & { width: number } = {
+          const newPosition = {
             x: d.x,
             y: d.y,
-            width: initialPosition?.width || 750,
+            width: 500,
           };
           onPositionChange(newPosition);
         }
       }}
       onResizeStop={(e, direction, ref, delta, position) => {
         if (onPositionChange) {
-          const newPosition: Position & { width: number } = {
+          const newPosition = {
             x: position.x,
             y: position.y,
             width: ref.offsetWidth,
@@ -96,18 +88,18 @@ export default function CalculatorContainer({
       <div
         className="
           p-2 
-          max-w-xl mx-auto
           rounded-2xl 
           border border-zinc-200 shadow-xl
           bg-white bg-opacity-90 dark:bg-neutral-800 dark:bg-opacity-80
           flex flex-col
           dark:border-white/20 dark:shadow-none
           relative
+          w-full  /* ✅ Sem max-w para não restringir resize */
         "
       >
-        <div className=" mb-3 flex items-start justify-between w-full">
-          <div className="flex-1 pl-6 ">
-            <h1 className=" py-2 text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full">
+        <div className="mb-3 flex items-start justify-between w-full">
+          <div className="flex-1 pl-6">
+            <h1 className="py-2 text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full">
               {title}
             </h1>
             {subtitle && (
@@ -119,19 +111,12 @@ export default function CalculatorContainer({
           {onClose && (
             <button
               className="
-            ml-2 mt-1
-            p-2
-            rounded-full
-            text-red-600
-           
-            hover:bg-red-500 hover:text-white
-             dark:hover:bg-red-600
-            shadow-lg
-            border border-zinc-300 dark:border-red-800
-            transition
-            focus:outline-none focus:ring-2 focus:ring-red-400
-            transform hover:scale-110
-          "
+                ml-2 mt-1 p-2 rounded-full text-red-600
+                hover:bg-red-500 hover:text-white dark:hover:bg-red-600
+                shadow-lg border border-zinc-300 dark:border-red-800
+                transition focus:outline-none focus:ring-2 focus:ring-red-400
+                transform hover:scale-110
+              "
               aria-label="Close calculator"
               onClick={onClose}
               type="button"
@@ -142,11 +127,8 @@ export default function CalculatorContainer({
         </div>
 
         <div className="mb-2">{input}</div>
-
         {!collapsed && <div className="mb-2 w-full">{actions}</div>}
-
         {children}
-
         {errorMessage && (
           <div className="flex justify-center items-center text-red-500 dark:text-red-400 text-center text-sm mb-2">
             {errorMessage}
