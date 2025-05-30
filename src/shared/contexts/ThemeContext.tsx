@@ -12,29 +12,33 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Inicia como light para evitar SSR mismatch
-  const [theme, setTheme] = useState<Theme>("light");
+  // Inicia com o tema do localStorage ou preferência do sistema
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "light";
 
-  // Sincroniza com localStorage após montagem
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    try {
+      const savedTheme = localStorage.getItem("theme") as Theme | null;
+      if (savedTheme) return savedTheme;
 
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      setTheme(prefersDark ? "dark" : "light");
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    } catch (e) {
+      return "light";
     }
-  }, []);
+  });
 
+  // Atualiza o tema no localStorage e na classe do documento
   useEffect(() => {
-    localStorage.setItem("theme", theme);
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    try {
+      localStorage.setItem("theme", theme);
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } catch (e) {
+      console.error("Error updating theme:", e);
     }
   }, [theme]);
 

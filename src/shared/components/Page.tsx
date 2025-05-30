@@ -35,7 +35,7 @@ export default function Page(props: PageProps) {
       <div className="flex flex-col flex-1">
         <Header title={sectionTitle} className="h-16 bg-zinc-100" />
         <Content title={props.title}>{props.children}</Content>
-        <Footer leftText="Email Contact" rightText={`Developed in ${year}`} />
+        <Footer year={year} />
       </div>
     </div>
   );

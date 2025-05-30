@@ -1,11 +1,17 @@
 import { ReactNode, useState } from "react";
 import { Rnd } from "react-rnd";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   IconKeyboard,
   IconChevronDown,
   IconChevronUp,
 } from "@tabler/icons-react";
+
+interface Position {
+  x: number;
+  y: number;
+}
 
 interface CalculatorContainerProps {
   title: string;
@@ -15,6 +21,10 @@ interface CalculatorContainerProps {
   children?: ReactNode;
   errorMessage?: string;
   onClose?: () => void;
+  initialPosition?: Position & { width?: number };
+  onPositionChange?: (position: Position & { width: number }) => void;
+  isKeyboardVisible?: boolean;
+  onKeyboardVisibilityChange?: (visible: boolean) => void;
 }
 
 export default function CalculatorContainer({
@@ -25,17 +35,63 @@ export default function CalculatorContainer({
   children,
   errorMessage,
   onClose,
+  initialPosition,
+  onPositionChange,
+  isKeyboardVisible = true,
+  onKeyboardVisibilityChange,
 }: CalculatorContainerProps) {
-  const [collapsed, setCollapsed] = useState(true);
+  const t = useTranslations();
+  const [collapsed, setCollapsed] = useState(!isKeyboardVisible);
+
+  const handleKeyboardToggle = () => {
+    setCollapsed((prev) => {
+      const newValue = !prev;
+      onKeyboardVisibilityChange?.(!newValue);
+      return newValue;
+    });
+  };
 
   return (
     <Rnd
       minWidth={500}
       maxWidth={900}
-      defaultSize={{ width: 750, height: "auto" }}
+      default={{
+        x: initialPosition?.x || 100,
+        y: initialPosition?.y || 100,
+        width: initialPosition?.width || 750,
+        height: "auto",
+      }}
+      size={{
+        width: initialPosition?.width || 750,
+        height: "auto",
+      }}
+      position={{
+        x: initialPosition?.x || 100,
+        y: initialPosition?.y || 100,
+      }}
       enable={{ right: true }}
       bounds="#main-content-area"
       className="calculator-resizable"
+      onDragStop={(e, d) => {
+        if (onPositionChange) {
+          const newPosition: Position & { width: number } = {
+            x: d.x,
+            y: d.y,
+            width: initialPosition?.width || 750,
+          };
+          onPositionChange(newPosition);
+        }
+      }}
+      onResizeStop={(e, direction, ref, delta, position) => {
+        if (onPositionChange) {
+          const newPosition: Position & { width: number } = {
+            x: position.x,
+            y: position.y,
+            width: ref.offsetWidth,
+          };
+          onPositionChange(newPosition);
+        }
+      }}
     >
       <div
         className="
@@ -43,15 +99,15 @@ export default function CalculatorContainer({
           max-w-xl mx-auto
           rounded-2xl 
           border border-zinc-200 shadow-xl
-          bg-white dark:bg-neutral-800/90
+          bg-white bg-opacity-90 dark:bg-neutral-800 dark:bg-opacity-80
           flex flex-col
           dark:border-white/20 dark:shadow-none
           relative
         "
       >
         <div className=" mb-3 flex items-start justify-between w-full">
-          <div className="flex-1 pl-6">
-            <h1 className="text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full">
+          <div className="flex-1 pl-6 ">
+            <h1 className=" py-2 text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full">
               {title}
             </h1>
             {subtitle && (
@@ -100,11 +156,15 @@ export default function CalculatorContainer({
         <div className="w-full flex justify-center mt-2">
           <button
             className="text-base text-zinc-500 dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-white flex items-center gap-1"
-            onClick={() => setCollapsed((c) => !c)}
+            onClick={handleKeyboardToggle}
             type="button"
           >
             <IconKeyboard size={20} />
-            <span>{collapsed ? "Show keyboard" : "Hide keyboard"}</span>
+            <span>
+              {collapsed
+                ? t("common.accessibility.showKeyboard")
+                : t("common.accessibility.hideKeyboard")}
+            </span>
             {collapsed ? (
               <IconChevronDown size={20} />
             ) : (

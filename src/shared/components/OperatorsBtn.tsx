@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useTranslations } from "next-intl";
 import KeyboardBtn from "@/shared/components/KeyboardBtn";
 import { ReloadIcon } from "./icons/ReloadIcon";
 import { BackspaceIcon } from "./icons/BackspaceIcon";
@@ -17,6 +18,8 @@ export default function OperatorsBtn({
   onCalculate,
   onParenthesis,
 }: OperatorsBtnProps) {
+  const t = useTranslations();
+
   return (
     <div className="flex gap-2 mt-1 items-center justify-center w-full">
       <KeyboardBtn onClick={onClear} className="bg-white w-10 h-10">
@@ -34,10 +37,10 @@ export default function OperatorsBtn({
         className="
     !bg-teal-400 hover:!bg-teal-600 
     dark:bg-teal-500 dark:hover:bg-teal-700
-    text-black font-semibold w-12 h-10 px-[70px]
-  "
+    text-black font-semibold text-xl w-12 h-10 px-[62px]
+l  "
       >
-        CALCULATE
+        {t('common.actions.calculate')}
       </KeyboardBtn>
 
       <KeyboardBtn

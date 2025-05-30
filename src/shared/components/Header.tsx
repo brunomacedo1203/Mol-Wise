@@ -1,6 +1,7 @@
 import React from "react";
 import { useSubtitle } from "@/shared/contexts/SubtitleContext";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export interface HeaderProps {
   title: string;
@@ -29,7 +30,10 @@ export default function Header(props: HeaderProps) {
             </h2>
           )}
         </div>
-        <ThemeToggle className="mt-2" />
+        <div className="flex items-center gap-2 mt-2">
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   );

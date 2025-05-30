@@ -1,11 +1,13 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 
 export interface FooterProps {
-  leftText: string;
-  rightText: string;
+  year: number;
 }
 
 export default function Footer(props: FooterProps) {
+  const t = useTranslations("common");
+  const { year } = props;
   return (
     <footer
       className={`
@@ -15,8 +17,8 @@ export default function Footer(props: FooterProps) {
   text-zinc-500 dark:bg-neutral-900
 `}
     >
-      <span>{props.leftText}</span>
-      <span>{props.rightText}</span>
+      <span>{t("footer.contact")}</span>
+      <span>{t("footer.developed", { year })}</span>
     </footer>
   );
 }

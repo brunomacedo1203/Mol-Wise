@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Element } from "../types/element";
 import elementsData from "../services/elementsData";
 import { formatWithSup } from "@/shared/utils/formatWithSup";
+import { useTranslations } from "next-intl";
 
 const ptNameToSymbol: Record<string, string> = {
   hidrogenio: "H",
@@ -68,6 +69,16 @@ function searchElement(term: string): Element | undefined {
   return undefined;
 }
 
+// Helper function to convert a string to camelCase matching JSON keys
+function toCamelCase(str: string): string {
+  // Convert to lowercase first
+  let s = str.toLowerCase();
+  // Replace spaces and hyphens with a single uppercase letter
+  s = s.replace(/[-\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
+  // Ensure the very first character is lowercase
+  return s.charAt(0).toLowerCase() + s.slice(1);
+}
+
 interface ElementDetailsPanelProps {
   element: Element | null;
 }
@@ -78,6 +89,7 @@ export default function ElementDetailsPanel({
   const [search, setSearch] = useState("");
   const searchedElement = searchElement(search);
   const elementToShow = searchedElement || element;
+  const t = useTranslations("periodicTable");
 
   if (!elementToShow) return null;
 
@@ -85,18 +97,30 @@ export default function ElementDetailsPanel({
   console.log("DADO NO PAINEL:", elementToShow.electronConfiguration);
 
   const fields: { label: string; value?: React.ReactNode }[] = [
-    { label: "Atomic number", value: elementToShow.atomicNumber },
+    { label: t("element.atomicNumber"), value: elementToShow.atomicNumber },
     {
-      label: "Molar mass",
+      label: t("element.atomicMass"),
       value:
         elementToShow.molarMass !== undefined
           ? `${Number(elementToShow.molarMass).toFixed(2)} g/mol`
           : undefined,
     },
-    { label: "Category", value: elementToShow.category },
-    { label: "Standard state", value: elementToShow.standardState },
     {
-      label: "Electron configuration",
+      label: t("element.category"),
+      value: elementToShow.category
+        ? t(`element.categories.${toCamelCase(elementToShow.category)}`)
+        : undefined,
+    },
+    {
+      label: t("element.standardState"),
+      value: elementToShow.standardState
+        ? t(
+            `element.standardStates.${elementToShow.standardState.toLowerCase()}`
+          )
+        : undefined,
+    },
+    {
+      label: t("element.electronConfiguration"),
       value: (
         <span
           className="break-all"
@@ -106,7 +130,10 @@ export default function ElementDetailsPanel({
         />
       ),
     },
-    { label: "Oxidation states", value: elementToShow.oxidationStates },
+    {
+      label: t("element.oxidationStates"),
+      value: elementToShow.oxidationStates,
+    },
     { label: "Group", value: elementToShow.group },
     { label: "Period", value: elementToShow.period },
   ];
@@ -129,7 +156,7 @@ export default function ElementDetailsPanel({
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by symbol or name (EN/PT)..."
+          placeholder={t("subtitle")}
           className="
             w-full px-3  border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
             text-base text-black bg-white 
@@ -154,7 +181,7 @@ export default function ElementDetailsPanel({
             {elementToShow.symbol}
           </span>
           <span className="text-sm text-zinc-700 font-semibold mt-2 dark:text-zinc-100">
-            {elementToShow.name}
+            {t(`elements.${elementToShow.symbol}`)}
           </span>
         </div>
         {/* Coluna das informações */}

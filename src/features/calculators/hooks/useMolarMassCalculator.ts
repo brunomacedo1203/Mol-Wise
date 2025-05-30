@@ -1,13 +1,41 @@
 "use client";
 import { useState } from "react";
-import { validateFormula, normalizeFormula } from "@/shared/utils/validateAndNormalizeFormula";
+import { useTranslations } from "next-intl";
+import { useFormulaValidation } from "@/shared/hooks/useFormulaValidation";
+import { normalizeFormula } from "@/shared/utils/validateAndNormalizeFormula";
 import { calculateMolarMassFromFormula } from "@/features/calculators/services/molarMass";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
-export function useMolarMassCalculator() {
-  const [formula, setFormula] = useState("");
-  const [molarMass, setMolarMass] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+export function useMolarMassCalculator(
+  initialFormula: string = '',
+  initialResult: string | null = null
+) {
+  const t = useTranslations();
+  const { validateFormula } = useFormulaValidation();
+  const [formula, setFormula] = useState(initialFormula);
+  const [molarMass, setMolarMass] = useState<string | null>(() => {
+    if (initialResult) return initialResult;
+    if (!initialFormula) return null;
+
+    const validationError = validateFormula(initialFormula);
+    if (validationError) return null;
+
+    const formattedFormula = normalizeFormula(initialFormula);
+    try {
+      const totalMolarMass = calculateMolarMassFromFormula(formattedFormula, t);
+      return t('common.results.molarMass', {
+        formula: formatWithSub(formattedFormula),
+        mass: totalMolarMass.toFixed(2)
+      });
+    } catch {
+      return null;
+    }
+  });
+  const [errorMessage, setErrorMessage] = useState<string>(() => {
+    if (!initialFormula) return "";
+    const validationError = validateFormula(initialFormula);
+    return validationError || "";
+  });
 
   // Handler dedicado para mudança da fórmula
   const handleFormulaChange = (val: string) => {
@@ -29,9 +57,12 @@ export function useMolarMassCalculator() {
     }
     const formattedFormula = normalizeFormula(formula);
     try {
-      const totalMolarMass = calculateMolarMassFromFormula(formattedFormula);
+      const totalMolarMass = calculateMolarMassFromFormula(formattedFormula, t);
       setMolarMass(
-        `The molar mass of "${formatWithSub(formattedFormula)}" is: ${totalMolarMass.toFixed(2)} g/mol`
+        t('common.results.molarMass', {
+          formula: formatWithSub(formattedFormula),
+          mass: totalMolarMass.toFixed(2)
+        })
       );
       setErrorMessage("");
     } catch (error: unknown) {
@@ -39,7 +70,7 @@ export function useMolarMassCalculator() {
         setErrorMessage(error.message);
         setFormula(""); // Clear input to show error message in placeholder
       } else {
-        setErrorMessage('An error occurred while calculating the molar mass');
+        setErrorMessage(t('calculators.molarMass.errors.generic'));
       }
       setMolarMass(null);
     }

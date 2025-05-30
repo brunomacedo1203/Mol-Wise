@@ -1,6 +1,10 @@
-export function validateFormula(formula: string): string | null {
+import { getTranslations } from "next-intl/server";
+
+export async function validateFormula(formula: string): Promise<string | null> {
+  const t = await getTranslations();
+
   if (!formula || formula.trim() === "") {
-    return "Enter an element symbol or a formula.";
+    return t('common.errors.emptyFormula');
   }
   return null;
 }
