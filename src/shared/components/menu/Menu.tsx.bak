@@ -1,0 +1,288 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import {
+  Calculator,
+  ChevronDown,
+  ChevronUp,
+  FlaskConical,
+  Table2,
+  Book,
+  Gamepad2,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter, useParams } from "next/navigation";
+import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import { useTranslations } from "next-intl";
+import {
+  MENU_STORAGE_KEY,
+  MENU_SECTIONS,
+  SUBMENU_VARIANTS,
+  MENU_WIDTHS,
+  MENU_CLASSES,
+} from "./constants";
+
+interface MenuState {
+  openSections: Record<string, boolean>;
+}
+
+export default function Menu({ collapsed }: { collapsed: boolean }) {
+  const [state, setState] = useState<MenuState>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(MENU_STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    }
+    return {
+      openSections: {},
+    };
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(state));
+    }
+  }, [state]);
+
+  const toggleSection = (id: string) => {
+    setState((prev) => ({
+      ...prev,
+      openSections: {
+        ...prev.openSections,
+        [id]: !prev.openSections[id],
+      },
+    }));
+  };
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams();
+  const { addCalculator } = useCalculatorInstances();
+  const locale = params.locale as string;
+  const t = useTranslations();
+
+  return (
+    <motion.nav
+      className={cn(
+        MENU_CLASSES.BASE,
+        collapsed ? MENU_WIDTHS.COLLAPSED : MENU_WIDTHS.EXPANDED
+      )}
+    >
+      {/* Periodic Table */}
+      <Link
+        href={`/${locale}/periodicTable`}
+        className={cn(
+          MENU_CLASSES.ITEM,
+          pathname === `/${locale}/periodicTable` && MENU_CLASSES.ACTIVE_ITEM
+        )}
+      >
+        <Table2 className="w-5 h-5" />
+        {!collapsed && (
+          <span className="text-base">{t("navigation.periodicTable")}</span>
+        )}
+      </Link>
+
+      <ScrollArea className="flex-1 scrollbar-hide">
+        <ul className="flex flex-col pt-4">
+          {/* Calculators Accordion */}
+          <li>
+            <button
+              onClick={() => toggleSection(MENU_SECTIONS.CALCULATORS)}
+              className={cn(
+                MENU_CLASSES.ITEM,
+                state.openSections[MENU_SECTIONS.CALCULATORS] &&
+                  MENU_CLASSES.ACTIVE_ITEM
+              )}
+              aria-expanded={state.openSections[MENU_SECTIONS.CALCULATORS]}
+            >
+              <Calculator className="w-5 h-5" />
+              {!collapsed && (
+                <>
+                  <span className="text-base">
+                    {t("navigation.calculators")}
+                  </span>
+                  {state.openSections[MENU_SECTIONS.CALCULATORS] ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </>
+              )}
+            </button>
+            {/* Submenu destacado */}
+            <motion.div
+              variants={SUBMENU_VARIANTS}
+              initial="closed"
+              animate={
+                state.openSections[MENU_SECTIONS.CALCULATORS] && !collapsed
+                  ? "open"
+                  : "closed"
+              }
+              className={cn(
+                "ml-6 mt-1",
+                state.openSections[MENU_SECTIONS.CALCULATORS] && !collapsed
+                  ? "block"
+                  : "hidden"
+              )}
+            >
+              <div className={MENU_CLASSES.SUBMENU}>
+                <ul className="p-1">
+                  <li>
+                    <button
+                      onClick={() => {
+                        if (pathname === `/${locale}/calculators`) {
+                          const position = {
+                            x: 100 + Math.random() * 100,
+                            y: 100 + Math.random() * 100,
+                            width: 750,
+                          };
+                          addCalculator("molar-mass", position);
+                        } else {
+                          router.push(`/${locale}/calculators?open=molar-mass`);
+                        }
+                      }}
+                      className={MENU_CLASSES.SUBMENU_ITEM}
+                    >
+                      <FlaskConical className="w-4 h-4" />
+                      {t("calculators.molarMass.title")}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </li>
+
+          {/* Catalog Accordion */}
+          <li>
+            <button
+              onClick={() => toggleSection(MENU_SECTIONS.CATALOG)}
+              className={cn(
+                MENU_CLASSES.ITEM,
+                state.openSections[MENU_SECTIONS.CATALOG] &&
+                  MENU_CLASSES.ACTIVE_ITEM
+              )}
+              aria-expanded={state.openSections[MENU_SECTIONS.CATALOG]}
+            >
+              <Book className="w-5 h-5" />
+              {!collapsed && (
+                <>
+                  <span className="text-base">{t("navigation.catalog")}</span>
+                  {state.openSections[MENU_SECTIONS.CATALOG] ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </>
+              )}
+            </button>
+            <motion.div
+              variants={SUBMENU_VARIANTS}
+              initial="closed"
+              animate={
+                state.openSections[MENU_SECTIONS.CATALOG] && !collapsed
+                  ? "open"
+                  : "closed"
+              }
+              className={cn(
+                "ml-6 mt-1",
+                state.openSections[MENU_SECTIONS.CATALOG] && !collapsed
+                  ? "block"
+                  : "hidden"
+              )}
+            >
+              <div className={MENU_CLASSES.SUBMENU}>
+                <ul className="p-1">
+                  <li>
+                    <Link
+                      href={`/${locale}/catalog/elements`}
+                      className={MENU_CLASSES.SUBMENU_ITEM}
+                    >
+                      <Table2 className="w-4 h-4" />
+                      {t("catalog.elements.title")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={`/${locale}/catalog/compounds`}
+                      className={MENU_CLASSES.SUBMENU_ITEM}
+                    >
+                      <FlaskConical className="w-4 h-4" />
+                      {t("catalog.compounds.title")}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </li>
+
+          {/* Games Accordion */}
+          <li>
+            <button
+              onClick={() => toggleSection(MENU_SECTIONS.GAMES)}
+              className={cn(
+                MENU_CLASSES.ITEM,
+                state.openSections[MENU_SECTIONS.GAMES] &&
+                  MENU_CLASSES.ACTIVE_ITEM
+              )}
+              aria-expanded={state.openSections[MENU_SECTIONS.GAMES]}
+            >
+              <Gamepad2 className="w-5 h-5" />
+              {!collapsed && (
+                <>
+                  <span className="text-base">{t("navigation.games")}</span>
+                  {state.openSections[MENU_SECTIONS.GAMES] ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </>
+              )}
+            </button>
+            <motion.div
+              variants={SUBMENU_VARIANTS}
+              initial="closed"
+              animate={
+                state.openSections[MENU_SECTIONS.GAMES] && !collapsed
+                  ? "open"
+                  : "closed"
+              }
+              className={cn(
+                "ml-6 mt-1",
+                state.openSections[MENU_SECTIONS.GAMES] && !collapsed
+                  ? "block"
+                  : "hidden"
+              )}
+            >
+              <div className={MENU_CLASSES.SUBMENU}>
+                <ul className="p-1">
+                  <li>
+                    <Link
+                      href={`/${locale}/games/element-quiz`}
+                      className={MENU_CLASSES.SUBMENU_ITEM}
+                    >
+                      <Gamepad2 className="w-4 h-4" />
+                      {t("games.elementQuiz.title")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={`/${locale}/games/compound-builder`}
+                      className={MENU_CLASSES.SUBMENU_ITEM}
+                    >
+                      <Gamepad2 className="w-4 h-4" />
+                      {t("games.compoundBuilder.title")}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </li>
+        </ul>
+      </ScrollArea>
+    </motion.nav>
+  );
+} 

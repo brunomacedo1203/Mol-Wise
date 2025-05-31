@@ -5,7 +5,7 @@ import Header from "@/shared/components/Header";
 import Content from "@/shared/components/Content";
 import Footer from "@/shared/components/Footer";
 import SideArea from "@/shared/components/SideArea";
-import Menu from "@/shared/components/Menu";
+import Menu from "@/shared/components/menu/Menu";
 import { useSectionTitle } from "@/shared/hooks/useSectionTitle";
 import { useCollapsedMenu } from "@/shared/hooks/useCollapsedMenu";
 
@@ -25,8 +25,7 @@ export default function Page(props: PageProps) {
   return (
     <div className="flex h-screen bg-zinc-100">
       <SideArea
-        title="Menu"
-        bgClass="bg-zinc-800 "
+        bgClass="bg-zinc-800"
         collapsed={isCollapsed}
         onToggleCollapsed={toggleCollapsed}
       >
