@@ -1,15 +1,18 @@
 "use client";
-import { useMolarMassCalculator } from "@/features/calculators/hooks/useMolarMassCalculator";
+import { useMolarMassCalculatorAdapter } from "@/core/application/hooks/useMolarMassCalculatorAdapter";
 import MolecularFormulaInput from "@/features/calculators/components/MolecularFormulaInput";
 import CalculatorContainer from "./CalculatorContainer";
 import KeyboardCalculate from "@/features/calculators/components/KeyboardCalculate";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 interface MolarMassCalculatorProps {
-  id: number;
   onClose?: () => void;
   initialPosition?: { x: number; y: number; width?: number };
-  onPositionChange?: (position: { x: number; y: number; width: number }) => void;
+  onPositionChange?: (position: {
+    x: number;
+    y: number;
+    width: number;
+  }) => void;
   initialFormula?: string;
   onFormulaChange?: (formula: string) => void;
   initialResult?: string | null;
@@ -19,11 +22,10 @@ interface MolarMassCalculatorProps {
 }
 
 export default function MolarMassCalculator({
-  id,
   onClose,
   initialPosition,
   onPositionChange,
-  initialFormula = '',
+  initialFormula = "",
   onFormulaChange,
   initialResult = null,
   onResultChange,
@@ -37,13 +39,12 @@ export default function MolarMassCalculator({
     errorMessage,
     calculate: _calculate,
     reset: _reset,
-  } = useMolarMassCalculator(initialFormula, initialResult);
+  } = useMolarMassCalculatorAdapter(initialFormula, initialResult);
 
   // Wrap calculate to notify parent
   const calculate = () => {
     _calculate();
     onResultChange?.(molarMass);
-    // Atualiza o estado com o erro se houver
     if (onFormulaChange) {
       onFormulaChange(formula);
     }
@@ -78,13 +79,12 @@ export default function MolarMassCalculator({
     handleFormulaChange(formula + paren);
   }
 
-  const t = useTranslations('calculators.molarMass');
+  const t = useTranslations("calculators.molarMass");
 
   return (
     <CalculatorContainer
-      id={id}
-      title={t('title')}
-      subtitle={t('subtitle')}
+      title={t("title")}
+      subtitle={t("subtitle")}
       initialPosition={initialPosition}
       onPositionChange={onPositionChange}
       isKeyboardVisible={isKeyboardVisible}
@@ -108,7 +108,7 @@ export default function MolarMassCalculator({
           onBackspace={backspace}
         />
       }
-      onClose={onClose} // <<<<<<<< repassando a prop!
+      onClose={onClose}
     />
   );
 }
