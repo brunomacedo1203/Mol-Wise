@@ -1,0 +1,48 @@
+/**
+ * @deprecated Este arquivo foi movido para src/features/calculators/domain/types/calculator.ts
+ * Mantido apenas para referência histórica.
+ * Por favor, use a nova localização.
+ */
+
+import { ReactNode } from "react";
+
+export interface Position {
+  x: number;
+  y: number;
+}
+
+export interface PositionWithWidth extends Position {
+  width: number;
+}
+
+export interface CalculatorContainerProps {
+  id: number;
+  title: string;
+  subtitle?: string;
+  input: ReactNode;
+  actions: ReactNode;
+  children?: ReactNode;
+  errorMessage?: string;
+  onClose?: () => void;
+  initialPosition?: PositionWithWidth;
+  onPositionChange?: (position: PositionWithWidth) => void;
+  isKeyboardVisible?: boolean;
+  onKeyboardVisibilityChange?: (visible: boolean) => void;
+}
+
+export interface CalculatorHeaderProps {
+  title: string;
+  subtitle?: string;
+  onClose?: () => void;
+}
+
+export interface CalculatorKeyboardToggleProps {
+  isCollapsed: boolean;
+  onToggle: () => void;
+  translations: {
+    showKeyboard: string;
+    hideKeyboard: string;
+  };
+}
+
+// ... rest of the file ... 
