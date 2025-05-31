@@ -1,20 +1,16 @@
 import { useCallback } from "react";
 import { RndDragCallback, RndResizeCallback } from "react-rnd";
-import { PositionWithWidth } from "../domain/types/calculator";
-import { CALCULATOR_CONSTANTS } from "../config/constants";
+import { Position } from "../../domain/types/position";
+import { containerStyles } from "../../styles/containerStyles";
 
 interface UseCalculatorPositionProps {
-  initialPosition?: PositionWithWidth;
-  onPositionChange?: (position: PositionWithWidth) => void;
+  initialPosition?: Position;
+  onPositionChange?: (position: Position & { width: number }) => void;
 }
 
 interface UseCalculatorPositionReturn {
-  defaultPosition: {
-    x: number;
-    y: number;
-    width: number;
-    height: string;
-  };
+  defaultPosition: Position & { width: number; height: number };
+  handlePositionChange: (position: Position & { width: number }) => void;
   handleDragStop: RndDragCallback;
   handleResizeStop: RndResizeCallback;
 }
@@ -30,18 +26,25 @@ export function useCalculatorPosition({
   onPositionChange,
 }: UseCalculatorPositionProps): UseCalculatorPositionReturn {
   const handlePositionChange = useCallback(
-    (position: PositionWithWidth) => {
+    (position: Position & { width: number }) => {
       onPositionChange?.(position);
     },
     [onPositionChange]
   );
+
+  const defaultPosition = {
+    x: initialPosition?.x ?? 100,
+    y: initialPosition?.y ?? 100,
+    width: containerStyles.rnd.defaultWidth,
+    height: containerStyles.rnd.defaultHeight,
+  };
 
   const handleDragStop: RndDragCallback = useCallback(
     (_, { x, y }) => {
       handlePositionChange({
         x,
         y,
-        width: CALCULATOR_CONSTANTS.DIMENSIONS.DEFAULT_WIDTH,
+        width: containerStyles.rnd.defaultWidth,
       });
     },
     [handlePositionChange]
@@ -58,15 +61,9 @@ export function useCalculatorPosition({
     [handlePositionChange]
   );
 
-  const defaultPosition = {
-    x: initialPosition?.x ?? CALCULATOR_CONSTANTS.DIMENSIONS.DEFAULT_X,
-    y: initialPosition?.y ?? CALCULATOR_CONSTANTS.DIMENSIONS.DEFAULT_Y,
-    width: CALCULATOR_CONSTANTS.DIMENSIONS.DEFAULT_WIDTH,
-    height: CALCULATOR_CONSTANTS.DIMENSIONS.DEFAULT_HEIGHT,
-  };
-
   return {
     defaultPosition,
+    handlePositionChange,
     handleDragStop,
     handleResizeStop,
   };

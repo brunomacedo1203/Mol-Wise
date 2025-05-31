@@ -1,29 +1,12 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-
-type CalculatorType = "molar-mass";
-
-interface Position {
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
-}
-
-interface CalculatorState {
-  formula?: string;
-  result?: string | null;
-  error?: string | null;
-  isKeyboardVisible?: boolean;
-}
-
-interface CalculatorInstance {
-  id: number;
-  type: CalculatorType;
-  position?: Position;
-  state?: CalculatorState;
-}
+import {
+  CalculatorType,
+  CalculatorInstance,
+  Position,
+  PositionWithWidth,
+} from "../domain/types/calculator";
 
 interface CalculatorInstancesProviderProps {
   children: React.ReactNode;
@@ -71,7 +54,7 @@ export const CalculatorInstancesProvider = ({
   });
 
   const addCalculator = (type: CalculatorType, position?: Position) => {
-    const defaultPosition: Position = {
+    const defaultPosition: PositionWithWidth = {
       x: 100,
       y: 100,
       width: 500,

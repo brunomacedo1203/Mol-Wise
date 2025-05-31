@@ -26,10 +26,9 @@ export function useMolarMassCalculatorAdapter(
       // Usa o novo serviço para cálculo
       calculateCore(formattedFormula).then(totalMolarMass => {
         if (totalMolarMass !== null) {
-          setMolarMass(t('common.results.molarMass', {
-            formula: formatWithSub(formattedFormula),
-            mass: totalMolarMass.toFixed(2)
-          }));
+          setMolarMass(
+            `${t('calculators.molarMass.result.prefix')} ${formatWithSub(formattedFormula)} ${t('calculators.molarMass.result.suffix')} ${totalMolarMass.toFixed(2)} ${t('calculators.molarMass.result.unit')}`
+          );
         }
       });
     } catch {
@@ -68,10 +67,7 @@ export function useMolarMassCalculatorAdapter(
       const totalMolarMass = await calculateCore(formattedFormula);
       if (totalMolarMass !== null) {
         setMolarMass(
-          t('common.results.molarMass', {
-            formula: formatWithSub(formattedFormula),
-            mass: totalMolarMass.toFixed(2)
-          })
+          `${t('calculators.molarMass.result.prefix')} ${formatWithSub(formattedFormula)} ${t('calculators.molarMass.result.suffix')} ${totalMolarMass.toFixed(2)} ${t('calculators.molarMass.result.unit')}`
         );
         setErrorMessage("");
       }

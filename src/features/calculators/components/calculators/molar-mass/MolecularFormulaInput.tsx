@@ -2,12 +2,13 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
+// Props do componente de entrada de fórmula molecular
 interface MolecularFormulaInputProps {
   value?: string;
   onChange: (val: string) => void;
   onEnterPress: () => void;
-  errorMessage?: string;
-  resultHtml?: string;
+  errorMessage?: string | null;
+  resultHtml?: string | null;
 }
 
 const MolecularFormulaInput = ({

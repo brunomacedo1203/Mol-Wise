@@ -1,24 +1,10 @@
 import { ReactNode } from "react";
+import type { Position, PositionWithWidth } from "./position";
 
 /**
  * Tipos de calculadoras disponíveis
  */
 export type CalculatorType = "molar-mass";
-
-/**
- * Posição 2D
- */
-export interface Position {
-  x: number;
-  y: number;
-}
-
-/**
- * Posição 2D com largura
- */
-export interface PositionWithWidth extends Position {
-  width: number;
-}
 
 /**
  * Estado de uma calculadora
@@ -71,14 +57,9 @@ export interface CalculatorInstance {
 }
 
 /**
- * Props do container de calculadora
+ * Props base para componentes de calculadora
  */
-export interface CalculatorContainerProps {
-  /**
-   * ID único da calculadora
-   */
-  id: number;
-
+export interface CalculatorBaseProps {
   /**
    * Título da calculadora
    */
@@ -88,6 +69,41 @@ export interface CalculatorContainerProps {
    * Subtítulo opcional
    */
   subtitle?: string;
+
+  /**
+   * Callback para fechar a calculadora
+   */
+  onClose?: () => void;
+
+  /**
+   * Posição inicial
+   */
+  initialPosition?: Position;
+
+  /**
+   * Callback quando a posição muda
+   */
+  onPositionChange?: (position: PositionWithWidth) => void;
+
+  /**
+   * Se o teclado está visível
+   */
+  isKeyboardVisible?: boolean;
+
+  /**
+   * Callback quando a visibilidade do teclado muda
+   */
+  onKeyboardVisibilityChange?: (visible: boolean) => void;
+}
+
+/**
+ * Props do container de calculadora
+ */
+export interface CalculatorContainerProps extends CalculatorBaseProps {
+  /**
+   * ID único da calculadora
+   */
+  id: number;
 
   /**
    * Componente de entrada
@@ -108,52 +124,12 @@ export interface CalculatorContainerProps {
    * Mensagem de erro
    */
   errorMessage?: string;
-
-  /**
-   * Callback para fechar a calculadora
-   */
-  onClose?: () => void;
-
-  /**
-   * Posição inicial
-   */
-  initialPosition?: PositionWithWidth;
-
-  /**
-   * Callback quando a posição muda
-   */
-  onPositionChange?: (position: PositionWithWidth) => void;
-
-  /**
-   * Se o teclado está visível
-   */
-  isKeyboardVisible?: boolean;
-
-  /**
-   * Callback quando a visibilidade do teclado muda
-   */
-  onKeyboardVisibilityChange?: (visible: boolean) => void;
 }
 
 /**
  * Props do cabeçalho da calculadora
  */
-export interface CalculatorHeaderProps {
-  /**
-   * Título da calculadora
-   */
-  title: string;
-
-  /**
-   * Subtítulo opcional
-   */
-  subtitle?: string;
-
-  /**
-   * Callback para fechar a calculadora
-   */
-  onClose?: () => void;
-}
+export type CalculatorHeaderProps = Pick<CalculatorBaseProps, 'title' | 'subtitle' | 'onClose'>;
 
 /**
  * Props do toggle do teclado
@@ -211,34 +187,4 @@ export interface KeyboardCalculateProps {
    * Callback para apagar o último caractere
    */
   onBackspace: () => void;
-}
-
-/**
- * Props do hook useCalculatorKeyboard
- */
-export interface UseCalculatorKeyboardProps {
-  /**
-   * Visibilidade inicial do teclado
-   */
-  initialVisibility?: boolean;
-
-  /**
-   * Callback chamado quando a visibilidade do teclado muda
-   */
-  onVisibilityChange?: (isVisible: boolean) => void;
-}
-
-/**
- * Retorno do hook useCalculatorKeyboard
- */
-export interface UseCalculatorKeyboardReturn {
-  /**
-   * Se o teclado está colapsado
-   */
-  isCollapsed: boolean;
-
-  /**
-   * Handler para alternar a visibilidade do teclado
-   */
-  handleKeyboardToggle: () => void;
 } 

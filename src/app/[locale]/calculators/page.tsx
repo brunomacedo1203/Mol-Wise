@@ -1,98 +1,61 @@
 "use client";
+import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import MolarMassCalculator from "@/features/calculators/components/calculators/molar-mass/MolarMassCalculator";
 import { SubtitleProvider } from "@/shared/contexts/SubtitleContext";
 import Page from "@/shared/components/Page";
-import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
-import MolarMassCalculator from "@/features/calculators/components/MolarMassCalculator";
 import { useTranslations } from "next-intl";
-
-type CalculatorType = "molar-mass";
-
-function CalculatorRenderer({
-  id,
-  type,
-  position,
-  state,
-  onClose,
-  onPositionChange,
-  onStateChange,
-}: {
-  id: number;
-  type: CalculatorType;
-  position?: { x: number; y: number; width?: number };
-  state?: {
-    formula?: string;
-    result?: string | null;
-    isKeyboardVisible?: boolean;
-  };
-  onClose?: () => void;
-  onPositionChange?: (position: {
-    x: number;
-    y: number;
-    width: number;
-  }) => void;
-  onStateChange?: (state: {
-    formula?: string;
-    result?: string | null;
-    isKeyboardVisible?: boolean;
-  }) => void;
-}) {
-  switch (type) {
-    case "molar-mass":
-      return (
-        <MolarMassCalculator
-          id={id}
-          onClose={onClose}
-          initialPosition={position}
-          onPositionChange={onPositionChange}
-          initialFormula={state?.formula}
-          onFormulaChange={(formula) => onStateChange?.({ ...state, formula })}
-          initialResult={state?.result}
-          onResultChange={(result) => onStateChange?.({ ...state, result })}
-          isKeyboardVisible={state?.isKeyboardVisible}
-          onKeyboardVisibilityChange={(isKeyboardVisible) =>
-            onStateChange?.({ ...state, isKeyboardVisible })
-          }
-        />
-      );
-    default:
-      return null;
-  }
-}
+import { useEffect } from "react";
+import { PositionWithWidth } from "@/features/calculators/domain/types/position";
 
 export default function CalculatorsPage() {
-  const { calculators, removeCalculator, updateCalculator, clearCalculators } =
-    useCalculatorInstances();
   const t = useTranslations("calculators");
+  const { calculators, addCalculator, removeCalculator, updateCalculator } =
+    useCalculatorInstances();
+
+  // Adiciona uma calculadora quando a página é carregada
+  useEffect(() => {
+    if (calculators.length === 0) {
+      addCalculator("molar-mass", { x: 100, y: 100 });
+    }
+  }, [addCalculator, calculators.length]);
+
+  // Se não houver calculadora, não renderiza nada
+  if (calculators.length === 0) {
+    return null;
+  }
+
+  const calculator = calculators[0];
 
   return (
     <SubtitleProvider subtitle={t("subtitle")}>
       <Page title={t("title")}>
         <div id="main-content-area" className="w-full min-h-screen relative">
-          {calculators.length > 0 && (
-            <button
-              onClick={clearCalculators}
-              className="absolute top-0 left-0 m-2 flex items-center gap-1 px-1.5 py-0.5 text-sm bg-red-500 hover:bg-red-600 text-white rounded shadow transition-colors"
-            >
-              {t("closeAll")}
-            </button>
-          )}
-          {calculators.map((instance) => (
-            <div key={instance.id}>
-              <CalculatorRenderer
-                id={instance.id}
-                type={instance.type}
-                position={instance.position}
-                state={instance.state}
-                onClose={() => removeCalculator(instance.id)}
-                onPositionChange={(position) =>
-                  updateCalculator(instance.id, { position })
-                }
-                onStateChange={(state) =>
-                  updateCalculator(instance.id, { state })
-                }
-              />
-            </div>
-          ))}
+          <MolarMassCalculator
+            id={calculator.id}
+            onClose={() => removeCalculator(calculator.id)}
+            initialPosition={calculator.position}
+            onPositionChange={(position: PositionWithWidth) =>
+              updateCalculator(calculator.id, { position })
+            }
+            initialFormula={calculator.state?.formula}
+            onFormulaChange={(formula: string) =>
+              updateCalculator(calculator.id, {
+                state: { ...calculator.state, formula },
+              })
+            }
+            initialResult={calculator.state?.result}
+            onResultChange={(result: string | null) =>
+              updateCalculator(calculator.id, {
+                state: { ...calculator.state, result },
+              })
+            }
+            isKeyboardVisible={calculator.state?.isKeyboardVisible}
+            onKeyboardVisibilityChange={(isKeyboardVisible: boolean) =>
+              updateCalculator(calculator.id, {
+                state: { ...calculator.state, isKeyboardVisible },
+              })
+            }
+          />
         </div>
       </Page>
     </SubtitleProvider>
