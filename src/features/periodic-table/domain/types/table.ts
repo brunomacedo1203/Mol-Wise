@@ -1,29 +1,5 @@
 import { Element } from "./element";
-
-/**
- * Configurações da tabela periódica
- */
-export interface PeriodicTableConfig {
-  /**
-   * Se deve mostrar números atômicos
-   */
-  showAtomicNumber: boolean;
-
-  /**
-   * Se deve mostrar massas atômicas
-   */
-  showAtomicMass: boolean;
-
-  /**
-   * Se deve mostrar nomes dos elementos
-   */
-  showElementName: boolean;
-
-  /**
-   * Se deve mostrar símbolos dos elementos
-   */
-  showElementSymbol: boolean;
-}
+import { PeriodicTableConfig } from "./config";
 
 /**
  * Estado da tabela periódica
@@ -50,24 +26,26 @@ export interface PeriodicTableState {
   searchTerm: string;
 }
 
-/**
- * Props do container da tabela periódica
- */
-export interface PeriodicTableContainerProps {
+export interface PeriodicTableProps {
   /**
-   * Configuração inicial
-   */
-  initialConfig?: Partial<PeriodicTableConfig>;
-
-  /**
-   * Callback quando um elemento é selecionado
+   * Callback chamado quando um elemento é selecionado
    */
   onElementSelect?: (element: Element | null) => void;
 
   /**
-   * Callback quando a configuração muda
+   * Callback chamado quando a configuração da tabela é alterada
    */
   onConfigChange?: (config: PeriodicTableConfig) => void;
+}
+
+/**
+ * Props do container da tabela periódica
+ */
+export interface PeriodicTableContainerProps extends PeriodicTableProps {
+  /**
+   * Conteúdo do container
+   */
+  children: React.ReactNode;
 }
 
 /**
@@ -75,24 +53,36 @@ export interface PeriodicTableContainerProps {
  */
 export interface ElementCardProps {
   /**
-   * Elemento a ser exibido
+   * Elemento químico a ser exibido
    */
   element: Element;
 
   /**
-   * Se o elemento está selecionado
+   * Indica se o elemento está selecionado
    */
   isSelected: boolean;
 
   /**
-   * Callback quando o card é clicado
+   * Callback chamado quando o elemento é clicado
    */
-  onClick: (element: Element) => void;
+  onClick: (atomicNumber: number) => void;
 
   /**
-   * Configuração atual
+   * Configuração da tabela periódica
    */
   config: PeriodicTableConfig;
+}
+
+export interface ElementCardsGridProps {
+  /**
+   * Lista de elementos químicos a serem exibidos
+   */
+  elements: Element[];
+
+  /**
+   * Callback chamado quando um elemento é selecionado
+   */
+  onElementSelect?: (element: Element | null) => void;
 }
 
 /**
@@ -100,12 +90,24 @@ export interface ElementCardProps {
  */
 export interface ElementDetailsPanelProps {
   /**
-   * Elemento selecionado
+   * Elemento químico selecionado
    */
   element: Element | null;
 
   /**
-   * Callback para fechar o painel
+   * Callback chamado quando o painel é fechado
    */
   onClose: () => void;
+}
+
+export interface PeriodicTableHeaderProps {
+  /**
+   * Configuração atual da tabela periódica
+   */
+  config: PeriodicTableConfig;
+
+  /**
+   * Callback chamado quando a configuração é alterada
+   */
+  onConfigChange: (config: PeriodicTableConfig) => void;
 } 

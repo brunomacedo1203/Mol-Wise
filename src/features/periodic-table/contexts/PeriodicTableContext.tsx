@@ -1,124 +1,78 @@
-import { createContext, useContext, useReducer, ReactNode } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { Element } from "../domain/types/element";
-import { PeriodicTableState, PeriodicTableConfig } from "../domain/types/table";
+import { PeriodicTableConfig, defaultConfig } from "../domain/types/config";
 
-// Estado inicial
-const initialState: PeriodicTableState = {
-  config: {
-    showAtomicNumber: true,
-    showAtomicMass: true,
-    showElementName: true,
-    showElementSymbol: true,
-  },
-  selectedElement: null,
-  filteredElements: [],
-  searchTerm: "",
-};
+interface PeriodicTableContextData {
+  /**
+   * Elemento químico atualmente selecionado
+   */
+  selectedElement: Element | null;
 
-// Ações
-type PeriodicTableAction =
-  | { type: "SET_CONFIG"; payload: Partial<PeriodicTableConfig> }
-  | { type: "SELECT_ELEMENT"; payload: Element | null }
-  | { type: "SET_FILTERED_ELEMENTS"; payload: Element[] }
-  | { type: "SET_SEARCH_TERM"; payload: string };
+  /**
+   * Função para atualizar o elemento selecionado
+   */
+  setSelectedElement: (element: Element | null) => void;
 
-// Reducer
-function periodicTableReducer(
-  state: PeriodicTableState,
-  action: PeriodicTableAction
-): PeriodicTableState {
-  switch (action.type) {
-    case "SET_CONFIG":
-      return {
-        ...state,
-        config: { ...state.config, ...action.payload },
-      };
-    case "SELECT_ELEMENT":
-      return {
-        ...state,
-        selectedElement: action.payload,
-      };
-    case "SET_FILTERED_ELEMENTS":
-      return {
-        ...state,
-        filteredElements: action.payload,
-      };
-    case "SET_SEARCH_TERM":
-      return {
-        ...state,
-        searchTerm: action.payload,
-      };
-    default:
-      return state;
-  }
-}
+  /**
+   * Configuração atual da tabela periódica
+   */
+  config: PeriodicTableConfig;
 
-// Contexto
-interface PeriodicTableContextType {
-  state: PeriodicTableState;
+  /**
+   * Função para atualizar a configuração
+   */
   setConfig: (config: Partial<PeriodicTableConfig>) => void;
-  selectElement: (element: Element | null) => void;
-  setFilteredElements: (elements: Element[]) => void;
-  setSearchTerm: (term: string) => void;
 }
 
-const PeriodicTableContext = createContext<
-  PeriodicTableContextType | undefined
->(undefined);
-
-// Provider
 interface PeriodicTableProviderProps {
+  /**
+   * Conteúdo do provider
+   */
   children: ReactNode;
+
+  /**
+   * Configuração inicial da tabela periódica
+   */
   initialConfig?: Partial<PeriodicTableConfig>;
 }
 
+/**
+ * Contexto da tabela periódica
+ */
+export const PeriodicTableContext = createContext<PeriodicTableContextData>(
+  {} as PeriodicTableContextData
+);
+
+/**
+ * Provider do contexto da tabela periódica
+ */
 export function PeriodicTableProvider({
   children,
   initialConfig,
 }: PeriodicTableProviderProps) {
-  const [state, dispatch] = useReducer(periodicTableReducer, {
-    ...initialState,
-    config: { ...initialState.config, ...initialConfig },
+  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
+  const [config, setConfig] = useState<PeriodicTableConfig>({
+    ...defaultConfig,
+    ...initialConfig,
   });
 
-  const setConfig = (config: Partial<PeriodicTableConfig>) => {
-    dispatch({ type: "SET_CONFIG", payload: config });
-  };
-
-  const selectElement = (element: Element | null) => {
-    dispatch({ type: "SELECT_ELEMENT", payload: element });
-  };
-
-  const setFilteredElements = (elements: Element[]) => {
-    dispatch({ type: "SET_FILTERED_ELEMENTS", payload: elements });
-  };
-
-  const setSearchTerm = (term: string) => {
-    dispatch({ type: "SET_SEARCH_TERM", payload: term });
+  const handleSetConfig = (newConfig: Partial<PeriodicTableConfig>) => {
+    setConfig((prev: PeriodicTableConfig) => ({
+      ...prev,
+      ...newConfig,
+    }));
   };
 
   return (
     <PeriodicTableContext.Provider
       value={{
-        state,
-        setConfig,
-        selectElement,
-        setFilteredElements,
-        setSearchTerm,
+        selectedElement,
+        setSelectedElement,
+        config,
+        setConfig: handleSetConfig,
       }}
     >
       {children}
     </PeriodicTableContext.Provider>
   );
-}
-
-// Hook
-export function usePeriodicTable() {
-  const context = useContext(PeriodicTableContext);
-  if (context === undefined) {
-    throw new Error(
-      "usePeriodicTable deve ser usado dentro de um PeriodicTableProvider"
-    );
-  }
-  return context;
 }
