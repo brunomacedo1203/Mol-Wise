@@ -3,7 +3,7 @@ export const MENU_STORAGE_KEY = "menuState";
 export const MENU_SECTIONS = {
   CALCULATORS: "calculators",
   CATALOG: "catalog",
-  GAMES: "games",
+  // GAMES: "games", // Comentado temporariamente
 } as const;
 
 export const SUBMENU_VARIANTS = {

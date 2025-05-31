@@ -1,5 +1,27 @@
 import { ComponentType } from 'react';
 
+export type MenuItemType = 'link' | 'calculator';
+export type CalculatorId = 'molar-mass'; // Adicionando tipo específico para IDs de calculadoras
+
+export interface BaseMenuItemProps {
+  icon: ComponentType<{ className?: string }>;
+  translationKey: string;
+  type: MenuItemType;
+}
+
+export interface LinkMenuItemProps extends BaseMenuItemProps {
+  type: 'link';
+  href: (locale: string) => string;
+}
+
+export interface CalculatorMenuItemProps extends BaseMenuItemProps {
+  type: 'calculator';
+  calculatorId: CalculatorId;
+}
+
+export type MenuItemConfig = LinkMenuItemProps | CalculatorMenuItemProps;
+
+// Tipo para os itens do menu após processamento
 export interface MenuItemProps {
   icon: ComponentType<{ className?: string }>;
   label: string;
@@ -9,11 +31,20 @@ export interface MenuItemProps {
   isCollapsed?: boolean;
 }
 
+// Tipo para as seções do menu após processamento
 export interface MenuSection {
   id: string;
   icon: ComponentType<{ className?: string }>;
   label: string;
   items: MenuItemProps[];
+}
+
+// Tipo para as seções do menu na configuração
+export interface MenuSectionConfig {
+  id: string;
+  icon: ComponentType<{ className?: string }>;
+  translationKey: string;
+  items: MenuItemConfig[];
 }
 
 export interface MenuState {
