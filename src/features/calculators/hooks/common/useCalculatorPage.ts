@@ -13,11 +13,9 @@ export function useCalculatorPage({
 
   // Adiciona uma calculadora quando o hook é montado
   useEffect(() => {
-    if (calculators.length === 0) {
-      addCalculator(calculatorType, initialPosition);
-      onCalculatorAdd?.();
-    }
-  }, [addCalculator, calculators.length, calculatorType, initialPosition, onCalculatorAdd]);
+    addCalculator(calculatorType, initialPosition);
+    onCalculatorAdd?.();
+  }, [addCalculator, calculatorType, initialPosition, onCalculatorAdd]);
 
   // Se não houver calculadora, retorna null
   if (calculators.length === 0) {
@@ -33,7 +31,7 @@ export function useCalculatorPage({
     };
   }
 
-  const calculator = calculators[0];
+  const calculator = calculators[calculators.length - 1]; // Pega a última calculadora adicionada
 
   return {
     calculator,

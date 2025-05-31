@@ -1,79 +1,109 @@
 /**
- * Representa um elemento químico
+ * Represents a chemical element
  */
 export interface Element {
   /**
-   * Número atômico
+   * Atomic number
    */
   atomicNumber: number;
 
   /**
-   * Símbolo do elemento
+   * Element symbol
    */
   symbol: string;
 
   /**
-   * Nome do elemento
+   * Element name
    */
   name: string;
 
   /**
-   * Massa atômica
+   * Atomic mass (molar mass)
    */
-  atomicMass: number;
+  molarMass: number;
 
   /**
-   * Grupo do elemento
+   * Element category
    */
-  group: number;
+  category: "Alkali metal" | "Alkaline earth metal" | "Transition metal" | "Post-transition metal" | "Metalloid" | "Nonmetal" | "Halogen" | "Noble gas" | "Lanthanide" | "Actinide";
 
   /**
-   * Período do elemento
+   * Standard state at room temperature
    */
-  period: number;
+  standardState: "solid" | "liquid" | "gas";
 
   /**
-   * Categoria do elemento
-   */
-  category: "metal" | "nonmetal" | "metalloid";
-
-  /**
-   * Estado físico em temperatura ambiente
-   */
-  phase: "solid" | "liquid" | "gas";
-
-  /**
-   * Densidade em g/cm³
-   */
-  density: number;
-
-  /**
-   * Ponto de fusão em K
-   */
-  meltingPoint: number;
-
-  /**
-   * Ponto de ebulição em K
-   */
-  boilingPoint: number;
-
-  /**
-   * Eletronegatividade (escala de Pauling)
-   */
-  electronegativity: number;
-
-  /**
-   * Energia de ionização em kJ/mol
-   */
-  ionizationEnergy: number;
-
-  /**
-   * Configuração eletrônica
+   * Electron configuration
    */
   electronConfiguration: string;
 
   /**
-   * Descrição do elemento
+   * Oxidation states
    */
-  description: string;
+  oxidationStates: string;
+
+  /**
+   * Electronegativity (Pauling scale)
+   */
+  electronegativity?: number;
+
+  /**
+   * Atomic radius
+   */
+  atomicRadius: string;
+
+  /**
+   * Ionization energy
+   */
+  ionizationEnergy: string;
+
+  /**
+   * Electron affinity
+   */
+  electronAffinity?: string;
+
+  /**
+   * Melting point in Kelvin
+   */
+  meltingPoint: string;
+
+  /**
+   * Boiling point in Kelvin
+   */
+  boilingPoint: string;
+
+  /**
+   * Density in g/cm³
+   */
+  density: string;
+
+  /**
+   * Year of discovery
+   */
+  yearDiscovered: string;
+
+  /**
+   * Group number
+   */
+  group: number;
+
+  /**
+   * Period number
+   */
+  period: number;
+
+  /**
+   * Row in periodic table
+   */
+  row: number;
+
+  /**
+   * Column in periodic table
+   */
+  column: number;
+
+  /**
+   * Column number to display
+   */
+  showColumnNumber?: number;
 } 

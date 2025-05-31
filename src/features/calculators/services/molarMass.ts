@@ -1,4 +1,4 @@
-import elementsData from "@/features/periodic-table/services/elementsData";
+import elementsData from "@/features/periodic-table/data/elementsData";
 
 export function calculateMolarMassFromFormula(formula: string, t: (key: string, params?: Record<string, any> /* eslint-disable-line @typescript-eslint/no-explicit-any */) => string): number {
   if (!formula || formula.trim() === "") {

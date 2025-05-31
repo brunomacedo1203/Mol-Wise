@@ -1,5 +1,5 @@
 import { IMolarMassCalculator } from '../../domain/interfaces/ICalculatorService';
-import elementsData from '@/features/periodic-table/services/elementsData';
+import elementsData from '@/features/periodic-table/data/elementsData';
 
 export class MolarMassCalculator implements IMolarMassCalculator {
   async calculate(formula: string): Promise<number> {

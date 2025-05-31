@@ -1,4 +1,4 @@
-import elementsData from '../services/elementsData'; 
+import elementsData from '../data/elementsData'; 
 
 const NUM_ROWS = 10;
 const NUM_COLS = 18;

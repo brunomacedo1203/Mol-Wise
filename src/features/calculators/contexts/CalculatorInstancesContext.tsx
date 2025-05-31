@@ -1,12 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import {
-  CalculatorType,
-  CalculatorInstance,
-  Position,
-  PositionWithWidth,
-} from "../domain/types/calculator";
+import { CalculatorType, CalculatorInstance } from "../domain/types/calculator";
+import type { Position, PositionWithWidth } from "../domain/types";
 
 interface CalculatorInstancesProviderProps {
   children: React.ReactNode;
