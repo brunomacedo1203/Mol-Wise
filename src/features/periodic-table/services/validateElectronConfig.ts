@@ -1,4 +1,4 @@
-import elementsData from "./elementsData";
+import elementsData from "../data/elementsData";
 
 const maxElectrons: Record<string, number> = { s: 2, p: 6, d: 10, f: 14 };
 

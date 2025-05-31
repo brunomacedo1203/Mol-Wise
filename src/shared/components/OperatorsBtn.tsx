@@ -40,7 +40,7 @@ export default function OperatorsBtn({
     text-black font-semibold text-xl w-12 h-10 px-[62px]
 l  "
       >
-        {t('common.actions.calculate')}
+        {t("calculators.molarMass.keyboard.calculate")}
       </KeyboardBtn>
 
       <KeyboardBtn

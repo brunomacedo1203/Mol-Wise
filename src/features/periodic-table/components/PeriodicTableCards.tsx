@@ -9,22 +9,21 @@ import {
   isLegendPlaceholder,
   isElementCard,
 } from "../utils/periodicTableUtils";
-import { Element } from "../types/element";
+import { Element } from "../domain/types/element";
 import LegendCard from "./cards/LegendCard";
 import LanthanidesLabelCard from "./cards/LanthanidesLabelCard";
 import ActinidesLabelCard from "./cards/ActinidesLabelCard";
 import ElementCardWrapper from "./cards/ElementCardWrapper";
-import elementsData from "../services/elementsData";
+import elementsData from "../data/elementsData";
 
 // Elemento padrão: Hidrogênio
-const defaultElement = elementsData.find((e) => e.symbol === "H");
+const defaultElement = elementsData.find((e) => e.symbol === "H") as Element;
 if (!defaultElement)
   throw new Error("Elemento padrão (Hidrogênio) não encontrado!");
 
 export default function PeriodicTableCards() {
-  const [selectedElement, setSelectedElement] = useState<Element>(
-    defaultElement!
-  );
+  const [selectedElement, setSelectedElement] =
+    useState<Element>(defaultElement);
   const matrix = generatePeriodicTableMatrix();
 
   return (
@@ -63,7 +62,7 @@ export default function PeriodicTableCards() {
                 ) ? (
                 <ElementCardWrapper
                   key={element.atomicNumber}
-                  element={element}
+                  element={element as Element}
                   setSelectedElement={setSelectedElement}
                 />
               ) : (

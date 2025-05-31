@@ -8,7 +8,7 @@ export default function PeriodicTableLegend() {
         <span className="font-normal">{t("atomicNumber").toUpperCase()}</span>
         <span className="text-2xl my-2">{t("symbol").toUpperCase()}</span>
         <span className="font-normal">{t("name").toUpperCase()}</span>
-        <span className="font-normal">{t("atomicMass").toUpperCase()}</span>
+        <span className="font-normal">{t("molarMass").toUpperCase()}</span>
       </div>
     </div>
   );

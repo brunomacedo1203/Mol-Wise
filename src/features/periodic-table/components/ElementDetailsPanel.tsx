@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Element } from "../types/element";
-import elementsData from "../services/elementsData";
+import { Element } from "../domain/types/element";
+import elementsData from "../data/elementsData";
 import { formatWithSup } from "@/shared/utils/formatWithSup";
 import { useTranslations } from "next-intl";
 
@@ -54,15 +54,19 @@ function searchElement(term: string): Element | undefined {
 
   let found = elementsData.find((el) =>
     normalize(el.symbol).startsWith(normalized)
-  );
+  ) as Element | undefined;
   if (found) return found;
 
-  found = elementsData.find((el) => normalize(el.name).includes(normalized));
+  found = elementsData.find((el) => normalize(el.name).includes(normalized)) as
+    | Element
+    | undefined;
   if (found) return found;
 
   const symbol = ptNameToSymbol[normalized];
   if (symbol) {
-    found = elementsData.find((el) => el.symbol === symbol);
+    found = elementsData.find((el) => el.symbol === symbol) as
+      | Element
+      | undefined;
     if (found) return found;
   }
 
@@ -99,7 +103,7 @@ export default function ElementDetailsPanel({
   const fields: { label: string; value?: React.ReactNode }[] = [
     { label: t("element.atomicNumber"), value: elementToShow.atomicNumber },
     {
-      label: t("element.atomicMass"),
+      label: t("element.molarMass"),
       value:
         elementToShow.molarMass !== undefined
           ? `${Number(elementToShow.molarMass).toFixed(2)} g/mol`

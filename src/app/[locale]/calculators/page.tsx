@@ -1,99 +1,16 @@
 "use client";
+import { CalculatorPageContent } from "@/features/calculators/components/common/CalculatorPageContent";
 import { SubtitleProvider } from "@/shared/contexts/SubtitleContext";
 import Page from "@/shared/components/Page";
-import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
-import MolarMassCalculator from "@/features/calculators/components/MolarMassCalculator";
 import { useTranslations } from "next-intl";
 
-type CalculatorType = "molar-mass";
-
-function CalculatorRenderer({
-  id,
-  type,
-  position,
-  state,
-  onClose,
-  onPositionChange,
-  onStateChange,
-}: {
-  id: number;
-  type: CalculatorType;
-  position?: { x: number; y: number; width?: number };
-  state?: {
-    formula?: string;
-    result?: string | null;
-    isKeyboardVisible?: boolean;
-  };
-  onClose?: () => void;
-  onPositionChange?: (position: {
-    x: number;
-    y: number;
-    width: number;
-  }) => void;
-  onStateChange?: (state: {
-    formula?: string;
-    result?: string | null;
-    isKeyboardVisible?: boolean;
-  }) => void;
-}) {
-  switch (type) {
-    case "molar-mass":
-      return (
-        <MolarMassCalculator
-          id={id}
-          onClose={onClose}
-          initialPosition={position}
-          onPositionChange={onPositionChange}
-          initialFormula={state?.formula}
-          onFormulaChange={(formula) => onStateChange?.({ ...state, formula })}
-          initialResult={state?.result}
-          onResultChange={(result) => onStateChange?.({ ...state, result })}
-          isKeyboardVisible={state?.isKeyboardVisible}
-          onKeyboardVisibilityChange={(isKeyboardVisible) =>
-            onStateChange?.({ ...state, isKeyboardVisible })
-          }
-        />
-      );
-    default:
-      return null;
-  }
-}
-
 export default function CalculatorsPage() {
-  const { calculators, removeCalculator, updateCalculator, clearCalculators } =
-    useCalculatorInstances();
   const t = useTranslations("calculators");
 
   return (
     <SubtitleProvider subtitle={t("subtitle")}>
       <Page title={t("title")}>
-        <div id="main-content-area" className="w-full min-h-screen relative">
-          {calculators.length > 0 && (
-            <button
-              onClick={clearCalculators}
-              className="absolute top-0 left-0 m-2 flex items-center gap-1 px-1.5 py-0.5 text-sm bg-red-500 hover:bg-red-600 text-white rounded shadow transition-colors"
-            >
-              {t("closeAll")}
-            </button>
-          )}
-          {calculators.map((instance) => (
-            <div key={instance.id}>
-              <CalculatorRenderer
-                id={instance.id}
-                type={instance.type}
-                position={instance.position}
-                state={instance.state}
-                onClose={() => removeCalculator(instance.id)}
-                onPositionChange={(position) =>
-                  updateCalculator(instance.id, { position })
-                }
-                onStateChange={(state) =>
-                  updateCalculator(instance.id, { state })
-                }
-              />
-            </div>
-          ))}
-        </div>
+        <CalculatorPageContent calculatorType="molar-mass" />
       </Page>
     </SubtitleProvider>
   );

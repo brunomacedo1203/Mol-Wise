@@ -1,5 +1,5 @@
 import SingleCardPeriodicTable from "../SingleCardPeriodicTable";
-import { Element } from "../../types/element";
+import { Element } from "../../domain/types/element";
 import React from "react";
 import { useTranslations } from "next-intl";
 
@@ -38,7 +38,7 @@ export default function ElementCardWrapper({
         symbol={element.symbol}
         name={translatedElementName}
         molarMass={element.molarMass}
-        showColummNumber={element.showColummNumber}
+        showColummNumber={element.showColumnNumber}
       />
     </div>
   );

@@ -16,7 +16,9 @@
       "calculate": "Calculate",
       "reset": "Reset",
       "close": "Close",
-      "backspace": "Backspace"
+      "backspace": "Backspace",
+       "closeAll": "Close all",
+      "closeAllWithCount": "Close all ({count})"
     },
     "theme": {
       "light": "Light Theme",
@@ -62,8 +64,12 @@
   },
   "navigation": {
     "home": "Home",
+    "about": "About",
+    "contact": "Contact",
     "calculators": "Calculators",
     "periodicTable": "Periodic Table",
+    "catalog": "Catalog",
+    "games": "Games",
     "menu": {
       "expand": "Expand menu",
       "collapse": "Collapse menu"
@@ -110,11 +116,12 @@
   "periodicTable": {
     "title": "Periodic Table",
     "subtitle": "Hover over an element to see details",
+    "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
     "element": {
       "atomicNumber": "Atomic Number",
       "symbol": "Symbol",
       "name": "Name",
-      "atomicMass": "Atomic Mass",
+      "molarMass": "Molar Mass",
       "category": "Category",
       "electronConfiguration": "Electron Configuration",
       "electronegativity": "Electronegativity",
@@ -269,6 +276,22 @@
       "Lv": "Livermorium",
       "Ts": "Tennessine",
       "Og": "Oganesson"
+    }
+  },
+  "catalog": {
+    "elements": {
+      "title": "Elements"
+    },
+    "compounds": {
+      "title": "Compounds"
+    }
+  },
+  "games": {
+    "elementQuiz": {
+      "title": "Element Quiz"
+    },
+    "compoundBuilder": {
+      "title": "Compound Builder"
     }
   }
 } 

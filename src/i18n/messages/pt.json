@@ -1,5 +1,3 @@
- 
-
 {
   "common": {
     "errors": {
@@ -18,7 +16,9 @@
       "calculate": "Calcular",
       "reset": "Limpar",
       "close": "Fechar",
-      "backspace": "Apagar"
+      "backspace": "Apagar",
+      "closeAll": "Fechar todas",
+      "closeAllWithCount": "Fechar todas ({count})"
     },
     "theme": {
       "light": "Tema Claro",
@@ -68,6 +68,8 @@
     "contact": "Contato",
     "calculators": "Calculadoras",
     "periodicTable": "Tabela Periódica",
+    "catalog": "Catálogo",
+    "games": "Jogos",
     "menu": {
       "expand": "Expandir menu",
       "collapse": "Recolher menu"
@@ -83,7 +85,7 @@
     "subtitle": "Abra uma ou mais calculadoras pelo menu.",
     "closeAll": "Fechar Todas",
     "molarMass": {
-      "title": " Massa Molar",
+      "title": "Massa Molar",
       "subtitle": "Digite uma fórmula química ou símbolo do elemento",
       "input": {
         "placeholder": "Digite a fórmula (ex: H2O)",
@@ -114,11 +116,12 @@
   "periodicTable": {
     "title": "Tabela Periódica",
     "subtitle": "Passe o mouse sobre um elemento para ver detalhes",
+    "ariaLabel": "Elemento {name} ({symbol}), número atômico {atomicNumber}",
     "element": {
       "atomicNumber": "Número Atômico",
       "symbol": "Símbolo",
       "name": "Nome",
-      "atomicMass": "Massa Atômica",
+      "molarMass": "Massa Molar",
       "category": "Categoria",
       "electronConfiguration": "Configuração Eletrônica",
       "electronegativity": "Eletronegatividade",
@@ -273,6 +276,22 @@
       "Lv": "Livermório",
       "Ts": "Tenesso",
       "Og": "Oganessônio"
+    }
+  },
+  "catalog": {
+    "elements": {
+      "title": "Elementos"
+    },
+    "compounds": {
+      "title": "Compostos"
+    }
+  },
+  "games": {
+    "elementQuiz": {
+      "title": "Quiz de Elementos"
+    },
+    "compoundBuilder": {
+      "title": "Construtor de Compostos"
     }
   }
 } 
