@@ -8,5 +8,9 @@ export type {
   KeyConfig, 
   KeyboardBaseProps, 
   FormulaKeyboardProps, 
-  ScientificKeyboardProps 
-} from "./keyboard"; 
+  ScientificKeyboardProps,
+  UseCalculatorKeyboardProps,
+  UseCalculatorKeyboardReturn
+} from "./keyboard";
+export * from "./molecularFormulaInput";
+export * from "./calculator-page"; 

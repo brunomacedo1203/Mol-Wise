@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import {
   UseCalculatorKeyboardProps,
   UseCalculatorKeyboardReturn,
-} from "../domain/types/keyboard";
+} from "@/features/calculators/domain/types";
 
 export function useCalculatorKeyboard({
   initialVisibility = true,

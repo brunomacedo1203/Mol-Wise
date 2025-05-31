@@ -1,5 +1,5 @@
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { containerStyles } from "../../styles/containerStyles";
+import { containerStyles } from "@/features/calculators/styles/containerStyles";
 
 interface CalculatorKeyboardToggleProps {
   isCollapsed: boolean;

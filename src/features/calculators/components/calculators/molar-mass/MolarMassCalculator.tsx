@@ -1,10 +1,12 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { CalculatorBaseProps } from "../../../domain/types/calculator";
-import { useMolarMassCalculator } from "../../../hooks/calculators/useMolarMassCalculator";
-import MolecularFormulaInput from "./MolecularFormulaInput";
-import CalculatorContainer from "../../common/CalculatorContainer";
-import KeyboardCalculate from "./KeyboardCalculate";
+import { CalculatorBaseProps } from "@/features/calculators/domain/types";
+import { useMolarMassCalculator } from "@/features/calculators/hooks";
+import {
+  MolecularFormulaInput,
+  KeyboardCalculate,
+} from "@/features/calculators/components/calculators/molar-mass";
+import { CalculatorContainer } from "@/features/calculators/components/common";
 
 // Props do componente de calculadora de massa molar
 type MolarMassCalculatorProps = Omit<

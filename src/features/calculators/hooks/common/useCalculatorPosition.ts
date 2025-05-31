@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { RndDragCallback, RndResizeCallback } from "react-rnd";
-import { Position } from "../../domain/types/position";
+import { Position } from "@/features/calculators/domain/types";
 import { containerStyles } from "../../styles/containerStyles";
 
 interface UseCalculatorPositionProps {

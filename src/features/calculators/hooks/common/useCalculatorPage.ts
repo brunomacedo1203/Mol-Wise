@@ -1,5 +1,5 @@
 import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
-import { UseCalculatorPageProps, UseCalculatorPageReturn } from "@/features/calculators/domain/types/calculator-page";
+import { UseCalculatorPageProps, UseCalculatorPageReturn } from "@/features/calculators/domain/types";
 import { useEffect } from "react";
 
 export function useCalculatorPage({

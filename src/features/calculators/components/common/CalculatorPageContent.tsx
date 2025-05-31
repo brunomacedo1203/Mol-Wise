@@ -1,4 +1,4 @@
-import MolarMassCalculator from "@/features/calculators/components/calculators/molar-mass/MolarMassCalculator";
+import { MolarMassCalculator } from "@/features/calculators/components/calculators/molar-mass";
 import { useCalculatorPage } from "@/features/calculators/hooks/common/useCalculatorPage";
 import { UseCalculatorPageProps } from "@/features/calculators/domain/types/calculator-page";
 

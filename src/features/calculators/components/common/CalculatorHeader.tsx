@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { containerStyles } from "../../styles/containerStyles";
+import { containerStyles } from "@/features/calculators/styles/containerStyles";
 
 interface CalculatorHeaderProps {
   title: string;

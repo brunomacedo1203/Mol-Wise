@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Rnd } from "react-rnd";
 import { useTranslations } from "next-intl";
-import { CalculatorContainerProps } from "../../domain/types/calculator";
-import { containerStyles } from "../../styles/containerStyles";
-import { CalculatorKeyboardToggle } from "./CalculatorKeyboardToggle";
-import { CalculatorHeader } from "./CalculatorHeader";
-import { useCalculatorPosition } from "../../hooks/common/useCalculatorPosition";
+import { CalculatorContainerProps } from "@/features/calculators/domain/types";
+import { containerStyles } from "@/features/calculators/styles/containerStyles";
+import {
+  CalculatorKeyboardToggle,
+  CalculatorHeader,
+} from "@/features/calculators/components/common";
+import { useCalculatorPosition } from "@/features/calculators/hooks";
 
 export default function CalculatorContainer({
   title,
