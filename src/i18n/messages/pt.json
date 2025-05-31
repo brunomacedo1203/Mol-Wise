@@ -68,6 +68,8 @@
     "contact": "Contato",
     "calculators": "Calculadoras",
     "periodicTable": "Tabela Periódica",
+    "catalog": "Catálogo",
+    "games": "Jogos",
     "menu": {
       "expand": "Expandir menu",
       "collapse": "Recolher menu"
@@ -274,6 +276,22 @@
       "Lv": "Livermório",
       "Ts": "Tenesso",
       "Og": "Oganessônio"
+    }
+  },
+  "catalog": {
+    "elements": {
+      "title": "Elementos"
+    },
+    "compounds": {
+      "title": "Compostos"
+    }
+  },
+  "games": {
+    "elementQuiz": {
+      "title": "Quiz de Elementos"
+    },
+    "compoundBuilder": {
+      "title": "Construtor de Compostos"
     }
   }
 } 

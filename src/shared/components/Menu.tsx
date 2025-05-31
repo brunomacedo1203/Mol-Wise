@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -10,15 +10,49 @@ import {
   ChevronUp,
   FlaskConical,
   Table2,
+  Book,
+  Gamepad2,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useParams } from "next/navigation";
 import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
-import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
+const STORAGE_KEY = "menuState";
+
+interface MenuState {
+  openSections: Record<string, boolean>;
+}
+
 export default function Menu({ collapsed }: { collapsed: boolean }) {
-  const [calculatorsOpen, setCalculatorsOpen] = useState(false);
+  const [state, setState] = useState<MenuState>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    }
+    return {
+      openSections: {},
+    };
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+  }, [state]);
+
+  const toggleSection = (id: string) => {
+    setState((prev) => ({
+      ...prev,
+      openSections: {
+        ...prev.openSections,
+        [id]: !prev.openSections[id],
+      },
+    }));
+  };
+
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
@@ -68,12 +102,13 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
           {/* Calculators Accordion */}
           <li>
             <button
-              onClick={() => setCalculatorsOpen((open) => !open)}
+              onClick={() => toggleSection("calculators")}
               className={cn(
                 "flex items-center w-full gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 mt-1",
-                calculatorsOpen && "bg-zinc-100 dark:bg-zinc-900"
+                state.openSections["calculators"] &&
+                  "bg-zinc-100 dark:bg-zinc-900"
               )}
-              aria-expanded={calculatorsOpen}
+              aria-expanded={state.openSections["calculators"]}
             >
               <Calculator className="w-5 h-5" />
               {!collapsed && (
@@ -81,7 +116,7 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
                   <span className="text-base">
                     {t("navigation.calculators")}
                   </span>
-                  {calculatorsOpen ? (
+                  {state.openSections["calculators"] ? (
                     <ChevronUp className="w-4 h-4" />
                   ) : (
                     <ChevronDown className="w-4 h-4" />
@@ -93,11 +128,16 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
             <motion.div
               variants={submenuVariants}
               initial="closed"
-              animate={calculatorsOpen && !collapsed ? "open" : "closed"}
+              animate={
+                state.openSections["calculators"] && !collapsed
+                  ? "open"
+                  : "closed"
+              }
               className={cn(
                 "ml-6 mt-1",
-                // O submenu só aparece quando aberto e não está colapsado
-                calculatorsOpen && !collapsed ? "block" : "hidden"
+                state.openSections["calculators"] && !collapsed
+                  ? "block"
+                  : "hidden"
               )}
             >
               <div className="rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[210px]">
@@ -122,7 +162,122 @@ export default function Menu({ collapsed }: { collapsed: boolean }) {
                       {t("calculators.molarMass.title")}
                     </button>
                   </li>
-                  {/* Adicione outros calculators aqui */}
+                </ul>
+              </div>
+            </motion.div>
+          </li>
+
+          {/* Catalog Accordion */}
+          <li>
+            <button
+              onClick={() => toggleSection("catalog")}
+              className={cn(
+                "flex items-center w-full gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 mt-1",
+                state.openSections["catalog"] && "bg-zinc-100 dark:bg-zinc-900"
+              )}
+              aria-expanded={state.openSections["catalog"]}
+            >
+              <Book className="w-5 h-5" />
+              {!collapsed && (
+                <>
+                  <span className="text-base">{t("navigation.catalog")}</span>
+                  {state.openSections["catalog"] ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </>
+              )}
+            </button>
+            <motion.div
+              variants={submenuVariants}
+              initial="closed"
+              animate={
+                state.openSections["catalog"] && !collapsed ? "open" : "closed"
+              }
+              className={cn(
+                "ml-6 mt-1",
+                state.openSections["catalog"] && !collapsed ? "block" : "hidden"
+              )}
+            >
+              <div className="rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[210px]">
+                <ul className="p-1">
+                  <li>
+                    <Link
+                      href={`/${locale}/catalog/elements`}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-2m hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
+                    >
+                      <Table2 className="w-4 h-4" />
+                      {t("catalog.elements.title")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={`/${locale}/catalog/compounds`}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-2m hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
+                    >
+                      <FlaskConical className="w-4 h-4" />
+                      {t("catalog.compounds.title")}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </li>
+
+          {/* Games Accordion */}
+          <li>
+            <button
+              onClick={() => toggleSection("games")}
+              className={cn(
+                "flex items-center w-full gap-2 px-4 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 mt-1",
+                state.openSections["games"] && "bg-zinc-100 dark:bg-zinc-900"
+              )}
+              aria-expanded={state.openSections["games"]}
+            >
+              <Gamepad2 className="w-5 h-5" />
+              {!collapsed && (
+                <>
+                  <span className="text-base">{t("navigation.games")}</span>
+                  {state.openSections["games"] ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </>
+              )}
+            </button>
+            <motion.div
+              variants={submenuVariants}
+              initial="closed"
+              animate={
+                state.openSections["games"] && !collapsed ? "open" : "closed"
+              }
+              className={cn(
+                "ml-6 mt-1",
+                state.openSections["games"] && !collapsed ? "block" : "hidden"
+              )}
+            >
+              <div className="rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[210px]">
+                <ul className="p-1">
+                  <li>
+                    <Link
+                      href={`/${locale}/games/element-quiz`}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-2m hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
+                    >
+                      <Gamepad2 className="w-4 h-4" />
+                      {t("games.elementQuiz.title")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={`/${locale}/games/compound-builder`}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-2m hover:bg-blue-100 dark:hover:bg-blue-900/40 mt-1"
+                    >
+                      <Gamepad2 className="w-4 h-4" />
+                      {t("games.compoundBuilder.title")}
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </motion.div>

@@ -68,6 +68,8 @@
     "contact": "Contact",
     "calculators": "Calculators",
     "periodicTable": "Periodic Table",
+    "catalog": "Catalog",
+    "games": "Games",
     "menu": {
       "expand": "Expand menu",
       "collapse": "Collapse menu"
@@ -274,6 +276,22 @@
       "Lv": "Livermorium",
       "Ts": "Tennessine",
       "Og": "Oganesson"
+    }
+  },
+  "catalog": {
+    "elements": {
+      "title": "Elements"
+    },
+    "compounds": {
+      "title": "Compounds"
+    }
+  },
+  "games": {
+    "elementQuiz": {
+      "title": "Element Quiz"
+    },
+    "compoundBuilder": {
+      "title": "Compound Builder"
     }
   }
 } 
