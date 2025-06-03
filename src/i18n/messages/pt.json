@@ -84,6 +84,10 @@
     "title": "Calculadoras",
     "subtitle": "Abra uma ou mais calculadoras pelo menu.",
     "closeAll": "Fechar Todas",
+    "errors": {
+      "generic": "Ocorreu um erro ao calcular",
+      "unsupportedType": "Tipo de calculadora não suportado: {type}"
+    },
     "molarMass": {
       "title": "Massa Molar",
       "subtitle": "Digite uma fórmula química ou símbolo do elemento",

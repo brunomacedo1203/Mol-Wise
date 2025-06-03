@@ -1,14 +1,17 @@
 import { IMolarMassCalculator } from '../../domain/interfaces/ICalculatorService';
 import elementsData from '@/features/periodic-table/data/elementsData';
+import { TranslationFunction } from '@/shared/types/translation';
 
 export class MolarMassCalculator implements IMolarMassCalculator {
+  constructor(private readonly t: TranslationFunction) {}
+
   async calculate(formula: string): Promise<number> {
     if (!formula || formula.trim() === "") {
-      throw new Error("A fórmula não pode estar vazia");
+      throw new Error(this.t("calculators.molarMass.errors.empty"));
     }
 
     if (!/[a-zA-Z]/.test(formula)) {
-      throw new Error("A fórmula deve conter pelo menos um elemento");
+      throw new Error(this.t("calculators.molarMass.errors.invalidFormula"));
     }
 
     // Remove estados físicos como (s), (l), (g), (aq)
@@ -21,11 +24,11 @@ export class MolarMassCalculator implements IMolarMassCalculator {
     const errors: string[] = [];
     
     if (!formula || formula.trim() === "") {
-      errors.push("A fórmula não pode estar vazia");
+      errors.push(this.t("calculators.molarMass.errors.empty"));
     }
 
     if (!/[a-zA-Z]/.test(formula)) {
-      errors.push("A fórmula deve conter pelo menos um elemento");
+      errors.push(this.t("calculators.molarMass.errors.invalidFormula"));
     }
 
     // Validação adicional pode ser adicionada aqui
@@ -80,7 +83,7 @@ export class MolarMassCalculator implements IMolarMassCalculator {
         }
 
         if (openParenCount !== 0) {
-          throw new Error("Parênteses não correspondem na fórmula");
+          throw new Error(this.t("calculators.molarMass.errors.mismatchedParentheses"));
         }
 
         const subFormula = formula.substring(i + 1, j - 1);
@@ -116,7 +119,7 @@ export class MolarMassCalculator implements IMolarMassCalculator {
 
         const elementData = elementsData.find(e => e.symbol === element);
         if (!elementData) {
-          throw new Error(`Elemento inválido: ${element}`);
+          throw new Error(this.t("calculators.molarMass.errors.invalidElement", { symbol: element }));
         }
 
         totalMolarMass += elementData.molarMass * elementCount;

@@ -19,70 +19,146 @@ const MolecularFormulaInput = ({
   resultHtml,
 }: MolecularFormulaInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [cursorVisible, setCursorVisible] = useState(true);
-
-  useEffect(() => {
-    if (!isFocused) return;
-    const interval = setInterval(() => {
-      setCursorVisible((prev) => !prev);
-    }, 530);
-    return () => clearInterval(interval);
-  }, [isFocused]);
-
   const updateFormattedContent = useCallback(
-    (rawText: string) => {
-      if (contentRef.current) {
-        const formatted = formatWithSub(rawText);
-        contentRef.current.innerHTML = formatted;
-        if (isFocused) {
-          const cursorSpan = document.createElement("span");
-          cursorSpan.className = cursorVisible
-            ? "inline-block w-px h-5 bg-black dark:bg-white align-middle ml-px"
-            : "inline-block w-px h-5 bg-transparent align-middle ml-px";
-          contentRef.current.appendChild(cursorSpan);
+    (rawText: string, preserveCursor: boolean = false) => {
+      if (!contentRef.current) return;
+
+      const selection = window.getSelection();
+      const cursorIndex =
+        preserveCursor &&
+        selection &&
+        contentRef.current.contains(selection.anchorNode)
+          ? (() => {
+              const range = selection.getRangeAt(0);
+              const preCursorRange = range.cloneRange();
+              preCursorRange.selectNodeContents(contentRef.current);
+              preCursorRange.setEnd(range.endContainer, range.endOffset);
+              return preCursorRange.toString().length;
+            })()
+          : null;
+
+      const formatted = formatWithSub(rawText);
+      contentRef.current.innerHTML = formatted;
+
+      if (preserveCursor && cursorIndex !== null && selection) {
+        try {
+          const walker = document.createTreeWalker(
+            contentRef.current,
+            NodeFilter.SHOW_TEXT,
+            null
+          );
+          let currentNode: Node | null = null;
+          let currentIndex = 0;
+
+          while ((currentNode = walker.nextNode())) {
+            const len = currentNode.textContent?.length || 0;
+            if (cursorIndex <= currentIndex + len) {
+              const range = document.createRange();
+              range.setStart(currentNode, cursorIndex - currentIndex);
+              range.collapse(true);
+              selection.removeAllRanges();
+              selection.addRange(range);
+              break;
+            }
+            currentIndex += len;
+          }
+        } catch (e) {
+          console.warn("Erro ao restaurar posição do cursor:", e);
         }
       }
     },
-    [isFocused, cursorVisible]
+    []
   );
 
   useEffect(() => {
+    if (typeof value === "string") {
+      updateFormattedContent(value, true);
+    }
+  }, [value, updateFormattedContent]);
+
+  const handleInput = useCallback(
+    (e: React.FormEvent<HTMLDivElement>) => {
+      const rawText = e.currentTarget.textContent || "";
+      onChange(rawText);
+      updateFormattedContent(rawText, true);
+    },
+    [onChange, updateFormattedContent]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        onEnterPress();
+      }
+    },
+    [onEnterPress]
+  );
+
+  const handleFocus = useCallback(() => {
+    setIsFocused(true);
+    if (contentRef.current) {
+      const selection = window.getSelection();
+      if (selection) {
+        const range = document.createRange();
+        range.selectNodeContents(contentRef.current);
+        range.collapse(false); // Move para o final
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    setIsFocused(false);
     if (typeof value === "string") {
       updateFormattedContent(value);
     }
   }, [value, updateFormattedContent]);
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawText = e.target.value;
-    onChange(rawText);
-    updateFormattedContent(rawText);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+  const handlePaste = useCallback(
+    (e: React.ClipboardEvent<HTMLDivElement>) => {
       e.preventDefault();
-      onEnterPress();
-    }
-  };
+      const pastedText = e.clipboardData.getData("text/plain");
+      const selection = window.getSelection();
 
-  const handleFocus = () => {
-    setIsFocused(true);
-    setCursorVisible(true);
-    updateFormattedContent(value || "");
-  };
+      if (selection && contentRef.current) {
+        const range = selection.getRangeAt(0);
+        const start = range.startOffset;
+        const end = range.endOffset;
+        const currentText = contentRef.current.textContent || "";
 
-  const handleBlur = () => {
-    setIsFocused(false);
-    updateFormattedContent(value || "");
-  };
+        const newText =
+          currentText.substring(0, start) +
+          pastedText +
+          currentText.substring(end);
+        onChange(newText);
 
-  const handleContainerClick = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
+        // Atualiza o conteúdo formatado e mantém o cursor na posição correta
+        updateFormattedContent(newText, true);
+
+        // Restaura o cursor após a posição do texto colado
+        setTimeout(() => {
+          if (contentRef.current) {
+            const newRange = document.createRange();
+            const textNode = contentRef.current.firstChild;
+            if (textNode) {
+              const newPosition = start + pastedText.length;
+              newRange.setStart(
+                textNode,
+                Math.min(newPosition, textNode.textContent?.length || 0)
+              );
+              newRange.collapse(true);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            }
+          }
+        }, 0);
+      }
+    },
+    [onChange, updateFormattedContent]
+  );
 
   const shouldShowPlaceholder = !isFocused && (!value || value.length === 0);
 
@@ -90,34 +166,31 @@ const MolecularFormulaInput = ({
     <div className="w-full">
       <div
         className="relative w-full min-h-[3rem] max-h-32"
-        onClick={handleContainerClick}
+        onClick={() => contentRef.current?.focus()}
       >
-        <input
-          ref={inputRef}
-          type="text"
-          value={value || ""}
-          onChange={handleInput}
+        <div
+          ref={contentRef}
+          contentEditable
+          onInput={handleInput}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="w-full h-full absolute inset-0 opacity-0 z-10 cursor-text"
+          onPaste={handlePaste}
+          className={`molecular-formula-input border 
+            ${
+              errorMessage
+                ? "border-red-500 dark:border-red-400"
+                : "border-gray-300 dark:border-white/20"
+            } 
+            rounded-xl pt-2 pb-2 px-3 text-gray-900 dark:text-white 
+            bg-white dark:bg-white/5 dark:border-white/20
+            text-xl min-h-[3rem] max-h-48 cursor-text
+            transition-all whitespace-pre-wrap break-words overflow-y-auto
+            ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
+            outline-none
+          `}
           spellCheck={false}
           aria-label="Chemical formula input"
-        />
-        <div
-          ref={contentRef}
-          className={`molecular-formula-input border 
-        ${
-          errorMessage
-            ? "border-red-500 dark:border-red-400"
-            : "border-gray-300 dark:border-white/20"
-        } 
-        rounded-xl pt-2 pb-2 px-3 text-gray-900 dark:text-white 
-        bg-white dark:bg-white/5 dark:border-white/20
-        text-xl min-h-[3rem] max-h-48 cursor-text
-        transition-all whitespace-pre-wrap break-words overflow-y-auto
-        ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
-      `}
         />
         {shouldShowPlaceholder && (
           <span

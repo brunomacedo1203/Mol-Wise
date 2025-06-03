@@ -84,6 +84,10 @@
     "title": "Calculators",
     "subtitle": "Open one or more calculators from the menu.",
     "closeAll": "Close All",
+    "errors": {
+      "generic": "An error occurred while calculating",
+      "unsupportedType": "Unsupported calculator type: {type}"
+    },
     "molarMass": {
       "title": "Molar Mass",
       "subtitle": "Enter a chemical formula or element symbol",
@@ -108,8 +112,7 @@
         "empty": "The formula cannot be empty",
         "invalidElement": "The symbol \"{symbol}\" was not found",
         "invalidFormula": "Invalid chemical formula",
-        "mismatchedParentheses": "Mismatched parentheses in the formula",
-        "generic": "An error occurred while calculating the molar mass"
+        "mismatchedParentheses": "Mismatched parentheses in the formula"
       }
     }
   },
