@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 
 export type MenuItemType = 'link' | 'calculator';
-export type CalculatorId = 'molar-mass'; // Adicionando tipo específico para IDs de calculadoras
+export type CalculatorId = 'molar-mass' | 'scientific';
 
 export interface BaseMenuItemProps {
   icon: ComponentType<{ className?: string }>;
