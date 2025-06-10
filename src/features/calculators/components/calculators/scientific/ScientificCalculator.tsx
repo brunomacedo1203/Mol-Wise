@@ -4,8 +4,7 @@ import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useScientificCalculator } from "@/features/calculators/hooks/calculators/scientific/useScientificCalculator";
 import ScientificKeyboard from "@/features/calculators/components/calculators/scientific/ScientificKeyboard";
 import { CalculatorContainer } from "@/features/calculators/components/common";
-import { Input } from "@/shared/components/ui/input";
-import { ChangeEvent, KeyboardEvent } from "react";
+import ScientificExpressionInput from "./ScientificExpressionInput";
 
 type ScientificCalculatorProps = Omit<
   CalculatorBaseProps,
@@ -40,24 +39,20 @@ export default function ScientificCalculator({
     handleFunction,
     handleMemory,
     backspace,
+    reset,
   } = useScientificCalculator({
     initialFormula,
     initialResult,
     onFormulaChange,
     onResultChange,
+    getErrorMessage: (type) => {
+      if (type === "invalidExpression") return t("errors.invalidExpression");
+      if (type === "empty") return t("errors.empty");
+      return "";
+    },
   });
 
   const t = useTranslations("calculators.scientific");
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleFormulaChange(e.target.value);
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      calculate();
-    }
-  };
 
   return (
     <CalculatorContainer
@@ -70,13 +65,12 @@ export default function ScientificCalculator({
       onKeyboardVisibilityChange={onKeyboardVisibilityChange}
       input={
         <div className="flex flex-col gap-2 w-full">
-          <Input
-            type="text"
+          <ScientificExpressionInput
             value={formula}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="text-right text-lg font-mono"
-            placeholder="Digite uma expressão..."
+            onChange={handleFormulaChange}
+            onEnterPress={calculate}
+            errorMessage={errorMessage}
+            placeholder={t("input.placeholder")}
           />
           {result && (
             <div className="text-right text-lg font-mono text-muted-foreground">
@@ -97,6 +91,7 @@ export default function ScientificCalculator({
           onMemory={handleMemory}
           onCalculate={calculate}
           onBackspace={backspace}
+          onReset={reset}
         />
       }
       onClose={onClose}

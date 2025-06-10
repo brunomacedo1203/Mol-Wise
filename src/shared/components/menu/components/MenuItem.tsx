@@ -17,7 +17,7 @@ export const MenuItem = memo(function MenuItem({
   const content = (
     <>
       <Icon className="w-5 h-5" />
-      {!isCollapsed && <span className="text-base">{label}</span>}
+      {!isCollapsed && <span className="text-sm">{label}</span>}
     </>
   );
 

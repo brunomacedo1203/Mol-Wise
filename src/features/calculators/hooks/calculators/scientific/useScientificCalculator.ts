@@ -6,6 +6,7 @@ interface UseScientificCalculatorProps {
   initialResult?: string | null;
   onFormulaChange?: (formula: string) => void;
   onResultChange?: (result: string | null) => void;
+  getErrorMessage?: (type: 'invalidExpression' | 'empty') => string;
 }
 
 interface UseScientificCalculatorReturn {
@@ -26,6 +27,7 @@ export function useScientificCalculator({
   initialResult = null,
   onFormulaChange,
   onResultChange,
+  getErrorMessage,
 }: UseScientificCalculatorProps): UseScientificCalculatorReturn {
   const [formula, setFormula] = useState(initialFormula);
   const [result, setResult] = useState<string | null>(initialResult);
@@ -45,6 +47,7 @@ export function useScientificCalculator({
     try {
       if (!formula.trim()) {
         setResult(null);
+        setErrorMessage(getErrorMessage ? getErrorMessage('empty') : "A expressão não pode estar vazia");
         return;
       }
 
@@ -57,10 +60,10 @@ export function useScientificCalculator({
       onResultChange?.(formattedResult);
       setErrorMessage(null);
     } catch {
-      setErrorMessage("Expressão inválida");
+      setErrorMessage(getErrorMessage ? getErrorMessage('invalidExpression') : "Expressão inválida");
       setResult(null);
     }
-  }, [formula, onResultChange]);
+  }, [formula, onResultChange, getErrorMessage]);
 
   const reset = useCallback(() => {
     setFormula("");
