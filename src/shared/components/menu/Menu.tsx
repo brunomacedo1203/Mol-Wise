@@ -32,8 +32,8 @@ export default function Menu({ collapsed }: MenuProps) {
           isCollapsed={collapsed}
         />
 
-        <ScrollArea className="flex-1 scrollbar-hide">
-          <ul className="flex flex-col pt-4">
+        <ScrollArea className="flex-1 scrollbar-hide overflow-x-hidden">
+          <ul className="flex flex-col">
             {menuSections.map((section) => (
               <MenuAccordion key={section.id} section={section} />
             ))}

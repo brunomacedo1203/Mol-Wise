@@ -1,4 +1,4 @@
-import Page from "@/shared/components/Page";
+import Page from "@/shared/components/layout/Page";
 import { SubtitleProvider } from "@/shared/contexts/SubtitleContext";
 import { useTranslations } from "next-intl";
 

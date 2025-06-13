@@ -17,7 +17,14 @@ export const MenuItem = memo(function MenuItem({
   const content = (
     <>
       <Icon className="w-5 h-5" />
-      {!isCollapsed && <span className="text-base">{label}</span>}
+      <span
+        className={cn(
+          "text-base transition-all duration-300 ease-in-out flex-shrink-0",
+          isCollapsed ? "hidden" : "whitespace-nowrap max-w-full"
+        )}
+      >
+        {label}
+      </span>
     </>
   );
 

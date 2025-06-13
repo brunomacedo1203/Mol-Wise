@@ -115,6 +115,41 @@
         "mismatchedParentheses": "Parênteses não correspondem na fórmula",
         "generic": "Ocorreu um erro ao calcular a massa molar"
       }
+    },
+    "scientific": {
+      "title": "Calculadora Científica",
+      "subtitle": "Realize cálculos matemáticos avançados",
+      "input": {
+        "placeholder": "Digite uma expressão matemática",
+        "label": "Expressão"
+      },
+      "keyboard": {
+        "calculate": "Calcular",
+        "reset": "Limpar",
+        "backspace": "Apagar",
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado",
+        "functions": {
+          "sin": "Seno",
+          "cos": "Cosseno",
+          "tan": "Tangente",
+          "log": "Logaritmo",
+          "ln": "Logaritmo Natural",
+          "sqrt": "Raiz Quadrada",
+          "pi": "Pi",
+          "e": "Número de Euler"
+        },
+        "memory": {
+          "store": "Armazenar na Memória",
+          "recall": "Recuperar da Memória",
+          "clear": "Limpar Memória"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Expressão inválida",
+        "empty": "A expressão não pode estar vazia",
+        "generic": "Ocorreu um erro ao calcular"
+      }
     }
   },
   "periodicTable": {

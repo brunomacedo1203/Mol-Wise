@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Logo from "@/shared/components/Logo";
+import Logo from "../brand/Logo";
 import { useCollapsedMenu } from "@/shared/hooks/useCollapsedMenu";
 import {
   IconLayoutSidebarLeftCollapse,

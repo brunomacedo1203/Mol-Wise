@@ -1,7 +1,7 @@
 "use client";
 import { CalculatorPageContent } from "@/features/calculators/components/common/CalculatorPageContent";
 import { SubtitleProvider } from "@/shared/contexts/SubtitleContext";
-import Page from "@/shared/components/Page";
+import Page from "@/shared/components/layout/Page";
 import { useTranslations } from "next-intl";
 
 export default function MolarMassCalculatorPage() {

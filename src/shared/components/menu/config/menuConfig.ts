@@ -1,4 +1,4 @@
-import { Calculator, FlaskConical, Table2, Book } from "lucide-react";
+import { Calculator, FlaskConical, Table2, Book, FunctionSquare } from "lucide-react";
 import { MENU_SECTIONS } from "../constants";
 import { MenuSectionConfig } from "../types";
 
@@ -13,6 +13,12 @@ export const menuSectionsConfig: MenuSectionConfig[] = [
         translationKey: "calculators.molarMass.title",
         type: "calculator",
         calculatorId: "molar-mass",
+      } as const,
+      {
+        icon: FunctionSquare,
+        translationKey: "calculators.scientific.title",
+        type: "calculator",
+        calculatorId: "scientific",
       } as const,
     ],
   },

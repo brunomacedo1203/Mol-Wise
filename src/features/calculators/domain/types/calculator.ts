@@ -4,7 +4,7 @@ import type { Position, PositionWithWidth } from "./position";
 /**
  * Tipos de calculadoras disponíveis
  */
-export type CalculatorType = "molar-mass";
+export type CalculatorType = "molar-mass" | "scientific";
 
 /**
  * Estado de uma calculadora

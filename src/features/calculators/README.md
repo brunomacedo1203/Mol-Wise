@@ -16,13 +16,22 @@ calculators/
 │       │   ├── MolarMassCalculator.tsx
 │       │   ├── MolecularFormulaInput.tsx
 │       │   └── KeyboardCalculate.tsx
+│       ├── scientific/  # Calculadora Científica
+│       │   ├── index.ts
+│       │   ├── ScientificCalculator.tsx
+│       │   ├── ScientificExpressionInput.tsx
+│       │   └── ScientificKeyboard.tsx
 │       └── sua-calculadora/  # Sua nova calculadora aqui
 ├── domain/              # Regras de negócio e tipos
 │   ├── types.ts        # Tipos compartilhados
 │   └── services/       # Serviços de cálculo
+│       └── formulaParser.ts # Serviço de parseamento de fórmulas
 ├── hooks/              # Hooks personalizados
 │   ├── index.ts
-│   └── useMolarMassCalculator.ts
+│   ├── useMolarMassCalculator.ts
+│   └── calculators/ # Hooks específicos de calculadora
+│       └── scientific/ # Hooks da calculadora científica
+│           └── useScientificCalculator.ts
 ├── services/           # Serviços e adaptadores
 └── styles/             # Estilos e temas
 ```
@@ -34,7 +43,7 @@ calculators/
 1. Adicione o ID da calculadora em `domain/types.ts`:
 
 ```typescript
-export type CalculatorId = "molar-mass" | "sua-calculadora";
+export type CalculatorId = "molar-mass" | "sua-calculadora" | "scientific";
 
 export interface CalculatorBaseProps {
   title: string;
@@ -282,49 +291,62 @@ UseSuaCalculadoraProps) {
 5. Verifique as traduções
 6. Teste o comportamento responsivo
 
-## Exemplo Completo: Calculadora de Massa Molar
+## Exemplo Completo: Calculadora Científica
 
-A calculadora de massa molar serve como exemplo completo de implementação:
+A calculadora científica serve como um exemplo de implementação mais avançada:
 
-1. **Componentes**:
+1.  **Componentes**:
 
-   - `MolarMassCalculator.tsx`: Componente principal
-   - `MolecularFormulaInput.tsx`: Entrada de fórmula
-   - `KeyboardCalculate.tsx`: Teclado virtual
+    - `ScientificCalculator.tsx`: Componente principal
+    - `ScientificExpressionInput.tsx`: Entrada de expressão
+    - `ScientificKeyboard.tsx`: Teclado virtual
 
-2. **Hook**:
+2.  **Hook**:
 
-   - `useMolarMassCalculator.ts`: Lógica de cálculo
+    - `useScientificCalculator.ts`: Lógica de cálculo
 
-3. **Traduções**:
+3.  **Serviço**:
 
-   ```json
-   {
-     "calculators": {
-       "molarMass": {
-         "title": "Massa Molar",
-         "subtitle": "Digite uma fórmula molecular",
-         "input": {
-           "placeholder": "Digite a fórmula (ex: H2O)",
-           "label": "Fórmula Molecular"
-         }
-       }
-     }
-   }
-   ```
+    - `formulaParser.ts`: Serviço de parseamento de fórmulas
 
-4. **Uso**:
-   ```tsx
-   <MolarMassCalculator
-     id={1}
-     initialFormula="H2O"
-     onFormulaChange={(formula) => console.log(formula)}
-     onResultChange={(result) => console.log(result)}
-     initialPosition={{ x: 100, y: 100 }}
-     onPositionChange={(pos) => console.log(pos)}
-     onClose={() => console.log("Fechar")}
-   />
-   ```
+4.  **Traduções**:
+
+    ```json
+    {
+      "calculators": {
+        "scientific": {
+          "title": "Calculadora Científica",
+          "subtitle": "Realize cálculos matemáticos avançados",
+          "input": {
+            "placeholder": "Digite uma expressão matemática",
+            "label": "Expressão"
+          },
+          "keyboard": {
+            "calculate": "Calcular",
+            "reset": "Reiniciar"
+          },
+          "errors": {
+            "invalidExpression": "Expressão inválida",
+            "empty": "A expressão não pode estar vazia"
+          }
+        }
+      }
+    }
+    ```
+
+5.  **Uso**:
+
+    ```tsx
+    <ScientificCalculator
+      id={1}
+      initialFormula="sin(pi/2)"
+      onFormulaChange={(formula) => console.log(formula)}
+      onResultChange={(result) => console.log(result)}
+      initialPosition={{ x: 100, y: 100 }}
+      onPositionChange={(pos) => console.log(pos)}
+      onClose={() => console.log("Fechar")}
+    />
+    ```
 
 ## Boas Práticas
 

@@ -1,0 +1,29 @@
+  "calculators": {
+    "molarMass": {
+      "title": "Calculadora de Massa Molar",
+      "subtitle": "Calcule a massa molar de compostos químicos",
+      "keyboard": {
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado",
+        "calculate": "Calcular"
+      },
+      "errors": {
+        "invalidElement": "Elemento inválido: {symbol}",
+        "emptyFormula": "A fórmula não pode estar vazia",
+        "noElements": "A fórmula deve conter pelo menos um elemento",
+        "mismatchedParentheses": "Parênteses não correspondem na fórmula"
+      }
+    },
+    "scientific": {
+      "title": "Calculadora Científica",
+      "subtitle": "Realize cálculos matemáticos avançados",
+      "keyboard": {
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado",
+        "calculate": "Calcular"
+      },
+      "errors": {
+        "invalidExpression": "Expressão inválida"
+      }
+    }
+  } 

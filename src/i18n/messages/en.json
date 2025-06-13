@@ -114,6 +114,41 @@
         "invalidFormula": "Invalid chemical formula",
         "mismatchedParentheses": "Mismatched parentheses in the formula"
       }
+    },
+    "scientific": {
+      "title": "Scientific Calculator",
+      "subtitle": "Perform advanced mathematical calculations",
+      "input": {
+        "placeholder": "Enter a mathematical expression",
+        "label": "Expression"
+      },
+      "keyboard": {
+        "calculate": "Calculate",
+        "reset": "Reset",
+        "backspace": "Backspace",
+        "showKeyboard": "Show keyboard",
+        "hideKeyboard": "Hide keyboard",
+        "functions": {
+          "sin": "Sine",
+          "cos": "Cosine",
+          "tan": "Tangent",
+          "log": "Logarithm",
+          "ln": "Natural Logarithm",
+          "sqrt": "Square Root",
+          "pi": "Pi",
+          "e": "Euler's Number"
+        },
+        "memory": {
+          "store": "Store in Memory",
+          "recall": "Recall from Memory",
+          "clear": "Clear Memory"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Invalid expression",
+        "empty": "The expression cannot be empty",
+        "generic": "An error occurred while calculating"
+      }
     }
   },
   "periodicTable": {
