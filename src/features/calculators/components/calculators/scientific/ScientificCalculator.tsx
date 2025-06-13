@@ -29,6 +29,8 @@ export default function ScientificCalculator({
   isKeyboardVisible = true,
   onKeyboardVisibilityChange,
 }: ScientificCalculatorProps) {
+  const t = useTranslations("calculators.scientific");
+
   const {
     formula,
     result,
@@ -52,8 +54,6 @@ export default function ScientificCalculator({
     },
   });
 
-  const t = useTranslations("calculators.scientific");
-
   return (
     <CalculatorContainer
       id={id}
@@ -64,7 +64,7 @@ export default function ScientificCalculator({
       isKeyboardVisible={isKeyboardVisible}
       onKeyboardVisibilityChange={onKeyboardVisibilityChange}
       input={
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col w-full">
           <ScientificExpressionInput
             value={formula}
             onChange={handleFormulaChange}
@@ -72,16 +72,19 @@ export default function ScientificCalculator({
             errorMessage={errorMessage}
             placeholder={t("input.placeholder")}
           />
-          {result && (
-            <div className="text-right text-lg font-mono text-muted-foreground">
-              = {result}
-            </div>
-          )}
-          {errorMessage && (
-            <div className="text-right text-sm text-destructive">
-              {errorMessage}
-            </div>
-          )}
+          <div className="h-[2rem] w-full px-3 overflow-hidden flex items-center">
+            {result ? (
+              <div className="text-blue-600 dark:text-blue-400 text-left text-2xl font-mono break-words">
+                = {result}
+              </div>
+            ) : errorMessage ? (
+              <div className="text-red-500 dark:text-red-400 text-left text-xl font-sans break-words">
+                {errorMessage}
+              </div>
+            ) : (
+              <span className="block invisible text-2xl">0</span>
+            )}
+          </div>
         </div>
       }
       actions={

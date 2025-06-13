@@ -51,7 +51,11 @@ export function useScientificCalculator({
         return;
       }
 
-      const calculatedResult = evaluate(formula);
+      const formulaToEvaluate = formula
+        .trim()
+        .replace(/\bln\(/g, "log("); // ← conversão para log()
+
+      const calculatedResult = evaluate(formulaToEvaluate);
       const formattedResult = Number.isInteger(calculatedResult)
         ? calculatedResult.toString()
         : calculatedResult.toFixed(8).replace(/\.?0+$/, "");
@@ -94,7 +98,7 @@ export function useScientificCalculator({
         cos: "cos(",
         tan: "tan(",
         log: "log(",
-        ln: "ln(",
+        ln: "ln(", // será tratado na hora do cálculo
         sqrt: "sqrt(",
         pi: "π",
         e: "e",
@@ -139,4 +143,4 @@ export function useScientificCalculator({
     handleFunction,
     handleMemory,
   };
-} 
+}

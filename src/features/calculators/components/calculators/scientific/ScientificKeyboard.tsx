@@ -1,75 +1,114 @@
+import React from "react";
 import { ScientificKeyboardProps } from "@/features/calculators/domain/types/keyboard";
-import Keyboard from "@/shared/components/keyboard/Keyboard";
-import { Button } from "@/shared/components/ui/button";
-import KeyboardBtn from "../../../../../shared/components/keyboard/KeyboardBtn";
+import KeyboardBtn from "@/shared/components/keyboard/KeyboardBtn";
 import { ReloadIcon } from "@/shared/components/icons/ReloadIcon";
 import { BackspaceIcon } from "@/shared/components/icons/BackspaceIcon";
 import { useTranslations } from "next-intl";
+import { ScientificButton } from "./ScientificButton";
+import { SCIENTIFIC_BUTTONS } from "@/features/calculators/domain/types/scientific-constants";
 
 export default function ScientificKeyboard({
   onKeyPress,
   onFunction,
-  onMemory,
   onCalculate,
   onBackspace,
   onReset,
 }: ScientificKeyboardProps) {
-  const scientificFunctions = [
-    { label: "sin", value: "sin" },
-    { label: "cos", value: "cos" },
-    { label: "tan", value: "tan" },
-    { label: "log", value: "log" },
-    { label: "ln", value: "ln" },
-    { label: "√", value: "sqrt" },
-    { label: "π", value: "pi" },
-    { label: "e", value: "e" },
-  ];
-
-  const memoryButtons = [
-    { label: "MC", value: "clear" as const },
-    { label: "MR", value: "recall" as const },
-    { label: "M+", value: "store" as const },
-  ];
-
   const t = useTranslations("calculators.scientific");
 
+  const scientificButtonMap = new Map(
+    SCIENTIFIC_BUTTONS.map((btn) => [btn.value, btn])
+  );
+
+  const fullKeyboardLayout: {
+    label: string;
+    value: string;
+    type: "scientific" | "numeric" | "operator";
+    colSpan?: number;
+  }[][] = [
+    [
+      { label: "sin", value: "sin", type: "scientific" },
+      { label: "cos", value: "cos", type: "scientific" },
+      { label: "tan", value: "tan", type: "scientific" },
+      { label: "log", value: "log10", type: "scientific" },
+    ],
+    [
+      { label: "asin", value: "asin", type: "scientific" },
+      { label: "acos", value: "acos", type: "scientific" },
+      { label: "atan", value: "atan", type: "scientific" },
+      { label: "ln", value: "log", type: "scientific" },
+    ],
+    [
+      { label: "√", value: "sqrt", type: "scientific" },
+      { label: "x^y", value: "pow", type: "scientific" },
+      { label: "π", value: "PI", type: "scientific" },
+      { label: "e", value: "E", type: "scientific" },
+    ],
+    [
+      { label: "7", value: "7", type: "numeric" },
+      { label: "8", value: "8", type: "numeric" },
+      { label: "9", value: "9", type: "numeric" },
+      { label: "/", value: "/", type: "operator" },
+    ],
+    [
+      { label: "4", value: "4", type: "numeric" },
+      { label: "5", value: "5", type: "numeric" },
+      { label: "6", value: "6", type: "numeric" },
+      { label: "*", value: "*", type: "operator" },
+    ],
+    [
+      { label: "1", value: "1", type: "numeric" },
+      { label: "2", value: "2", type: "numeric" },
+      { label: "3", value: "3", type: "numeric" },
+      { label: "-", value: "-", type: "operator" },
+    ],
+    [
+      { label: "0", value: "0", type: "numeric", colSpan: 2 },
+      { label: ".", value: ".", type: "numeric" },
+      { label: "+", value: "+", type: "operator" },
+    ],
+  ];
+
   return (
-    <div className="flex flex-col items-center w-full gap-2 py-2 rounded-xl shadow">
-      {/* Teclado numérico padrão */}
-      <div className="w-full flex justify-center">
-        <Keyboard onKeyPress={onKeyPress} />
-      </div>
+    <div className="flex flex-col items-center w-full gap-0 py-2 rounded-xl shadow">
+      <div className="w-full px-4 grid grid-cols-4 gap-1">
+        {fullKeyboardLayout.map((row, rowIndex) => (
+          <React.Fragment key={rowIndex}>
+            {row.map((button, _buttonIndex) => {
+              if (button.type === "scientific") {
+                const scientificConfig = scientificButtonMap.get(button.value);
+                if (!scientificConfig) return null;
 
-      {/* Funções científicas */}
-      <div className="w-full grid grid-cols-4 gap-2 px-4">
-        {scientificFunctions.map((func) => (
-          <Button
-            key={func.value}
-            variant="outline"
-            className="h-10"
-            onClick={() => onFunction(func.value)}
-          >
-            {func.label}
-          </Button>
+                return (
+                  <ScientificButton
+                    key={button.value}
+                    button={scientificConfig}
+                    onClick={onFunction}
+                    className={
+                      button.colSpan ? `col-span-${button.colSpan}` : ""
+                    }
+                  />
+                );
+              } else {
+                return (
+                  <KeyboardBtn
+                    key={button.value}
+                    onClick={() => onKeyPress?.(button.value)}
+                    className={
+                      button.colSpan ? `col-span-${button.colSpan}` : ""
+                    }
+                  >
+                    {button.label}
+                  </KeyboardBtn>
+                );
+              }
+            })}
+          </React.Fragment>
         ))}
       </div>
 
-      {/* Botões de memória */}
-      <div className="w-full grid grid-cols-3 gap-2 px-4">
-        {memoryButtons.map((btn) => (
-          <Button
-            key={btn.value}
-            variant="outline"
-            className="h-10"
-            onClick={() => onMemory(btn.value)}
-          >
-            {btn.label}
-          </Button>
-        ))}
-      </div>
-
-      {/* Botões de operação - padronizado com a calculadora de massa molar */}
-      <div className="flex gap-2 mt-1 items-center justify-center w-full">
+      {/* Botões de operação especiais */}
+      <div className="flex gap-2 mt-2 items-center justify-center w-full px-4">
         <KeyboardBtn onClick={onReset} className="bg-white w-10 h-10">
           <ReloadIcon size={24} />
         </KeyboardBtn>
