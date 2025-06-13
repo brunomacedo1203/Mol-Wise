@@ -1,6 +1,6 @@
-import Keyboard from "@/shared/components/Keyboard";
-import FormulasBtn from "@/shared/components/FormulasBtn";
-import OperatorsBtn from "@/shared/components/OperatorsBtn";
+import Keyboard from "@/shared/components/keyboard/Keyboard";
+import FormulasBtn from "@/shared/components/buttons/FormulasBtn";
+import OperatorsBtn from "@/shared/components/buttons/OperatorsBtn";
 
 interface KeyboardCalculateProps {
   onKeyPress: (key: string) => void;

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import KeyboardBtn from "@/shared/components/KeyboardBtn";
+import KeyboardBtn from "../keyboard/KeyboardBtn";
 
 const formulas = [
   { label: "CH₃", value: "CH3" },

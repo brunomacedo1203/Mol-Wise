@@ -1,11 +1,31 @@
 import { MolarMassCalculator } from "@/features/calculators/components/calculators/molar-mass";
 import { ScientificCalculator } from "@/features/calculators/components/calculators/scientific";
 import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
-import { CloseAllButton } from "@/shared/components/CloseAllButton";
+import { CloseAllButton } from "@/shared/components/buttons/CloseAllButton";
+import { CalculatorType } from "@/features/calculators/domain/types/calculator";
+import React from "react";
 
-export function CalculatorPageContent() {
-  const { calculators, clearCalculators, removeCalculator, updateCalculator } =
-    useCalculatorInstances();
+interface CalculatorPageContentProps {
+  calculatorType: CalculatorType;
+}
+
+export function CalculatorPageContent({
+  calculatorType,
+}: CalculatorPageContentProps) {
+  const {
+    calculators,
+    clearCalculators,
+    removeCalculator,
+    updateCalculator,
+    addCalculator,
+  } = useCalculatorInstances();
+
+  // Adiciona uma calculadora do tipo especificado se não houver nenhuma
+  React.useEffect(() => {
+    if (calculators.length === 0) {
+      addCalculator(calculatorType);
+    }
+  }, [calculatorType, calculators.length, addCalculator]);
 
   // Se não houver calculadoras, não renderiza nada
   if (calculators.length === 0) {

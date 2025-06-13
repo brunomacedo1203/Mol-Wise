@@ -1,7 +1,7 @@
 import { ScientificKeyboardProps } from "@/features/calculators/domain/types/keyboard";
-import Keyboard from "@/shared/components/Keyboard";
+import Keyboard from "@/shared/components/keyboard/Keyboard";
 import { Button } from "@/shared/components/ui/button";
-import KeyboardBtn from "@/shared/components/KeyboardBtn";
+import KeyboardBtn from "../../../../../shared/components/keyboard/KeyboardBtn";
 import { ReloadIcon } from "@/shared/components/icons/ReloadIcon";
 import { BackspaceIcon } from "@/shared/components/icons/BackspaceIcon";
 import { useTranslations } from "next-intl";

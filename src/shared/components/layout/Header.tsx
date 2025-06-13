@@ -1,7 +1,7 @@
 import React from "react";
 import { useSubtitle } from "@/shared/contexts/SubtitleContext";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import LanguageSwitcher from "./LanguageSwitcher";
+import LanguageSwitcher from "@/shared/components/settings/LanguageSwitcher";
 
 export interface HeaderProps {
   title: string;
