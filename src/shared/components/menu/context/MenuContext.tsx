@@ -29,7 +29,7 @@ export function MenuProvider({
           const parsed = JSON.parse(saved);
           return {
             ...parsed,
-            collapsed: initialCollapsed,
+            collapsed: parsed.collapsed ?? initialCollapsed,
           };
         }
       } catch (error) {
@@ -41,6 +41,14 @@ export function MenuProvider({
       collapsed: initialCollapsed,
     };
   });
+
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      collapsed: initialCollapsed,
+      openSections: initialCollapsed ? {} : prev.openSections,
+    }));
+  }, [initialCollapsed]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -63,7 +71,11 @@ export function MenuProvider({
   };
 
   const setCollapsed = (collapsed: boolean) => {
-    setState((prev) => ({ ...prev, collapsed }));
+    setState((prev) => ({
+      ...prev,
+      collapsed,
+      openSections: collapsed ? {} : prev.openSections,
+    }));
   };
 
   const value: MenuContextType = {

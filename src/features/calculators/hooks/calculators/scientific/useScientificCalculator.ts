@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { evaluate } from "mathjs";
+import { parseFormulaForEvaluation } from "@/features/calculators/domain/services/formulaParser";
 
 interface UseScientificCalculatorProps {
   initialFormula?: string;
@@ -51,9 +52,7 @@ export function useScientificCalculator({
         return;
       }
 
-      const formulaToEvaluate = formula
-        .trim()
-        .replace(/\bln\(/g, "log("); // ← conversão para log()
+      const formulaToEvaluate = parseFormulaForEvaluation(formula);
 
       const calculatedResult = evaluate(formulaToEvaluate);
       const formattedResult = Number.isInteger(calculatedResult)
@@ -93,19 +92,7 @@ export function useScientificCalculator({
 
   const handleFunction = useCallback(
     (func: string) => {
-      const functionMap: Record<string, string> = {
-        sin: "sin(",
-        cos: "cos(",
-        tan: "tan(",
-        log: "log(",
-        ln: "ln(", // será tratado na hora do cálculo
-        sqrt: "sqrt(",
-        pi: "π",
-        e: "e",
-      };
-
-      const mappedFunc = functionMap[func] || func;
-      handleFormulaChange(formula + mappedFunc);
+      handleFormulaChange(formula + func);
     },
     [formula, handleFormulaChange]
   );
