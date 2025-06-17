@@ -1,15 +1,14 @@
 import { useCallback } from "react";
-import { usePeriodicTable as usePeriodicTableContext } from "../../contexts/PeriodicTableContext";
+import { usePeriodicTable as usePeriodicTableContext } from "../../hooks/usePeriodicTable";
 import { Element } from "../../domain/types/element";
-import { PeriodicTableConfig } from "../../domain/types/table";
+import { PeriodicTableConfig } from "../../domain/types/config";
 
 export function usePeriodicTable() {
   const {
-    state,
+    selectedElement,
+    setSelectedElement,
+    config,
     setConfig,
-    selectElement,
-    setFilteredElements,
-    setSearchTerm,
   } = usePeriodicTableContext();
 
   // Handlers
@@ -22,36 +21,19 @@ export function usePeriodicTable() {
 
   const handleElementSelect = useCallback(
     (element: Element | null) => {
-      selectElement(element);
+      setSelectedElement(element);
     },
-    [selectElement]
-  );
-
-  const handleSearch = useCallback(
-    (term: string) => {
-      setSearchTerm(term);
-    },
-    [setSearchTerm]
-  );
-
-  const handleFilter = useCallback(
-    (elements: Element[]) => {
-      setFilteredElements(elements);
-    },
-    [setFilteredElements]
+    [setSelectedElement]
   );
 
   return {
     // Estado
-    config: state.config,
-    selectedElement: state.selectedElement,
-    filteredElements: state.filteredElements,
-    searchTerm: state.searchTerm,
+    config,
+    selectedElement,
+    setSelectedElement,
 
     // Handlers
     handleConfigChange,
     handleElementSelect,
-    handleSearch,
-    handleFilter,
   };
 } 

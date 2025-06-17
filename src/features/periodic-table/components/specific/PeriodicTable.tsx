@@ -4,7 +4,7 @@ import { PeriodicTableLegend } from "../common/PeriodicTableLegend";
 import { ElementCardsGrid } from "./cards/ElementCardsGrid";
 import { ElementDetailsPanel } from "./details/ElementDetailsPanel";
 import { usePeriodicTable } from "../../hooks/usePeriodicTable";
-import { elements } from "../../data/elements";
+import elementsData from "../../data/elementsData";
 import { PeriodicTableProps } from "../../domain/types/table";
 import { Element } from "../../domain/types/element";
 
@@ -35,7 +35,7 @@ export function PeriodicTable({
         <PeriodicTableHeader />
         <PeriodicTableLegend />
         <ElementCardsGrid
-          elements={elements}
+          elements={elementsData as Element[]}
           onElementSelect={handleElementSelect}
         />
         <ElementDetailsPanel

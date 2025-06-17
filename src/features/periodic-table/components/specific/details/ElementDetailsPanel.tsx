@@ -38,7 +38,7 @@ export function ElementDetailsPanel({
             <div className="flex justify-between">
               <dt className="text-sm">Massa Atômica</dt>
               <dd className="text-sm font-medium">
-                {element.atomicMass.toFixed(2)} u
+                {element.molarMass.toFixed(2)} u
               </dd>
             </div>
             <div className="flex justify-between">
@@ -50,7 +50,7 @@ export function ElementDetailsPanel({
             <div className="flex justify-between">
               <dt className="text-sm">Estado Físico</dt>
               <dd className="text-sm font-medium capitalize">
-                {element.phase}
+                {element.standardState}
               </dd>
             </div>
           </dl>
@@ -63,9 +63,7 @@ export function ElementDetailsPanel({
           <dl className="mt-2 space-y-2">
             <div className="flex justify-between">
               <dt className="text-sm">Densidade</dt>
-              <dd className="text-sm font-medium">
-                {element.density.toFixed(2)} g/cm³
-              </dd>
+              <dd className="text-sm font-medium">{element.density} g/cm³</dd>
             </div>
             <div className="flex justify-between">
               <dt className="text-sm">Ponto de Fusão</dt>
@@ -86,7 +84,9 @@ export function ElementDetailsPanel({
             <div className="flex justify-between">
               <dt className="text-sm">Eletronegatividade</dt>
               <dd className="text-sm font-medium">
-                {element.electronegativity.toFixed(2)}
+                {element.electronegativity
+                  ? element.electronegativity.toFixed(2)
+                  : "N/A"}
               </dd>
             </div>
             <div className="flex justify-between">
@@ -106,9 +106,28 @@ export function ElementDetailsPanel({
 
         <div>
           <h3 className="text-sm font-medium text-muted-foreground">
-            Descrição
+            Informações Adicionais
           </h3>
-          <p className="mt-2 text-sm">{element.description}</p>
+          <dl className="mt-2 space-y-2">
+            <div className="flex justify-between">
+              <dt className="text-sm">Raio Atômico</dt>
+              <dd className="text-sm font-medium">{element.atomicRadius}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-sm">Estados de Oxidação</dt>
+              <dd className="text-sm font-medium">{element.oxidationStates}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-sm">Afinidade Eletrônica</dt>
+              <dd className="text-sm font-medium">
+                {element.electronAffinity || "N/A"}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-sm">Ano de Descoberta</dt>
+              <dd className="text-sm font-medium">{element.yearDiscovered}</dd>
+            </div>
+          </dl>
         </div>
       </div>
     </div>

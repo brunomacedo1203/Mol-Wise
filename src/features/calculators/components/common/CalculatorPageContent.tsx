@@ -2,14 +2,14 @@ import { MolarMassCalculator } from "@/features/calculators/components/calculato
 import { ScientificCalculator } from "@/features/calculators/components/calculators/scientific";
 import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
 import { CloseAllButton } from "@/shared/components/buttons/CloseAllButton";
-// import { CalculatorType } from "@/features/calculators/domain/types/calculator"; // Removido
+import { PositionWithWidth } from "@/features/calculators/domain/types";
 import React from "react";
 
 // interface CalculatorPageContentProps { // Removido
 //   // calculatorType: CalculatorType; // Removido
 // } // Removido
 
-export function CalculatorPageContent({}: /* calculatorType, */ /* CalculatorPageContentProps */ any) {
+export function CalculatorPageContent() {
   // Ajustado para remover a prop e interface, mantendo compatibilidade
   const {
     calculators,
@@ -30,7 +30,7 @@ export function CalculatorPageContent({}: /* calculatorType, */ /* CalculatorPag
       id: calculator.id,
       onClose: () => removeCalculator(calculator.id),
       initialPosition: calculator.position,
-      onPositionChange: (position: any) =>
+      onPositionChange: (position: PositionWithWidth) =>
         updateCalculator(calculator.id, { position }),
       initialFormula: calculator.state?.formula,
       onFormulaChange: (formula: string) =>

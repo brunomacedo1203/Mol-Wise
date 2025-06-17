@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
-import { UseMolecularFormulaInputProps, UseMolecularFormulaInputReturn } from "../domain/types/molecularFormulaInput";
+import { UseMolecularFormulaInputProps, UseMolecularFormulaInputReturn } from "../../../domain/types/molecularFormulaInput";
 
 /**
  * Hook para gerenciar o estado e comportamento do input de fórmula molecular

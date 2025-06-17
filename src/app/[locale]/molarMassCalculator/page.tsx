@@ -10,7 +10,7 @@ export default function MolarMassCalculatorPage() {
   return (
     <SubtitleProvider subtitle={t("molarMass.subtitle")}>
       <Page title={t("molarMass.title")}>
-        <CalculatorPageContent calculatorType="molar-mass" />
+        <CalculatorPageContent />
       </Page>
     </SubtitleProvider>
   );

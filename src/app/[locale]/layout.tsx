@@ -38,8 +38,7 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  // Aguarda a resolução do params
-  const { locale } = await Promise.resolve(params);
+  const { locale } = params;
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
@@ -68,8 +67,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Aguarda a resolução do params
-  const { locale } = await Promise.resolve(params);
+  const { locale } = params;
 
   // Garante que o locale recebido é válido
   if (!hasLocale(routing.locales, locale)) {

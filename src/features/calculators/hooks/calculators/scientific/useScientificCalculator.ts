@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { evaluate } from "mathjs";
 import { parseFormulaForEvaluation } from "@/features/calculators/domain/services/formulaParser";
+import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
 
 interface UseScientificCalculatorProps {
   initialFormula?: string;
@@ -83,6 +84,10 @@ export function useScientificCalculator({
     (key: string) => {
       if (key === "⌫") {
         backspace();
+      } else if (key === "0") {
+        if (isValidZeroInsertion(formula, key)) {
+          handleFormulaChange(formula + key);
+        }
       } else {
         handleFormulaChange(formula + key);
       }
