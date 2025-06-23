@@ -1,0 +1,45 @@
+[
+    {
+      "id": 1,
+      "name": "Sodium Chloride",
+      "synonym": "Table Salt",
+      "formula": "NaCl",
+      "casNumber": "7647-14-5",
+      "molarMass": 58.44,
+      "physicalForm": "Solid",
+      "meltingPoint": 801,
+      "boilingPoint": 1413,
+      "density": 2.165,
+      "refractiveIndex": null,
+      "solubility": "Soluble in water"
+    },
+    {
+      "id": 2,
+      "name": "Calcium Carbonate",
+      "synonym": "Limestone",
+      "formula": "CaCO3",
+      "casNumber": "471-34-1",
+      "molarMass": 100.0869,
+      "physicalForm": "Solid",
+      "meltingPoint": 825,
+      "boilingPoint": null,
+      "density": 2.71,
+      "refractiveIndex": null,
+      "solubility": "Practically insoluble in water"
+    },
+    {
+      "id": 3,
+      "name": "Copper(II) Sulfate Pentahydrate",
+      "synonym": "Blue vitriol",
+      "formula": "CuSO4·5H2O",
+      "casNumber": "7758-99-8",
+      "molarMass": 249.685,
+      "physicalForm": "Blue crystals",
+      "meltingPoint": 110,
+      "boilingPoint": null,
+      "density": 2.284,
+      "refractiveIndex": null,
+      "solubility": "Soluble in water"
+    }
+  ]
+  
