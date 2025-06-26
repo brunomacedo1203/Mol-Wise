@@ -20,8 +20,10 @@ import { Input } from "@/components/ui/input";
 
 import { useCompoundData } from "@/features/catalog/hooks/common/useCompoundData";
 import { useCompoundTable } from "@/features/catalog/hooks/common/useCompoundTable";
+import { useTranslations } from "next-intl";
 
 export function CompoundTable() {
+  const t = useTranslations();
   const { compounds, isLoading, error } = useCompoundData();
 
   const {
@@ -38,18 +40,18 @@ export function CompoundTable() {
   } = useCompoundTable({ data: compounds });
 
   const allColumns = [
-    "No.",
-    "Name",
-    "Synonym",
-    "Molecular Formula",
-    "CAS Number",
-    "Molar Mass",
-    "Physical Form",
-    "Melting Point (°C)",
-    "Boiling Point (°C)",
-    "Density (g/cm³)",
-    "Refractive Index",
-    "Solubility",
+    t("catalog.tableHeaders.no"),
+    t("catalog.tableHeaders.name"),
+    t("catalog.tableHeaders.synonym"),
+    t("catalog.tableHeaders.formula"),
+    t("catalog.tableHeaders.casNumber"),
+    t("catalog.tableHeaders.molarMass"),
+    t("catalog.tableHeaders.physicalForm"),
+    t("catalog.tableHeaders.meltingPoint"),
+    t("catalog.tableHeaders.boilingPoint"),
+    t("catalog.tableHeaders.density"),
+    t("catalog.tableHeaders.refractiveIndex"),
+    t("catalog.tableHeaders.solubility"),
   ] as const;
 
   const toggleColumn = (col: string) => {
@@ -58,9 +60,32 @@ export function CompoundTable() {
     );
   };
 
-  if (isLoading) return <div className="text-center">Loading...</div>;
+  // Função utilitária para buscar tradução de nome/sinônimo
+  function getCompoundName(formula: string, fallback: string) {
+    try {
+      const translated = t(`catalog.compoundNames.${formula}`);
+      return translated || fallback;
+    } catch {
+      return fallback;
+    }
+  }
+  function getCompoundSynonym(formula: string, fallback: string) {
+    try {
+      const translated = t(`catalog.compoundSynonyms.${formula}`);
+      return translated || fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  if (isLoading)
+    return <div className="text-center">{t("compoundTable.loading")}</div>;
   if (error)
-    return <div className="text-center text-red-500">Error loading data.</div>;
+    return (
+      <div className="text-center text-red-500">
+        {t("compoundTable.errorLoading")}
+      </div>
+    );
 
   return (
     <div className="container my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm overflow-x-auto">
@@ -68,7 +93,7 @@ export function CompoundTable() {
       <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
         <div className="flex gap-2 flex-wrap">
           <Input
-            placeholder="Search compounds..."
+            placeholder={t("compoundTable.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-72"
@@ -78,7 +103,7 @@ export function CompoundTable() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
-              Columns
+              {t("compoundTable.columns")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48">
@@ -99,66 +124,89 @@ export function CompoundTable() {
       <Table className="w-full">
         <TableHeader>
           <TableRow>
-            {visibleColumns["No."] && <TableHead>No.</TableHead>}
-            {visibleColumns["Name"] && <TableHead>Name</TableHead>}
-            {visibleColumns["Synonym"] && <TableHead>Synonym</TableHead>}
-            {visibleColumns["Molecular Formula"] && (
-              <TableHead>Formula</TableHead>
+            {visibleColumns[t("catalog.tableHeaders.no")] && (
+              <TableHead>{t("catalog.tableHeaders.no")}</TableHead>
             )}
-            {visibleColumns["CAS Number"] && <TableHead>CAS</TableHead>}
-            {visibleColumns["Molar Mass"] && <TableHead>Molar Mass</TableHead>}
-            {visibleColumns["Physical Form"] && (
-              <TableHead>Physical Form</TableHead>
+            {visibleColumns[t("catalog.tableHeaders.name")] && (
+              <TableHead>{t("catalog.tableHeaders.name")}</TableHead>
             )}
-            {visibleColumns["Melting Point (°C)"] && (
-              <TableHead>mp (°C)</TableHead>
+            {visibleColumns[t("catalog.tableHeaders.synonym")] && (
+              <TableHead>{t("catalog.tableHeaders.synonym")}</TableHead>
             )}
-            {visibleColumns["Boiling Point (°C)"] && (
-              <TableHead>bp (°C)</TableHead>
+            {visibleColumns[t("catalog.tableHeaders.formula")] && (
+              <TableHead>{t("catalog.tableHeaders.formula")}</TableHead>
             )}
-            {visibleColumns["Density (g/cm³)"] && (
-              <TableHead>Density</TableHead>
+            {visibleColumns[t("catalog.tableHeaders.casNumber")] && (
+              <TableHead>{t("catalog.tableHeaders.casNumber")}</TableHead>
             )}
-            {visibleColumns["Refractive Index"] && <TableHead>nD</TableHead>}
-            {visibleColumns["Solubility"] && <TableHead>Solubility</TableHead>}
+            {visibleColumns[t("catalog.tableHeaders.molarMass")] && (
+              <TableHead>{t("catalog.tableHeaders.molarMass")}</TableHead>
+            )}
+            {visibleColumns[t("catalog.tableHeaders.physicalForm")] && (
+              <TableHead>{t("catalog.tableHeaders.physicalForm")}</TableHead>
+            )}
+            {visibleColumns[t("catalog.tableHeaders.meltingPoint")] && (
+              <TableHead>{t("catalog.tableHeaders.meltingPoint")}</TableHead>
+            )}
+            {visibleColumns[t("catalog.tableHeaders.boilingPoint")] && (
+              <TableHead>{t("catalog.tableHeaders.boilingPoint")}</TableHead>
+            )}
+            {visibleColumns[t("catalog.tableHeaders.density")] && (
+              <TableHead>{t("catalog.tableHeaders.density")}</TableHead>
+            )}
+            {visibleColumns[t("catalog.tableHeaders.refractiveIndex")] && (
+              <TableHead>{t("catalog.tableHeaders.refractiveIndex")}</TableHead>
+            )}
+            {visibleColumns[t("catalog.tableHeaders.solubility")] && (
+              <TableHead>{t("catalog.tableHeaders.solubility")}</TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
           {paginatedData.length ? (
             paginatedData.map((compound) => (
               <TableRow key={compound.id}>
-                {visibleColumns["No."] && <TableCell>{compound.id}</TableCell>}
-                {visibleColumns["Name"] && (
-                  <TableCell>{compound.name}</TableCell>
+                {visibleColumns[t("catalog.tableHeaders.no")] && (
+                  <TableCell>{compound.id}</TableCell>
                 )}
-                {visibleColumns["Synonym"] && (
-                  <TableCell>{compound.synonym}</TableCell>
+                {visibleColumns[t("catalog.tableHeaders.name")] && (
+                  <TableCell>
+                    {getCompoundName(compound.formula, compound.name ?? "")}
+                  </TableCell>
                 )}
-                {visibleColumns["Molecular Formula"] && (
+                {visibleColumns[t("catalog.tableHeaders.synonym")] && (
+                  <TableCell>
+                    {getCompoundSynonym(
+                      compound.formula,
+                      compound.synonym ?? ""
+                    )}
+                  </TableCell>
+                )}
+                {visibleColumns[t("catalog.tableHeaders.formula")] && (
                   <TableCell>{compound.formula}</TableCell>
                 )}
-                {visibleColumns["CAS Number"] && (
+                {visibleColumns[t("catalog.tableHeaders.casNumber")] && (
                   <TableCell>{compound.casNumber}</TableCell>
                 )}
-                {visibleColumns["Molar Mass"] && (
+                {visibleColumns[t("catalog.tableHeaders.molarMass")] && (
                   <TableCell>{compound.molarMass}</TableCell>
                 )}
-                {visibleColumns["Physical Form"] && (
+                {visibleColumns[t("catalog.tableHeaders.physicalForm")] && (
                   <TableCell>{compound.physicalForm}</TableCell>
                 )}
-                {visibleColumns["Melting Point (°C)"] && (
+                {visibleColumns[t("catalog.tableHeaders.meltingPoint")] && (
                   <TableCell>{compound.meltingPoint}</TableCell>
                 )}
-                {visibleColumns["Boiling Point (°C)"] && (
+                {visibleColumns[t("catalog.tableHeaders.boilingPoint")] && (
                   <TableCell>{compound.boilingPoint}</TableCell>
                 )}
-                {visibleColumns["Density (g/cm³)"] && (
+                {visibleColumns[t("catalog.tableHeaders.density")] && (
                   <TableCell>{compound.density}</TableCell>
                 )}
-                {visibleColumns["Refractive Index"] && (
+                {visibleColumns[t("catalog.tableHeaders.refractiveIndex")] && (
                   <TableCell>{compound.refractiveIndex}</TableCell>
                 )}
-                {visibleColumns["Solubility"] && (
+                {visibleColumns[t("catalog.tableHeaders.solubility")] && (
                   <TableCell>{compound.solubility}</TableCell>
                 )}
               </TableRow>
@@ -169,7 +217,7 @@ export function CompoundTable() {
                 colSpan={allColumns.length}
                 className="text-center py-6"
               >
-                No results found.
+                {t("compoundTable.noResults")}
               </TableCell>
             </TableRow>
           )}
@@ -180,7 +228,9 @@ export function CompoundTable() {
       <div className="flex items-center justify-between mt-4">
         {/* Rows per page */}
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Rows per page:</span>
+          <span className="text-sm text-muted-foreground">
+            {t("compoundTable.rowsPerPage")}
+          </span>
           <select
             value={rowsPerPage}
             onChange={(e) => setRowsPerPage(Number(e.target.value))}
