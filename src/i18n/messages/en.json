@@ -317,11 +317,64 @@
     }
   },
   "catalog": {
+   "title": "Inorganic Compounds Catalog",
+    "subtitle": "Explore detailed information about inorganic compounds",
     "elements": {
       "title": "Elements"
     },
     "compounds": {
       "title": "Compounds"
+    },
+    "compoundProperties": {
+      "name": "Name",
+      "synonym": "Synonym",
+      "formula": "Formula",
+      "casNumber": "CAS Number",
+      "molarMass": "Molar Mass",
+      "physicalForm": "Physical Form",
+      "meltingPoint": "Melting Point",
+      "boilingPoint": "Boiling Point",
+      "density": "Density",
+      "refractiveIndex": "Refractive Index",
+      "solubility": "Solubility"
+    },
+    "compoundNames": {
+      "NaCl": "Sodium Chloride",
+      "CaCO3": "Calcium Carbonate",
+      "CuSO4·5H2O": "Copper(II) Sulfate Pentahydrate"
+    },
+    "compoundSynonyms": {
+      "NaCl": "Table Salt",
+      "CaCO3": "Limestone",
+      "CuSO4·5H2O": "Blue vitriol"
+    },
+    "tableHeaders": {
+      "no": "No.",
+      "name": "Name",
+      "synonym": "Synonym",
+      "formula": "Mol. Form.",
+      "casNumber": "CAS RN",
+      "molarMass": "Mol. Wt.",
+      "physicalForm": "Physical Form",
+      "meltingPoint": "mp/°C",
+      "boilingPoint": "bp/°C",
+      "density": "den/g cm³",
+      "refractiveIndex": "nD",
+      "solubility": "Solubility"
+    },
+    "tableHeadersFull": {
+      "no": "Number",
+      "name": "Compound Name",
+      "synonym": "Synonym",
+      "formula": "Molecular Formula",
+      "casNumber": "CAS Registry Number",
+      "molarMass": "Molecular Weight",
+      "physicalForm": "Physical Form",
+      "meltingPoint": "Melting Point (°C)",
+      "boilingPoint": "Boiling Point (°C)",
+      "density": "Density (g/cm³)",
+      "refractiveIndex": "Refractive Index (nD)",
+      "solubility": "Solubility"
     }
   },
   "games": {

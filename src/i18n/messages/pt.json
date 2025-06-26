@@ -1,4 +1,5 @@
 {
+  
   "common": {
     "errors": {
       "emptyFormula": "Por favor, insira uma fórmula química"
@@ -317,14 +318,67 @@
       "Og": "Oganessônio"
     }
   },
-  "catalog": {
-    "elements": {
-      "title": "Elementos"
-    },
-    "compounds": {
-      "title": "Compostos"
-    }
+ "catalog": {
+  "title": "Catálogo de Compostos Inorgânicos",
+    "subtitle": "Explore informações detalhadas sobre compostos inorgânicos",
+  "elements": {
+    "title": "Elementos"
   },
+  "compounds": {
+    "title": "Compostos"
+  },
+  "compoundProperties": {
+    "name": "Nome",
+    "synonym": "Sinônimo",
+    "formula": "Fórmula",
+    "casNumber": "Número CAS",
+    "molarMass": "Massa Molar",
+    "physicalForm": "Forma Física",
+    "meltingPoint": "Ponto de Fusão",
+    "boilingPoint": "Ponto de Ebulição",
+    "density": "Densidade",
+    "refractiveIndex": "Índice de Refração",
+    "solubility": "Solubilidade"
+  },
+  "compoundNames": {
+    "NaCl": "Cloreto de Sódio",
+    "CaCO3": "Carbonato de Cálcio",
+    "CuSO4·5H2O": "Sulfato de Cobre(II) Pentahidratado"
+  },
+  "compoundSynonyms": {
+    "NaCl": "Sal de Cozinha",
+    "CaCO3": "Calcário",
+    "CuSO4·5H2O": "Sulfato de Cobre Azul"
+  },
+  "tableHeaders": {
+    "no": "Nº",
+    "name": "Nome",
+    "synonym": "Sinônimo",
+    "formula": "Fórmula Mol.",
+    "casNumber": "CAS RN",
+    "molarMass": "Massa Mol.",
+    "physicalForm": "Forma Física",
+    "meltingPoint": "pf/°C",
+    "boilingPoint": "pe/°C",
+    "density": "dens/g cm³",
+    "refractiveIndex": "nD",
+    "solubility": "Solubilidade"
+  },
+  "tableHeadersFull": {
+    "no": "Número",
+    "name": "Nome do Composto",
+    "synonym": "Sinônimo",
+    "formula": "Fórmula Molecular",
+    "casNumber": "Número de Registro CAS",
+    "molarMass": "Massa Molecular",
+    "physicalForm": "Forma Física",
+    "meltingPoint": "Ponto de Fusão (°C)",
+    "boilingPoint": "Ponto de Ebulição (°C)",
+    "density": "Densidade (g/cm³)",
+    "refractiveIndex": "Índice de Refração (nD)",
+    "solubility": "Solubilidade"
+  }
+},
   "games": {
     "elementQuiz": {
       "title": "Quiz de Elementos"
@@ -333,4 +387,5 @@
       "title": "Construtor de Compostos"
     }
   }
+  
 } 

@@ -9,7 +9,7 @@ export function useCompoundData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/data/inorganic-compounds.json');
+        const response = await fetch("/data/inorganic-compounds.json");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
