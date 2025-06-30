@@ -1,6 +1,5 @@
 "use client";
 import { TablePagination } from "@/features/catalog/components/common/TablePagination";
-
 import {
   Table,
   TableBody,
@@ -21,6 +20,9 @@ import { Input } from "@/components/ui/input";
 import { useCompoundData } from "@/features/catalog/hooks/common/useCompoundData";
 import { useCompoundTable } from "@/features/catalog/hooks/common/useCompoundTable";
 import { useTranslations } from "next-intl";
+import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
+import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
+import { useMemo, useCallback } from "react";
 
 export function CompoundTable() {
   const t = useTranslations();
@@ -37,69 +39,208 @@ export function CompoundTable() {
     paginatedData,
     visibleColumns,
     setVisibleColumns,
+    sortColumn,
+    sortOrder,
+    handleSort,
   } = useCompoundTable({ data: compounds });
 
-  const allColumns = [
-    t("catalog.tableHeaders.no"),
-    t("catalog.tableHeaders.name"),
-    t("catalog.tableHeaders.synonym"),
-    t("catalog.tableHeaders.formula"),
-    t("catalog.tableHeaders.casNumber"),
-    t("catalog.tableHeaders.molarMass"),
-    t("catalog.tableHeaders.physicalForm"),
-    t("catalog.tableHeaders.meltingPoint"),
-    t("catalog.tableHeaders.boilingPoint"),
-    t("catalog.tableHeaders.density"),
-    t("catalog.tableHeaders.refractiveIndex"),
-    t("catalog.tableHeaders.solubility"),
-  ] as const;
+  // Memoizar o array de colunas para evitar recriação a cada render
+  const allColumns = useMemo(
+    () => [
+      {
+        key: "id" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.no"),
+      },
+      {
+        key: "name" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.name"),
+      },
+      {
+        key: "synonym" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.synonym"),
+      },
+      {
+        key: "formula" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.formula"),
+      },
+      {
+        key: "casNumber" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.casNumber"),
+      },
+      {
+        key: "molarMass" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.molarMass"),
+      },
+      {
+        key: "physicalForm" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.physicalForm"),
+      },
+      {
+        key: "meltingPoint" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.meltingPoint"),
+      },
+      {
+        key: "boilingPoint" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.boilingPoint"),
+      },
+      {
+        key: "density" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.density"),
+      },
+      {
+        key: "refractiveIndex" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.refractiveIndex"),
+      },
+      {
+        key: "solubility" as keyof ChemicalCompound,
+        label: t("catalog.tableHeaders.solubility"),
+      },
+    ],
+    [t]
+  );
 
-  const toggleColumn = (col: string) => {
-    setVisibleColumns((prev) =>
-      prev[col] ? { ...prev, [col]: false } : { ...prev, [col]: true }
-    );
+  const getCompoundName = useCallback(
+    (formula: string, fallback: string) => {
+      try {
+        const translated = t(`catalog.compoundNames.${formula}`);
+        return translated || fallback;
+      } catch {
+        return fallback;
+      }
+    },
+    [t]
+  );
+
+  const getCompoundSynonym = useCallback(
+    (formula: string, fallback: string) => {
+      try {
+        const translated = t(`catalog.compoundSynonyms.${formula}`);
+        return translated || fallback;
+      } catch {
+        return fallback;
+      }
+    },
+    [t]
+  );
+
+  const getSolubilityTranslation = useCallback(
+    (solubility: string) => {
+      try {
+        const translated = t(`solubilityTerms.${solubility}`);
+        return translated || solubility;
+      } catch {
+        return solubility;
+      }
+    },
+    [t]
+  );
+
+  const getPhysicalFormTranslation = useCallback(
+    (physicalForm: string | undefined) => {
+      if (!physicalForm) return "";
+      try {
+        const translated = t(`physicalFormTerms.${physicalForm}`);
+        return translated || physicalForm;
+      } catch {
+        return physicalForm;
+      }
+    },
+    [t]
+  );
+
+  // Função para obter o valor de uma célula
+  const getCellValue = useCallback(
+    (compound: ChemicalCompound, key: keyof ChemicalCompound) => {
+      switch (key) {
+        case "id":
+          return compound.id?.toString() || "";
+        case "name":
+          return getCompoundName(compound.formula, compound.name ?? "");
+        case "synonym":
+          return getCompoundSynonym(compound.formula, compound.synonym ?? "");
+        case "formula":
+          return compound.formula || "";
+        case "casNumber":
+          return compound.casNumber || "";
+        case "molarMass":
+          return compound.molarMass?.toString() || "";
+        case "physicalForm":
+          return getPhysicalFormTranslation(compound.physicalForm);
+        case "meltingPoint":
+          return compound.meltingPoint?.toString() || "";
+        case "boilingPoint":
+          return compound.boilingPoint?.toString() || "";
+        case "density":
+          return compound.density?.toString() || "";
+        case "refractiveIndex":
+          return compound.refractiveIndex?.toString() || "";
+        case "solubility":
+          return getSolubilityTranslation(compound.solubility);
+        default:
+          return "";
+      }
+    },
+    [
+      getCompoundName,
+      getCompoundSynonym,
+      getPhysicalFormTranslation,
+      getSolubilityTranslation,
+    ]
+  );
+
+  // Calcular larguras mínimas das colunas
+  const columnWidths = useMemo(() => {
+    const widths: Partial<Record<keyof ChemicalCompound, number>> = {};
+
+    allColumns.forEach(({ key }) => {
+      let maxWidth = 0;
+
+      // Verificar largura do cabeçalho
+      const headerText = allColumns.find((col) => col.key === key)?.label || "";
+      maxWidth = Math.max(maxWidth, headerText.length * 8 + 40); // 8px por caractere + padding
+
+      // Verificar largura dos dados
+      compounds.forEach((compound) => {
+        const cellValue = getCellValue(compound, key);
+        maxWidth = Math.max(maxWidth, cellValue.length * 8 + 20); // 8px por caractere + padding
+      });
+
+      // Largura mínima e máxima
+      widths[key] = Math.min(Math.max(maxWidth, 80), 300); // Mínimo 80px, máximo 300px
+    });
+
+    return widths;
+  }, [compounds, allColumns, getCellValue]);
+
+  const toggleColumn = (col: keyof ChemicalCompound) => {
+    setVisibleColumns((prev) => ({
+      ...prev,
+      [col]: !prev[col],
+    }));
   };
 
-  // Função utilitária para buscar tradução de nome/sinônimo
-  function getCompoundName(formula: string, fallback: string) {
-    try {
-      const translated = t(`catalog.compoundNames.${formula}`);
-      return translated || fallback;
-    } catch {
-      return fallback;
-    }
-  }
-  function getCompoundSynonym(formula: string, fallback: string) {
-    try {
-      const translated = t(`catalog.compoundSynonyms.${formula}`);
-      return translated || fallback;
-    } catch {
-      return fallback;
-    }
+  if (isLoading) {
+    return <div className="text-center">{t("compoundTable.loading")}</div>;
   }
 
-  if (isLoading)
-    return <div className="text-center">{t("compoundTable.loading")}</div>;
-  if (error)
+  if (error) {
     return (
       <div className="text-center text-red-500">
         {t("compoundTable.errorLoading")}
       </div>
     );
+  }
 
   return (
-    <div className="container my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm overflow-x-auto">
+    <div className="w-full max-w-[1400px] mx-auto my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm">
       {/* Toolbar */}
       <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
-        <div className="flex gap-2 flex-wrap">
-          <Input
-            placeholder={t("compoundTable.searchPlaceholder")}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-72"
-          />
-        </div>
-
+        <Input
+          placeholder={t("compoundTable.searchPlaceholder")}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-72"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
@@ -107,13 +248,13 @@ export function CompoundTable() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48">
-            {allColumns.map((col) => (
+            {allColumns.map(({ key, label }) => (
               <DropdownMenuCheckboxItem
-                key={col}
-                checked={visibleColumns[col]}
-                onCheckedChange={() => toggleColumn(col)}
+                key={key}
+                checked={visibleColumns[key]}
+                onCheckedChange={() => toggleColumn(key)}
               >
-                {col}
+                {label}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
@@ -121,44 +262,31 @@ export function CompoundTable() {
       </div>
 
       {/* Tabela */}
-      <Table className="w-full">
+      <Table className="w-full table-fixed">
         <TableHeader>
           <TableRow>
-            {visibleColumns[t("catalog.tableHeaders.no")] && (
-              <TableHead>{t("catalog.tableHeaders.no")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.name")] && (
-              <TableHead>{t("catalog.tableHeaders.name")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.synonym")] && (
-              <TableHead>{t("catalog.tableHeaders.synonym")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.formula")] && (
-              <TableHead>{t("catalog.tableHeaders.formula")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.casNumber")] && (
-              <TableHead>{t("catalog.tableHeaders.casNumber")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.molarMass")] && (
-              <TableHead>{t("catalog.tableHeaders.molarMass")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.physicalForm")] && (
-              <TableHead>{t("catalog.tableHeaders.physicalForm")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.meltingPoint")] && (
-              <TableHead>{t("catalog.tableHeaders.meltingPoint")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.boilingPoint")] && (
-              <TableHead>{t("catalog.tableHeaders.boilingPoint")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.density")] && (
-              <TableHead>{t("catalog.tableHeaders.density")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.refractiveIndex")] && (
-              <TableHead>{t("catalog.tableHeaders.refractiveIndex")}</TableHead>
-            )}
-            {visibleColumns[t("catalog.tableHeaders.solubility")] && (
-              <TableHead>{t("catalog.tableHeaders.solubility")}</TableHead>
+            {allColumns.map(({ key, label }) =>
+              visibleColumns[key] ? (
+                <TableHead
+                  key={key}
+                  className="cursor-pointer select-none font-bold text-black whitespace-nowrap overflow-hidden text-ellipsis"
+                  style={{ width: `${columnWidths[key] || 100}px` }}
+                  onClick={() => handleSort(key)}
+                >
+                  <div className="flex items-center gap-1">
+                    {label}
+                    {sortColumn === key ? (
+                      sortOrder === "asc" ? (
+                        <ArrowUp className="w-3 h-3 flex-shrink-0" />
+                      ) : (
+                        <ArrowDown className="w-3 h-3 flex-shrink-0" />
+                      )
+                    ) : (
+                      <ChevronsUpDown className="w-3 h-3 text-muted-foreground flex-shrink-0" />
+                    )}
+                  </div>
+                </TableHead>
+              ) : null
             )}
           </TableRow>
         </TableHeader>
@@ -166,55 +294,25 @@ export function CompoundTable() {
           {paginatedData.length ? (
             paginatedData.map((compound) => (
               <TableRow key={compound.id}>
-                {visibleColumns[t("catalog.tableHeaders.no")] && (
-                  <TableCell>{compound.id}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.name")] && (
-                  <TableCell>
-                    {getCompoundName(compound.formula, compound.name ?? "")}
-                  </TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.synonym")] && (
-                  <TableCell>
-                    {getCompoundSynonym(
-                      compound.formula,
-                      compound.synonym ?? ""
-                    )}
-                  </TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.formula")] && (
-                  <TableCell>{compound.formula}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.casNumber")] && (
-                  <TableCell>{compound.casNumber}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.molarMass")] && (
-                  <TableCell>{compound.molarMass}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.physicalForm")] && (
-                  <TableCell>{compound.physicalForm}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.meltingPoint")] && (
-                  <TableCell>{compound.meltingPoint}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.boilingPoint")] && (
-                  <TableCell>{compound.boilingPoint}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.density")] && (
-                  <TableCell>{compound.density}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.refractiveIndex")] && (
-                  <TableCell>{compound.refractiveIndex}</TableCell>
-                )}
-                {visibleColumns[t("catalog.tableHeaders.solubility")] && (
-                  <TableCell>{compound.solubility}</TableCell>
+                {allColumns.map(({ key }) =>
+                  visibleColumns[key] ? (
+                    <TableCell
+                      key={key}
+                      className="whitespace-nowrap overflow-hidden text-ellipsis"
+                      style={{ width: `${columnWidths[key] || 100}px` }}
+                    >
+                      {getCellValue(compound, key)}
+                    </TableCell>
+                  ) : null
                 )}
               </TableRow>
             ))
           ) : (
             <TableRow>
               <TableCell
-                colSpan={allColumns.length}
+                colSpan={
+                  allColumns.filter((col) => visibleColumns[col.key]).length
+                }
                 className="text-center py-6"
               >
                 {t("compoundTable.noResults")}
@@ -224,9 +322,8 @@ export function CompoundTable() {
         </TableBody>
       </Table>
 
-      {/* Footer - Paginação e Rows per page */}
+      {/* Paginação */}
       <div className="flex items-center justify-between mt-4">
-        {/* Rows per page */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">
             {t("compoundTable.rowsPerPage")}
@@ -242,8 +339,6 @@ export function CompoundTable() {
             <option value={50}>50</option>
           </select>
         </div>
-
-        {/* Paginação */}
         <TablePagination
           currentPage={currentPage}
           totalPages={totalPages}

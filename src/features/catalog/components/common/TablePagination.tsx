@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface TablePaginationProps {
   currentPage: number;
@@ -13,14 +14,15 @@ export function TablePagination({
   totalPages,
   onPageChange,
 }: TablePaginationProps) {
+  const t = useTranslations("compoundTable");
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
   return (
     <div className="flex items-center justify-between mt-4">
       {/* Indicador de Página */}
-      <div className="text-sm text-muted-foreground">
-        Page {currentPage} of {totalPages}
+      <div className="text-sm px-2 text-muted-foreground">
+        {t("pageOf", { current: currentPage, total: totalPages })}
       </div>
 
       {/* Botões de Navegação */}
@@ -31,7 +33,7 @@ export function TablePagination({
           onClick={() => onPageChange(currentPage - 1)}
           disabled={isFirstPage}
         >
-          Previous
+          {t("previous")}
         </Button>
         <Button
           variant="outline"
@@ -39,7 +41,7 @@ export function TablePagination({
           onClick={() => onPageChange(currentPage + 1)}
           disabled={isLastPage}
         >
-          Next
+          {t("next")}
         </Button>
       </div>
     </div>
