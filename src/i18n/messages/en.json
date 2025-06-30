@@ -452,11 +452,11 @@
       "physicalForm": "Physical Form",
       "meltingPoint": "mp/°C",
       "boilingPoint": "bp/°C",
-      "density": "den/g cm³",
       "refractiveIndex": "nD",
       "solubility": "Solubility",
-      "solubilityNumeric": "Solubility g/100 g H2O",
-      "solubilityQualitative": "Qualitative Solubility"
+      "density": "Density\ng/cm³",
+      "solubilityNumeric": "Solubility\ng/100g H₂O",
+      "solubilityQualitative": "Qualitative\nSolubility"
     },
     "tableHeadersFull": {
       "no": "Number",

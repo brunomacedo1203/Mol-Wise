@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 export function useCompoundColumns(): ColumnDef<ChemicalCompound>[] {
   const t = useTranslations("catalog.tableHeaders");
 
-  return [
+  const columns: ColumnDef<ChemicalCompound>[] = [
     {
       accessorKey: "id",
       header: () => t("no"),
@@ -50,19 +50,31 @@ export function useCompoundColumns(): ColumnDef<ChemicalCompound>[] {
       accessorKey: "meltingPoint",
       header: () => t("meltingPoint"),
       enableSorting: true,
-      cell: ({ row }) => row.getValue("meltingPoint") + " °C",
+      cell: ({ row }) => (
+        <div className="text-center w-full">
+          {row.getValue("meltingPoint")} °C
+        </div>
+      ),
     },
     {
       accessorKey: "boilingPoint",
       header: () => t("boilingPoint"),
       enableSorting: true,
-      cell: ({ row }) => row.getValue("boilingPoint") + " °C",
+      cell: ({ row }) => (
+        <div className="text-center w-full">
+          {row.getValue("boilingPoint")} °C
+        </div>
+      ),
     },
     {
       accessorKey: "density",
       header: () => t("density"),
       enableSorting: true,
-      cell: ({ row }) => row.getValue("density") + " g/cm³",
+      cell: ({ row }) => (
+        <div className="text-center w-full">
+          {row.getValue("density")} g/cm³
+        </div>
+      ),
     },
     {
       accessorKey: "refractiveIndex",
@@ -75,4 +87,6 @@ export function useCompoundColumns(): ColumnDef<ChemicalCompound>[] {
       enableSorting: true,
     },
   ];
+
+  return columns;
 }

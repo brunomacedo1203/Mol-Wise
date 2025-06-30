@@ -336,9 +336,9 @@
     "physicalForm": "Forma Física",
     "meltingPoint": "Ponto de Fusão",
     "boilingPoint": "Ponto de Ebulição",
-    "density": "Densidade",
-    "refractiveIndex": "Índice de Refração",
-    "solubility": "Solubilidade"
+    "density": "Densidade\ng/cm³",
+    "solubilityNumeric": "Solubilidade\ng/100g H₂O",
+    "solubilityQualitative": "Solubilidade\nqualitativa"
   },
   "compoundNames": {
     "NaCl": "Cloreto de Sódio",
@@ -453,10 +453,12 @@
     "physicalForm": "Forma Física",
     "meltingPoint": "PF (°C)",
     "boilingPoint": "PE (°C)",
-    "density": "Densidade (g/cm³)",
-    "solubilityNumeric": "Solubilidade (g/100 g H2O)",
-    "solubilityQualitative": "Solubilidade Qualitativa"
-  },
+    "refractiveIndex": "Índice de refração",
+    "density": "Densidade\ng/cm³",
+    "solubilityNumeric": "Solubilidade\ng/100g\u00A0H₂O",
+    "solubilityQualitative": "Solubilidade\nQualitativa"
+  }
+,
   "tableHeadersFull": {
     "no": "Número",
     "name": "Nome do Composto",
