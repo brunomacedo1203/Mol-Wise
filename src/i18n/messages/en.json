@@ -446,7 +446,7 @@
       "no": "No.",
       "name": "Name",
       "synonym": "Common Name",
-      "formula": "Formula",
+      "formula": "Mol. Form.",
       "casNumber": "CAS RN",
       "molarMass": "Mol. Wt.",
       "physicalForm": "Physical Form",
@@ -454,7 +454,9 @@
       "boilingPoint": "bp/°C",
       "density": "den/g cm³",
       "refractiveIndex": "nD",
-      "solubility": "Solubility"
+      "solubility": "Solubility",
+      "solubilityNumeric": "Solubility g/100 g H2O",
+      "solubilityQualitative": "Qualitative Solubility"
     },
     "tableHeadersFull": {
       "no": "Number",

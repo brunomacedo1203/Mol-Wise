@@ -4,6 +4,10 @@ import { useTranslations } from 'next-intl';
 
 type SortOrder = 'asc' | 'desc';
 
+// Adicionar tipos extras para as novas colunas
+type ExtraColumn = "solubilityNumeric" | "solubilityQualitative";
+type TableColumnKey = keyof ChemicalCompound | ExtraColumn;
+
 interface UseCompoundTableProps {
   data: ChemicalCompound[];
 }
@@ -18,11 +22,11 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
   const [visibleColumns, setVisibleColumns] = useState<
-    Record<keyof ChemicalCompound, boolean>
+    Record<TableColumnKey, boolean>
   >({
     id: true,
     name: true,
-    synonym: true,
+    synonym: false,
     formula: true,
     casNumber: true,
     molarMass: true,
@@ -30,21 +34,25 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     meltingPoint: true,
     boilingPoint: true,
     density: true,
-    refractiveIndex: true,
-    solubility: true,
+    refractiveIndex: false,
+    solubility: false,
+    solubilityNumeric: true,
+    solubilityQualitative: true,
   });
 
   // 🔍 Filtro por texto
   const filteredData = useMemo(() => {
     const term = searchTerm.toLowerCase();
     return data.filter((compound) =>
-      compound.name.toLowerCase().includes(term) ||
-      compound.formula.toLowerCase().includes(term) ||
-      (compound.synonym?.toLowerCase().includes(term) ?? false) ||
-      compound.casNumber.toLowerCase().includes(term) ||
-      compound.solubility.toLowerCase().includes(term)
+      (compound.name ?? '').toLowerCase().includes(term) ||
+      (compound.formula ?? '').toLowerCase().includes(term) ||
+      (compound.synonym ?? '').toLowerCase().includes(term) ||
+      (compound.casNumber ?? '').toLowerCase().includes(term) ||
+      (compound.solubility ?? '').toLowerCase().includes(term)
     );
   }, [data, searchTerm]);
+  
+  
 
   // 🔀 Ordenação corrigida
   const sortedData = useMemo(() => {
@@ -52,7 +60,10 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     const getTranslatedValue = (compound: ChemicalCompound, column: keyof ChemicalCompound) => {
       if (column === 'name') {
         try {
-          return t(`catalog.compoundNames.${compound.formula}`) || compound.name;
+          return compound.formula
+          ? t(`catalog.compoundNames.${compound.formula}`, { fallback: '' }) || compound.name
+          : compound.name
+        
         } catch {
           return compound.name;
         }

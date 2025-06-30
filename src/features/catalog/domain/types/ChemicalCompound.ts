@@ -11,5 +11,6 @@ export interface ChemicalCompound {
     density?: number;            // den/g cm³ (Densidade)
     refractiveIndex?: number | null; // nD (Índice de refração)
     solubility: string;          // Solubility (Solubilidade)
+    solubilityNumeric?: string; // Solubility numérica (g/100 g H2O)
   }
   

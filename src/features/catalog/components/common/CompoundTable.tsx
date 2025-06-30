@@ -24,6 +24,10 @@ import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
 import { useMemo, useCallback } from "react";
 
+// Definir tipo para as colunas extras
+type ExtraColumn = "solubilityNumeric" | "solubilityQualitative";
+type TableColumnKey = keyof ChemicalCompound | ExtraColumn;
+
 export function CompoundTable() {
   const t = useTranslations();
   const { compounds, isLoading, error } = useCompoundData();
@@ -44,56 +48,45 @@ export function CompoundTable() {
     handleSort,
   } = useCompoundTable({ data: compounds });
 
-  // Memoizar o array de colunas para evitar recriação a cada render
   const allColumns = useMemo(
     () => [
+      { key: "id" as TableColumnKey, label: t("catalog.tableHeaders.no") },
+      { key: "name" as TableColumnKey, label: t("catalog.tableHeaders.name") },
       {
-        key: "id" as keyof ChemicalCompound,
-        label: t("catalog.tableHeaders.no"),
-      },
-      {
-        key: "name" as keyof ChemicalCompound,
-        label: t("catalog.tableHeaders.name"),
-      },
-      {
-        key: "synonym" as keyof ChemicalCompound,
-        label: t("catalog.tableHeaders.synonym"),
-      },
-      {
-        key: "formula" as keyof ChemicalCompound,
+        key: "formula" as TableColumnKey,
         label: t("catalog.tableHeaders.formula"),
       },
       {
-        key: "casNumber" as keyof ChemicalCompound,
+        key: "casNumber" as TableColumnKey,
         label: t("catalog.tableHeaders.casNumber"),
       },
       {
-        key: "molarMass" as keyof ChemicalCompound,
+        key: "molarMass" as TableColumnKey,
         label: t("catalog.tableHeaders.molarMass"),
       },
       {
-        key: "physicalForm" as keyof ChemicalCompound,
+        key: "physicalForm" as TableColumnKey,
         label: t("catalog.tableHeaders.physicalForm"),
       },
       {
-        key: "meltingPoint" as keyof ChemicalCompound,
+        key: "meltingPoint" as TableColumnKey,
         label: t("catalog.tableHeaders.meltingPoint"),
       },
       {
-        key: "boilingPoint" as keyof ChemicalCompound,
+        key: "boilingPoint" as TableColumnKey,
         label: t("catalog.tableHeaders.boilingPoint"),
       },
       {
-        key: "density" as keyof ChemicalCompound,
+        key: "density" as TableColumnKey,
         label: t("catalog.tableHeaders.density"),
       },
       {
-        key: "refractiveIndex" as keyof ChemicalCompound,
-        label: t("catalog.tableHeaders.refractiveIndex"),
+        key: "solubilityNumeric" as TableColumnKey,
+        label: t("catalog.tableHeaders.solubilityNumeric"),
       },
       {
-        key: "solubility" as keyof ChemicalCompound,
-        label: t("catalog.tableHeaders.solubility"),
+        key: "solubilityQualitative" as TableColumnKey,
+        label: t("catalog.tableHeaders.solubilityQualitative"),
       },
     ],
     [t]
@@ -148,9 +141,17 @@ export function CompoundTable() {
     [t]
   );
 
-  // Função para obter o valor de uma célula
+  // Atualizar getCellValue para definir extractSolubilityQualitative dentro do useCallback
   const getCellValue = useCallback(
-    (compound: ChemicalCompound, key: keyof ChemicalCompound) => {
+    (compound: ChemicalCompound, key: TableColumnKey) => {
+      // Função local para extrair valor qualitativo de solubilidade
+      function extractSolubilityQualitative(solubility: string) {
+        // Se não for valor numérico, retorna o texto original traduzido
+        if (!/([\d,.]+)\s*g\/(?:100\s*(?:mL|g))\s*water/i.test(solubility)) {
+          return getSolubilityTranslation(solubility);
+        }
+        return "";
+      }
       switch (key) {
         case "id":
           return compound.id?.toString() || "";
@@ -174,6 +175,10 @@ export function CompoundTable() {
           return compound.density?.toString() || "";
         case "refractiveIndex":
           return compound.refractiveIndex?.toString() || "";
+        case "solubilityNumeric":
+          return compound.solubilityNumeric || "";
+        case "solubilityQualitative":
+          return extractSolubilityQualitative(compound.solubility);
         case "solubility":
           return getSolubilityTranslation(compound.solubility);
         default:
@@ -188,9 +193,9 @@ export function CompoundTable() {
     ]
   );
 
-  // Calcular larguras mínimas das colunas
+  // Atualizar columnWidths para aceitar TableColumnKey
   const columnWidths = useMemo(() => {
-    const widths: Partial<Record<keyof ChemicalCompound, number>> = {};
+    const widths: Partial<Record<TableColumnKey, number>> = {};
 
     allColumns.forEach(({ key }) => {
       let maxWidth = 0;
@@ -212,11 +217,36 @@ export function CompoundTable() {
     return widths;
   }, [compounds, allColumns, getCellValue]);
 
-  const toggleColumn = (col: keyof ChemicalCompound) => {
+  // Atualizar toggleColumn para aceitar TableColumnKey
+  const toggleColumn = (col: TableColumnKey) => {
     setVisibleColumns((prev) => ({
       ...prev,
       [col]: !prev[col],
     }));
+  };
+
+  // Atualizar handleSort para aceitar apenas colunas do tipo keyof ChemicalCompound
+  const handleSafeSort = (key: TableColumnKey) => {
+    // Só permite ordenação para colunas do tipo ChemicalCompound
+    if (
+      typeof key === "string" &&
+      [
+        "id",
+        "name",
+        "synonym",
+        "formula",
+        "casNumber",
+        "molarMass",
+        "physicalForm",
+        "meltingPoint",
+        "boilingPoint",
+        "density",
+        "refractiveIndex",
+        "solubility",
+      ].includes(key)
+    ) {
+      handleSort(key as keyof ChemicalCompound);
+    }
   };
 
   if (isLoading) {
@@ -271,7 +301,7 @@ export function CompoundTable() {
                   key={key}
                   className="cursor-pointer select-none font-bold text-black whitespace-nowrap overflow-hidden text-ellipsis"
                   style={{ width: `${columnWidths[key] || 100}px` }}
-                  onClick={() => handleSort(key)}
+                  onClick={() => handleSafeSort(key)}
                 >
                   <div className="flex items-center gap-1">
                     {label}

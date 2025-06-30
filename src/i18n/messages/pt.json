@@ -447,16 +447,15 @@
   "tableHeaders": {
     "no": "Nº",
     "name": "Nome",
-    "synonym": "Nome Usual",
-    "formula": "Fórmula Mol.",
-    "casNumber": "CAS RN",
-    "molarMass": "Massa Mol.",
+    "formula": "Fórmula",
+    "casNumber": "Registro CAS",
+    "molarMass": "Massa Molar",
     "physicalForm": "Forma Física",
-    "meltingPoint": "pf/°C",
-    "boilingPoint": "pe/°C",
-    "density": "dens/g cm³",
-    "refractiveIndex": "nD",
-    "solubility": "Solubilidade"
+    "meltingPoint": "PF (°C)",
+    "boilingPoint": "PE (°C)",
+    "density": "Densidade (g/cm³)",
+    "solubilityNumeric": "Solubilidade (g/100 g H2O)",
+    "solubilityQualitative": "Solubilidade Qualitativa"
   },
   "tableHeadersFull": {
     "no": "Número",
@@ -532,8 +531,7 @@
     "Fully soluble in water": "Totalmente solúvel em água",
     "Sparingly soluble (reacts with water)": "Pouco solúvel (reage com água)",
     "Reacts with water (forms H2SO3)": "Reage com água (forma H2SO3)",
-    "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)",
-    "6.4 g/100 mL water (20 °C)": "6,4 g/100 mL de água (20 °C)"
+    "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)"
   },
   "compoundTable": {
     "loading": "Carregando...",
