@@ -13,7 +13,7 @@ export const Submenu = memo(function Submenu({ isOpen, items }: SubmenuProps) {
       variants={SUBMENU_VARIANTS}
       initial="closed"
       animate={isOpen ? "open" : "closed"}
-      className={cn("ml-4 mt-1", isOpen ? "block" : "hidden")}
+      className={cn("ml-3 mt-1", isOpen ? "block" : "hidden")}
     >
       <div className={MENU_CLASSES.SUBMENU}>
         <ul className="p-1">

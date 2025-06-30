@@ -21,33 +21,26 @@ export function MenuProvider({
   children,
   initialCollapsed = false,
 }: MenuProviderProps) {
-  const [state, setState] = useState<MenuState>(() => {
+  const [state, setState] = useState<MenuState>({
+    openSections: {},
+    collapsed: initialCollapsed,
+  });
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       try {
         const saved = localStorage.getItem(MENU_STORAGE_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          return {
+          setState({
             ...parsed,
             collapsed: parsed.collapsed ?? initialCollapsed,
-          };
+          });
         }
       } catch (error) {
         console.error("Erro ao carregar estado do menu:", error);
       }
     }
-    return {
-      openSections: {},
-      collapsed: initialCollapsed,
-    };
-  });
-
-  useEffect(() => {
-    setState((prev) => ({
-      ...prev,
-      collapsed: initialCollapsed,
-      openSections: initialCollapsed ? {} : prev.openSections,
-    }));
   }, [initialCollapsed]);
 
   useEffect(() => {

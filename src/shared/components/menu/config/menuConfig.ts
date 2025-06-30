@@ -1,4 +1,4 @@
-import { Calculator, FlaskConical, Table2, Book, FunctionSquare } from "lucide-react";
+import { Calculator, FlaskConical, Book, FunctionSquare } from "lucide-react";
 import { MENU_SECTIONS } from "../constants";
 import { MenuSectionConfig } from "../types";
 
@@ -28,39 +28,11 @@ export const menuSectionsConfig: MenuSectionConfig[] = [
     translationKey: "navigation.catalog",
     items: [
       {
-        icon: Table2,
-        translationKey: "catalog.elements.title",
+        icon: Book,
+        translationKey: "catalog.title", 
         type: "link",
-        href: (locale: string) => `/${locale}/catalog/elements`,
-      } as const,
-      {
-        icon: FlaskConical,
-        translationKey: "catalog.compounds.title",
-        type: "link",
-        href: (locale: string) => `/${locale}/catalog/compounds`,
-      } as const,
+        href: (locale: string) => `/${locale}/catalog`,
+      } as const
     ],
   },
-  // Seção Games comentada temporariamente
-  /*
-  {
-    id: MENU_SECTIONS.GAMES,
-    icon: Gamepad2,
-    translationKey: "navigation.games",
-    items: [
-      {
-        icon: Gamepad2,
-        translationKey: "games.elementQuiz.title",
-        type: "link",
-        href: (locale: string) => `/${locale}/games/element-quiz`,
-      } as const,
-      {
-        icon: Gamepad2,
-        translationKey: "games.compoundBuilder.title",
-        type: "link",
-        href: (locale: string) => `/${locale}/games/compound-builder`,
-      } as const,
-    ],
-  },
-  */
 ]; 
