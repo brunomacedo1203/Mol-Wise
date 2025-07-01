@@ -22,7 +22,7 @@ import { useCompoundTable } from "@/features/catalog/hooks/common/useCompoundTab
 import { useTranslations } from "next-intl";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
 // Definir tipo para as colunas extras
@@ -32,6 +32,9 @@ type TableColumnKey = keyof ChemicalCompound | ExtraColumn;
 export function CompoundTable() {
   const t = useTranslations();
   const { compounds, isLoading, error } = useCompoundData();
+
+  // Adiciona controle manual de abertura do DropdownMenu
+  const [columnsMenuOpen, setColumnsMenuOpen] = useState(false);
 
   const {
     searchTerm,
@@ -290,7 +293,7 @@ export function CompoundTable() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-72"
         />
-        <DropdownMenu>
+        <DropdownMenu open={columnsMenuOpen} onOpenChange={setColumnsMenuOpen}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
               {t("compoundTable.columns")}
@@ -301,7 +304,12 @@ export function CompoundTable() {
               <DropdownMenuCheckboxItem
                 key={key}
                 checked={visibleColumns[key]}
-                onCheckedChange={() => toggleColumn(key)}
+                onCheckedChange={() => {
+                  toggleColumn(key);
+                  // NÃO fecha o menu ao marcar/desmarcar
+                }}
+                // Impede o fechamento automático
+                onSelect={(e) => e.preventDefault()}
               >
                 {typeof label === "string"
                   ? label
@@ -315,7 +323,7 @@ export function CompoundTable() {
         </DropdownMenu>
       </div>
 
-      <Table className="w-full table-fixed">
+      <Table className="w-full table-fixed shadow-xl ">
         <TableHeader>
           <TableRow className="dark:hover:bg-zinc-800 transition-colors">
             {allColumns.map(({ key, label }) =>
