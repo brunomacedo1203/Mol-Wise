@@ -24,6 +24,27 @@ interface UseScientificCalculatorReturn {
   handleMemory: (action: "store" | "recall" | "clear") => void;
 }
 
+function degToRad(deg: number): number {
+  return deg * (Math.PI / 180);
+}
+
+// Função para substituir argumentos de funções trigonométricas por radianos
+function convertTrigArgsToRad(expr: string): string {
+  // Substitui sin(x), cos(x), tan(x) por sin(radians), etc.
+  return expr.replace(/(sin|cos|tan)\s*\(([^)]+)\)/gi, (match, fn, arg) => {
+    // Tenta avaliar o argumento, caso seja uma expressão
+    let argValue = Number(arg);
+    if (isNaN(argValue)) {
+      try {
+        argValue = evaluate(arg);
+      } catch {
+        argValue = Number(arg); // fallback
+      }
+    }
+    return `${fn}(${degToRad(argValue)})`;
+  });
+}
+
 export function useScientificCalculator({
   initialFormula = "",
   initialResult = null,
@@ -54,8 +75,10 @@ export function useScientificCalculator({
       }
 
       const formulaToEvaluate = parseFormulaForEvaluation(formula);
+      const formulaWithRad = convertTrigArgsToRad(formulaToEvaluate);
 
-      const calculatedResult = evaluate(formulaToEvaluate);
+      const calculatedResult = evaluate(formulaWithRad);
+
       const formattedResult = Number.isInteger(calculatedResult)
         ? calculatedResult.toString()
         : calculatedResult.toFixed(8).replace(/\.?0+$/, "");
