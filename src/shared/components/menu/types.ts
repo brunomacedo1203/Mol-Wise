@@ -72,4 +72,5 @@ export interface MenuAccordionProps {
 export interface SubmenuProps {
   isOpen: boolean;
   items: MenuItemProps[];
+  isCollapsed: boolean;
 } 

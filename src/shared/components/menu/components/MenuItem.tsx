@@ -16,15 +16,13 @@ export const MenuItem = memo(function MenuItem({
 }: MenuItemProps) {
   const content = (
     <>
-      <Icon className="w-5 h-5" />
-      <span
-        className={cn(
-          "text-base transition-all duration-300 ease-in-out flex-shrink-0",
-          isCollapsed ? "hidden" : "whitespace-nowrap max-w-full"
-        )}
-      >
-        {label}
-      </span>
+      <Icon className="w-5 h-5 flex-shrink-0" />
+
+      {!isCollapsed && (
+        <span className="text-base whitespace-nowrap overflow-hidden">
+          {label}
+        </span>
+      )}
     </>
   );
 
@@ -34,6 +32,7 @@ export const MenuItem = memo(function MenuItem({
         href={href}
         className={cn(MENU_CLASSES.ITEM, isActive && MENU_CLASSES.ACTIVE_ITEM)}
         aria-current={isActive ? "page" : undefined}
+        title={isCollapsed ? label : undefined}
       >
         {content}
       </Link>
@@ -46,6 +45,7 @@ export const MenuItem = memo(function MenuItem({
       className={cn(MENU_CLASSES.ITEM, isActive && MENU_CLASSES.ACTIVE_ITEM)}
       aria-pressed={isActive}
       type="button"
+      title={isCollapsed ? label : undefined}
     >
       {content}
     </button>
