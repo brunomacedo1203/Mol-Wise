@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { ChemicalCompound } from '@/features/catalog/domain/types/ChemicalCompound';
 import { useTranslations } from 'next-intl';
+
 
 type SortOrder = 'asc' | 'desc';
 
@@ -16,7 +17,19 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
   const t = useTranslations();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  // Persistência do rowsPerPage no localStorage
+  const [rowsPerPage, setRowsPerPage] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("catalogRowsPerPage");
+      return saved ? Number(saved) : 10;
+    }
+    return 10;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("catalogRowsPerPage", String(rowsPerPage));
+  }, [rowsPerPage]);
 
   const [sortColumn, setSortColumn] = useState<keyof ChemicalCompound>('id');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');

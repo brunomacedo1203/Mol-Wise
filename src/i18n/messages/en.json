@@ -452,11 +452,11 @@
       "physicalForm": "Physical Form",
       "meltingPoint": "mp/°C",
       "boilingPoint": "bp/°C",
-      "density": "den/g cm³",
       "refractiveIndex": "nD",
       "solubility": "Solubility",
-      "solubilityNumeric": "Solubility g/100 g H2O",
-      "solubilityQualitative": "Qualitative Solubility"
+      "density": "Density\ng/cm³",
+      "solubilityNumeric": "Solubility\ng/100g H₂O",
+      "solubilityQualitative": "Qualitative\nSolubility"
     },
     "tableHeadersFull": {
       "no": "Number",
@@ -471,6 +471,22 @@
       "density": "Density (g/cm³)",
       "refractiveIndex": "Refractive Index (nD)",
       "solubility": "Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "",
+      "name": "Name of the chemical compound",
+      "synonym": "Common or alternative name of the compound",
+      "formula": "Chemical formula of the compound",
+      "casNumber": "CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "Molar mass in grams per mole (g/mol)",
+      "physicalForm": "Physical state at room temperature",
+      "meltingPoint": "Melting point in degrees Celsius (°C)",
+      "boilingPoint": "Boiling point in degrees Celsius (°C)",
+      "density": "Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "Refractive index (nD)",
+      "solubility": "Qualitative description of water solubility",
+      "solubilityNumeric": "Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "Qualitative description of solubility"
     }
   },
   "games": {
@@ -532,7 +548,8 @@
     "Fully soluble in water": "Fully soluble in water",
     "Sparingly soluble (reacts with water)": "Sparingly soluble (reacts with water)",
     "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
-    "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)"
+    "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
+    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)"
   },
   "compoundTable": {
     "loading": "Loading...",

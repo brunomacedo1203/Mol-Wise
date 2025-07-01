@@ -1,3 +1,4 @@
+// MenuAccordion.tsx - CORRIGIDO
 "use client";
 
 import { memo } from "react";
@@ -35,7 +36,13 @@ export const MenuAccordion = memo(function MenuAccordion({
           </>
         )}
       </button>
-      <Submenu isOpen={isOpen && !isCollapsed} items={section.items} />
+      {!isCollapsed && (
+        <Submenu
+          isOpen={isOpen}
+          items={section.items}
+          isCollapsed={isCollapsed}
+        />
+      )}
     </li>
   );
 });
