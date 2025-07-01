@@ -337,7 +337,7 @@
     "meltingPoint": "Ponto de Fusão",
     "boilingPoint": "Ponto de Ebulição",
     "density": "Densidade\ng/cm³",
-    "solubilityNumeric": "Solubilidade\ng/100g H₂O",
+    "solubilityNumeric": "Solubilidade\ng/100g H₂O",
     "solubilityQualitative": "Solubilidade\nqualitativa"
   },
   "compoundNames": {
@@ -457,8 +457,23 @@
     "density": "Densidade\ng/cm³",
     "solubilityNumeric": "Solubilidade\ng/100g\u00A0H₂O",
     "solubilityQualitative": "Solubilidade\nQualitativa"
-  }
-,
+  },
+  "tableHeaderDescriptions": {
+    "no": "",
+    "name": "Nome do composto químico",
+    "synonym": "Nome usual ou alternativo do composto",
+    "formula": "Fórmula química do composto",
+    "casNumber": "Número de registro CAS (Chemical Abstracts Service)",
+    "molarMass": "Massa molar em gramas por mol (g/mol)",
+    "physicalForm": "Estado físico à temperatura ambiente",
+    "meltingPoint": "Ponto de fusão em graus Celsius (°C)",
+    "boilingPoint": "Ponto de ebulição em graus Celsius (°C)",
+    "density": "Densidade em gramas por centímetro cúbico (g/cm³)",
+    "refractiveIndex": "Índice de refração (nD)",
+    "solubility": "Descrição qualitativa da solubilidade em água",
+    "solubilityNumeric": "Quantidade máxima dissolvida em 100g de água (g/100g H₂O)",
+    "solubilityQualitative": "Descrição qualitativa da solubilidade"
+  },
   "tableHeadersFull": {
     "no": "Número",
     "name": "Nome do Composto",
