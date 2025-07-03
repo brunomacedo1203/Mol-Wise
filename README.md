@@ -41,349 +41,144 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 - Framer Motion (animações do menu/submenu)
 - [shadcn/ui](https://ui.shadcn.com/) (ScrollArea e outros utilitários de UI)
 
-## 🏗️ Arquitetura
+## 🏗️ Arquitetura Detalhada das Features
 
-O projeto segue uma arquitetura baseada em domínio, organizando o código em camadas bem definidas e responsabilidades separadas. A estrutura atual é:
+O projeto segue uma arquitetura baseada em domínio, com cada funcionalidade principal organizada em uma feature independente. Abaixo, detalhamos a estrutura de arquivos das principais features:
 
-### Estrutura de Diretórios
-
-```
-src/
-├── core/                    # Camada de núcleo da aplicação
-│   ├── application/        # Serviços e casos de uso
-│   │   ├── services/      # Serviços de domínio (ex: cálculo de massa molar)
-│   │   └── hooks/         # Hooks de aplicação reutilizáveis
-│   └── domain/            # Entidades e regras de negócio
-│       ├── entities/      # Entidades de domínio
-│       └── value-objects/ # Objetos de valor
-│
-├── features/               # Funcionalidades da aplicação
-│   ├── calculators/       # Módulo de calculadoras
-│   │   ├── components/    # Componentes React
-│   │   │   ├── common/    # Componentes compartilhados
-│   │   │   └── calculators/
-│   │   │       └── molar-mass/ # Componentes específicos
-│   │   ├── contexts/      # Contextos React
-│   │   ├── domain/        # Tipos e interfaces
-│   │   ├── hooks/         # Hooks específicos
-│   │   └── styles/        # Estilos específicos
-│   └── periodic-table/    # Módulo da tabela periódica
-│
-└── shared/                # Código compartilhado
-    ├── components/        # Componentes UI reutilizáveis
-    ├── hooks/            # Hooks utilitários
-    ├── styles/           # Estilos globais
-    └── utils/            # Funções utilitárias
-```
-
-### Camadas da Aplicação
-
-1. **Camada de Domínio (`core/domain/`)**
-
-   - Contém as entidades e regras de negócio fundamentais
-   - Define interfaces e tipos base
-   - Independente de frameworks e bibliotecas
-   - Exemplo: Lógica de cálculo de massa molar
-
-2. **Camada de Aplicação (`core/application/`)**
-
-   - Implementa os casos de uso da aplicação
-   - Coordena as interações entre domínio e interface
-   - Contém serviços e hooks de aplicação
-   - Exemplo: Serviço de cálculo de massa molar
-
-3. **Camada de Features (`features/`)**
-
-   - Organizada por funcionalidades
-   - Cada feature é um módulo independente
-   - Contém componentes, hooks e lógica específica
-   - Exemplo: Módulo de calculadoras
-
-4. **Camada Compartilhada (`shared/`)**
-   - Código reutilizável entre features
-   - Componentes UI comuns
-   - Utilitários e helpers
-   - Exemplo: Componentes de botão, input, etc.
-
-### Padrões e Princípios
-
-1. **Separação de Responsabilidades**
-
-   - Cada módulo tem responsabilidades bem definidas
-   - Componentes focados em UI
-   - Hooks para lógica de estado
-   - Serviços para regras de negócio
-
-2. **Composição de Componentes**
-
-   - Componentes pequenos e reutilizáveis
-   - Composição sobre herança
-   - Props tipadas com TypeScript
-   - Exemplo: `CalculatorContainer` compõe `CalculatorHeader` e `KeyboardCalculate`
-
-3. **Gerenciamento de Estado**
-
-   - Context API para estado global
-   - Hooks personalizados para lógica de estado
-   - Estado local quando apropriado
-   - Exemplo: `CalculatorInstancesContext` para gerenciar múltiplas calculadoras
-
-4. **Tipagem Forte**
-
-   - Interfaces e tipos bem definidos
-   - Tipos específicos por domínio
-   - Reutilização de tipos entre camadas
-   - Exemplo: Tipos de calculadora em `domain/types/calculator.ts`
-
-5. **Estilização**
-   - Tailwind CSS para estilos
-   - Classes utilitárias
-   - Temas (claro/escuro)
-   - Estilos específicos por feature
-
-### Fluxo de Dados
-
-1. **Calculadora de Massa Molar**
-
-   ```
-   UI (Componentes) → Hooks → Serviços → Domínio
-   ```
-
-   - Componentes React capturam interações
-   - Hooks gerenciam estado e lógica
-   - Serviços implementam regras de negócio
-   - Domínio contém entidades e cálculos
-
-2. **Gerenciamento de Instâncias**
-   ```
-   Context → Hooks → Componentes
-   ```
-   - Context API gerencia estado global
-   - Hooks expõem funcionalidades
-   - Componentes consomem e atualizam estado
-
-### Extensibilidade
-
-A arquitetura foi projetada para facilitar a adição de novas funcionalidades:
-
-1. **Novas Calculadoras**
-
-   - Implementar novos serviços em `core/application/services/`
-   - Adicionar componentes em `features/calculators/components/calculators/`
-   - Estender tipos em `features/calculators/domain/types/`
-
-2. **Novas Features**
-   - Criar novo diretório em `features/`
-   - Seguir estrutura modular existente
-   - Reutilizar componentes e hooks compartilhados
-
-### Detalhamento do Módulo de Features
-
-#### Estrutura Geral de uma Feature
+### Estrutura Geral
 
 ```
-features/
-└── feature-name/              # Nome da feature (ex: calculators, periodic-table)
-    ├── components/            # Componentes React
-    │   ├── common/           # Componentes compartilhados internamente
-    │   └── specific/         # Componentes específicos da feature
-    │
-    ├── contexts/             # Contextos React para estado global
-    │
-    ├── domain/               # Tipos e interfaces específicos
-    │   └── types/           # Definições de tipos
-    │
-    ├── hooks/                # Hooks personalizados
-    │   ├── common/          # Hooks compartilhados internamente
-    │   └── specific/        # Hooks específicos da feature
-    │
-    └── styles/               # Estilos específicos da feature
+src/features/
+├── catalog/         # Catálogo de compostos químicos
+├── calculators/     # Calculadoras químicas
+└── periodic-table/  # Tabela periódica
 ```
 
-#### Responsabilidades por Camada
+---
 
-1. **Componentes (`components/`)**
-
-   - **Common**: Componentes reutilizáveis dentro da feature
-
-     - Componentes de layout
-     - Componentes de UI compartilhados
-     - Wrappers e containers
-
-   - **Specific**: Componentes específicos da feature
-     - Implementações concretas
-     - Componentes de negócio
-     - Componentes de UI específicos
-
-2. **Contextos (`contexts/`)**
-
-   - Gerenciamento de estado global da feature
-   - Compartilhamento de estado entre componentes
-   - Fornecimento de hooks para interação
-   - Persistência de estado quando necessário
-
-3. **Tipos (`domain/types/`)**
-
-   - Interfaces e tipos específicos da feature
-   - Definições de props e estados
-   - Tipos de eventos e callbacks
-   - Enums e constantes
-
-4. **Hooks (`hooks/`)**
-
-   - **Common**: Hooks compartilhados
-
-     - Lógica de UI reutilizável
-     - Hooks de estado compartilhados
-     - Hooks de efeitos comuns
-
-   - **Specific**: Hooks específicos
-     - Lógica de negócio
-     - Hooks de estado específicos
-     - Hooks de efeitos particulares
-
-5. **Estilos (`styles/`)**
-   - Estilos específicos da feature
-   - Classes utilitárias
-   - Temas e variantes
-   - Configurações de layout
-
-#### Exemplo: Módulo de Calculadoras
-
-A feature de calculadoras segue a estrutura geral acima, com implementações específicas:
+### Feature: Catalog
 
 ```
-features/calculators/
+catalog/
 ├── components/
-│   ├── common/               # Componentes compartilhados
-│   │   ├── CalculatorContainer.tsx    # Container base para todas as calculadoras
-│   │   ├── CalculatorHeader.tsx       # Cabeçalho padrão
-│   │   └── CalculatorKeyboardToggle.tsx # Controle de teclado
-│   │
-│   └── calculators/          # Implementações específicas
-│       └── molar-mass/       # Calculadora de massa molar
-│           ├── MolarMassCalculator.tsx    # Implementação principal
-│           └── MolecularFormulaInput.tsx  # Input especializado
-│
-├── contexts/
-│   └── CalculatorInstancesContext.tsx    # Gerenciamento de múltiplas instâncias
-│
+│   └── common/
+│       ├── CompoundTable.tsx            # Componente principal da tabela de compostos
+│       ├── CompoundTableToolbar.tsx     # Barra de ferramentas (busca, seleção de colunas)
+│       ├── CompoundTableHeader.tsx      # Cabeçalho da tabela (ordenação, títulos)
+│       ├── CompoundTableRows.tsx        # Linhas da tabela (dados, tratamento de vazio)
+│       ├── TablePagination.tsx          # Paginação da tabela
+│       ├── DataTableColumnHeader.tsx    # Header customizado para colunas
+│       ├── columns.tsx                  # Definição das colunas da tabela
+│       ├── compoundColumns.tsx          # Colunas específicas de compostos
+│       └── README.md                    # Documentação interna
+├── hooks/
+│   └── common/
+│       ├── useCompoundTable.ts          # Hook de estado da tabela (busca, ordenação, etc)
+│       ├── useColumnWidths.ts           # Hook para cálculo dinâmico das larguras
+│       └── useCompoundData.ts           # Hook para buscar e normalizar dados
 ├── domain/
 │   └── types/
-│       ├── calculator.ts     # Tipos base de calculadora
-│       └── keyboard.ts       # Tipos do teclado virtual
-│
-├── hooks/
-│   ├── common/
-│   │   ├── useCalculatorKeyboard.ts    # Hook de teclado
-│   │   └── useCalculatorPosition.ts    # Hook de posicionamento
-│   │
-│   └── calculators/
-│       └── molar-mass/
-│           └── useMolarMassCalculator.ts    # Hook específico
-│
-└── styles/
-    └── containerStyles.ts    # Estilos do container
+│       ├── TableColumnKey.ts            # Tipos de chave de coluna
+│       └── ChemicalCompound.ts          # Tipo de composto químico
+├── utils/
+│   ├── extractLabelText.ts              # Utilitário para extrair texto de labels
+│   └── compoundFormatters.ts            # Funções utilitárias para formatação/tradução
 ```
 
-#### Fluxo de Dados Típico
+**Responsabilidades:**
 
-1. **Inicialização**:
+- `components/common/`: Componentes visuais reutilizáveis para tabelas de compostos.
+- `hooks/common/`: Hooks para lógica de estado, dados e layout das tabelas.
+- `domain/types/`: Tipos TypeScript para compostos e colunas.
+- `utils/`: Funções utilitárias para formatação e manipulação de dados.
 
-   ```
-   Componente Principal
-   └── Hook de Feature
-       └── Contexto
-           └── Componentes Específicos
-   ```
+---
 
-2. **Interação**:
+### Feature: Calculators
 
-   ```
-   Componente de UI
-   └── Hook Específico
-       └── Serviço de Domínio
-           └── Atualização de Estado
-   ```
+```
+calculators/
+├── components/
+│   ├── common/
+│   │   ├── CalculatorContainer.tsx         # Container base para calculadoras
+│   │   ├── CalculatorHeader.tsx            # Cabeçalho padrão
+│   │   └── CalculatorKeyboardToggle.tsx    # Controle de teclado virtual
+│   └── calculators/
+│       ├── molar-mass/                     # Calculadora de massa molar
+│       │   ├── MolarMassCalculator.tsx     # Implementação principal
+│       │   └── MolecularFormulaInput.tsx   # Input especializado
+│       └── scientific/                     # Outras calculadoras científicas
+├── hooks/
+│   ├── common/
+│   │   ├── useCalculatorKeyboard.ts        # Hook de teclado virtual
+│   │   ├── useCalculatorPosition.ts        # Hook de posicionamento
+│   │   └── useCalculatorPage.ts            # Hook de gerenciamento de página
+│   └── calculators/
+│       ├── molar-mass/
+│       │   └── useMolarMassCalculator.ts   # Hook específico de massa molar
+│       └── scientific/                     # Hooks de outras calculadoras
+├── domain/
+│   └── types/
+│       ├── calculator.ts                   # Tipos base de calculadora
+│       ├── scientific-constants.ts         # Constantes científicas
+│       ├── position.ts                     # Tipos de posição
+│       ├── keyboard.ts                     # Tipos do teclado virtual
+│       ├── molecularFormulaInput.ts        # Tipos para input molecular
+│       └── calculator-page.ts              # Tipos de página de calculadora
+├── utils/
+│   ├── zeroValidation.ts                   # Validação de zeros em cálculos
+│   └── chunkArray.ts                       # Utilitário para dividir arrays
+```
 
-3. **Gerenciamento de Estado**:
-   ```
-   Contexto
-   └── Hook de Feature
-       └── Componentes
-           └── Hooks Específicos
-   ```
+**Responsabilidades:**
 
-#### Exemplo: Fluxo na Calculadora de Massa Molar
+- `components/common/`: Componentes base e utilitários visuais para calculadoras.
+- `components/calculators/`: Implementações específicas de cada calculadora.
+- `hooks/common/`: Hooks reutilizáveis para lógica de UI e estado.
+- `hooks/calculators/`: Hooks específicos para cada tipo de calculadora.
+- `domain/types/`: Tipos TypeScript para calculadoras, teclado, posições, etc.
+- `utils/`: Funções utilitárias para cálculos e manipulação de dados.
 
-1. **Inicialização**:
+---
 
-   ```
-   CalculatorPageContent
-   └── useCalculatorPage
-       └── CalculatorInstancesContext
-           └── MolarMassCalculator
-   ```
+### Feature: Periodic Table
 
-2. **Cálculo de Massa Molar**:
-   ```
-   MolecularFormulaInput
-   └── useMolarMassCalculator
-       └── Serviço de Cálculo
-           └── Atualização de Resultado
-   ```
+```
+periodic-table/
+├── components/
+│   ├── common/
+│   │   ├── PeriodicTableHeader.tsx         # Cabeçalho da tabela periódica
+│   │   ├── PeriodicTableLegend.tsx         # Legenda de cores/símbolos
+│   │   └── PeriodicTableContainer.tsx      # Container principal
+│   └── specific/
+│       ├── PeriodicTable.tsx               # Componente principal da tabela
+│       ├── cards/                          # Cartões de elementos
+│       └── details/                        # Detalhes de elementos
+├── hooks/
+│   ├── usePeriodicTable.ts                 # Hook principal da tabela periódica
+│   └── common/                             # Hooks comuns (se houver)
+├── domain/
+│   └── types/
+│       ├── table.ts                        # Tipos da tabela periódica
+│       ├── config.ts                       # Configurações da tabela
+│       └── element.ts                      # Tipos de elemento químico
+├── utils/
+│   ├── periodicTableMatrix.ts              # Matriz de elementos
+│   ├── periodicTableUtils.ts               # Funções utilitárias
+│   └── .gitkeep                            # Placeholder
+```
 
-#### Extensibilidade
+**Responsabilidades:**
 
-Para adicionar uma nova feature:
+- `components/common/`: Componentes visuais compartilhados da tabela periódica.
+- `components/specific/`: Componentes específicos, cartões e detalhes de elementos.
+- `hooks/`: Hooks para lógica de estado e dados da tabela periódica.
+- `domain/types/`: Tipos TypeScript para elementos, configuração e estrutura da tabela.
+- `utils/`: Funções utilitárias para manipulação de dados da tabela periódica.
 
-1. **Estrutura Base**:
+---
 
-   - Criar diretório em `features/`
-   - Seguir estrutura de pastas padrão
-   - Implementar componentes base
-
-2. **Componentes**:
-
-   - Identificar componentes comuns
-   - Criar componentes específicos
-   - Reutilizar componentes UI quando possível
-
-3. **Estado**:
-
-   - Definir tipos de estado
-   - Implementar contexto se necessário
-   - Criar hooks de gerenciamento
-
-4. **Lógica**:
-   - Implementar hooks específicos
-   - Conectar com serviços de domínio
-   - Gerenciar efeitos colaterais
-
-#### Exemplo: Adicionar Nova Calculadora
-
-1. **Componentes**:
-
-   - Criar pasta em `components/calculators/`
-   - Reutilizar `CalculatorContainer` e outros componentes comuns
-   - Implementar componentes específicos
-
-2. **Hooks**:
-
-   - Adicionar hooks em `hooks/calculators/`
-   - Reutilizar hooks comuns (teclado, posicionamento)
-   - Implementar lógica específica
-
-3. **Tipos**:
-
-   - Estender tipos existentes
-   - Adicionar tipos específicos
-   - Manter compatibilidade
-
-4. **Contexto**:
-   - Usar `CalculatorInstancesContext` existente
-   - Adicionar estados específicos se necessário
-   - Manter API consistente
+> Para cada nova feature, siga o padrão de organização acima: separe componentes, hooks, tipos e utilitários em subpastas claras e documente as responsabilidades de cada arquivo.
 
 ## 💻 Pré-requisitos
 
@@ -454,3 +249,105 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ---
 
 **Sinta-se à vontade para sugerir melhorias ou contribuir!**
+
+## 🧭 Estrutura e Funcionamento do Menu
+
+O menu lateral do Mol Wise é altamente modular, responsivo e suporta múltiplas seções, submenus e integração com internacionalização (i18n). Ele é implementado em `src/shared/components/menu/` e utiliza contexto para controle de estado (colapsado/expandido, seções abertas, etc).
+
+### Estrutura de Arquivos do Menu
+
+```
+src/shared/components/menu/
+├── constants.ts           # Constantes de identificação das seções do menu
+├── types.ts               # Tipos TypeScript para itens, seções e props do menu
+├── config/
+│   └── menuConfig.ts      # Configuração das seções e itens do menu
+├── hooks/
+│   └── useMenuItems.ts    # Hook para montar as seções do menu com base na config e traduções
+├── context/
+│   └── MenuContext.tsx    # Contexto React para estado do menu (colapsado, seções abertas)
+├── components/
+│   ├── Menu.tsx           # Componente principal do menu lateral
+│   ├── MenuAccordion.tsx  # Componente de seção expansível do menu
+│   ├── MenuItem.tsx       # Componente de item individual do menu
+│   └── Submenu.tsx        # Componente de submenu
+└── README.md              # Guia detalhado de contribuição e extensão do menu
+```
+
+### Como o Menu Funciona
+
+- **Configuração Centralizada:** Todas as seções e itens do menu são definidos em `menuConfig.ts`, usando constantes e tipos para garantir consistência.
+- **Internacionalização:** Labels e títulos são traduzidos dinamicamente via arquivos de mensagens (`src/i18n/messages/pt.json` e `en.json`).
+- **Estado Global:** O estado do menu (colapsado, seções abertas) é controlado por contexto (`MenuContext.tsx`) e persistido no `localStorage`.
+- **Componentização:** O menu é composto por componentes reutilizáveis, como `MenuAccordion` (seção expansível), `MenuItem` (item de link ou ação) e `Submenu` (lista de subitens).
+- **Responsividade:** O menu pode ser colapsado/expandido, adaptando-se a diferentes tamanhos de tela.
+- **Acessibilidade:** Usa atributos ARIA e navegação por teclado.
+
+### Tipos de Itens de Menu
+
+- **Link:** Navegação para páginas internas.
+- **Calculator:** Abre uma calculadora em janela/modal (multi-instância).
+- **Custom:** (Opcional) Para ações específicas, pode ser estendido.
+
+### Exemplo de Adição de Nova Seção
+
+1. **Defina a constante da seção em `constants.ts`:**
+
+   ```ts
+   export const MENU_SECTIONS = {
+     CATALOG: "catalog",
+     CALCULATORS: "calculators",
+     NOVA_SECAO: "nova-secao",
+   } as const;
+   ```
+
+2. **Adicione traduções em `pt.json` e `en.json`:**
+
+   ```json
+   {
+     "navigation": {
+       "novaSecao": "Nova Seção"
+     },
+     "novaSecao": {
+       "item1": { "title": "Item 1", "subtitle": "Descrição" }
+     }
+   }
+   ```
+
+3. **Atualize `menuConfig.ts`:**
+
+   ```ts
+   import { MENU_SECTIONS } from "../constants";
+   import { SomeIcon } from "lucide-react";
+   export const menuSectionsConfig = [
+     // ...outras seções
+     {
+       id: MENU_SECTIONS.NOVA_SECAO,
+       icon: SomeIcon,
+       translationKey: "navigation.novaSecao",
+       items: [
+         {
+           icon: SomeIcon,
+           translationKey: "novaSecao.item1.title",
+           type: "link",
+           href: (locale: string) => `/${locale}/nova-secao/item1`,
+         } as const,
+       ],
+     },
+   ];
+   ```
+
+4. **Crie a página correspondente em `src/app/[locale]/nova-secao/item1/page.tsx`.**
+
+### Boas Práticas
+
+- Use sempre os tipos definidos em `types.ts` para garantir consistência.
+- Mantenha as traduções atualizadas para todos os idiomas suportados.
+- Prefira componentes já existentes para manter a padronização visual.
+- Teste o menu em diferentes tamanhos de tela e com teclado.
+
+### Referência Rápida
+
+- O menu é renderizado pelo componente `Menu.tsx`, geralmente dentro do layout lateral (`SideArea.tsx`).
+- O estado de colapso/expansão pode ser controlado pelo usuário e é persistido.
+- O menu suporta scroll interno e animações com Framer Motion.

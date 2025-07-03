@@ -8,7 +8,7 @@
       "molarMass": "A massa molar de\"{formula}\" é: {mass} g/mol"
     },
     "welcome": "Bem-vindo",
-    "loading": "Carregando...",
+    "": "Carregando...",
     "error": "Erro",
     "success": "Sucesso",
     "chooseTool": "Escolha uma ferramenta na barra lateral para começar.",
