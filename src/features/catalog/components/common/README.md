@@ -1,3 +1,21 @@
+# Mapa de Arquivos do Catálogo
+
+Este diretório contém os principais arquivos responsáveis pela renderização e funcionamento da tabela de compostos químicos (catálogo). Veja abaixo um mapa dos arquivos e suas funções:
+
+- **CompoundTable.tsx**: Componente principal da tabela de compostos. Orquestra hooks de dados, estado e renderiza os subcomponentes visuais.
+- **CompoundTableToolbar.tsx**: Barra de ferramentas da tabela, incluindo busca e seleção de colunas.
+- **CompoundTableHeader.tsx**: Cabeçalho da tabela, responsável por ordenação e exibição dos títulos das colunas.
+- **CompoundTableRows.tsx**: Renderiza as linhas da tabela, incluindo tratamento para ausência de resultados.
+- **TablePagination.tsx**: Componente de paginação da tabela.
+- **useCompoundData.ts**: Hook para buscar e normalizar os dados dos compostos.
+- **useCompoundTable.ts**: Hook para gerenciar o estado da tabela (busca, ordenação, paginação, colunas visíveis).
+- **useCompoundColumns.tsx**: Hook que define as colunas da tabela, com suporte a tradução e labels dinâmicos.
+- **useColumnWidths.ts**: Hook para cálculo dinâmico das larguras das colunas.
+- **compoundFormatters.ts**: Funções utilitárias para formatação e tradução dos dados das células.
+- **extractLabelText.ts**: Função utilitária para extrair texto de labels ReactNode.
+
+> Estes arquivos trabalham juntos para fornecer uma tabela de catálogo flexível, reutilizável e fácil de manter.
+
 # Compound Table Components
 
 ## Visão Geral da Arquitetura
