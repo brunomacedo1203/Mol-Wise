@@ -1,16 +1,21 @@
 export interface ChemicalCompound {
-    id: number;                  // No. (Número sequencial na tabela)
-    name: string;                // Name (Nome do composto)
-    synonym?: string;            // Synonym (Sinônimo)
-    formula: string;             // Mol. Form. (Fórmula molecular)
-    casNumber: string;           // CAS RN (Número CAS)
-    molarMass: number;           // Mol. Wt. (Massa molecular)
-    physicalForm?: string;       // Physical Form (Forma física)
-    meltingPoint?: number;       // mp/°C (Ponto de fusão)
-    boilingPoint?: number;       // bp/°C (Ponto de ebulição)
-    density?: number;            // den/g cm³ (Densidade)
-    refractiveIndex?: number | null; // nD (Índice de refração)
-    solubility: string;          // Solubility (Solubilidade)
-    solubilityNumeric?: string; // Solubility numérica (g/100 g H2O)
-  }
-  
+  id: number;
+  name: string;
+  synonym?: string;
+  formula: string;
+  casNumber: string;
+  molarMass: number;
+  physicalForm?: string;
+  meltingPoint?: number;
+  boilingPoint?: number;
+  density?: number;
+  refractiveIndex?: number | null;
+  solubility: string;
+  solubilityNumeric?: string;
+}
+
+// Tipo estendido com nome usual e função inorgânica
+export type ExtendedCompound = ChemicalCompound & {
+  commonName: string;
+  category: "ácido" | "base" | "sal" | "óxido" | "desconhecida";
+};

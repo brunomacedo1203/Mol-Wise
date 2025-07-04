@@ -17,10 +17,7 @@ import {
 import { CompoundTableToolbar } from "./CompoundTableToolbar";
 import { CompoundTableHeader } from "./CompoundTableHeader";
 import { CompoundTableRows } from "./CompoundTableRows";
-
-// Definir tipo para as colunas extras
-type ExtraColumn = "solubilityNumeric" | "solubilityQualitative";
-type TableColumnKey = keyof ChemicalCompound | ExtraColumn;
+import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
 
 export function CompoundTable() {
   const t = useTranslations();

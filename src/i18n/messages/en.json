@@ -445,6 +445,8 @@
     "tableHeaders": {
       "no": "No.",
       "name": "Name",
+      "commonName": "Common Name",
+      "category": "Category",
       "synonym": "Common Name",
       "formula": "Mol. Form.",
       "casNumber": "CAS RN",

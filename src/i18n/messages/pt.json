@@ -447,6 +447,8 @@
   "tableHeaders": {
     "no": "Nº",
     "name": "Nome",
+    "commonName": "Nome usual",
+    "category": "Função",
     "formula": "Fórmula",
     "casNumber": "Registro CAS",
     "molarMass": "Massa Molar",

@@ -4,6 +4,7 @@ import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
 
 export function useCompoundColumns() {
   const t = useTranslations();
+
   return useMemo(() => {
     const renderSplitLabel = (translationKey: string) => {
       const translatedText = t(translationKey);
@@ -19,6 +20,11 @@ export function useCompoundColumns() {
     return [
       { key: "id" as TableColumnKey, label: t("catalog.tableHeaders.no") },
       { key: "name" as TableColumnKey, label: t("catalog.tableHeaders.name") },
+      {
+        key: "commonName" as TableColumnKey,
+        label: t("catalog.tableHeaders.commonName"),
+      },
+
       {
         key: "formula" as TableColumnKey,
         label: t("catalog.tableHeaders.formula"),
