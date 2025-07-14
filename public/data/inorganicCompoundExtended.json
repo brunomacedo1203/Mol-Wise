@@ -1,0 +1,203 @@
+{
+    "NaCl": {
+      "commonName": "Sal de cozinha",
+      "category": "sal"
+    },
+    "CaCO3": {
+      "commonName": "Calcário",
+      "category": "sal"
+    },
+    "CuSO4·5H2O": {
+      "commonName": "Sulfato de cobre(II) pentahidratado",
+      "category": "sal"
+    },
+    "H2O": {
+      "commonName": "Água",
+      "category": "óxido"
+    },
+    "CO2": {
+      "commonName": "Gás carbônico",
+      "category": "óxido"
+    },
+    "NH3": {
+      "commonName": "Amônia",
+      "category": "base"
+    },
+    "HCl": {
+      "commonName": "Ácido muriático",
+      "category": "ácido"
+    },
+    "H2SO4": {
+      "commonName": "Ácido sulfúrico",
+      "category": "ácido"
+    },
+    "HNO3": {
+      "commonName": "Ácido nítrico",
+      "category": "ácido"
+    },
+    "NaOH": {
+      "commonName": "Soda cáustica",
+      "category": "base"
+    },
+    "Ca(OH)2": {
+      "commonName": "Cal hidratada",
+      "category": "base"
+    },
+    "CaO": {
+      "commonName": "Cal virgem",
+      "category": "óxido"
+    },
+    "NaHCO3": {
+      "commonName": "Bicarbonato de sódio",
+      "category": "sal"
+    },
+    "Na2CO3·10H2O": {
+      "commonName": "Barrilha leve",
+      "category": "sal"
+    },
+    "MgSO4·7H2O": {
+      "commonName": "Sal de Epsom",
+      "category": "sal"
+    },
+    "AgNO3": {
+      "commonName": "Nitrato de prata",
+      "category": "sal"
+    },
+    "KMnO4": {
+      "commonName": "Permanganato de potássio",
+      "category": "sal"
+    },
+    "K2Cr2O7": {
+      "commonName": "Dicromato de potássio",
+      "category": "sal"
+    },
+    "Fe2O3": {
+      "commonName": "Óxido de ferro(III)",
+      "category": "óxido"
+    },
+    "SiO2": {
+      "commonName": "Areia",
+      "category": "óxido"
+    },
+    "Al2O3": {
+      "commonName": "Óxido de alumínio",
+      "category": "óxido"
+    },
+    "NH4NO3": {
+      "commonName": "Nitrato de amônio",
+      "category": "sal"
+    },
+    "CaCl2": {
+      "commonName": "Cloreto de cálcio",
+      "category": "sal"
+    },
+    "CaSO4·2H2O": {
+      "commonName": "Gesso",
+      "category": "sal"
+    },
+    "KNO3": {
+      "commonName": "Nitrato de potássio",
+      "category": "sal"
+    },
+    "NaNO3": {
+      "commonName": "Nitrato de sódio",
+      "category": "sal"
+    },
+    "H2O2": {
+      "commonName": "Água oxigenada",
+      "category": "óxido"
+    },
+    "H3PO4": {
+      "commonName": "Ácido fosfórico",
+      "category": "ácido"
+    },
+    "NH4Cl": {
+      "commonName": "Cloreto de amônio",
+      "category": "sal"
+    },
+    "ZnO": {
+      "commonName": "Óxido de zinco",
+      "category": "óxido"
+    },
+    "MgO": {
+      "commonName": "Óxido de magnésio",
+      "category": "óxido"
+    },
+    "FeSO4·7H2O": {
+      "commonName": "Sulfato ferroso",
+      "category": "sal"
+    },
+    "ZnSO4·7H2O": {
+      "commonName": "Sulfato de zinco",
+      "category": "sal"
+    },
+    "CuO": {
+      "commonName": "Óxido de cobre(II)",
+      "category": "óxido"
+    },
+    "KOH": {
+      "commonName": "Hidróxido de potássio",
+      "category": "base"
+    },
+    "BaSO4": {
+      "commonName": "Sulfato de bário",
+      "category": "sal"
+    },
+    "Ca3(PO4)2": {
+      "commonName": "Fosfato de cálcio",
+      "category": "sal"
+    },
+    "H3BO3": {
+      "commonName": "Ácido bórico",
+      "category": "ácido"
+    },
+    "H2S": {
+      "commonName": "Sulfeto de hidrogênio",
+      "category": "ácido"
+    },
+    "NaClO": {
+      "commonName": "Hipoclorito de sódio",
+      "category": "sal"
+    },
+    "KCl": {
+      "commonName": "Cloreto de potássio",
+      "category": "sal"
+    },
+    "MnO2": {
+      "commonName": "Dióxido de manganês",
+      "category": "óxido"
+    },
+    "Na2SO4·10H2O": {
+      "commonName": "Sulfato de sódio decahidratado",
+      "category": "sal"
+    },
+    "(NH4)2SO4": {
+      "commonName": "Sulfato de amônio",
+      "category": "sal"
+    },
+    "SO2": {
+      "commonName": "Dióxido de enxofre",
+      "category": "óxido"
+    },
+    "NO2": {
+      "commonName": "Dióxido de nitrogênio",
+      "category": "óxido"
+    },
+    "Na2S2O3·5H2O": {
+      "commonName": "Tiossulfato de sódio",
+      "category": "sal"
+    },
+    "N2O": {
+      "commonName": "Óxido nitroso",
+      "category": "óxido"
+    },
+    "Na3PO4": {
+      "commonName": "Fosfato de sódio",
+      "category": "sal"
+    },
+    "Ca(ClO)2": {
+      "commonName": "Hipoclorito de cálcio",
+      "category": "sal"
+    }
+  }
+  

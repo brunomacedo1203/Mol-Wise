@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
-import { ChemicalCompound } from '@/features/catalog/domain/types/ChemicalCompound';
+import { useEffect, useState } from "react";
+import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
+import rawExtendedMetadata from "../../../../../public/data/inorganicCompoundExtended.json";
+
+const extendedMetadata: Record<string, { commonName: string; category: string }> = rawExtendedMetadata;
 
 // Tipo para os dados brutos do JSON
 export type RawCompound = {
@@ -18,8 +21,13 @@ export type RawCompound = {
   "Solubility g/100 g H2O"?: string;
 };
 
+export type ExtendedCompound = ChemicalCompound & {
+  commonName: string;
+  category: "ácido" | "base" | "sal" | "óxido" | "desconhecida";
+};
+
 export function useCompoundData() {
-  const [compounds, setCompounds] = useState<ChemicalCompound[]>([]);
+  const [compounds, setCompounds] = useState<ExtendedCompound[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -30,26 +38,40 @@ export function useCompoundData() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
         const data = await response.json();
-        // Normalizar os dados para garantir que 'formula' exista
-        const normalized = (data as RawCompound[]).map((item) => ({
-          id: item["No."],
-          name: item["Name"],
-          synonym: item["Synonym"],
-          formula: item["Formula"],
-          casNumber: item["CAS Reg No."],
-          molarMass: item["Mol. Weight"],
-          physicalForm: item["Physical Form"],
-          meltingPoint: item["mp/°C"],
-          boilingPoint: item["bp/°C"],
-          density: item["Density g cm–3"],
-          refractiveIndex: item["Refractive Index"],
-          solubility: item["Qualitative Solubility"],
-          solubilityNumeric: item["Solubility g/100 g H2O"],
-        }));
-        
-        setCompounds(normalized);
-        
+
+        // Normalizar os dados originais
+        const normalized = (data as RawCompound[]).map((item) => {
+          const base: ChemicalCompound = {
+            id: item["No."],
+            name: item["Name"],
+            synonym: item["Synonym"],
+            formula: item["Formula"],
+            casNumber: item["CAS Reg No."],
+            molarMass: item["Mol. Weight"],
+            physicalForm: item["Physical Form"],
+            meltingPoint: item["mp/°C"],
+            boilingPoint: item["bp/°C"],
+            density: item["Density g cm–3"],
+            refractiveIndex: item["Refractive Index"],
+            solubility: item["Qualitative Solubility"],
+            solubilityNumeric: item["Solubility g/100 g H2O"],
+          };
+          return base;
+        });
+
+        // Enriquecer com nome usual e categoria
+        const enrichCompound = (compound: ChemicalCompound): ExtendedCompound => {
+          const meta = extendedMetadata[compound.formula] ?? {};
+          return {
+            ...compound,
+            commonName: meta.commonName ?? "—",
+            category: (meta.category as ExtendedCompound["category"]) ?? "desconhecida",
+          };
+        };
+
+        setCompounds(normalized.map(enrichCompound));
       } catch (err) {
         setError(err as Error);
       } finally {

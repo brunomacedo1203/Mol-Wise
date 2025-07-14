@@ -1,24 +1,26 @@
 import { useMemo, useState, useEffect } from 'react';
-import { ChemicalCompound } from '@/features/catalog/domain/types/ChemicalCompound';
+import { ExtendedCompound } from '@/features/catalog/domain/types/ChemicalCompound';
 import { useTranslations } from 'next-intl';
-
+import type { CompoundCategory as BaseCompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
+type FilterCategory = BaseCompoundCategory | "desconhecida" | "todas";
 
 type SortOrder = 'asc' | 'desc';
 
-// Adicionar tipos extras para as novas colunas
+// Colunas extras que não estão no tipo original
 type ExtraColumn = "solubilityNumeric" | "solubilityQualitative";
-type TableColumnKey = keyof ChemicalCompound | ExtraColumn;
+type TableColumnKey = keyof ExtendedCompound | ExtraColumn;
 
 interface UseCompoundTableProps {
-  data: ChemicalCompound[];
+  data: ExtendedCompound[];
 }
 
 export function useCompoundTable({ data }: UseCompoundTableProps) {
   const t = useTranslations();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<FilterCategory>('todas');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategories, setSelectedCategories] = useState<BaseCompoundCategory[]>([]);
 
-  // Persistência do rowsPerPage no localStorage
   const [rowsPerPage, setRowsPerPage] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("catalogRowsPerPage");
@@ -31,7 +33,7 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     localStorage.setItem("catalogRowsPerPage", String(rowsPerPage));
   }, [rowsPerPage]);
 
-  const [sortColumn, setSortColumn] = useState<keyof ChemicalCompound>('id');
+  const [sortColumn, setSortColumn] = useState<keyof ExtendedCompound>('id');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
   const [visibleColumns, setVisibleColumns] = useState<
@@ -51,32 +53,44 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     solubility: false,
     solubilityNumeric: true,
     solubilityQualitative: true,
+    commonName: true,
+    category: false, 
   });
 
-  // 🔍 Filtro por texto
+  // 🔍 Filtro por texto + categoria
   const filteredData = useMemo(() => {
+    let result = data;
     const term = searchTerm.toLowerCase();
-    return data.filter((compound) =>
-      (compound.name ?? '').toLowerCase().includes(term) ||
-      (compound.formula ?? '').toLowerCase().includes(term) ||
-      (compound.synonym ?? '').toLowerCase().includes(term) ||
-      (compound.casNumber ?? '').toLowerCase().includes(term) ||
-      (compound.solubility ?? '').toLowerCase().includes(term)
-    );
-  }, [data, searchTerm]);
-  
-  
+    result = result.filter((compound) => {
+      const matchesSearch =
+        (compound.name ?? '').toLowerCase().includes(term) ||
+        (compound.formula ?? '').toLowerCase().includes(term) ||
+        (compound.synonym ?? '').toLowerCase().includes(term) ||
+        (compound.casNumber ?? '').toLowerCase().includes(term) ||
+        (compound.solubility ?? '').toLowerCase().includes(term);
 
-  // 🔀 Ordenação corrigida
+      const matchesCategory =
+        selectedCategory === 'todas' || compound.category === selectedCategory;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    if (selectedCategories.length > 0) {
+      result = result.filter((compound) =>
+        selectedCategories.includes(compound.category)
+      );
+    }
+    return result;
+  }, [data, searchTerm, selectedCategory, selectedCategories]);
+
+  // 🔀 Ordenação (mantida)
   const sortedData = useMemo(() => {
-    // Função para obter valor traduzido para ordenação
-    const getTranslatedValue = (compound: ChemicalCompound, column: keyof ChemicalCompound) => {
+    const getTranslatedValue = (compound: ExtendedCompound, column: keyof ExtendedCompound) => {
       if (column === 'name') {
         try {
           return compound.formula
-          ? t(`catalog.compoundNames.${compound.formula}`, { fallback: '' }) || compound.name
-          : compound.name
-        
+            ? t(`catalog.compoundNames.${compound.formula}`, { fallback: '' }) || compound.name
+            : compound.name;
         } catch {
           return compound.name;
         }
@@ -88,12 +102,8 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
           return compound.synonym || '';
         }
       }
-      if (column === 'physicalForm') {
-        return compound.physicalForm || '';
-      }
-      if (column === 'solubility') {
-        return compound.solubility;
-      }
+      if (column === 'physicalForm') return compound.physicalForm || '';
+      if (column === 'solubility') return compound.solubility;
       return compound[column];
     };
 
@@ -113,7 +123,6 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     });
   }, [filteredData, sortColumn, sortOrder, t]);
 
-  // 📄 Paginação
   const paginatedData = useMemo(() => {
     const start = (currentPage - 1) * rowsPerPage;
     return sortedData.slice(start, start + rowsPerPage);
@@ -121,7 +130,7 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
-  function handleSort(column: keyof ChemicalCompound) {
+  function handleSort(column: keyof ExtendedCompound) {
     if (sortColumn === column) {
       setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
@@ -133,6 +142,8 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
   return {
     searchTerm,
     setSearchTerm,
+    selectedCategory,
+    setSelectedCategory,
     currentPage,
     setCurrentPage,
     rowsPerPage,
@@ -144,5 +155,7 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     sortColumn,
     sortOrder,
     handleSort,
+    selectedCategories,
+    setSelectedCategories,
   };
 }
