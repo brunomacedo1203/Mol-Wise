@@ -2,12 +2,12 @@
 
 import React from "react";
 import Logo from "../brand/Logo";
-import { useCollapsedMenu } from "@/shared/hooks/useCollapsedMenu";
 import {
   IconLayoutSidebarLeftCollapse,
   IconLayoutSidebarRightCollapse,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { useSidebarStore } from "@/shared/store/sidebarStore";
 
 export interface SideAreaProps {
   bgClass?: string;
@@ -20,14 +20,16 @@ export interface SideAreaProps {
 export default function SideArea({
   children,
   className = "",
-  collapsed = false,
+  collapsed: collapsedProp,
   onToggleCollapsed,
 }: SideAreaProps) {
-  const { collapsed: collapsedState, toggleCollapsed } = useCollapsedMenu();
+  const collapsed = useSidebarStore((state) => state.collapsed);
+  const toggleCollapsed = useSidebarStore((state) => state.toggleCollapsed);
   const t = useTranslations("common.navigation.menu");
 
+  // Permite sobrescrever via prop, mas padrão é Zustand
   const isCollapsed =
-    typeof collapsed === "boolean" ? collapsed : collapsedState;
+    typeof collapsedProp === "boolean" ? collapsedProp : collapsed;
 
   const handleToggle = onToggleCollapsed || toggleCollapsed;
 

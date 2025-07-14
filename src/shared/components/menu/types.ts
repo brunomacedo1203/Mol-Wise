@@ -47,16 +47,16 @@ export interface MenuSectionConfig {
   items: MenuItemConfig[];
 }
 
-export interface MenuState {
-  openSections: Record<string, boolean>;
-  collapsed: boolean;
-}
+// export interface MenuState {
+//   openSections: Record<string, boolean>;
+//   collapsed: boolean;
+// }
 
-export interface MenuContextType {
-  state: MenuState;
-  toggleSection: (id: string) => void;
-  setCollapsed: (collapsed: boolean) => void;
-}
+// export interface MenuContextType {
+//   state: MenuState;
+//   toggleSection: (id: string) => void;
+//   setCollapsed: (collapsed: boolean) => void;
+// }
 
 // Tipo para as props do Menu principal
 export interface MenuProps {

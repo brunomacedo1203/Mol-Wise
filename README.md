@@ -278,7 +278,7 @@ src/shared/components/menu/
 
 - **Configuração Centralizada:** Todas as seções e itens do menu são definidos em `menuConfig.ts`, usando constantes e tipos para garantir consistência.
 - **Internacionalização:** Labels e títulos são traduzidos dinamicamente via arquivos de mensagens (`src/i18n/messages/pt.json` e `en.json`).
-- **Estado Global:** O estado do menu (colapsado, seções abertas) é controlado por contexto (`MenuContext.tsx`) e persistido no `localStorage`.
+- **Estado Global:** O estado do menu (colapsado, seções abertas) é controlado por Zustand (`src/shared/store/sidebarStore.ts`) e persistido automaticamente no `localStorage`.
 - **Componentização:** O menu é composto por componentes reutilizáveis, como `MenuAccordion` (seção expansível), `MenuItem` (item de link ou ação) e `Submenu` (lista de subitens).
 - **Responsividade:** O menu pode ser colapsado/expandido, adaptando-se a diferentes tamanhos de tela.
 - **Acessibilidade:** Usa atributos ARIA e navegação por teclado.

@@ -6,15 +6,15 @@ import { ChevronUp, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MenuAccordionProps } from "../types";
 import { MENU_CLASSES } from "../constants";
-import { useMenu } from "../context/MenuContext";
+import { useSidebarStore } from "@/shared/store/sidebarStore";
 import { Submenu } from "./Submenu";
 
 export const MenuAccordion = memo(function MenuAccordion({
   section,
 }: MenuAccordionProps) {
-  const { state, toggleSection } = useMenu();
-  const isOpen = state.openSections[section.id];
-  const isCollapsed = state.collapsed;
+  const isCollapsed = useSidebarStore((state) => state.collapsed);
+  const isOpen = useSidebarStore((state) => state.openSections[section.id]);
+  const toggleSection = useSidebarStore((state) => state.toggleSection);
 
   return (
     <li>
