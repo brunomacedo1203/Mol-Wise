@@ -4,10 +4,10 @@ import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompou
 import React from "react";
 import { extractLabelText } from "@/features/catalog/utils/extractLabelText";
 
-export function useColumnWidths(
-  compounds: ChemicalCompound[],
+export function useColumnWidths<T extends ChemicalCompound>(
+  compounds: T[],
   allColumns: { key: TableColumnKey; label: React.ReactNode }[],
-  getCellValue: (compound: ChemicalCompound, key: TableColumnKey) => string
+  getCellValue: (compound: T, key: TableColumnKey) => string
 ) {
   return useMemo(() => {
     const widths: Partial<Record<TableColumnKey, number>> = {};

@@ -392,7 +392,7 @@
     "Na3PO4": "Fosfato de Sódio",
     "Ca(ClO)2": "Hipoclorito de Cálcio"
   },
-  "compoundSynonyms": {
+  "commonName": {
     "NaCl": "Sal de Cozinha",
     "CaCO3": "Calcário",
     "CuSO4·5H2O": "Sulfato de Cobre Azul",
@@ -489,6 +489,13 @@
     "density": "Densidade (g/cm³)",
     "refractiveIndex": "Índice de Refração (nD)",
     "solubility": "Solubilidade"
+  },
+  "categoryTags": {
+    "placeholder": "Filtre as funções inorgânicas",
+    "ácido": "Ácido",
+    "base": "Base",
+    "sal": "Sal",
+    "óxido": "Óxido"
   }
 },
   "games": {
@@ -523,7 +530,7 @@
     "White deliquescent solid": "Sólido branco deliquescente",
     "White heavy powder": "Pó branco pesado",
     "White solid (crystalline)": "Sólido branco (cristalino)",
-    "Usually in aqueous solution": "Geralmente em solução aquosa",
+    "Usually in aqueous solution": "Geralmente em solução sal aquosa",
     "Black or brown solid": "Sólido preto ou marrom",
     "Transparent crystals": "Cristais transparentes",
     "Reddish-brown gas": "Gás marrom-avermelhado",

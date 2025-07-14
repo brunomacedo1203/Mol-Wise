@@ -1,3 +1,5 @@
+export type CompoundCategory = "ácido" | "base" | "sal" | "óxido";
+
 export interface ChemicalCompound {
   id: number;
   name: string;
@@ -12,6 +14,7 @@ export interface ChemicalCompound {
   refractiveIndex?: number | null;
   solubility: string;
   solubilityNumeric?: string;
+  category: CompoundCategory;
 }
 
 // Tipo estendido com nome usual e função inorgânica

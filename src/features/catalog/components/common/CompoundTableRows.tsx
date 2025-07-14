@@ -1,15 +1,15 @@
 import { TableBody, TableRow, TableCell } from "@/components/ui/table";
 import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
-import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
+import type { ExtendedCompound } from "@/features/catalog/hooks/common/useCompoundData";
 import React from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
 
 interface CompoundTableRowsProps {
-  paginatedData: ChemicalCompound[];
+  paginatedData: ExtendedCompound[];
   allColumns: { key: TableColumnKey; label: React.ReactNode }[];
   visibleColumns: Record<TableColumnKey, boolean>;
   columnWidths: Partial<Record<TableColumnKey, number>>;
-  getCellValue: (compound: ChemicalCompound, key: TableColumnKey) => string;
+  getCellValue: (compound: ExtendedCompound, key: TableColumnKey) => string;
   centerAlignedColumns: TableColumnKey[];
   t: (key: string) => string;
 }

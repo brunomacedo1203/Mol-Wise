@@ -342,7 +342,7 @@
       "NaCl": "Sodium Chloride",
       "CaCO3": "Calcium Carbonate",
       "CuSO4·5H2O": "Copper(II) Sulfate Pentahydrate",
-      "H2O": "Dihydrogen Monoxide",
+      "H2O": "water",
       "CO2": "Carbon Dioxide",
       "NH3": "Ammonia",
       "HCl": "Hydrochloric Acid",
@@ -390,7 +390,7 @@
       "Na3PO4": "Trisodium Phosphate",
       "Ca(ClO)2": "Calcium Hypochlorite"
     },
-    "compoundSynonyms": {
+    "commonName": {
       "NaCl": "Table Salt",
       "CaCO3": "Limestone",
       "CuSO4·5H2O": "Blue vitriol",
@@ -489,6 +489,13 @@
       "solubility": "Qualitative description of water solubility",
       "solubilityNumeric": "Maximum amount dissolved in 100g of water (g/100g H₂O)",
       "solubilityQualitative": "Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "Filter inorganic categories",
+      "ácido": "Acid",
+      "base": "Base",
+      "sal": "Salt",
+      "óxido": "Oxide"
     }
   },
   "games": {

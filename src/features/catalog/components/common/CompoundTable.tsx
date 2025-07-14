@@ -3,17 +3,13 @@ import { Table } from "@/components/ui/table";
 import { useCompoundData } from "@/features/catalog/hooks/common/useCompoundData";
 import { useCompoundTable } from "@/features/catalog/hooks/common/useCompoundTable";
 import { useTranslations } from "next-intl";
-import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
+import type { ExtendedCompound } from "@/features/catalog/hooks/common/useCompoundData";
 import { useCallback, useState } from "react";
 import { useCompoundColumns } from "./compoundColumns";
 import { useColumnWidths } from "@/features/catalog/hooks/common/useColumnWidths";
 import { TablePagination } from "@/features/catalog/components/common/TablePagination";
-import {
-  getCompoundName,
-  getCompoundSynonym,
-  getSolubilityTranslation,
-  getPhysicalFormTranslation,
-} from "@/features/catalog/utils/compoundFormatters";
+
+import { getCellValue } from "@/features/catalog/utils/getCellValue";
 import { CompoundTableToolbar } from "./CompoundTableToolbar";
 import { CompoundTableHeader } from "./CompoundTableHeader";
 import { CompoundTableRows } from "./CompoundTableRows";
@@ -40,61 +36,25 @@ export function CompoundTable() {
     sortColumn,
     sortOrder,
     handleSort,
+    selectedCategories,
+    setSelectedCategories,
   } = useCompoundTable({ data: compounds });
 
   const centerAlignedColumns: TableColumnKey[] = ["solubilityNumeric"];
 
   const allColumns = useCompoundColumns();
 
-  const getCellValue = useCallback(
-    (compound: ChemicalCompound, key: TableColumnKey) => {
-      function extractSolubilityQualitative(solubility: string) {
-        if (!/([\d,.]+)\s*g\/(?:100\s*(?:mL|g))\s*water/i.test(solubility)) {
-          return getSolubilityTranslation(t, solubility);
-        }
-        return "";
-      }
-      switch (key) {
-        case "id":
-          return compound.id?.toString() || "";
-        case "name":
-          return getCompoundName(t, compound.formula, compound.name ?? "");
-        case "synonym":
-          return getCompoundSynonym(
-            t,
-            compound.formula,
-            compound.synonym ?? ""
-          );
-        case "formula":
-          return compound.formula || "";
-        case "casNumber":
-          return compound.casNumber || "";
-        case "molarMass":
-          return compound.molarMass?.toString() || "";
-        case "physicalForm":
-          return getPhysicalFormTranslation(t, compound.physicalForm);
-        case "meltingPoint":
-          return compound.meltingPoint?.toString() || "";
-        case "boilingPoint":
-          return compound.boilingPoint?.toString() || "";
-        case "density":
-          return compound.density?.toString() || "";
-        case "refractiveIndex":
-          return compound.refractiveIndex?.toString() || "";
-        case "solubilityNumeric":
-          return compound.solubilityNumeric || "";
-        case "solubilityQualitative":
-          return extractSolubilityQualitative(compound.solubility);
-        case "solubility":
-          return getSolubilityTranslation(t, compound.solubility);
-        default:
-          return "";
-      }
-    },
+  const cellValueGetter = useCallback(
+    (compound: ExtendedCompound, key: TableColumnKey) =>
+      getCellValue(compound, key, t),
     [t]
   );
 
-  const columnWidths = useColumnWidths(compounds, allColumns, getCellValue);
+  const columnWidths = useColumnWidths(
+    compounds as ExtendedCompound[],
+    allColumns,
+    cellValueGetter
+  );
 
   const toggleColumn = (col: TableColumnKey) => {
     setVisibleColumns((prev) => ({ ...prev, [col]: !prev[col] }));
@@ -120,7 +80,7 @@ export function CompoundTable() {
         "solubilityQualitative",
       ].includes(key)
     ) {
-      handleSort(key as keyof ChemicalCompound);
+      handleSort(key as keyof ExtendedCompound);
     }
   };
 
@@ -139,6 +99,8 @@ export function CompoundTable() {
   return (
     <div className="w-full max-w-[1400px] mx-auto my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm dark:bg-zinc-900 dark:border-zinc-700">
       <CompoundTableToolbar
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         columnsMenuOpen={columnsMenuOpen}
@@ -164,7 +126,7 @@ export function CompoundTable() {
           allColumns={allColumns}
           visibleColumns={visibleColumns}
           columnWidths={columnWidths}
-          getCellValue={getCellValue}
+          getCellValue={cellValueGetter}
           centerAlignedColumns={centerAlignedColumns}
           t={t}
         />

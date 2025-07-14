@@ -1,15 +1,14 @@
 import { useMemo, useState, useEffect } from 'react';
 import { ExtendedCompound } from '@/features/catalog/domain/types/ChemicalCompound';
 import { useTranslations } from 'next-intl';
+import type { CompoundCategory as BaseCompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
+type FilterCategory = BaseCompoundCategory | "desconhecida" | "todas";
 
 type SortOrder = 'asc' | 'desc';
 
 // Colunas extras que não estão no tipo original
 type ExtraColumn = "solubilityNumeric" | "solubilityQualitative";
 type TableColumnKey = keyof ExtendedCompound | ExtraColumn;
-
-// Categorias possíveis para o filtro
-export type CompoundCategory = "ácido" | "base" | "sal" | "óxido" | "desconhecida" | "todas";
 
 interface UseCompoundTableProps {
   data: ExtendedCompound[];
@@ -18,8 +17,9 @@ interface UseCompoundTableProps {
 export function useCompoundTable({ data }: UseCompoundTableProps) {
   const t = useTranslations();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<CompoundCategory>('todas');
+  const [selectedCategory, setSelectedCategory] = useState<FilterCategory>('todas');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategories, setSelectedCategories] = useState<BaseCompoundCategory[]>([]);
 
   const [rowsPerPage, setRowsPerPage] = useState(() => {
     if (typeof window !== "undefined") {
@@ -54,13 +54,14 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     solubilityNumeric: true,
     solubilityQualitative: true,
     commonName: true,
-    category: false, // mesmo que não exibida, ainda faz parte do tipo
+    category: false, 
   });
 
   // 🔍 Filtro por texto + categoria
   const filteredData = useMemo(() => {
+    let result = data;
     const term = searchTerm.toLowerCase();
-    return data.filter((compound) => {
+    result = result.filter((compound) => {
       const matchesSearch =
         (compound.name ?? '').toLowerCase().includes(term) ||
         (compound.formula ?? '').toLowerCase().includes(term) ||
@@ -73,7 +74,14 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
 
       return matchesSearch && matchesCategory;
     });
-  }, [data, searchTerm, selectedCategory]);
+
+    if (selectedCategories.length > 0) {
+      result = result.filter((compound) =>
+        selectedCategories.includes(compound.category)
+      );
+    }
+    return result;
+  }, [data, searchTerm, selectedCategory, selectedCategories]);
 
   // 🔀 Ordenação (mantida)
   const sortedData = useMemo(() => {
@@ -147,5 +155,7 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     sortColumn,
     sortOrder,
     handleSort,
+    selectedCategories,
+    setSelectedCategories,
   };
 }
