@@ -1,5 +1,5 @@
 import React from "react";
-import { useSubtitle } from "@/shared/contexts/SubtitleContext";
+import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import LanguageSwitcher from "@/shared/components/settings/LanguageSwitcher";
 
@@ -9,7 +9,7 @@ export interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const subtitle = useSubtitle();
+  const subtitle = useSubtitleStore((state) => state.subtitle);
   return (
     <div
       className={`

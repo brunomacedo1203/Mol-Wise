@@ -1,6 +1,6 @@
 import { MolarMassCalculator } from "@/features/calculators/components/calculators/molar-mass";
 import { ScientificCalculator } from "@/features/calculators/components/calculators/scientific";
-import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
 import { CloseAllButton } from "@/shared/components/buttons/CloseAllButton";
 import { PositionWithWidth } from "@/features/calculators/domain/types";
 import React from "react";
@@ -11,13 +11,16 @@ import React from "react";
 
 export function CalculatorPageContent() {
   // Ajustado para remover a prop e interface, mantendo compatibilidade
-  const {
-    calculators,
-    clearCalculators,
-    removeCalculator,
-    updateCalculator,
-    // addCalculator, // Removido
-  } = useCalculatorInstances();
+  const calculators = useCalculatorInstancesStore((state) => state.calculators);
+  const removeCalculator = useCalculatorInstancesStore(
+    (state) => state.removeCalculator
+  );
+  const updateCalculator = useCalculatorInstancesStore(
+    (state) => state.updateCalculator
+  );
+  const clearCalculators = useCalculatorInstancesStore(
+    (state) => state.clearCalculators
+  );
 
   // Se não houver calculadoras, não renderiza nada
   if (calculators.length === 0) {

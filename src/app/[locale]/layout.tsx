@@ -7,8 +7,6 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import { ThemeProvider } from "@/shared/contexts/ThemeContext";
-import { CalculatorInstancesProvider } from "@/features/calculators/contexts/CalculatorInstancesContext";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -87,13 +85,9 @@ export default async function LocaleLayout({
         />
       </head>
       <body className={inter.className}>
-        <ThemeProvider>
-          <NextIntlClientProvider locale={locale}>
-            <CalculatorInstancesProvider>
-              {children}
-            </CalculatorInstancesProvider>
-          </NextIntlClientProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

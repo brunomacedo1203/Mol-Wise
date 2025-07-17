@@ -1,4 +1,4 @@
-import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
 import { UseCalculatorPageProps, UseCalculatorPageReturn } from "@/features/calculators/domain/types";
 import { useEffect } from "react";
 
@@ -8,8 +8,10 @@ export function useCalculatorPage({
   onCalculatorAdd,
   onCalculatorRemove,
 }: UseCalculatorPageProps): UseCalculatorPageReturn {
-  const { calculators, addCalculator, removeCalculator, updateCalculator } =
-    useCalculatorInstances();
+  const calculators = useCalculatorInstancesStore((state) => state.calculators);
+  const addCalculator = useCalculatorInstancesStore((state) => state.addCalculator);
+  const removeCalculator = useCalculatorInstancesStore((state) => state.removeCalculator);
+  const updateCalculator = useCalculatorInstancesStore((state) => state.updateCalculator);
 
   // Adiciona uma calculadora quando o hook é montado
   useEffect(() => {

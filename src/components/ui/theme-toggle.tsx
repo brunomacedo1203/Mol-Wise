@@ -2,18 +2,19 @@
 
 import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/shared/contexts/ThemeContext";
-import { useTranslations } from 'next-intl';
+import { useThemeStore } from "@/shared/store/themeStore";
+import { useTranslations } from "next-intl";
 
 interface ThemeToggleProps {
   className?: string;
 }
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-  const { theme, toggleTheme } = useTheme(); // <-- Usa o contexto
+  const theme = useThemeStore((state) => state.theme);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
   const isDark = theme === "dark";
 
-  const t = useTranslations('common.theme');
+  const t = useTranslations("common.theme");
 
   return (
     <button
@@ -23,7 +24,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         isDark ? "bg-zinc-900 border-zinc-600" : "bg-zinc-100 border-zinc-200",
         className
       )}
-      aria-label={t('toggle')}
+      aria-label={t("toggle")}
       tabIndex={0}
     >
       {/* Fundo: só exibe o ícone NÃO coberto pelo knob */}

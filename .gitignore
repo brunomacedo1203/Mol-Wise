@@ -39,3 +39,33 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# arquivos temporários de editores
+*.swp
+*.swo
+*.tmp
+
+# arquivos do Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# arquivos do sistema operacional
+Thumbs.db
+ehthumbs.db
+
+# arquivos de build alternativos
+dist/
+
+# arquivos de cache do npm
+.npm
+
+# arquivos de lock alternativos
+package-lock.json
+pnpm-lock.yaml
+
+# relatórios de erro do Next.js
+.next/crash-dumps
+
+# arquivos de configuração locais
+*.local

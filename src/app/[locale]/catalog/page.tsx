@@ -1,18 +1,22 @@
 "use client";
 
 import { CompoundTable } from "@/features/catalog/components/common/CompoundTable";
-import { SubtitleProvider } from "@/shared/contexts/SubtitleContext";
+import { useEffect } from "react";
+import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import Page from "@/shared/components/layout/Page";
 import { useTranslations } from "next-intl";
 
 export default function CatalogPage() {
   const t = useTranslations("catalog");
+  const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+  useEffect(() => {
+    setSubtitle(t("subtitle"));
+    return () => setSubtitle("");
+  }, [setSubtitle, t]);
 
   return (
-    <SubtitleProvider subtitle={t("subtitle")}>
-      <Page title={t("title")}>
-        <CompoundTable />
-      </Page>
-    </SubtitleProvider>
+    <Page title={t("title")}>
+      <CompoundTable />
+    </Page>
   );
 }
