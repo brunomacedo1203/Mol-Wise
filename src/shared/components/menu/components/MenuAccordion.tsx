@@ -17,14 +17,18 @@ export const MenuAccordion = memo(function MenuAccordion({
   const toggleSection = useSidebarStore((state) => state.toggleSection);
 
   return (
-    <li>
+    <li className={cn(isCollapsed && "flex")}>
       <button
         onClick={() => toggleSection(section.id)}
-        className={cn(MENU_CLASSES.ITEM, isOpen && MENU_CLASSES.ACTIVE_ITEM)}
+        className={cn(
+          MENU_CLASSES.ITEM,
+          isOpen && MENU_CLASSES.ACTIVE_ITEM,
+          isCollapsed && "justify-center px-0 w-full"
+        )}
         aria-expanded={isOpen}
         type="button"
       >
-        <section.icon className="w-5 h-5" />
+        <section.icon className={cn("w-5 h-5", isCollapsed && "mx-auto")} />
         {!isCollapsed && (
           <>
             <span className="text-base">{section.label}</span>
