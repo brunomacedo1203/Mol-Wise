@@ -26,11 +26,7 @@ export default function Page({ title, children, ...rest }: PageProps) {
 
   return (
     <div className="flex h-screen bg-zinc-100">
-      <SideArea
-        bgClass="bg-zinc-800"
-        collapsed={collapsed}
-        onToggleCollapsed={toggleCollapsed}
-      >
+      <SideArea collapsed={collapsed} onToggleCollapsed={toggleCollapsed}>
         <Menu collapsed={collapsed} />
       </SideArea>
       <div className="flex flex-col flex-1">

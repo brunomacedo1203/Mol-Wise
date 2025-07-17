@@ -97,7 +97,14 @@ export function CompoundTable() {
   }
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm dark:bg-zinc-900 dark:border-zinc-700">
+    <div
+      className={`
+           w-full max-w-8xl mx-auto my-10 space-y-4 p-4
+           border border-border rounded-lg bg-background shadow-sm
+           dark:bg-zinc-900 dark:border-zinc-700
+           mx-2 sm:mx-4 lg:mx-8
+         `}
+    >
       <CompoundTableToolbar
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}

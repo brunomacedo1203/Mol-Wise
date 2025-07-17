@@ -45,9 +45,9 @@ export function CompoundTableToolbar({
   return (
     <div
       className={`
-        w-full max-w-6xl mx-auto
+        w-full max-w-8xl mx-auto
         bg-background dark:bg-zinc-900
-        border border-border dark:border-zinc-700
+        border border-zinc-300 dark:border-zinc-600
         p-4 rounded-lg shadow mb-6
       `}
     >

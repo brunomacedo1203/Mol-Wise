@@ -8,6 +8,7 @@ import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Script from "next/script";
+import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider"; // ADICIONE ESTA LINHA
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 const themeScript = `
   (function() {
     try {
-      const theme = localStorage.getItem('theme');
+      var theme = localStorage.getItem('theme');
       if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
       } else {
@@ -72,7 +73,6 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Habilita renderização estática
   setRequestLocale(locale);
 
   return (
@@ -85,9 +85,11 @@ export default async function LocaleLayout({
         />
       </head>
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale}>
-          {children}
-        </NextIntlClientProvider>
+        <ThemeEffectProvider>
+          <NextIntlClientProvider locale={locale}>
+            {children}
+          </NextIntlClientProvider>
+        </ThemeEffectProvider>
       </body>
     </html>
   );

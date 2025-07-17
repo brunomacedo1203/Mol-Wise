@@ -17,7 +17,7 @@ export const MenuAccordion = memo(function MenuAccordion({
   const toggleSection = useSidebarStore((state) => state.toggleSection);
 
   return (
-    <li className={cn(isCollapsed && "flex")}>
+    <li className={cn("w-full", isCollapsed && "flex")}>
       <button
         onClick={() => toggleSection(section.id)}
         className={cn(
