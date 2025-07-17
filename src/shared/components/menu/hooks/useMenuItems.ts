@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCalculatorInstances } from "@/features/calculators/contexts/CalculatorInstancesContext";
+import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
 import { MenuItemProps, MenuSection, MenuSectionConfig, MenuItemConfig } from "../types";
 import { menuSectionsConfig } from "../config/menuConfig";
 
@@ -10,7 +10,7 @@ export function useMenuItems() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
-  const { addCalculator } = useCalculatorInstances();
+  const addCalculator = useCalculatorInstancesStore((state) => state.addCalculator);
   const locale = params.locale as string;
   const t = useTranslations();
 

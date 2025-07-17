@@ -17,4 +17,4 @@ export type {
 } from './domain/types/position';
 
 // Contextos
-export { CalculatorInstancesProvider, useCalculatorInstances } from './contexts/CalculatorInstancesContext';
+
