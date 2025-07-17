@@ -1,3 +1,5 @@
+// features/sidebar/SideArea.tsx
+
 "use client";
 
 import React from "react";
@@ -6,26 +8,23 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconLayoutSidebarRightCollapse,
 } from "@tabler/icons-react";
-import { useTranslations } from "next-intl";
 import { useSidebarStore } from "@/shared/store/sidebarStore";
 
 export interface SideAreaProps {
-  bgClass?: string;
-  children?: React.ReactNode;
   className?: string;
   collapsed?: boolean;
   onToggleCollapsed?: () => void;
+  children?: React.ReactNode;
 }
 
 export default function SideArea({
-  children,
   className = "",
   collapsed: collapsedProp,
   onToggleCollapsed,
+  children,
 }: SideAreaProps) {
   const collapsed = useSidebarStore((state) => state.collapsed);
   const toggleCollapsed = useSidebarStore((state) => state.toggleCollapsed);
-  const t = useTranslations("common.navigation.menu");
 
   // Permite sobrescrever via prop, mas padrão é Zustand
   const isCollapsed =
@@ -35,18 +34,23 @@ export default function SideArea({
 
   return (
     <aside
-      className={`flex flex-col gap-5 custom-shadow  
-    ${isCollapsed ? "w-16" : "w-64 min-w-64"}
-    bg-zinc-100 dark:bg-neutral-900 
-    border-r border-zinc-300 dark:border-white/10
-    shadow-md ${className}`}
+      className={`
+        flex flex-col
+        ${isCollapsed ? "w-16" : "w-64 min-w-64"}
+        h-screen
+        bg-zinc-100 dark:bg-neutral-900
+        border-r border-zinc-300 dark:border-white/10
+        shadow-md
+        transition-all duration-200
+        ${className}
+      `}
     >
       <div className="flex items-center justify-between px-5 h-16 border-b border-zinc-400 dark:border-zinc-700">
         <Logo collapsed={isCollapsed ?? false} />
         <button
           className="text-xl p-0 rounded-md"
           onClick={handleToggle}
-          aria-label={isCollapsed ? t("expand") : t("collapse")}
+          aria-label={isCollapsed ? "Expandir menu" : "Colapsar menu"}
         >
           {isCollapsed ? (
             <IconLayoutSidebarRightCollapse
@@ -63,7 +67,7 @@ export default function SideArea({
           )}
         </button>
       </div>
-      <div>{children}</div>
+      <div className="flex-1 overflow-y-auto">{children}</div>
     </aside>
   );
 }
