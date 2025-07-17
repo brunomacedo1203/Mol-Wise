@@ -37,7 +37,7 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 - TypeScript
 - Tailwind CSS
 - React Hooks
-- Context API
+- Zustand (gerenciamento de estado global)
 - Framer Motion (animações do menu/submenu)
 - [shadcn/ui](https://ui.shadcn.com/) (ScrollArea e outros utilitários de UI)
 
@@ -351,3 +351,37 @@ src/shared/components/menu/
 - O menu é renderizado pelo componente `Menu.tsx`, geralmente dentro do layout lateral (`SideArea.tsx`).
 - O estado de colapso/expansão pode ser controlado pelo usuário e é persistido.
 - O menu suporta scroll interno e animações com Framer Motion.
+
+## 🧭 Gerenciamento de Estado Global
+
+O projeto utiliza **Zustand** para todo o gerenciamento de estado global, substituindo completamente o uso de Context API para estados compartilhados entre features. Cada domínio relevante possui seu próprio store, fortemente tipado e, quando necessário, com persistência automática no `localStorage`.
+
+### Exemplos de stores globais:
+
+- `src/shared/store/themeStore.ts` — tema claro/escuro
+- `src/shared/store/sidebarStore.ts` — estado do menu lateral
+- `src/shared/store/subtitleStore.ts` — subtítulo global
+- `src/features/calculators/store/calculatorInstancesStore.ts` — instâncias das calculadoras
+- `src/features/periodic-table/store/periodicTableStore.ts` — seleção e configuração da tabela periódica
+
+#### Como consumir um estado global com Zustand:
+
+```tsx
+import { useThemeStore } from "@/shared/store/themeStore";
+const theme = useThemeStore((state) => state.theme);
+const toggleTheme = useThemeStore((state) => state.toggleTheme);
+```
+
+#### Como modificar um estado global:
+
+```tsx
+const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+setSubtitle("Novo subtítulo");
+```
+
+#### Boas práticas:
+
+- Sempre defina uma interface para o estado do store.
+- Use o middleware `persist` apenas quando necessário.
+- Prefira actions nomeadas (ex: `toggleTheme`, `setCollapsed`) ao invés de setters diretos.
+- Documente o propósito do store e suas actions com comentários JSDoc.
