@@ -29,7 +29,7 @@ export default function Page({ title, children, ...rest }: PageProps) {
       <SideArea collapsed={collapsed} onToggleCollapsed={toggleCollapsed}>
         <Menu collapsed={collapsed} />
       </SideArea>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 min-w-0">
         <Header title={sectionTitle} className="h-16 bg-zinc-100" />
         <Content title={title}>
           {React.isValidElement(children)

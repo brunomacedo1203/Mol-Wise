@@ -36,7 +36,7 @@ export function CompoundTableRows({
                 <TableCell
                   key={key}
                   className={
-                    "whitespace-nowrap overflow-hidden text-ellipsis bg-white text-black dark:bg-zinc-900 dark:text-zinc-200" +
+                    "whitespace-normal break-words bg-white text-black dark:bg-zinc-900 dark:text-zinc-200" +
                     (centerAlignedColumns.includes(key) ? " text-center" : "")
                   }
                   style={{ width: `${columnWidths[key] || 100}px` }}

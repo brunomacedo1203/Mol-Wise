@@ -16,7 +16,9 @@ export default function CatalogPage() {
 
   return (
     <Page title={t("title")}>
-      <CompoundTable />
+      <div className="w-full overflow-x-auto flex-1">
+        <CompoundTable />
+      </div>
     </Page>
   );
 }

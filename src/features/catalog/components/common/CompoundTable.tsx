@@ -99,11 +99,10 @@ export function CompoundTable() {
   return (
     <div
       className={`
-           w-full max-w-8xl mx-auto my-10 space-y-4 p-4
-           border border-border rounded-lg bg-background shadow-sm
-           dark:bg-zinc-900 dark:border-zinc-700
-           mx-2 sm:mx-4 lg:mx-8
-         `}
+      w-full max-w-8xl mx-auto my-10 space-y-4 p-4 border 
+      border-border rounded-lg bg-background shadow-sm 
+      dark:bg-zinc-900 dark:border-zinc-700 
+    `}
     >
       <CompoundTableToolbar
         selectedCategories={selectedCategories}
@@ -118,26 +117,28 @@ export function CompoundTable() {
         t={t}
       />
 
-      <Table className="w-full table-fixed shadow-xl ">
-        <CompoundTableHeader
-          allColumns={allColumns}
-          visibleColumns={visibleColumns}
-          sortColumn={sortColumn}
-          sortOrder={sortOrder}
-          handleSort={handleSafeSort}
-          centerAlignedColumns={centerAlignedColumns}
-          columnWidths={columnWidths}
-        />
-        <CompoundTableRows
-          paginatedData={paginatedData}
-          allColumns={allColumns}
-          visibleColumns={visibleColumns}
-          columnWidths={columnWidths}
-          getCellValue={cellValueGetter}
-          centerAlignedColumns={centerAlignedColumns}
-          t={t}
-        />
-      </Table>
+      {/* Scroll horizontal só quando necessário */}
+      <div className="w-full overflow-x-auto">
+        <Table className="min-w-full table-fixed shadow-xl">
+          <CompoundTableHeader
+            allColumns={allColumns}
+            visibleColumns={visibleColumns}
+            sortColumn={sortColumn}
+            sortOrder={sortOrder}
+            handleSort={handleSafeSort}
+            centerAlignedColumns={centerAlignedColumns}
+          />
+          <CompoundTableRows
+            paginatedData={paginatedData}
+            allColumns={allColumns}
+            visibleColumns={visibleColumns}
+            columnWidths={columnWidths}
+            getCellValue={cellValueGetter}
+            centerAlignedColumns={centerAlignedColumns}
+            t={t}
+          />
+        </Table>
+      </div>
 
       <div className="flex items-center justify-between mt-4">
         <div className="flex items-center gap-2">
