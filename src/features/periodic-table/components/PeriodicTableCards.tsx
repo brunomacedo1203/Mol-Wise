@@ -15,6 +15,8 @@ import LanthanidesLabelCard from "./cards/LanthanidesLabelCard";
 import ActinidesLabelCard from "./cards/ActinidesLabelCard";
 import ElementCardWrapper from "./cards/ElementCardWrapper";
 import elementsData from "../data/elementsData";
+import PeriodicTableFilterDropdown from "../components/common/PeriodicTableFilterDropdown";
+import { usePeriodicTableStore } from "../store/periodicTableStore";
 
 // Elemento padrão: Hidrogênio
 const defaultElement = elementsData.find((e) => e.symbol === "H") as Element;
@@ -24,13 +26,29 @@ if (!defaultElement)
 export default function PeriodicTableCards() {
   const [selectedElement, setSelectedElement] =
     useState<Element>(defaultElement);
+  const filter = usePeriodicTableStore((state) => state.filter);
+  const setFilter = usePeriodicTableStore((state) => state.setFilter);
   const matrix = generatePeriodicTableMatrix();
 
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
-      <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-4 relative">
+      <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
+        {/* Dropdown alinhado à esquerda acima da tabela */}
+        <div className="mb-4 w-full flex justify-start pl-2">
+          <PeriodicTableFilterDropdown
+            options={[
+              { value: "all", label: "Classificação" },
+              { value: "metal", label: "Metais" },
+              { value: "nonmetal", label: "Não-metais" },
+              // ...adicione outros filtros
+            ]}
+            value={filter}
+            onChange={setFilter}
+          />
+        </div>
+
         {/* Details Panel */}
-        <div className="absolute top-8 left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
+        <div className="absolute top-[90px]  left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
           <ElementDetailsPanel element={selectedElement} />
         </div>
 

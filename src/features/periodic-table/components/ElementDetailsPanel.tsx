@@ -152,7 +152,7 @@ export default function ElementDetailsPanel({
       {/* Campo de pesquisa no topo */}
       <div
         className="
-          w-full px-4 pt-2 pb-2 bg-white border-b border-cyan-100 
+          w-full px-4 pt-1 pb-1 bg-white border-b border-cyan-100 
           dark:border-white/20 dark:bg-neutral-800/90
         "
       >
