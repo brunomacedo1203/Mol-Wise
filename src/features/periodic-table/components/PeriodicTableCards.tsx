@@ -1,3 +1,4 @@
+// src/features/periodic-table/components/PeriodicTableCards.tsx
 "use client";
 import React, { useState } from "react";
 import { generatePeriodicTableMatrix } from "@/features/periodic-table/utils/periodicTableMatrix";
@@ -33,16 +34,17 @@ export default function PeriodicTableCards() {
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
-        {/* Dropdown com label acima da tabela */}
-        <div className="mb-4 w-full flex flex-col items-start pl-2">
-          <label className="mb-1 text-lg font-medium text-zinc-800 dark:text-zinc-200">
-            Classificação
+        {/* Dropdown absoluto, sobrepondo a tabela */}
+        <div className="absolute top-1 left-4 z-50">
+          <label className="px-1  text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
+            <strong>Classificação</strong>
           </label>
           <PeriodicTableFilterDropdown
             options={[
-              { value: "all", label: "Classificação" },
               { value: "metal", label: "Metais" },
               { value: "nonmetal", label: "Não-metais" },
+              { value: "metalloid", label: "Semi-metais" },
+              { value: "nobleGas", label: "Gases Nobres" },
               // ...adicione outros filtros
             ]}
             values={filters}
@@ -50,12 +52,15 @@ export default function PeriodicTableCards() {
           />
         </div>
 
-        {/* Details Panel */}
-        <div className="absolute top-[90px] left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
+        {/* Espaço para garantir visualização limpa (ajuste se precisar) */}
+        <div className="h-[110px]" />
+
+        {/* Painel de detalhes */}
+        <div className="absolute top-[142px] left-1/2 transform -translate-x-[78%] z-40 w-[500px] flex justify-center">
           <ElementDetailsPanel element={selectedElement} />
         </div>
 
-        {/* Column numbers */}
+        {/* Números das colunas */}
         <div className="grid grid-cols-[repeat(18,80px)] gap-0">
           {Array.from({ length: 18 }, (_, i) => (
             <div
@@ -67,7 +72,7 @@ export default function PeriodicTableCards() {
           ))}
         </div>
 
-        {/* Periodic table */}
+        {/* Tabela periódica */}
         <div className="grid grid-cols-[repeat(18,80px)] gap-0">
           {matrix
             .flat()
