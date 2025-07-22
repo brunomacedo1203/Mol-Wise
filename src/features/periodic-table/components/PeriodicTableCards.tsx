@@ -19,6 +19,20 @@ import elementsData from "../data/elementsData";
 import PeriodicTableFilterDropdown from "../components/common/PeriodicTableFilterDropdown";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
 
+// 1. Options do filtro (usando nomes ORIGINAIS)
+const filterOptions = [
+  { value: "Alkali metal", label: "Metal Alcalino" },
+  { value: "Alkaline earth metal", label: "Metal Alcalino-terroso" },
+  { value: "Transition metal", label: "Metal de Transição" },
+  { value: "Post-transition metal", label: "Metal Pós-transição" },
+  { value: "Metalloid", label: "Semimetal" },
+  { value: "Nonmetal", label: "Não-metal" },
+  { value: "Halogen", label: "Halogênio" },
+  { value: "Noble gas", label: "Gás Nobre" },
+  { value: "Lanthanide", label: "Lantanídeo" },
+  { value: "Actinide", label: "Actinídeo" },
+];
+
 // Elemento padrão: Hidrogênio
 const defaultElement = elementsData.find((e) => e.symbol === "H") as Element;
 if (!defaultElement)
@@ -36,17 +50,11 @@ export default function PeriodicTableCards() {
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
         {/* Dropdown absoluto, sobrepondo a tabela */}
         <div className="absolute top-1 left-4 z-50">
-          <label className="px-1  text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
+          <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
             <strong>Classificação</strong>
           </label>
           <PeriodicTableFilterDropdown
-            options={[
-              { value: "metal", label: "Metais" },
-              { value: "nonmetal", label: "Não-metais" },
-              { value: "metalloid", label: "Semi-metais" },
-              { value: "nobleGas", label: "Gases Nobres" },
-              // ...adicione outros filtros
-            ]}
+            options={filterOptions}
             values={filters}
             onChange={setFilters}
           />
@@ -90,6 +98,7 @@ export default function PeriodicTableCards() {
                   key={element.atomicNumber}
                   element={element as Element}
                   setSelectedElement={setSelectedElement}
+                  highlightedCategories={filters}
                 />
               ) : (
                 <div
