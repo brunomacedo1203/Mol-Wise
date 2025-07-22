@@ -26,15 +26,18 @@ if (!defaultElement)
 export default function PeriodicTableCards() {
   const [selectedElement, setSelectedElement] =
     useState<Element>(defaultElement);
-  const filter = usePeriodicTableStore((state) => state.filter);
-  const setFilter = usePeriodicTableStore((state) => state.setFilter);
+  const filters = usePeriodicTableStore((state) => state.filters);
+  const setFilters = usePeriodicTableStore((state) => state.setFilters);
   const matrix = generatePeriodicTableMatrix();
 
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
-        {/* Dropdown alinhado à esquerda acima da tabela */}
-        <div className="mb-4 w-full flex justify-start pl-2">
+        {/* Dropdown com label acima da tabela */}
+        <div className="mb-4 w-full flex flex-col items-start pl-2">
+          <label className="mb-1 text-lg font-medium text-zinc-800 dark:text-zinc-200">
+            Classificação
+          </label>
           <PeriodicTableFilterDropdown
             options={[
               { value: "all", label: "Classificação" },
@@ -42,13 +45,13 @@ export default function PeriodicTableCards() {
               { value: "nonmetal", label: "Não-metais" },
               // ...adicione outros filtros
             ]}
-            value={filter}
-            onChange={setFilter}
+            values={filters}
+            onChange={setFilters}
           />
         </div>
 
         {/* Details Panel */}
-        <div className="absolute top-[90px]  left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
+        <div className="absolute top-[90px] left-1/2 transform -translate-x-[78%] z-50 w-[500px] flex justify-center">
           <ElementDetailsPanel element={selectedElement} />
         </div>
 

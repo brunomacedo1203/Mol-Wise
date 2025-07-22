@@ -9,8 +9,8 @@ interface PeriodicTableState {
   setSelectedElement: (element: Element | null) => void;
   config: PeriodicTableConfig;
   setConfig: (config: Partial<PeriodicTableConfig>) => void;
-  filter: string; // filtro atual
-  setFilter: (filter: string) => void; // função para atualizar o filtro
+  filters: string[]; // array de filtros agora!
+  setFilters: (filters: string[]) => void; // função para atualizar os filtros
 }
 
 export const usePeriodicTableStore = create<PeriodicTableState>()(
@@ -19,10 +19,11 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
       selectedElement: null,
       setSelectedElement: (element) => set({ selectedElement: element }),
       config: defaultConfig,
-      setConfig: (config) => set((state) => ({ config: { ...state.config, ...config } })),
-      filter: "all", // valor padrão do filtro
-      setFilter: (filter) => set({ filter }),
+      setConfig: (config) =>
+        set((state) => ({ config: { ...state.config, ...config } })),
+      filters: [], // começa sem filtros selecionados
+      setFilters: (filters) => set({ filters }),
     }),
     { name: "molwise_periodic_table" }
   )
-); 
+);

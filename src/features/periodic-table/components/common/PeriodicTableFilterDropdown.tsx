@@ -1,22 +1,28 @@
 // src/features/periodic-table/components/common/PeriodicTableFilterDropdown.tsx
-import React from "react";
+
+import { MultiSelectCombobox } from "@/components/ui/combobox";
+
+type Option = { value: string; label: string };
 
 interface PeriodicTableFilterDropdownProps {
-  options: { value: string; label: string }[];
-  value: string;
-  onChange: (value: string) => void;
+  options: Option[];
+  values: string[];
+  onChange: (values: string[]) => void;
+  placeholder?: string;
 }
 
-const PeriodicTableFilterDropdown: React.FC<
-  PeriodicTableFilterDropdownProps
-> = ({ options, value, onChange }) => (
-  <select value={value} onChange={(e) => onChange(e.target.value)}>
-    {options.map((option) => (
-      <option key={option.value} value={option.value}>
-        {option.label}
-      </option>
-    ))}
-  </select>
-);
-
-export default PeriodicTableFilterDropdown;
+export default function PeriodicTableFilterDropdown({
+  options,
+  values,
+  onChange,
+  placeholder,
+}: PeriodicTableFilterDropdownProps) {
+  return (
+    <MultiSelectCombobox
+      options={options}
+      selected={values}
+      setSelected={onChange}
+      placeholder={placeholder}
+    />
+  );
+}
