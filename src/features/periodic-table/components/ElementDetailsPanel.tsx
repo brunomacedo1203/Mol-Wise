@@ -4,6 +4,7 @@ import elementsData from "../data/elementsData";
 import { formatWithSup } from "@/shared/utils/formatWithSup";
 import { useTranslations } from "next-intl";
 
+// Mapeamento nomes em PT para símbolo (opcional, pode remover se não usa busca PT)
 const ptNameToSymbol: Record<string, string> = {
   hidrogenio: "H",
   helio: "He",
@@ -73,13 +74,9 @@ function searchElement(term: string): Element | undefined {
   return undefined;
 }
 
-// Helper function to convert a string to camelCase matching JSON keys
 function toCamelCase(str: string): string {
-  // Convert to lowercase first
   let s = str.toLowerCase();
-  // Replace spaces and hyphens with a single uppercase letter
   s = s.replace(/[-\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
-  // Ensure the very first character is lowercase
   return s.charAt(0).toLowerCase() + s.slice(1);
 }
 
@@ -96,9 +93,6 @@ export default function ElementDetailsPanel({
   const t = useTranslations("periodicTable");
 
   if (!elementToShow) return null;
-
-  // LOG para depuração do valor da configuração eletrônica
-  console.log("DADO NO PAINEL:", elementToShow.electronConfiguration);
 
   const fields: { label: string; value?: React.ReactNode }[] = [
     { label: t("element.atomicNumber"), value: elementToShow.atomicNumber },
@@ -145,11 +139,13 @@ export default function ElementDetailsPanel({
   return (
     <div
       className="
-        w-[500px] h-auto bg-white border-2 border-cyan-500 rounded-lg shadow-lg flex overflow-hidden flex-col 
+        bg-white border-2 border-cyan-500 rounded-lg shadow-lg flex flex-col
         dark:border-white/35 dark:bg-neutral-800/90
+        min-w-[340px] max-w-[95vw] w-auto
       "
+      style={{ minWidth: 340 }}
     >
-      {/* Campo de pesquisa no topo */}
+      {/* Campo de pesquisa */}
       <div
         className="
           w-full px-4 pt-1 pb-1 bg-white border-b border-cyan-100 
@@ -162,22 +158,17 @@ export default function ElementDetailsPanel({
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t("subtitle")}
           className="
-            w-full px-3  border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
+            w-full px-3 border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
             text-base text-black bg-white 
             dark:text-zinc-100 dark:bg-neutral-950/60 dark:border-white/20
           "
         />
       </div>
-      <div
-        className="
-          flex flex-row flex-1 overflow-hidden 
-          dark:border-white/10 dark:bg-neutral-800/90
-        "
-      >
+      <div className="flex flex-row gap-0 items-stretch">
         {/* Coluna do símbolo */}
         <div
           className="
-            flex flex-col items-center justify-center w-[120px] bg-cyan-50 border-r border-cyan-200 py-4 
+            flex flex-col items-center justify-center w-[110px] bg-cyan-50 border-r border-cyan-200 py-4 
             dark:border-white/20 dark:bg-neutral-800/90
           "
         >
@@ -191,9 +182,15 @@ export default function ElementDetailsPanel({
         {/* Coluna das informações */}
         <div
           className="
-            flex-1 flex flex-col justify-center px-4 py-2 text-zinc-800 text-[15px]
+            px-4 py-2 text-zinc-800 text-[15px]
             dark:border-white/10 dark:bg-neutral-800/90 dark:text-zinc-100
-          "
+            flex flex-col justify-center
+            min-w-[200px]
+            "
+          style={{
+            whiteSpace: "nowrap",
+            overflowX: "auto",
+          }}
         >
           <ul className="flex flex-col gap-y-0 leading-tight">
             {fields.map(

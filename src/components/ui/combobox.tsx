@@ -112,7 +112,7 @@ export function MultiSelectCombobox({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[350px] p-0 z-[100]"
+        className="w-[300px] p-0 z-[100]"
         side="bottom"
         align="start"
         style={{ position: "absolute" }}

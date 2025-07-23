@@ -1,4 +1,3 @@
-// src/features/periodic-table/components/PeriodicTableCards.tsx
 "use client";
 import React, { useState } from "react";
 import { generatePeriodicTableMatrix } from "@/features/periodic-table/utils/periodicTableMatrix";
@@ -21,6 +20,7 @@ import { usePeriodicTableStore } from "../store/periodicTableStore";
 
 // 1. Options do filtro (usando nomes ORIGINAIS)
 const filterOptions = [
+  { value: "ALL", label: "Todos" },
   { value: "Alkali metal", label: "Metal Alcalino" },
   { value: "Alkaline earth metal", label: "Metal Alcalino-terroso" },
   { value: "Transition metal", label: "Metal de Transição" },
@@ -45,6 +45,30 @@ export default function PeriodicTableCards() {
   const setFilters = usePeriodicTableStore((state) => state.setFilters);
   const matrix = generatePeriodicTableMatrix();
 
+  // Handler para seleção de categorias, incluindo "Todos"
+  function handleFilterChange(values: string[]) {
+    // Se o usuário clicou em "Todos" e nem tudo estava selecionado, seleciona tudo
+    if (values.includes("ALL") && filters.length !== filterOptions.length - 1) {
+      setFilters(
+        filterOptions
+          .filter((opt) => opt.value !== "ALL")
+          .map((opt) => opt.value)
+      );
+    }
+    // Se o usuário desmarcou "Todos" (clicando no X do chip "Todos" e só ele foi removido)
+    else if (
+      filters.length === filterOptions.length - 1 &&
+      !values.includes("ALL") &&
+      values.length === filterOptions.length - 1
+    ) {
+      setFilters([]);
+    }
+    // Se o usuário desmarcou uma opção individual após selecionar "Todos"
+    else {
+      setFilters(values.filter((v) => v !== "ALL"));
+    }
+  }
+
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
@@ -55,17 +79,20 @@ export default function PeriodicTableCards() {
           </label>
           <PeriodicTableFilterDropdown
             options={filterOptions}
-            values={filters}
-            onChange={setFilters}
+            values={
+              filters.length === filterOptions.length - 1
+                ? ["ALL", ...filters]
+                : filters
+            }
+            onChange={handleFilterChange}
           />
         </div>
 
-        {/* Espaço para garantir visualização limpa (ajuste se precisar) */}
-        <div className="h-[110px]" />
-
-        {/* Painel de detalhes */}
-        <div className="absolute top-[142px] left-1/2 transform -translate-x-[78%] z-40 w-[500px] flex justify-center">
-          <ElementDetailsPanel element={selectedElement} />
+        <div className="h-[90px]" />
+        <div className="w-full flex justify-center absolute top-[130px] left-0 z-40 pointer-events-none">
+          <div className="pointer-events-auto max-w-[650px] w-full flex justify-center ml-[-300px]">
+            <ElementDetailsPanel element={selectedElement} />
+          </div>
         </div>
 
         {/* Números das colunas */}
