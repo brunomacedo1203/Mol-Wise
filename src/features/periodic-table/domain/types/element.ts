@@ -106,4 +106,6 @@ export interface Element {
    * Column number to display
    */
   showColumnNumber?: number;
+
+  isRareEarth?: boolean;
 } 

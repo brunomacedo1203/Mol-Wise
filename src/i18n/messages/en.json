@@ -153,7 +153,7 @@
   },
   "periodicTable": {
     "title": "Periodic Table",
-    "subtitle": "Hover over an element to see details",
+    "subtitle": "Type a name or symbol to see details",
     "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
     "element": {
       "atomicNumber": "Atomic Number",

@@ -155,7 +155,7 @@
   },
   "periodicTable": {
     "title": "Tabela Periódica",
-    "subtitle": "Passe o mouse sobre um elemento para ver detalhes",
+    "subtitle": "Digite o nome ou símbolo do elemento",
     "ariaLabel": "Elemento {name} ({symbol}), número atômico {atomicNumber}",
     "element": {
       "atomicNumber": "Número Atômico",

@@ -139,7 +139,7 @@ export default function ElementDetailsPanel({
   return (
     <div
       className="
-        bg-white border-2 border-cyan-500 rounded-lg shadow-lg flex flex-col
+        bg-white border-2 border-cyan-400 rounded-sm shadow flex flex-col
         dark:border-white/35 dark:bg-neutral-800/90
         min-w-[340px] max-w-[95vw] w-auto
       "
@@ -158,7 +158,7 @@ export default function ElementDetailsPanel({
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t("subtitle")}
           className="
-            w-full px-3 border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
+            w-full px-2 border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
             text-base text-black bg-white 
             dark:text-zinc-100 dark:bg-neutral-950/60 dark:border-white/20
           "
@@ -168,7 +168,7 @@ export default function ElementDetailsPanel({
         {/* Coluna do símbolo */}
         <div
           className="
-            flex flex-col items-center justify-center w-[110px] bg-cyan-50 border-r border-cyan-200 py-4 
+            flex flex-col items-center justify-center w-[110px] bg-cyan-50 border-r border-cyan-200 py-2 
             dark:border-white/20 dark:bg-neutral-800/90
           "
         >
@@ -182,7 +182,7 @@ export default function ElementDetailsPanel({
         {/* Coluna das informações */}
         <div
           className="
-            px-4 py-2 text-zinc-800 text-[15px]
+            px-4 py-1 text-zinc-800 text-[15px]
             dark:border-white/10 dark:bg-neutral-800/90 dark:text-zinc-100
             flex flex-col justify-center
             min-w-[200px]

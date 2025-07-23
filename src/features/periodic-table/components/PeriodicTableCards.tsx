@@ -17,10 +17,12 @@ import ElementCardWrapper from "./cards/ElementCardWrapper";
 import elementsData from "../data/elementsData";
 import PeriodicTableFilterDropdown from "../components/common/PeriodicTableFilterDropdown";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
+import { RARE_EARTHS_LABEL } from "../domain/types/elementCategories";
 
 // 1. Options do filtro (usando nomes ORIGINAIS)
 const filterOptions = [
   { value: "ALL", label: "Todos" },
+  { value: RARE_EARTHS_LABEL, label: "Terras Raras" },
   { value: "Alkali metal", label: "Metal Alcalino" },
   { value: "Alkaline earth metal", label: "Metal Alcalino-terroso" },
   { value: "Transition metal", label: "Metal de Transição" },

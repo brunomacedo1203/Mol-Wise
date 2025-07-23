@@ -2,7 +2,11 @@ import SingleCardPeriodicTable from "../SingleCardPeriodicTable";
 import { Element } from "../../domain/types/element";
 import React from "react";
 import { useTranslations } from "next-intl";
-import { CATEGORY_COLOR_MAP } from "../../domain/types/elementCategories";
+import {
+  CATEGORY_COLOR_MAP,
+  RARE_EARTHS_LABEL,
+  RARE_EARTHS_COLOR,
+} from "../../domain/types/elementCategories";
 
 interface ElementCardWrapperProps {
   element: Element;
@@ -18,13 +22,15 @@ export default function ElementCardWrapper({
   const t = useTranslations("periodicTable");
   const translatedElementName = t(`elements.${element.symbol}`);
 
-  // Verifica se a categoria do elemento está entre as selecionadas
-  const highlight = highlightedCategories.includes(element.category);
+  const terrasRarasAtiva = highlightedCategories.includes(RARE_EARTHS_LABEL);
+  const isTerraRara = !!element.isRareEarth;
 
-  // Se destacado, pega a cor, senão, string vazia
-  const highlightClass = highlight
-    ? CATEGORY_COLOR_MAP[element.category] || ""
-    : "";
+  let highlightClass = "";
+  if (terrasRarasAtiva && isTerraRara) {
+    highlightClass = RARE_EARTHS_COLOR;
+  } else if (highlightedCategories.includes(element.category)) {
+    highlightClass = CATEGORY_COLOR_MAP[element.category] || "";
+  }
 
   return (
     <div
@@ -42,7 +48,7 @@ export default function ElementCardWrapper({
           setSelectedElement(element);
         }
       }}
-      className="focus:outline-none focus:ring-2 focus:ring-cyan-600 transition-all duration-150"
+      className={`focus:outline-none focus:ring-2 focus:ring-cyan-600 transition-all duration-150 ${highlightClass}`}
     >
       <SingleCardPeriodicTable
         atomicNumber={element.atomicNumber}
