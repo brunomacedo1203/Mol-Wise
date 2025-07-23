@@ -8,17 +8,18 @@ interface PeriodicTableFilterDropdownProps {
   options: ComboboxOption[];
   values: string[];
   onChange: (values: string[]) => void;
+  placeholder?: string;
 }
 
 const PeriodicTableFilterDropdown: React.FC<
   PeriodicTableFilterDropdownProps
-> = ({ options, values, onChange }) => {
+> = ({ options, values, onChange, placeholder }) => {
   return (
     <MultiSelectCombobox
       options={options}
       selected={values}
       setSelected={onChange}
-      placeholder="Selecione a(s) classificação(ões)"
+      placeholder={placeholder || "Selecione a(s) classificação(ões)"}
     />
   );
 };

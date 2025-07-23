@@ -17,23 +17,9 @@ import ElementCardWrapper from "./cards/ElementCardWrapper";
 import elementsData from "../data/elementsData";
 import PeriodicTableFilterDropdown from "../components/common/PeriodicTableFilterDropdown";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
-import { RARE_EARTHS_LABEL } from "../domain/types/elementCategories";
+import { useTranslations } from "next-intl";
 
-// 1. Options do filtro (usando nomes ORIGINAIS)
-const filterOptions = [
-  { value: "ALL", label: "Todos" },
-  { value: RARE_EARTHS_LABEL, label: "Terras Raras" },
-  { value: "Alkali metal", label: "Metal Alcalino" },
-  { value: "Alkaline earth metal", label: "Metal Alcalino-terroso" },
-  { value: "Transition metal", label: "Metal de Transição" },
-  { value: "Post-transition metal", label: "Metal Pós-transição" },
-  { value: "Metalloid", label: "Semimetal" },
-  { value: "Nonmetal", label: "Não-metal" },
-  { value: "Halogen", label: "Halogênio" },
-  { value: "Noble gas", label: "Gás Nobre" },
-  { value: "Lanthanide", label: "Lantanídeo" },
-  { value: "Actinide", label: "Actinídeo" },
-];
+import { getFilterOptions } from "../config/filterOptions";
 
 // Elemento padrão: Hidrogênio
 const defaultElement = elementsData.find((e) => e.symbol === "H") as Element;
@@ -46,6 +32,8 @@ export default function PeriodicTableCards() {
   const filters = usePeriodicTableStore((state) => state.filters);
   const setFilters = usePeriodicTableStore((state) => state.setFilters);
   const matrix = generatePeriodicTableMatrix();
+  const t = useTranslations("periodicTable");
+  const filterOptions = getFilterOptions(t);
 
   // Handler para seleção de categorias, incluindo "Todos"
   function handleFilterChange(values: string[]) {
@@ -74,10 +62,9 @@ export default function PeriodicTableCards() {
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
-        {/* Dropdown absoluto, sobrepondo a tabela */}
         <div className="absolute top-1 left-4 z-50">
           <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
-            <strong>Classificação</strong>
+            <strong>{t("filterLabel")}</strong>
           </label>
           <PeriodicTableFilterDropdown
             options={filterOptions}
@@ -87,6 +74,7 @@ export default function PeriodicTableCards() {
                 : filters
             }
             onChange={handleFilterChange}
+            placeholder={t("filterPlaceholder")}
           />
         </div>
 
