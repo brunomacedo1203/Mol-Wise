@@ -53,7 +53,7 @@ export default function PeriodicTableCards() {
         className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative"
         onMouseLeave={() => {
           if (highlightSource === "hover") {
-            setHighlight(null, null); // Limpa o highlight ao sair da tabela
+            setHighlight(null, null);
           }
         }}
       >

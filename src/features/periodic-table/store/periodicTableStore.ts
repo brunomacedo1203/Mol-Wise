@@ -1,3 +1,4 @@
+// features/periodic-table/store/periodicTableStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Element } from "../domain/types/element";
@@ -21,17 +22,29 @@ interface PeriodicTableState {
   setFilters: (filters: string[]) => void;
 }
 
+// Timeout externo para controle do efeito temporário
+let searchHighlightTimeout: ReturnType<typeof setTimeout>;
+
 export const usePeriodicTableStore = create<PeriodicTableState>()(
   persist(
     (set) => ({
       selectedElement: null,
       setSelectedElement: (element) => set({ selectedElement: element }),
 
-      // sistema de highlight
       highlightedElement: null,
       highlightSource: null,
-      setHighlight: (element, source) =>
-        set({ highlightedElement: element, highlightSource: source }),
+
+      setHighlight: (element, source) => {
+        set({ highlightedElement: element, highlightSource: source });
+
+        // 🔄 Comportamento de destaque temporário para buscas
+        if (source === "search") {
+          clearTimeout(searchHighlightTimeout);
+          searchHighlightTimeout = setTimeout(() => {
+            set({ highlightedElement: null, highlightSource: null });
+          }, 2000); // ⏱️ tempo do efeito: 2 segundos
+        }
+      },
 
       config: defaultConfig,
       setConfig: (config) =>
@@ -40,6 +53,8 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
       filters: [],
       setFilters: (filters) => set({ filters }),
     }),
-    { name: "molwise_periodic_table" }
+    {
+      name: "molwise_periodic_table",
+    }
   )
 );
