@@ -3,21 +3,21 @@
 import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-
+// [Dropdown Root] - Componente raiz do menu dropdown
 const DropdownMenu = DropdownMenuPrimitive.Root;
-
+// [Dropdown Trigger] - Botão/elemento que abre o menu
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
-
+// [Dropdown Group] - Agrupa itens do menu
 const DropdownMenuGroup = DropdownMenuPrimitive.Group;
-
+// [Dropdown Portal] - Renderiza o menu em um portal (fora do fluxo normal do DOM)
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
-
+// [Dropdown Submenu] - Submenu aninhado
 const DropdownMenuSub = DropdownMenuPrimitive.Sub;
-
+// [Dropdown Radio Group] - Grupo de opções do tipo rádio
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
+// [Submenu Trigger] - Item que abre um submenu
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
@@ -40,6 +40,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
 DropdownMenuSubTrigger.displayName =
   DropdownMenuPrimitive.SubTrigger.displayName;
 
+// [Submenu Content] - Conteúdo do submenu
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
@@ -56,6 +57,7 @@ const DropdownMenuSubContent = React.forwardRef<
 DropdownMenuSubContent.displayName =
   DropdownMenuPrimitive.SubContent.displayName;
 
+// [Menu Content] - Container principal do menu dropdown
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
@@ -75,6 +77,7 @@ const DropdownMenuContent = React.forwardRef<
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
+// [Menu Item] - Cada opção/item do menu
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
@@ -93,6 +96,7 @@ const DropdownMenuItem = React.forwardRef<
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
+// [Checkbox Item] - Item do menu com checkbox
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
@@ -117,6 +121,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 DropdownMenuCheckboxItem.displayName =
   DropdownMenuPrimitive.CheckboxItem.displayName;
 
+// [Radio Item] - Item do menu com opção rádio
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
@@ -139,6 +144,7 @@ const DropdownMenuRadioItem = React.forwardRef<
 ));
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
 
+// [Menu Label] - Label/título de seção do menu
 const DropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
@@ -157,6 +163,7 @@ const DropdownMenuLabel = React.forwardRef<
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
+// [Menu Separator] - Linha divisória entre grupos/seções
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
@@ -169,6 +176,7 @@ const DropdownMenuSeparator = React.forwardRef<
 ));
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
+// [Menu Shortcut] - Atalho de teclado exibido à direita do item
 const DropdownMenuShortcut = ({
   className,
   ...props

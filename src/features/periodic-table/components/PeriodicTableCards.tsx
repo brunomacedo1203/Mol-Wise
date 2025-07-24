@@ -18,8 +18,8 @@ import elementsData from "../data/elementsData";
 import PeriodicTableFilterDropdown from "../components/common/PeriodicTableFilterDropdown";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
 import { useTranslations } from "next-intl";
-
 import { getFilterOptions } from "../config/filterOptions";
+import { handleFilterChangeFactory } from "../utils/filterHandlers";
 
 // Elemento padrão: Hidrogênio
 const defaultElement = elementsData.find((e) => e.symbol === "H") as Element;
@@ -34,30 +34,11 @@ export default function PeriodicTableCards() {
   const matrix = generatePeriodicTableMatrix();
   const t = useTranslations("periodicTable");
   const filterOptions = getFilterOptions(t);
-
-  // Handler para seleção de categorias, incluindo "Todos"
-  function handleFilterChange(values: string[]) {
-    // Se o usuário clicou em "Todos" e nem tudo estava selecionado, seleciona tudo
-    if (values.includes("ALL") && filters.length !== filterOptions.length - 1) {
-      setFilters(
-        filterOptions
-          .filter((opt) => opt.value !== "ALL")
-          .map((opt) => opt.value)
-      );
-    }
-    // Se o usuário desmarcou "Todos" (clicando no X do chip "Todos" e só ele foi removido)
-    else if (
-      filters.length === filterOptions.length - 1 &&
-      !values.includes("ALL") &&
-      values.length === filterOptions.length - 1
-    ) {
-      setFilters([]);
-    }
-    // Se o usuário desmarcou uma opção individual após selecionar "Todos"
-    else {
-      setFilters(values.filter((v) => v !== "ALL"));
-    }
-  }
+  const handleFilterChange = handleFilterChangeFactory(
+    filterOptions,
+    setFilters,
+    filters
+  );
 
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">

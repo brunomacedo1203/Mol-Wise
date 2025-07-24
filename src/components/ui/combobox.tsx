@@ -87,7 +87,7 @@ export function MultiSelectCombobox({
               );
             })}
           </div>
-          {/* Container dos ícones — agora mais colado e harmonioso */}
+          {/* Container dos ícones */}
           <div className="flex items-center gap-1 ml-2">
             {selected.length > 0 && (
               <button
@@ -111,33 +111,38 @@ export function MultiSelectCombobox({
           </div>
         </Button>
       </PopoverTrigger>
+
+      {/* [Popover Content] - Container do menu dropdown */}
       <PopoverContent
-        className="w-[300px] p-0 z-[100]"
+        className="w-[320px] p-0 z-[100]"
         side="bottom"
         align="start"
         style={{ position: "absolute" }}
       >
-        <Command>
-          <CommandGroup>
-            {options.map((option) => (
-              <CommandItem
-                key={option.value}
-                onSelect={() => toggleOption(option.value)}
-                className="cursor-pointer"
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4 stroke-2",
-                    selected.includes(option.value)
-                      ? "opacity-100 text-blue-600"
-                      : "opacity-0"
-                  )}
-                />
-                {option.label}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
+        {/* AQUI: container com altura máxima e overflow para scroll */}
+        <div className="max-h-[220px] overflow-y-auto">
+          <Command>
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  onSelect={() => toggleOption(option.value)}
+                  className="cursor-pointer"
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4 stroke-2",
+                      selected.includes(option.value)
+                        ? "opacity-100 text-blue-600"
+                        : "opacity-0"
+                    )}
+                  />
+                  {option.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </div>
       </PopoverContent>
     </Popover>
   );
