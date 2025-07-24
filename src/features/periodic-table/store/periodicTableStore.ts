@@ -4,13 +4,21 @@ import type { Element } from "../domain/types/element";
 import type { PeriodicTableConfig } from "../domain/types/config";
 import { defaultConfig } from "../domain/types/config";
 
+type HighlightSource = "hover" | "search" | "click" | null;
+
 interface PeriodicTableState {
   selectedElement: Element | null;
   setSelectedElement: (element: Element | null) => void;
+
+  highlightedElement: Element | null;
+  highlightSource: HighlightSource;
+  setHighlight: (element: Element | null, source: HighlightSource) => void;
+
   config: PeriodicTableConfig;
   setConfig: (config: Partial<PeriodicTableConfig>) => void;
-  filters: string[]; // array de filtros agora!
-  setFilters: (filters: string[]) => void; // função para atualizar os filtros
+
+  filters: string[];
+  setFilters: (filters: string[]) => void;
 }
 
 export const usePeriodicTableStore = create<PeriodicTableState>()(
@@ -18,10 +26,18 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
     (set) => ({
       selectedElement: null,
       setSelectedElement: (element) => set({ selectedElement: element }),
+
+      // sistema de highlight
+      highlightedElement: null,
+      highlightSource: null,
+      setHighlight: (element, source) =>
+        set({ highlightedElement: element, highlightSource: source }),
+
       config: defaultConfig,
       setConfig: (config) =>
         set((state) => ({ config: { ...state.config, ...config } })),
-      filters: [], // começa sem filtros selecionados
+
+      filters: [],
       setFilters: (filters) => set({ filters }),
     }),
     { name: "molwise_periodic_table" }

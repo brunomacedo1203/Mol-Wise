@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { generatePeriodicTableMatrix } from "@/features/periodic-table/utils/periodicTableMatrix";
 import ElementDetailsPanel from "./ElementDetailsPanel";
 import {
@@ -27,12 +27,19 @@ if (!defaultElement)
   throw new Error("Elemento padrão (Hidrogênio) não encontrado!");
 
 export default function PeriodicTableCards() {
-  const [selectedElement, setSelectedElement] =
-    useState<Element>(defaultElement);
   const filters = usePeriodicTableStore((state) => state.filters);
   const setFilters = usePeriodicTableStore((state) => state.setFilters);
-  const matrix = generatePeriodicTableMatrix();
+
+  const highlightedElement = usePeriodicTableStore(
+    (state) => state.highlightedElement
+  );
+  const highlightSource = usePeriodicTableStore(
+    (state) => state.highlightSource
+  );
+  const setHighlight = usePeriodicTableStore((state) => state.setHighlight);
+
   const t = useTranslations("periodicTable");
+  const matrix = generatePeriodicTableMatrix();
   const filterOptions = getFilterOptions(t);
   const handleFilterChange = handleFilterChangeFactory(
     filterOptions,
@@ -42,7 +49,15 @@ export default function PeriodicTableCards() {
 
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
-      <div className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative">
+      <div
+        className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative"
+        onMouseLeave={() => {
+          if (highlightSource === "hover") {
+            setHighlight(null, null); // Limpa o highlight ao sair da tabela
+          }
+        }}
+      >
+        {/* Filtro no topo */}
         <div className="absolute top-1 left-4 z-50">
           <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
             <strong>{t("filterLabel")}</strong>
@@ -59,10 +74,13 @@ export default function PeriodicTableCards() {
           />
         </div>
 
+        {/* Painel de Detalhes */}
         <div className="h-[90px]" />
         <div className="w-full flex justify-center absolute top-[130px] left-0 z-40 pointer-events-none">
           <div className="pointer-events-auto max-w-[650px] w-full flex justify-center ml-[-300px]">
-            <ElementDetailsPanel element={selectedElement} />
+            <ElementDetailsPanel
+              element={highlightedElement || defaultElement}
+            />
           </div>
         </div>
 
@@ -78,7 +96,7 @@ export default function PeriodicTableCards() {
           ))}
         </div>
 
-        {/* Tabela periódica */}
+        {/* Tabela Periódica */}
         <div className="grid grid-cols-[repeat(18,80px)] gap-0">
           {matrix
             .flat()
@@ -95,7 +113,9 @@ export default function PeriodicTableCards() {
                 <ElementCardWrapper
                   key={element.atomicNumber}
                   element={element as Element}
-                  setSelectedElement={setSelectedElement}
+                  setHighlight={setHighlight}
+                  highlightSource={highlightSource}
+                  highlightedElement={highlightedElement || undefined}
                   highlightedCategories={filters}
                 />
               ) : (

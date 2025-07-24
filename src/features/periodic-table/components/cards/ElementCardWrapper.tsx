@@ -10,13 +10,20 @@ import {
 
 interface ElementCardWrapperProps {
   element: Element;
-  setSelectedElement: (e: Element) => void;
+  setHighlight: (
+    e: Element | null,
+    source: "hover" | "search" | "click" | null
+  ) => void;
+  highlightedElement?: Element;
+  highlightSource?: "hover" | "search" | "click" | null;
   highlightedCategories?: string[];
 }
 
 export default function ElementCardWrapper({
   element,
-  setSelectedElement,
+  setHighlight,
+  highlightedElement,
+  highlightSource,
   highlightedCategories = [],
 }: ElementCardWrapperProps) {
   const t = useTranslations("periodicTable");
@@ -32,6 +39,18 @@ export default function ElementCardWrapper({
     highlightClass = CATEGORY_COLOR_MAP[element.category] || "";
   }
 
+  const isHighlighted =
+    highlightedElement?.atomicNumber === element.atomicNumber;
+
+  const ringHighlightClass =
+    isHighlighted && highlightSource === "search"
+      ? "ring-[6px] ring-yellow-300 dark:ring-yellow-200 scale-[1.15] z-40 shadow-2xl animate-pulse transition-transform duration-300"
+      : isHighlighted && highlightSource === "click"
+      ? "ring-4 ring-yellow-400 dark:ring-yellow-300 scale-105 z-30 shadow-xl transition-transform duration-200"
+      : isHighlighted && highlightSource === "hover"
+      ? "ring-4 ring-yellow-500 dark:ring-yellow-100 z-20 shadow-md transition-transform duration-200"
+      : "";
+
   return (
     <div
       tabIndex={0}
@@ -41,14 +60,30 @@ export default function ElementCardWrapper({
         symbol: element.symbol,
         atomicNumber: element.atomicNumber,
       })}
-      onMouseEnter={() => setSelectedElement(element)}
-      onFocus={() => setSelectedElement(element)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          setSelectedElement(element);
+      onMouseEnter={() => {
+        if (highlightSource !== "search") {
+          setHighlight(element, "hover");
         }
       }}
-      className={`focus:outline-none focus:ring-2 focus:ring-cyan-600 transition-all duration-150 ${highlightClass}`}
+      onFocus={() => {
+        if (highlightSource !== "search") {
+          setHighlight(element, "hover");
+        }
+      }}
+      onMouseLeave={() => {
+        if (highlightSource === "hover") {
+          setHighlight(null, null);
+        }
+      }}
+      onClick={() => {
+        setHighlight(element, "click");
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          setHighlight(element, "hover");
+        }
+      }}
+      className={`focus:outline-none focus:ring-2 focus:ring-cyan-900 transition-all duration-150 ${highlightClass} ${ringHighlightClass}`}
     >
       <SingleCardPeriodicTable
         atomicNumber={element.atomicNumber}

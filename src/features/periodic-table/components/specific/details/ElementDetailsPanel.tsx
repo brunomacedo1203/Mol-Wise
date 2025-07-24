@@ -1,9 +1,6 @@
 import { X } from "lucide-react";
 import { ElementDetailsPanelProps } from "../../../domain/types/table";
 
-/**
- * Painel de detalhes de um elemento químico
- */
 export function ElementDetailsPanel({
   element,
   onClose,
