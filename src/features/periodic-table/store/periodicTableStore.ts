@@ -22,9 +22,6 @@ interface PeriodicTableState {
   setFilters: (filters: string[]) => void;
 }
 
-// Timeout externo para controle do efeito temporário
-let searchHighlightTimeout: ReturnType<typeof setTimeout>;
-
 export const usePeriodicTableStore = create<PeriodicTableState>()(
   persist(
     (set) => ({
@@ -36,14 +33,7 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
 
       setHighlight: (element, source) => {
         set({ highlightedElement: element, highlightSource: source });
-
-        // 🔄 Comportamento de destaque temporário para buscas
-        if (source === "search") {
-          clearTimeout(searchHighlightTimeout);
-          searchHighlightTimeout = setTimeout(() => {
-            set({ highlightedElement: null, highlightSource: null });
-          }, 2000); // ⏱️ tempo do efeito: 2 segundos
-        }
+        // Removido o timeout para highlight de busca
       },
 
       config: defaultConfig,

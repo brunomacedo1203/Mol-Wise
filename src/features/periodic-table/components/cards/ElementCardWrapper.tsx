@@ -78,16 +78,20 @@ export default function ElementCardWrapper({
       onClick={() => {
         const isSame =
           highlightedElement?.atomicNumber === element.atomicNumber;
-        const isSearch = highlightSource === "search";
-        if (isSame && isSearch) {
+        const isClick = highlightSource === "click";
+
+        // Se é o mesmo elemento e já está com highlight de click, remove
+        if (isSame && isClick) {
           setHighlight(null, null);
-        } else {
-          setHighlight(element, "search");
+        }
+        // Senão, aplica highlight de click
+        else {
+          setHighlight(element, "click");
         }
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
-          setHighlight(element, "hover");
+          setHighlight(element, "click");
         }
       }}
       className={`focus:outline-none focus:ring-0 transition-all duration-150 ${highlightClass} ${ringHighlightClass}`}

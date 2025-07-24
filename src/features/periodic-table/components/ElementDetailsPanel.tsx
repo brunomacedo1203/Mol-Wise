@@ -3,6 +3,7 @@ import { Element } from "../domain/types/element";
 import elementsData from "../data/elementsData";
 import { formatWithSup } from "@/shared/utils/formatWithSup";
 import { useTranslations } from "next-intl";
+import { usePeriodicTableStore } from "../store/periodicTableStore";
 
 // Mapeamento nomes em PT para símbolo (opcional, pode remover se não usa busca PT)
 const ptNameToSymbol: Record<string, string> = {
@@ -91,6 +92,15 @@ export default function ElementDetailsPanel({
   const searchedElement = searchElement(search);
   const elementToShow = searchedElement || element;
   const t = useTranslations("periodicTable");
+  const setHighlight = usePeriodicTableStore((state) => state.setHighlight);
+
+  React.useEffect(() => {
+    if (searchedElement) {
+      setHighlight(searchedElement, "search");
+    } else {
+      setHighlight(null, null);
+    }
+  }, [searchedElement, setHighlight]);
 
   if (!elementToShow) return null;
 
