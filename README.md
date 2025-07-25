@@ -469,3 +469,42 @@ import { useElementSearch } from "../utils/elementSearch";
 const searchElement = useElementSearch();
 const result = searchElement("ferro"); // Retorna o elemento Fe
 ```
+
+### Busca e Filtro de Elementos na Tabela Periódica
+
+A busca de elementos pode ser feita diretamente no painel de detalhes do elemento (`ElementDetailsPanel.tsx`). Quando o usuário digita o nome, símbolo ou tradução de um elemento no campo de busca, o sistema utiliza o hook `useElementSearch` para localizar o elemento correspondente, considerando as traduções disponíveis (internacionalização).
+
+**Destaque visual:**
+
+- Quando um elemento é encontrado pela busca, ele é destacado na tabela periódica com uma borda ou cor específica, conforme a regra de destaque global (ver mapeamento de cores por categoria em `elementCategories.ts`).
+- O destaque é controlado pelo estado global via Zustand (`setHighlight`), garantindo que o elemento buscado fique visualmente evidente para o usuário.
+- Ao limpar a busca, o destaque é removido automaticamente.
+
+**Resumo do fluxo:**
+
+1. O usuário digita no campo de busca do painel de detalhes.
+2. O hook `useElementSearch` retorna o elemento correspondente (considerando símbolo, nome em inglês ou português).
+3. O painel chama `setHighlight` para destacar o elemento na tabela.
+4. O destaque visual segue a regra de cor definida para a categoria do elemento, usando o mapeamento de cores do projeto.
+5. Ao apagar a busca, o destaque é removido.
+
+**Exemplo de uso:**
+
+```tsx
+// Dentro de ElementDetailsPanel.tsx
+const searchElement = useElementSearch();
+const searchedElement = searchElement(search);
+useEffect(() => {
+  if (searchedElement) {
+    setHighlight(searchedElement, "search");
+  } else {
+    setHighlight(null, null);
+  }
+}, [searchedElement, setHighlight]);
+```
+
+**Vantagens:**
+
+- Busca internacionalizada (funciona para nomes em português e inglês).
+- Destaque visual imediato e claro na tabela periódica.
+- Integração total com o sistema de categorias e cores do projeto.
