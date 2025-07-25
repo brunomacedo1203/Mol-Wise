@@ -2,9 +2,6 @@ import { usePeriodicTable } from "../../../hooks/usePeriodicTable";
 import { ElementCard } from "./ElementCard";
 import { ElementCardsGridProps } from "../../../domain/types/table";
 
-/**
- * Grid de cards dos elementos químicos
- */
 export function ElementCardsGrid({
   elements,
   onElementSelect,

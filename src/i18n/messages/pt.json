@@ -155,7 +155,23 @@
   },
   "periodicTable": {
     "title": "Tabela Periódica",
-    "subtitle": "Passe o mouse sobre um elemento para ver detalhes",
+    "subtitle": "Digite o nome ou símbolo do elemento",
+    "filterPlaceholder": "Selecione a(s) classificação(ões)",
+    "filterLabel": "Classificação",
+    "filterOptions": {
+      "ALL": "Todos",
+      "RARE_EARTHS": "Terras Raras",
+      "Alkali metal": "Metal Alcalino",
+      "Alkaline earth metal": "Metal Alcalino-terroso",
+      "Transition metal": "Metal de Transição",
+      "Post-transition metal": "Metal Pós-transição",
+      "Metalloid": "Semimetal",
+      "Nonmetal": "Não-metal",
+      "Halogen": "Halogênio",
+      "Noble gas": "Gás Nobre",
+      "Lanthanide": "Lantanídeo",
+      "Actinide": "Actinídeo"
+    },
     "ariaLabel": "Elemento {name} ({symbol}), número atômico {atomicNumber}",
     "element": {
       "atomicNumber": "Número Atômico",
@@ -175,6 +191,8 @@
       "density": "Densidade",
       "yearDiscovered": "Ano da Descoberta",
       "discoveredBy": "Descoberto Por",
+      "group": "Grupo",
+      "period": "Período",
       "categories": {
         "alkaliMetal": "Metal Alcalino",
         "alkalineEarthMetal": "Metal Alcalino-Terroso",

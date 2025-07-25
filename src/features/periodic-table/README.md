@@ -115,3 +115,26 @@ function App() {
   );
 }
 ```
+
+## Busca Internacionalizada de Elementos
+
+A busca por elementos químicos no painel de detalhes da tabela periódica agora é **totalmente internacionalizada** e integrada ao sistema de traduções (i18n) do projeto.
+
+- O usuário pode digitar o símbolo, o nome em inglês ou o nome em português do elemento.
+- O sistema utiliza as traduções presentes nos arquivos `pt.json` e `en.json` para identificar o elemento, sem necessidade de manter um dicionário manual de nomes em português.
+- A lógica de busca foi extraída para um utilitário reutilizável: `src/features/periodic-table/utils/elementSearch.ts`.
+
+**Exemplo de uso do hook:**
+
+```tsx
+import { useElementSearch } from "../utils/elementSearch";
+
+const searchElement = useElementSearch();
+const result = searchElement("ferro"); // Retorna o elemento Fe
+```
+
+**Vantagens:**
+
+- Sempre que as traduções forem atualizadas, a busca já funciona para o novo nome.
+- Menos código duplicado e mais alinhado com o padrão do projeto.
+- Manutenção e escalabilidade muito melhores.

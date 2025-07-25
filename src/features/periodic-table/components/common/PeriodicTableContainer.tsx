@@ -1,8 +1,5 @@
 import { PeriodicTableContainerProps } from "../../domain/types/table";
 
-/**
- * Container da tabela periódica que fornece o contexto
- */
 export function PeriodicTableContainer({
   children,
   onElementSelect: _onElementSelect,

@@ -178,6 +178,65 @@ periodic-table/
 
 ---
 
+# 💡 Como funciona a feature de destaque por categoria na Tabela Periódica (Mol Wise)
+
+---
+
+## 📝 **Resumo da Feature**
+
+- Ao selecionar uma ou mais categorias no filtro, todos os elementos que pertencem a essas categorias na tabela periódica são destacados com uma cor de fundo específica.
+- Ao remover a seleção, os cards voltam ao fundo padrão.
+- Funciona tanto no modo claro quanto no modo escuro.
+
+---
+
+## ⚙️ **Passo a Passo e Arquivos Relacionados**
+
+### 1. **Seleção de Categorias**
+
+- **Componente:** `PeriodicTableFilterDropdown.tsx` → Usa o `MultiSelectCombobox` (`combobox.tsx`).
+- **Descrição:** O usuário seleciona uma ou mais opções de categoria no filtro, que dispara a atualização do array de categorias selecionadas.
+
+### 2. **Estado Global**
+
+- **Componente:** `usePeriodicTableStore.ts` (store Zustand)
+- **Descrição:** O array `filters` armazena as categorias atualmente selecionadas e é acessado por toda a aplicação.
+
+### 3. **Renderização da Tabela**
+
+- **Componente:** `PeriodicTableCards.tsx`
+- **Descrição:** Ao renderizar a tabela, o componente lê o array `filters` e repassa para cada elemento (`ElementCardWrapper`) a lista de categorias selecionadas via prop `highlightedCategories`.
+
+### 4. **Destaque Visual do Elemento**
+
+- **Componente:** `ElementCardWrapper.tsx`
+- **Descrição:** Recebe o array de categorias selecionadas. Para cada elemento, compara sua categoria com as selecionadas. Se houver correspondência, aplica a classe de cor de fundo definida no mapeamento; caso contrário, mantém o fundo padrão. O destaque é feito usando o modificador `!` do Tailwind para garantir que a cor prevaleça sobre outras classes.
+
+### 5. **Mapeamento de Cores**
+
+- **Arquivo:** `elementCategories.ts`
+- **Descrição:** O objeto `CATEGORY_COLOR_MAP` faz o mapeamento entre o nome da categoria e a classe de cor do Tailwind, por exemplo:
+  ```ts
+  export const CATEGORY_COLOR_MAP: Record<string, string> = {
+    "Alkali metal": "!bg-yellow-300",
+    "Alkaline earth metal": "!bg-orange-300",
+    "Transition metal": "!bg-blue-300",
+    // ... outras categorias
+  };
+  ```
+- O safelist no `tailwind.config.ts` garante que todas as classes de cor usadas dinamicamente sejam geradas no CSS final.
+
+### 6. **Componente Visual do Card**
+
+- **Componente:** `SingleCardPeriodicTable.tsx`
+- **Descrição:** Responsável apenas pelo conteúdo visual do elemento (símbolo, nome, etc.), sem aplicar cor de fundo no modo claro, permitindo que o destaque do wrapper seja visível.
+
+---
+
+## 🧩 **Resumo da Lógica**
+
+Sempre que o usuário seleciona ou desmarca uma categoria, o array de filtros é atualizado e propagado para todos os cards. Cada card verifica se sua categoria está entre as selecionadas e, se sim, aplica a cor de destaque correspondente, garantindo uma experiência visual instantânea e clara para o usuário.
+
 > Para cada nova feature, siga o padrão de organização acima: separe componentes, hooks, tipos e utilitários em subpastas claras e documente as responsabilidades de cada arquivo.
 
 ## 💻 Pré-requisitos
@@ -385,3 +444,28 @@ setSubtitle("Novo subtítulo");
 - Use o middleware `persist` apenas quando necessário.
 - Prefira actions nomeadas (ex: `toggleTheme`, `setCollapsed`) ao invés de setters diretos.
 - Documente o propósito do store e suas actions com comentários JSDoc.
+
+### Busca Internacionalizada de Elementos na Tabela Periódica
+
+A busca por elementos químicos no painel de detalhes da tabela periódica agora é **totalmente internacionalizada** e integrada ao sistema de traduções (i18n) do projeto.
+
+**Como funciona:**
+
+- O usuário pode digitar o símbolo, o nome em inglês ou o nome em português do elemento.
+- O sistema utiliza as traduções presentes nos arquivos `pt.json` e `en.json` para identificar o elemento, sem necessidade de manter um dicionário manual de nomes em português.
+- A lógica de busca foi extraída para um utilitário reutilizável: `src/features/periodic-table/utils/elementSearch.ts`.
+
+**Vantagens:**
+
+- Sempre que as traduções forem atualizadas, a busca já funciona para o novo nome.
+- Menos código duplicado e mais alinhado com o padrão do projeto.
+- Manutenção e escalabilidade muito melhores.
+
+**Exemplo de uso do hook:**
+
+```tsx
+import { useElementSearch } from "../utils/elementSearch";
+
+const searchElement = useElementSearch();
+const result = searchElement("ferro"); // Retorna o elemento Fe
+```

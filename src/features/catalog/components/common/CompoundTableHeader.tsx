@@ -21,7 +21,6 @@ interface CompoundTableHeaderProps {
   sortOrder: "asc" | "desc";
   handleSort: (key: TableColumnKey) => void;
   centerAlignedColumns: TableColumnKey[];
-  columnWidths: Partial<Record<TableColumnKey, number>>;
 }
 
 export function CompoundTableHeader({
@@ -31,7 +30,6 @@ export function CompoundTableHeader({
   sortOrder,
   handleSort,
   centerAlignedColumns,
-  columnWidths,
 }: CompoundTableHeaderProps) {
   const t = useTranslations();
 
@@ -50,7 +48,6 @@ export function CompoundTableHeader({
                     ? "text-right"
                     : centerAlignedColumns.includes(key) && "text-center"
                 )}
-                style={{ width: `${columnWidths[key] || 100}px` }}
                 onClick={() => handleSort(key)}
               >
                 {tooltipText &&

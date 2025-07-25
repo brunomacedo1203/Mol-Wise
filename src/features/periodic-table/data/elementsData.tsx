@@ -458,6 +458,7 @@ const elementsData = [
     period: 4,
     row: 4,
     column: 3,
+    isRareEarth: true,
   },
   {
     symbol: "Ti",
@@ -849,6 +850,7 @@ const elementsData = [
     period: 5,
     row: 5,
     column: 3,
+    isRareEarth: true,
   },
   {
     symbol: "Zr",
@@ -1230,6 +1232,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 4,
+    isRareEarth: true,
   },
   {
     symbol: "Ce",
@@ -1251,6 +1254,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 5,
+    isRareEarth: true,
   },
   {
     symbol: "Pr",
@@ -1272,6 +1276,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 6,
+    isRareEarth: true,
   },
   {
     symbol: "Nd",
@@ -1293,6 +1298,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 7,
+    isRareEarth: true,
   },
   {
     symbol: "Pm",
@@ -1313,6 +1319,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 8,
+    isRareEarth: true,
   },
   {
     symbol: "Sm",
@@ -1334,6 +1341,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 9,
+    isRareEarth: true,
   },
   {
     symbol: "Eu",
@@ -1354,6 +1362,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 10,
+    isRareEarth: true,
   },
   {
     symbol: "Gd",
@@ -1375,6 +1384,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 11,
+    isRareEarth: true,
   },
   {
     symbol: "Tb",
@@ -1395,6 +1405,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 12,
+    isRareEarth: true,
   },
   {
     symbol: "Dy",
@@ -1416,6 +1427,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 13,
+    isRareEarth: true,
   },
   {
     symbol: "Ho",
@@ -1437,6 +1449,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 14,
+    isRareEarth: true,
   },
   {
     symbol: "Er",
@@ -1458,6 +1471,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 15,
+    isRareEarth: true,
   },
   {
     symbol: "Tm",
@@ -1479,6 +1493,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 16,
+    isRareEarth: true,
   },
   {
     symbol: "Yb",
@@ -1499,6 +1514,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 17,
+    isRareEarth: true,
   },
   {
     symbol: "Lu",
@@ -1520,6 +1536,7 @@ const elementsData = [
     period: 6,
     row: 9,
     column: 18,
+    isRareEarth: true,
   },
   {
     symbol: "Hf",
