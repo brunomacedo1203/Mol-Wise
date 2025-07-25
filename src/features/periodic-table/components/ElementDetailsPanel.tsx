@@ -6,7 +6,7 @@ import { formatWithSup } from "@/shared/utils/formatWithSup";
 import { useTranslations } from "next-intl";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
 import { useElementSearch } from "../utils/elementSearch";
-import { toCamelCase } from "@/shared/utils/stringUtils";
+import { getElementFields } from "../utils/elementFields";
 
 interface ElementDetailsPanelProps {
   element: Element | null;
@@ -32,52 +32,11 @@ export default function ElementDetailsPanel({
 
   if (!elementToShow) return null;
 
-  const generalFields = [
-    {
-      label: t("element.atomicNumber"),
-      value: elementToShow.atomicNumber,
-    },
-    {
-      label: t("element.molarMass"),
-      value: `${Number(elementToShow.molarMass).toFixed(2)} g/mol`,
-    },
-    {
-      label: t("element.category"),
-      value: t(`element.categories.${toCamelCase(elementToShow.category)}`),
-    },
-    {
-      label: t("element.standardState"),
-      value: t(
-        `element.standardStates.${elementToShow.standardState.toLowerCase()}`
-      ),
-    },
-  ];
-
-  const extraFields = [
-    {
-      label: t("element.electronegativity"),
-      value: elementToShow.electronegativity,
-    },
-    { label: t("element.atomicRadius"), value: elementToShow.atomicRadius },
-    {
-      label: t("element.ionizationEnergy"),
-      value: elementToShow.ionizationEnergy,
-    },
-    {
-      label: t("element.electronAffinity"),
-      value: elementToShow.electronAffinity,
-    },
-    { label: t("element.meltingPoint"), value: elementToShow.meltingPoint },
-    { label: t("element.boilingPoint"), value: elementToShow.boilingPoint },
-    { label: t("element.density"), value: elementToShow.density },
-    { label: t("element.yearDiscovered"), value: elementToShow.yearDiscovered },
-    { label: t("element.group"), value: elementToShow.group },
-    { label: t("element.period"), value: elementToShow.period },
-  ];
+  const { generalFields, extraFields } = getElementFields(elementToShow, t);
 
   return (
     <div className="bg-white border-2 border-cyan-400 dark:border-white/35 dark:bg-neutral-800/90 rounded-sm shadow min-w-[340px] max-w-[95vw]">
-      {/* Search bar */}
+      {/* barra de input */}
       <div className="w-full px-4 pt-1 pb-1 bg-white border-b border-cyan-100 dark:border-white/20 dark:bg-neutral-800/90">
         <input
           type="text"
@@ -85,14 +44,14 @@ export default function ElementDetailsPanel({
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t("subtitle")}
           className={`
-            w-full px-2 border-cyan-200 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
-            text-base text-black bg-white dark:text-zinc-100 dark:bg-neutral-950/60 dark:border-white/20
-            `}
+            w-full px-2 py-1 h-10 border-cyan-500 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
+            text-sm text-black bg-white dark:text-zinc-100 dark:bg-neutral-950/60 dark:border-white/20
+          `}
         />
       </div>
 
       {/* Card layout */}
-      <div className="flex gap-4 px-4 py-3">
+      <div className="flex gap-4 px-4 py-1">
         {/* Symbol and name */}
         <div className="flex flex-col items-center justify-center min-w-[80px]">
           <p className="text-4xl font-bold text-cyan-700 dark:text-cyan-200">
@@ -105,25 +64,36 @@ export default function ElementDetailsPanel({
 
         {/* General and extra data */}
         <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-zinc-800 dark:text-zinc-100">
-          {generalFields.map(({ label, value }) => (
-            <div key={label}>
-              <span className="font-semibold">{label}:</span> {value}
-            </div>
-          ))}
-          {extraFields.map(
-            ({ label, value }) =>
-              value && (
+          <div className="flex flex-col gap-y-1">
+            {generalFields
+              .filter(
+                ({ value }) =>
+                  value !== undefined && value !== null && value !== ""
+              )
+              .map(({ label, value }) => (
                 <div key={label}>
                   <span className="font-semibold">{label}:</span> {value}
                 </div>
+              ))}
+          </div>
+          <div className="flex flex-col gap-y-1">
+            {extraFields
+              .filter(
+                ({ value }) =>
+                  value !== undefined && value !== null && value !== ""
               )
-          )}
+              .map(({ label, value }) => (
+                <div key={label}>
+                  <span className="font-semibold">{label}:</span> {value}
+                </div>
+              ))}
+          </div>
         </div>
       </div>
 
       {/* Bottom section: Electron config and Oxidation states */}
-      <div className="px-4 pb-3 pt-1 text-sm text-zinc-800 dark:text-zinc-100 border-t border-cyan-200 dark:border-white/20">
-        <div className="mb-1">
+      <div className="px-4 pb-1 pt-1 text-sm text-zinc-800 dark:text-zinc-100 border-t border-cyan-200 dark:border-white/20">
+        <div>
           <span className="font-semibold">
             {t("element.electronConfiguration")}:
           </span>{" "}

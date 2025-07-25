@@ -89,7 +89,10 @@ export default function PeriodicTableCards() {
           {Array.from({ length: 18 }, (_, i) => (
             <div
               key={`colnum-${i}`}
-              className="w-[80px] h-[30px] flex items-center justify-center text-cyan-600 text-lg font-bold bg-zinc-100 dark:bg-neutral-950 dark:text-white"
+              className={`
+                w-[80px] h-[30px] flex items-center justify-center text-cyan-600 
+                text-xl font-bold bg-zinc-100 dark:bg-neutral-950 dark:text-white
+                `}
             >
               {i + 1}
             </div>
@@ -97,7 +100,7 @@ export default function PeriodicTableCards() {
         </div>
 
         {/* Tabela Periódica */}
-        <div className="grid grid-cols-[repeat(18,80px)] gap-0">
+        <div className="grid grid-cols-[repeat(18,80px)] gap-0 mt-8">
           {matrix
             .flat()
             .map((element, idx) =>
