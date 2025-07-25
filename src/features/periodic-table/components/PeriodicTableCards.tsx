@@ -85,13 +85,13 @@ export default function PeriodicTableCards() {
         </div>
 
         {/* Números das colunas */}
-        <div className="grid grid-cols-[repeat(18,80px)] gap-0">
+        <div className="grid grid-cols-[repeat(18,80px)] gap-0 mb-4">
           {Array.from({ length: 18 }, (_, i) => (
             <div
               key={`colnum-${i}`}
               className={`
                 w-[80px] h-[30px] flex items-center justify-center text-cyan-600 
-                text-xl font-bold bg-zinc-100 dark:bg-neutral-950 dark:text-white
+                text-2xl font-bold bg-zinc-100 dark:bg-neutral-950 dark:text-white
                 `}
             >
               {i + 1}
