@@ -191,6 +191,8 @@
       "density": "Densidade",
       "yearDiscovered": "Ano da Descoberta",
       "discoveredBy": "Descoberto Por",
+      "group": "Grupo",
+      "period": "Período",
       "categories": {
         "alkaliMetal": "Metal Alcalino",
         "alkalineEarthMetal": "Metal Alcalino-Terroso",

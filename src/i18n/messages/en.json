@@ -189,6 +189,8 @@
       "density": "Density",
       "yearDiscovered": "Year Discovered",
       "discoveredBy": "Discovered By",
+      "group": "Group",
+      "period": "Period",
       "categories": {
         "alkaliMetal": "Alkali Metal",
         "alkalineEarthMetal": "Alkaline Earth Metal",
