@@ -1,19 +1,35 @@
-import { ElementCardProps } from "../../../domain/types/table";
 import { Element } from "../../../domain/types/element";
-import { usePeriodicTable } from "../../../hooks/usePeriodicTable";
 import { cn } from "@/lib/utils";
+import React from "react";
 
-/**
- * Card que representa um elemento químico na tabela periódica
- */
+export interface UnifiedElementCardProps {
+  element: Element;
+  isSelected?: boolean;
+  onClick?: (atomicNumber: number) => void;
+  highlightClass?: string;
+  showColummNumber?: number;
+  asButton?: boolean;
+}
+
 export function ElementCard({
   element,
   isSelected,
   onClick,
-}: Omit<ElementCardProps, "config">) {
-  const { config } = usePeriodicTable();
+  highlightClass = "",
+  showColummNumber,
+  asButton = true,
+}: UnifiedElementCardProps) {
+  const columnNumberClass = showColummNumber
+    ? "before:content-[attr(data-columm-number)] before:absolute before:top-[-35px] before:w-full before:text-center before:text-cyan-600"
+    : "";
 
-  const getCategoryColor = (category: Element["category"]) => {
+  // Cor de fundo: prioridade para highlightClass
+  const bgColor =
+    highlightClass && highlightClass.length > 0
+      ? highlightClass
+      : getCategoryColor(element.category);
+
+  function getCategoryColor(category: Element["category"]) {
     switch (category) {
       case "Alkali metal":
         return "bg-red-100 hover:bg-red-200";
@@ -38,9 +54,9 @@ export function ElementCard({
       default:
         return "bg-gray-100 hover:bg-gray-200";
     }
-  };
+  }
 
-  const getPhaseColor = (state: Element["standardState"]) => {
+  function getPhaseColor(state: Element["standardState"]) {
     switch (state) {
       case "gas":
         return "bg-red-100";
@@ -51,43 +67,56 @@ export function ElementCard({
       default:
         return "bg-gray-100";
     }
-  };
+  }
 
-  return (
-    <button
-      onClick={() => onClick(element.atomicNumber)}
+  const content = (
+    <div
+      data-columm-number={showColummNumber}
       className={cn(
-        "relative w-24 h-24 p-2 rounded-lg border transition-colors",
-        getCategoryColor(element.category),
+        columnNumberClass,
+        "relative w-[80px] h-[80px] border-2 border-black flex flex-col items-center justify-center text-center overflow-hidden text-xs",
+        bgColor,
         isSelected && "ring-2 ring-primary ring-offset-2"
       )}
     >
-      {config.showAtomicNumber && (
-        <div className="absolute top-1 left-1 text-xs font-medium">
-          {element.atomicNumber}
-        </div>
-      )}
-
-      <div className="flex flex-col items-center justify-center h-full">
-        {config.showElementSymbol && (
-          <div className="text-2xl font-bold">{element.symbol}</div>
-        )}
-
-        {config.showElementName && (
-          <div className="text-xs text-center mt-1">{element.name}</div>
-        )}
-
-        {config.showAtomicMass && (
-          <div className="text-xs mt-1">{element.molarMass.toFixed(2)}</div>
-        )}
+      <span className="absolute top-0.5 left-1 text-black dark:text-white text-xs font-bold">
+        {element.atomicNumber}
+      </span>
+      <div className="flex flex-col items-center justify-center h-full px-1 mt-1">
+        <span className="text-2xl font-bold text-black dark:text-white">
+          {element.symbol}
+        </span>
+        <span
+          className="text-[12px] text-zinc-800 dark:text-zinc-200 truncate w-full leading-tight"
+          title={element.name}
+        >
+          {element.name}
+        </span>
+        <span className="font-bold text-[10px] text-black dark:text-white mt-1">
+          {element.molarMass?.toFixed(2)}
+        </span>
       </div>
-
       <div
         className={cn(
           "absolute bottom-1 right-1 w-2 h-2 rounded-full",
           getPhaseColor(element.standardState)
         )}
       />
-    </button>
+    </div>
   );
+
+  if (asButton) {
+    return (
+      <button
+        onClick={() => onClick && onClick(element.atomicNumber)}
+        className="focus:outline-none"
+        tabIndex={0}
+        aria-label={element.name}
+        type="button"
+      >
+        {content}
+      </button>
+    );
+  }
+  return content;
 }

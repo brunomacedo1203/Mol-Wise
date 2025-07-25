@@ -1,3 +1,4 @@
+// DEPRECATED: Este hook foi unificado em ../usePeriodicTable.ts. Não use mais este arquivo.
 import { useCallback } from "react";
 import { usePeriodicTable as usePeriodicTableContext } from "../../hooks/usePeriodicTable";
 import { Element } from "../../domain/types/element";
