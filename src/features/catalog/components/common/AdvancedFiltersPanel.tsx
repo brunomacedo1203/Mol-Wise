@@ -94,8 +94,8 @@ export function AdvancedFiltersPanel({
   ].filter(Boolean).length;
 
   return (
-    <div className="mb-2 border rounded-lg bg-background dark:bg-zinc-900 dark:border-zinc-700">
-      <div className="px-4 py-2 border-b dark:border-zinc-700">
+    <div className="mb-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-background dark:bg-zinc-900">
+      <div className="px-4 py-2 border-b border-zinc-300 dark:border-zinc-700">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4" />

@@ -47,8 +47,8 @@ export function CompoundTableToolbar({
     <div
       className={`
         w-full max-w-8xl mx-auto
-        bg-background dark:bg-zinc-900
         border border-zinc-300 dark:border-zinc-600
+        bg-background dark:bg-zinc-900
         p-6 rounded-lg shadow-sm mb-6
       `}
     >
@@ -79,7 +79,7 @@ export function CompoundTableToolbar({
 
         {/* Filtro por categoria - Centro */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+          <label className="text-sm font-semibold text-gray-900 dark:text-zinc-200">
             {t("catalog.categoryTags.placeholder")}
           </label>
           <DropdownMenu>
@@ -97,9 +97,7 @@ export function CompoundTableToolbar({
               >
                 <div className="flex items-center gap-2 flex-wrap flex-1">
                   {selectedCategories.length === 0 ? (
-                    <span className="text-sm text-gray-400">
-                      {t("catalog.categoryTags.placeholder")}
-                    </span>
+                    <span className="text-sm text-gray-400"></span>
                   ) : (
                     <div className="flex items-center gap-1 flex-wrap">
                       {selectedCategories.map((category) => (
