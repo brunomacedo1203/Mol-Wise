@@ -524,6 +524,7 @@
   },
   "categoryTags": {
     "placeholder": "Filtre as funções inorgânicas",
+    "clearAll": "Limpar todas",
     "ácido": "Ácido",
     "base": "Base",
     "sal": "Sal",

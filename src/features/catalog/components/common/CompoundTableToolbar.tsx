@@ -14,6 +14,7 @@ import { extractLabelText } from "@/features/catalog/utils/extractLabelText";
 import { CategoryTagsSelector } from "../CategoryTagsSelector";
 import { CATEGORY_TAGS } from "../../domain/categoryTags";
 import type { CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
+import { ChevronDown } from "lucide-react";
 
 interface CompoundTableToolbarProps {
   selectedCategories: CompoundCategory[];
@@ -48,43 +49,135 @@ export function CompoundTableToolbar({
         w-full max-w-8xl mx-auto
         bg-background dark:bg-zinc-900
         border border-zinc-300 dark:border-zinc-600
-        p-4 rounded-lg shadow mb-6
+        p-6 rounded-lg shadow-sm mb-6
       `}
     >
       <div
         className={`
-          w-full flex flex-col gap-4
-          md:flex-row md:items-center md:justify-between
+          w-full grid grid-cols-1 lg:grid-cols-3 gap-6
+          items-start lg:items-center
         `}
       >
-        {/* Campo de busca */}
-        <div className="flex-1 min-w-[200px] flex justify-center md:justify-start">
+        {/* Campo de busca - Esquerda */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+            {t("compoundTable.searchPlaceholder")}
+          </label>
           <Input
-            placeholder={t("compoundTable.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={`
-              w-full md:w-72
+              w-full
               bg-white dark:bg-zinc-900
               border-2 border-border dark:border-zinc-400
-              rounded-md shadow-sm
+              rounded-lg shadow-sm
               focus:ring-2 focus:ring-primary/30
               transition
             `}
           />
         </div>
 
-        {/* Filtro por categoria */}
-        <div className="flex-1 min-w-[250px] flex justify-center">
-          <CategoryTagsSelector
-            tags={CATEGORY_TAGS}
-            selected={selectedCategories}
-            onChange={setSelectedCategories}
-          />
+        {/* Filtro por categoria - Centro */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+            {t("catalog.categoryTags.placeholder")}
+          </label>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className={`
+                  w-full justify-between min-h-[40px]
+                  bg-white dark:bg-zinc-900
+                  border-2 border-border dark:border-zinc-400
+                  text-gray-700 dark:text-zinc-200
+                  hover:bg-gray-50 dark:hover:bg-zinc-800
+                  transition rounded-lg
+                `}
+              >
+                <div className="flex items-center gap-2 flex-wrap flex-1">
+                  {selectedCategories.length === 0 ? (
+                    <span className="text-sm text-gray-400">
+                      {t("catalog.categoryTags.placeholder")}
+                    </span>
+                  ) : (
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {selectedCategories.map((category) => (
+                        <span
+                          key={category}
+                          className={`
+                            inline-flex items-center px-2 py-1 rounded-full text-xs
+                            bg-gray-100 dark:bg-zinc-800
+                            text-gray-700 dark:text-zinc-200
+                            border border-gray-200 dark:border-zinc-700
+                          `}
+                        >
+                          {t(`catalog.categoryTags.${category}`)}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <ChevronDown className="h-4 w-4 flex-shrink-0" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className={`
+                w-80
+                bg-white dark:bg-zinc-900
+                border border-border dark:border-zinc-400
+                rounded-lg shadow-lg
+              `}
+            >
+              {/* Opção Limpar todas */}
+              {selectedCategories.length > 0 && (
+                <div className="px-2 py-1.5 border-b border-gray-200 dark:border-zinc-700">
+                  <button
+                    onClick={() => setSelectedCategories([])}
+                    className={`
+                      w-full text-left text-sm text-red-600 dark:text-red-400
+                      hover:bg-red-50 dark:hover:bg-red-900/20
+                      px-2 py-1 rounded
+                      transition
+                    `}
+                  >
+                    {t("catalog.categoryTags.clearAll")}
+                  </button>
+                </div>
+              )}
+
+              {CATEGORY_TAGS.map((tag) => (
+                <DropdownMenuCheckboxItem
+                  key={tag.id}
+                  checked={selectedCategories.includes(tag.id)}
+                  onCheckedChange={() => {
+                    if (selectedCategories.includes(tag.id)) {
+                      setSelectedCategories(
+                        selectedCategories.filter((cat) => cat !== tag.id)
+                      );
+                    } else {
+                      setSelectedCategories([...selectedCategories, tag.id]);
+                    }
+                  }}
+                  onSelect={(e) => e.preventDefault()}
+                  className={`
+                    text-gray-700 dark:text-zinc-200
+                    hover:bg-gray-100 dark:hover:bg-zinc-800
+                    rounded
+                  `}
+                >
+                  {t(`catalog.categoryTags.${tag.id}`)}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
-        {/* Botão de colunas */}
-        <div className="flex-1 min-w-[120px] flex justify-center md:justify-end">
+        {/* Botão de colunas - Direita */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+            {t("compoundTable.columns")}
+          </label>
           <DropdownMenu
             open={columnsMenuOpen}
             onOpenChange={setColumnsMenuOpen}
@@ -92,16 +185,17 @@ export function CompoundTableToolbar({
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                size="sm"
                 className={`
+                  w-full justify-between
+                  bg-white dark:bg-zinc-900
                   border-2 border-border dark:border-zinc-400
-                  bg-gray-50 dark:bg-zinc-800
                   text-gray-700 dark:text-zinc-200
-                  hover:bg-gray-100 dark:hover:bg-zinc-700
-                  transition
+                  hover:bg-gray-50 dark:hover:bg-zinc-800
+                  transition rounded-lg
                 `}
               >
-                {t("compoundTable.columns")}
+                <span className="text-sm">{t("compoundTable.columns")}</span>
+                <ChevronDown className="h-4 w-4 flex-shrink-0" />
               </Button>
             </DropdownMenuTrigger>
 
@@ -110,7 +204,7 @@ export function CompoundTableToolbar({
                 w-48
                 bg-white dark:bg-zinc-900
                 border border-border dark:border-zinc-400
-                rounded-md shadow-lg
+                rounded-lg shadow-lg
               `}
             >
               {allColumns.map(({ key, label }) => (

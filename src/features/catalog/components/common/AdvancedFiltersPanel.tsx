@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { X, Filter, ChevronDown, ChevronUp } from "lucide-react";
+import { Filter, ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { BasicAdvancedFilters } from "../../domain/types/ChemicalCompound";
 
@@ -95,8 +95,8 @@ export function AdvancedFiltersPanel({
 
   return (
     <div className="mb-2 border rounded-lg bg-background dark:bg-zinc-900 dark:border-zinc-700">
-      <div className="p-4 border-b dark:border-zinc-700">
-        <div className="flex items-center justify-between">
+      <div className="px-4 py-2 border-b dark:border-zinc-700">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4" />
             <h3 className="text-lg font-semibold">
@@ -108,24 +108,23 @@ export function AdvancedFiltersPanel({
               </Badge>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            {isActive && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleReset}
-                className="text-xs"
-              >
-                <X className="h-3 w-3 mr-1" />
-                {t("catalog.advancedFilters.reset")}
-              </Button>
-            )}
+          <div className="flex items-center gap-2 flex-wrap">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
-              onClick={onToggle}
-              className="p-1"
+              onClick={handleReset}
+              className="dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-100"
             >
+              {t("catalog.advancedFilters.reset")}
+            </Button>
+            <Button
+              size="sm"
+              onClick={handleApply}
+              className="dark:bg-zinc-200 dark:hover:bg-zinc-300 dark:text-black"
+            >
+              {t("catalog.advancedFilters.apply")}
+            </Button>
+            <Button variant="ghost" size="sm" onClick={onToggle}>
               {isOpen ? (
                 <ChevronUp className="h-4 w-4" />
               ) : (
@@ -137,126 +136,71 @@ export function AdvancedFiltersPanel({
       </div>
 
       {isOpen && (
-        <div className="p-4 space-y-6">
+        <div className="px-4 py-3 space-y-4">
           {/* Faixas de Valores */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Ponto de Fusão */}
-            <div className="space-y-2">
-              <Label className="text-sm font-bold">
-                {t("catalog.advancedFilters.meltingPoint")} (°C)
-              </Label>
-              <div className="flex gap-2">
-                <Input
-                  type="number"
-                  placeholder={t("catalog.advancedFilters.min")}
-                  value={localFilters.meltingPoint.min ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("meltingPoint", "min", e.target.value)
-                  }
-                  className="flex-1"
-                />
-                <Input
-                  type="number"
-                  placeholder={t("catalog.advancedFilters.max")}
-                  value={localFilters.meltingPoint.max ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("meltingPoint", "max", e.target.value)
-                  }
-                  className="flex-1"
-                />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {(
+              [
+                {
+                  key: "meltingPoint",
+                  label: `${t("catalog.advancedFilters.meltingPoint")} (°C)`,
+                },
+                {
+                  key: "boilingPoint",
+                  label: `${t("catalog.advancedFilters.boilingPoint")} (°C)`,
+                },
+                {
+                  key: "density",
+                  label: `${t("catalog.advancedFilters.density")} (g/cm³)`,
+                  step: "0.01",
+                },
+                {
+                  key: "molarMass",
+                  label: `${t("catalog.advancedFilters.molarMass")} (g/mol)`,
+                },
+              ] as {
+                key: keyof Pick<
+                  BasicAdvancedFilters,
+                  "meltingPoint" | "boilingPoint" | "density" | "molarMass"
+                >;
+                label: string;
+                step?: string;
+              }[]
+            ).map(({ key, label, step }) => (
+              <div key={key} className="space-y-1">
+                <Label className="text-sm font-bold">{label}</Label>
+                <div className="flex gap-2">
+                  <Input
+                    type="number"
+                    step={step}
+                    placeholder={t("catalog.advancedFilters.min")}
+                    value={localFilters[key].min ?? ""}
+                    onChange={(e) =>
+                      handleRangeChange(key, "min", e.target.value)
+                    }
+                    className="flex-1"
+                  />
+                  <Input
+                    type="number"
+                    step={step}
+                    placeholder={t("catalog.advancedFilters.max")}
+                    value={localFilters[key].max ?? ""}
+                    onChange={(e) =>
+                      handleRangeChange(key, "max", e.target.value)
+                    }
+                    className="flex-1"
+                  />
+                </div>
               </div>
-            </div>
-
-            {/* Ponto de Ebulição */}
-            <div className="space-y-2">
-              <Label className="text-sm font-bold">
-                {t("catalog.advancedFilters.boilingPoint")} (°C)
-              </Label>
-              <div className="flex gap-2">
-                <Input
-                  type="number"
-                  placeholder={t("catalog.advancedFilters.min")}
-                  value={localFilters.boilingPoint.min ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("boilingPoint", "min", e.target.value)
-                  }
-                  className="flex-1"
-                />
-                <Input
-                  type="number"
-                  placeholder={t("catalog.advancedFilters.max")}
-                  value={localFilters.boilingPoint.max ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("boilingPoint", "max", e.target.value)
-                  }
-                  className="flex-1"
-                />
-              </div>
-            </div>
-
-            {/* Densidade */}
-            <div className="space-y-2">
-              <Label className="text-sm font-bold">
-                {t("catalog.advancedFilters.density")} (g/cm³)
-              </Label>
-              <div className="flex gap-2">
-                <Input
-                  type="number"
-                  step="0.01"
-                  placeholder={t("catalog.advancedFilters.min")}
-                  value={localFilters.density.min ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("density", "min", e.target.value)
-                  }
-                  className="flex-1"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  placeholder={t("catalog.advancedFilters.max")}
-                  value={localFilters.density.max ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("density", "max", e.target.value)
-                  }
-                  className="flex-1"
-                />
-              </div>
-            </div>
-
-            {/* Massa Molar */}
-            <div className="space-y-2">
-              <Label className="text-sm font-bold">
-                {t("catalog.advancedFilters.molarMass")} (g/mol)
-              </Label>
-              <div className="flex gap-2">
-                <Input
-                  type="number"
-                  placeholder={t("catalog.advancedFilters.min")}
-                  value={localFilters.molarMass.min ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("molarMass", "min", e.target.value)
-                  }
-                  className="flex-1"
-                />
-                <Input
-                  type="number"
-                  placeholder={t("catalog.advancedFilters.max")}
-                  value={localFilters.molarMass.max ?? ""}
-                  onChange={(e) =>
-                    handleRangeChange("molarMass", "max", e.target.value)
-                  }
-                  className="flex-1"
-                />
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Formas Físicas */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <Label className="text-sm font-bold">
               {t("catalog.advancedFilters.physicalForms")}
             </Label>
-            <div className="flex flex-wrap gap-x-8 gap-y-1">
+            <div className="flex flex-wrap gap-x-6 gap-y-2">
               {["Solid", "Crystals", "Liquid", "Powder", "Gas", "Solution"].map(
                 (form) => (
                   <div
@@ -281,11 +225,11 @@ export function AdvancedFiltersPanel({
           </div>
 
           {/* Tipos de Solubilidade */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <Label className="text-sm font-bold">
               {t("catalog.advancedFilters.solubilityTypes")}
             </Label>
-            <div className="flex flex-wrap gap-x-8 gap-y-1">
+            <div className="flex flex-wrap gap-x-6 gap-y-2">
               {[
                 "Soluble",
                 "Insoluble",
@@ -296,7 +240,7 @@ export function AdvancedFiltersPanel({
               ].map((type) => (
                 <div
                   key={type}
-                  className="flex items-center space-x-2 min-w-[180px]"
+                  className="flex items-center space-x-2 min-w-[160px]"
                 >
                   <Checkbox
                     id={`solubility-${type}`}
@@ -312,16 +256,6 @@ export function AdvancedFiltersPanel({
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Botões de Ação */}
-          <div className="flex justify-end gap-2 pt-4 border-t dark:border-zinc-700">
-            <Button variant="outline" onClick={handleReset} size="sm">
-              {t("catalog.advancedFilters.reset")}
-            </Button>
-            <Button onClick={handleApply} size="sm">
-              {t("catalog.advancedFilters.apply")}
-            </Button>
           </div>
         </div>
       )}

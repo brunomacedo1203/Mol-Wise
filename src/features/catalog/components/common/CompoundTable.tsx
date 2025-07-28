@@ -140,9 +140,9 @@ export function CompoundTable({ data: _data }: CompoundTableProps) {
   return (
     <div
       className={`
-        w-full max-w-8xl mx-auto my-10 space-y-4 p-4 border 
-        border-border rounded-lg bg-background shadow-sm 
-        dark:bg-zinc-900 dark:border-zinc-700 
+         w-full max-w-8xl mx-auto my-10 space-y-4 px-4 md:px-8 py-4 border 
+    border-border rounded-lg bg-background shadow-sm 
+    dark:bg-zinc-900 dark:border-zinc-700 
       `}
     >
       {/* Painel de Filtros Avançados */}
@@ -193,11 +193,28 @@ export function CompoundTable({ data: _data }: CompoundTableProps) {
       </div>
 
       {/* Paginação */}
-      <TablePagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">
+            {t("compoundTable.rowsPerPage")}
+          </span>
+          <select
+            value={_rowsPerPage}
+            onChange={(e) => _setRowsPerPage(Number(e.target.value))}
+            className="border rounded px-2 py-1 text-sm bg-background dark:bg-zinc-800 dark:border-zinc-700"
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+        <TablePagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </div>
   );
 }

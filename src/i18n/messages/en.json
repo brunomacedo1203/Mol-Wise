@@ -524,6 +524,7 @@
     },
     "categoryTags": {
       "placeholder": "Filter inorganic categories",
+      "clearAll": "Clear all",
       "ácido": "Acid",
       "base": "Base",
       "sal": "Salt",
