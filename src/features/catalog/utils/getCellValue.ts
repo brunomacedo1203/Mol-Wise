@@ -52,12 +52,7 @@ export function getCellValue(
     case "solubility":
       return getSolubilityTranslation(t, compound.solubility);
     case "commonName":
-      try {
-        const translated = t(`catalog.commonName.${compound.formula}`);
-        return translated || compound.commonName || "";
-      } catch {
-        return compound.commonName || "";
-      }
+      return compound.commonName || "";
     default:
       return "";
   }

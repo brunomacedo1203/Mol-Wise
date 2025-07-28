@@ -1,7 +1,7 @@
 "use client";
 import { Table } from "@/components/ui/table";
-import { useCompoundData } from "@/features/catalog/hooks/common/useCompoundData";
-import { useCompoundTable } from "@/features/catalog/hooks/common/useCompoundTable";
+import { useCatalogData } from "@/features/catalog/hooks/common/useCatalogData";
+import { useCatalogStore } from "@/features/catalog/store/catalogStore";
 import { useTranslations } from "next-intl";
 import type { ExtendedCompound } from "@/features/catalog/hooks/common/useCompoundData";
 import { useCallback, useState } from "react";
@@ -17,28 +17,35 @@ import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
 
 export function CompoundTable() {
   const t = useTranslations();
-  const { compounds, isLoading, error } = useCompoundData();
-
-  // Adiciona controle manual de abertura do DropdownMenu
   const [columnsMenuOpen, setColumnsMenuOpen] = useState(false);
 
+  // Usa o novo hook que integra com o store
   const {
-    searchTerm,
-    setSearchTerm,
-    currentPage,
-    setCurrentPage,
-    rowsPerPage,
-    setRowsPerPage,
-    totalPages,
     paginatedData,
-    visibleColumns,
-    setVisibleColumns,
+    isLoading,
+    error,
+    currentPage,
+    rowsPerPage,
+    totalPages,
+    searchTerm,
+    selectedCategories,
     sortColumn,
     sortOrder,
-    handleSort,
-    selectedCategories,
+    totalCompounds: _totalCompounds,
+    filteredCount: _filteredCount,
+  } = useCatalogData();
+
+  // Actions do store
+  const {
+    setSearchTerm,
+    setCurrentPage,
+    setRowsPerPage,
+    setSortColumn,
+    toggleSortOrder,
     setSelectedCategories,
-  } = useCompoundTable({ data: compounds });
+    visibleColumns,
+    toggleColumn,
+  } = useCatalogStore();
 
   const centerAlignedColumns: TableColumnKey[] = ["solubilityNumeric"];
 
@@ -51,14 +58,10 @@ export function CompoundTable() {
   );
 
   const columnWidths = useColumnWidths(
-    compounds as ExtendedCompound[],
+    paginatedData as ExtendedCompound[],
     allColumns,
     cellValueGetter
   );
-
-  const toggleColumn = (col: TableColumnKey) => {
-    setVisibleColumns((prev) => ({ ...prev, [col]: !prev[col] }));
-  };
 
   const handleSafeSort = (key: TableColumnKey) => {
     if (
@@ -66,6 +69,7 @@ export function CompoundTable() {
       [
         "id",
         "name",
+        "commonName",
         "synonym",
         "formula",
         "casNumber",
@@ -80,7 +84,11 @@ export function CompoundTable() {
         "solubilityQualitative",
       ].includes(key)
     ) {
-      handleSort(key as keyof ExtendedCompound);
+      if (sortColumn === key) {
+        toggleSortOrder();
+      } else {
+        setSortColumn(key as keyof ExtendedCompound);
+      }
     }
   };
 

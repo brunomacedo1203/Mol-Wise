@@ -64,6 +64,7 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     result = result.filter((compound) => {
       const matchesSearch =
         (compound.name ?? '').toLowerCase().includes(term) ||
+        (compound.commonName ?? '').toLowerCase().includes(term) ||
         (compound.formula ?? '').toLowerCase().includes(term) ||
         (compound.synonym ?? '').toLowerCase().includes(term) ||
         (compound.casNumber ?? '').toLowerCase().includes(term) ||
@@ -88,23 +89,30 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     const getTranslatedValue = (compound: ExtendedCompound, column: keyof ExtendedCompound) => {
       if (column === 'name') {
         try {
-          return compound.formula
-            ? t(`catalog.compoundNames.${compound.formula}`, { fallback: '' }) || compound.name
-            : compound.name;
+          const translated = compound.formula
+            ? t(`catalog.compoundNames.${compound.formula}`, { fallback: '' })
+            : '';
+          return translated || compound.name || '';
         } catch {
-          return compound.name;
+          return compound.name || '';
         }
+      }
+      if (column === 'commonName') {
+        return compound.commonName || '';
       }
       if (column === 'synonym') {
         try {
-          return t(`catalog.compoundSynonyms.${compound.formula}`) || compound.synonym || '';
+          const translated = compound.formula
+            ? t(`catalog.compoundSynonyms.${compound.formula}`, { fallback: '' })
+            : '';
+          return translated || compound.synonym || '';
         } catch {
           return compound.synonym || '';
         }
       }
       if (column === 'physicalForm') return compound.physicalForm || '';
-      if (column === 'solubility') return compound.solubility;
-      return compound[column];
+      if (column === 'solubility') return compound.solubility || '';
+      return compound[column] || '';
     };
 
     return [...filteredData].sort((a, b) => {
