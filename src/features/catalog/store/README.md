@@ -1,212 +1,455 @@
-# Stores do Catálogo - Zustand
+# Zustand Store - Catálogo de Compostos
 
-Este diretório contém os stores Zustand para gerenciamento de estado das tabelas de catálogo.
+## Visão Geral
 
-## Estrutura
+O Zustand store centraliza todo o estado do catálogo de compostos químicos, oferecendo gerenciamento de estado global com persistência automática e performance otimizada.
 
+## Arquitetura
+
+### **Estado Centralizado**
+
+```typescript
+interface CatalogState {
+  // Dados
+  compounds: ExtendedCompound[];
+  isLoading: boolean;
+  error: string | null;
+
+  // Busca e Filtros
+  searchTerm: string;
+  selectedCategory: CompoundCategory;
+  selectedCategories: CompoundCategory[];
+
+  // Ordenação
+  sortColumn: keyof ExtendedCompound;
+  sortOrder: "asc" | "desc";
+
+  // Paginação
+  currentPage: number;
+  rowsPerPage: number;
+
+  // Colunas Visíveis
+  visibleColumns: Record<TableColumnKey, boolean>;
+
+  // Filtros Avançados
+  advancedFilters: AdvancedFilterState;
+}
 ```
-store/
-├── catalogStore.ts           # Store para compostos inorgânicos
-├── organicCatalogStore.ts    # Store para compostos orgânicos (futuro)
-└── README.md                 # Esta documentação
+
+### **Actions Disponíveis**
+
+```typescript
+interface CatalogActions {
+  // Dados
+  setCompounds: (compounds: ExtendedCompound[]) => void;
+  setIsLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+
+  // Busca e Filtros
+  setSearchTerm: (term: string) => void;
+  setSelectedCategory: (category: CompoundCategory) => void;
+  setSelectedCategories: (categories: CompoundCategory[]) => void;
+
+  // Ordenação
+  setSortColumn: (column: keyof ExtendedCompound) => void;
+  toggleSortOrder: () => void;
+
+  // Paginação
+  setCurrentPage: (page: number) => void;
+  setRowsPerPage: (rows: number) => void;
+
+  // Colunas
+  toggleColumn: (key: TableColumnKey) => void;
+
+  // Filtros Avançados
+  setAdvancedFiltersOpen: (isOpen: boolean) => void;
+  setAdvancedFilters: (filters: BasicAdvancedFilters) => void;
+  resetAdvancedFilters: () => void;
+
+  // Reset
+  resetFilters: () => void;
+  resetTableState: () => void;
+}
 ```
 
-## Stores Disponíveis
+## Implementação
 
-### 1. `catalogStore.ts` - Compostos Inorgânicos
+### **Store Principal**
 
-**Estado gerenciado:**
+```typescript
+// catalogStore.ts
+export const useCatalogStore = create<CatalogState>()(
+  persist(
+    (set) => ({
+      // Estado inicial
+      compounds: [],
+      isLoading: false,
+      error: null,
+      searchTerm: "",
+      selectedCategory: "todas",
+      selectedCategories: [],
+      sortColumn: "id",
+      sortOrder: "asc",
+      currentPage: 1,
+      rowsPerPage: 10,
+      visibleColumns: defaultVisibleColumns,
+      advancedFilters: {
+        isOpen: false,
+        filters: defaultAdvancedFilters,
+        isActive: false,
+      },
 
-- Busca e filtros
-- Paginação
-- Ordenação
-- Colunas visíveis
-- Dados dos compostos
+      // Actions
+      setCompounds: (compounds) => set({ compounds }),
+      setIsLoading: (isLoading) => set({ isLoading }),
+      setError: (error) => set({ error }),
+      setSearchTerm: (searchTerm) => set({ searchTerm, currentPage: 1 }),
+      setSelectedCategory: (selectedCategory) =>
+        set({ selectedCategory, currentPage: 1 }),
+      setSelectedCategories: (selectedCategories) =>
+        set({ selectedCategories, currentPage: 1 }),
+      setSortColumn: (sortColumn) => set({ sortColumn, sortOrder: "asc" }),
+      toggleSortOrder: () =>
+        set((state) => ({
+          sortOrder: state.sortOrder === "asc" ? "desc" : "asc",
+        })),
+      setCurrentPage: (currentPage) => set({ currentPage }),
+      setRowsPerPage: (rowsPerPage) => set({ rowsPerPage, currentPage: 1 }),
+      toggleColumn: (key) =>
+        set((state) => ({
+          visibleColumns: {
+            ...state.visibleColumns,
+            [key]: !state.visibleColumns[key],
+          },
+        })),
+      setAdvancedFiltersOpen: (isOpen) =>
+        set((state) => ({
+          advancedFilters: {
+            ...state.advancedFilters,
+            isOpen,
+          },
+        })),
+      setAdvancedFilters: (filters) =>
+        set((state) => ({
+          advancedFilters: {
+            ...state.advancedFilters,
+            filters,
+            isActive: true,
+          },
+        })),
+      resetAdvancedFilters: () =>
+        set((state) => ({
+          advancedFilters: {
+            ...state.advancedFilters,
+            filters: defaultAdvancedFilters,
+            isActive: false,
+          },
+        })),
+      resetFilters: () =>
+        set({
+          searchTerm: "",
+          selectedCategory: "todas",
+          selectedCategories: [],
+          advancedFilters: {
+            isOpen: false,
+            filters: defaultAdvancedFilters,
+            isActive: false,
+          },
+          currentPage: 1,
+        }),
+      resetTableState: () =>
+        set({
+          sortColumn: "id",
+          sortOrder: "asc",
+          currentPage: 1,
+          rowsPerPage: 10,
+          visibleColumns: defaultVisibleColumns,
+        }),
+    }),
+    {
+      name: "molwise_catalog",
+      partialize: (state) => ({
+        searchTerm: state.searchTerm,
+        selectedCategory: state.selectedCategory,
+        selectedCategories: state.selectedCategories,
+        sortColumn: state.sortColumn,
+        sortOrder: state.sortOrder,
+        currentPage: state.currentPage,
+        rowsPerPage: state.rowsPerPage,
+        visibleColumns: state.visibleColumns,
+        advancedFilters: state.advancedFilters,
+      }),
+    }
+  )
+);
+```
 
-**Persistência:**
+## Integração com Hooks
 
-- Configurações do usuário (filtros, colunas, paginação)
-- Dados não são persistidos (carregados dinamicamente)
+### **Hook de Dados**
 
-### 2. `organicCatalogStore.ts` - Compostos Orgânicos
-
-**Estado gerenciado:**
-
-- Tudo do store inorgânico
-- Filtros avançados (futuro):
-  - Filtro por estado físico
-  - Faixas de ponto de fusão/ebulição
-  - Agrupamento
-
-## Como Usar
-
-### Hook Integrado (Recomendado)
-
-```tsx
-import { useCatalogData } from "@/features/catalog/hooks/common/useCatalogData";
-
-function MyComponent() {
+```typescript
+// useCatalogData.ts
+export function useCatalogData() {
+  const { compounds: rawCompounds, isLoading, error } = useCompoundData();
   const {
+    searchTerm,
+    selectedCategory,
+    selectedCategories,
+    advancedFilters,
+    sortColumn,
+    sortOrder,
+    currentPage,
+    rowsPerPage,
+    setCompounds,
+    setIsLoading,
+    setError,
+  } = useCatalogStore();
+
+  // Aplicar filtros e ordenação
+  const filteredData = useMemo(() => {
+    let result = rawCompounds;
+
+    // Busca
+    if (searchTerm) {
+      result = result.filter(/* lógica de busca */);
+    }
+
+    // Filtros de categoria
+    if (selectedCategories.length > 0) {
+      result = result.filter(/* lógica de categoria */);
+    }
+
+    // Filtros avançados
+    if (advancedFilters.isActive) {
+      result = applyAdvancedFilters(result, advancedFilters.filters);
+    }
+
+    return result;
+  }, [rawCompounds, searchTerm, selectedCategories, advancedFilters]);
+
+  // Ordenação
+  const sortedData = useMemo(() => {
+    return [...filteredData].sort(/* lógica de ordenação */);
+  }, [filteredData, sortColumn, sortOrder]);
+
+  // Paginação
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    return sortedData.slice(start, start + rowsPerPage);
+  }, [sortedData, currentPage, rowsPerPage]);
+
+  return {
     paginatedData,
     isLoading,
     error,
     currentPage,
-    totalPages,
+    rowsPerPage,
+    totalPages: Math.ceil(filteredData.length / rowsPerPage),
     searchTerm,
     selectedCategories,
     sortColumn,
     sortOrder,
-  } = useCatalogData();
-
-  // Actions do store
-  const {
-    setSearchTerm,
-    setCurrentPage,
-    setSelectedCategories,
-    toggleSortOrder,
-  } = useCatalogStore();
-
-  return <div>{/* Seu componente */}</div>;
-}
-```
-
-### Acesso Direto ao Store
-
-```tsx
-import { useCatalogStore } from "@/features/catalog/store/catalogStore";
-
-function MyComponent() {
-  // Estado
-  const searchTerm = useCatalogStore((state) => state.searchTerm);
-  const currentPage = useCatalogStore((state) => state.currentPage);
-
-  // Actions
-  const setSearchTerm = useCatalogStore((state) => state.setSearchTerm);
-  const resetFilters = useCatalogStore((state) => state.resetFilters);
-
-  return (
-    <div>
-      <input
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={resetFilters}>Limpar Filtros</button>
-    </div>
-  );
+    totalCompounds: rawCompounds.length,
+    filteredCount: filteredData.length,
+    advancedFilters,
+  };
 }
 ```
 
 ## Vantagens do Zustand
 
-### ✅ **Reutilização**
+### **1. Simplicidade**
 
-- Mesma estrutura para compostos inorgânicos e orgânicos
-- Componentes podem ser compartilhados
-- Lógica de filtros reutilizável
+- API simples e intuitiva
+- Menos boilerplate que Redux
+- TypeScript nativo
 
-### ✅ **Persistência**
+### **2. Performance**
 
-- Configurações salvas automaticamente
-- Usuário não perde preferências
-- Filtros mantidos entre sessões
+- Renderizações otimizadas
+- Memoização automática
+- Bundle size pequeno
 
-### ✅ **Performance**
+### **3. Persistência**
 
-- Renderização otimizada
-- Apenas componentes necessários re-renderizam
-- Estado centralizado
+- Middleware de persistência integrado
+- Controle granular sobre o que persistir
+- Recuperação automática do estado
 
-### ✅ **Desenvolvimento**
+### **4. DevTools**
 
-- DevTools para debug
-- Tipagem forte
-- Fácil de testar
+- Integração com Redux DevTools
+- Debugging facilitado
+- Time-travel debugging
 
-## Migração do Hook Local
+### **5. Reutilização**
 
-### Antes (useCompoundTable)
+- Preparado para catálogo de orgânicos
+- Padrão replicável para outras entidades
+- Estado compartilhado entre componentes
 
-```tsx
+## Padrões de Uso
+
+### **1. Acessar Estado**
+
+```typescript
+const { searchTerm, setSearchTerm } = useCatalogStore();
+```
+
+### **2. Atualizar Estado**
+
+```typescript
+const { setSearchTerm, setCurrentPage } = useCatalogStore();
+
+const handleSearch = (term: string) => {
+  setSearchTerm(term);
+  setCurrentPage(1); // Reset para primeira página
+};
+```
+
+### **3. Estado Derivado**
+
+```typescript
+const { compounds } = useCatalogStore();
+const totalCompounds = compounds.length;
+```
+
+### **4. Reset de Estado**
+
+```typescript
+const { resetFilters, resetTableState } = useCatalogStore();
+
+const handleReset = () => {
+  resetFilters();
+  resetTableState();
+};
+```
+
+## Persistência
+
+### **Configuração**
+
+```typescript
+{
+  name: "molwise_catalog", // Chave no localStorage
+  partialize: (state) => ({
+    // Apenas os campos que devem ser persistidos
+    searchTerm: state.searchTerm,
+    selectedCategory: state.selectedCategory,
+    // ... outros campos
+  }),
+}
+```
+
+### **Campos Persistidos**
+
+- `searchTerm`: Termo de busca
+- `selectedCategory`: Categoria selecionada
+- `selectedCategories`: Categorias múltiplas
+- `sortColumn`: Coluna de ordenação
+- `sortOrder`: Ordem de classificação
+- `currentPage`: Página atual
+- `rowsPerPage`: Linhas por página
+- `visibleColumns`: Colunas visíveis
+- `advancedFilters`: Filtros avançados
+
+### **Campos Não Persistidos**
+
+- `compounds`: Dados dos compostos (carregados dinamicamente)
+- `isLoading`: Estado de carregamento
+- `error`: Estado de erro
+
+## Migração de Estado Local
+
+### **Antes (useState)**
+
+```typescript
+const [searchTerm, setSearchTerm] = useState("");
+const [currentPage, setCurrentPage] = useState(1);
+const [sortColumn, setSortColumn] = useState("id");
+// ... mais estados locais
+```
+
+### **Depois (Zustand)**
+
+```typescript
 const {
   searchTerm,
   setSearchTerm,
   currentPage,
   setCurrentPage,
-  // ... mais props
-} = useCompoundTable({ data: compounds });
-```
-
-### Depois (useCatalogData + Store)
-
-```tsx
-const {
-  paginatedData,
-  currentPage,
-  totalPages,
-  // ... dados processados
-} = useCatalogData();
-
-const {
-  setSearchTerm,
-  setCurrentPage,
-  // ... actions
+  sortColumn,
+  setSortColumn,
 } = useCatalogStore();
 ```
 
-## Implementação para Compostos Orgânicos
+## Benefícios da Migração
 
-Para implementar a tabela de compostos orgânicos:
+### **1. Estado Centralizado**
 
-1. **Criar hook de dados:**
+- Todos os estados relacionados em um lugar
+- Eliminação de prop drilling
+- Facilita debugging
 
-```tsx
-// useOrganicCatalogData.ts
-export function useOrganicCatalogData() {
-  const { compounds, isLoading, error } = useOrganicCompoundData();
-  const store = useOrganicCatalogStore();
+### **2. Persistência Automática**
 
-  // Lógica similar ao useCatalogData
-  // mas com filtros avançados
-}
-```
+- Estado salvo automaticamente
+- Recuperação ao recarregar
+- Melhor UX
 
-2. **Criar componente:**
+### **3. Reutilização**
 
-```tsx
-// OrganicCompoundTable.tsx
-export function OrganicCompoundTable() {
-  const data = useOrganicCatalogData();
-  const actions = useOrganicCatalogStore();
+- Preparado para catálogo de orgânicos
+- Padrão replicável
+- Menos duplicação de código
 
-  // Reutilizar componentes existentes
-  return (
-    <CompoundTableToolbar {...data} {...actions} />
-    <CompoundTableHeader {...data} {...actions} />
-    <CompoundTableRows {...data} />
-  );
-}
-```
+### **4. Performance**
 
-3. **Reutilizar componentes:**
+- Renderizações otimizadas
+- Memoização automática
+- Bundle size reduzido
 
-- `CompoundTableToolbar`
-- `CompoundTableHeader`
-- `CompoundTableRows`
-- `TablePagination`
+## Troubleshooting
+
+### **Estado não persiste**
+
+1. Verifique se o localStorage está habilitado
+2. Confirme se o campo está no `partialize`
+3. Verifique se não há erros no console
+
+### **Performance lenta**
+
+1. Use `partialize` para persistir apenas campos necessários
+2. Evite persistir dados grandes
+3. Considere usar `shallow` para comparações
+
+### **Estado não atualiza**
+
+1. Verifique se está usando as actions corretas
+2. Confirme se o componente está inscrito no store
+3. Verifique se não há erros de TypeScript
 
 ## Próximos Passos
 
-1. ✅ **Corrigir ordenação das colunas** (feito)
-2. 🔄 **Migrar para Zustand** (em progresso)
-3. 📋 **Implementar filtros avançados**
-4. 📊 **Adicionar agrupamento**
-5. 📤 **Implementar exportação**
-6. 🧪 **Criar tabela de compostos orgânicos**
+### **1. Catálogo de Orgânicos**
 
-## Boas Práticas
+- Reutilizar o padrão do store
+- Adicionar filtros específicos
+- Manter compatibilidade
 
-- **Use o hook `useCatalogData`** para dados processados
-- **Use o store diretamente** para actions simples
-- **Mantenha a tipagem forte** em todos os stores
-- **Documente novos filtros** no store
-- **Teste a persistência** antes de fazer deploy
+### **2. Otimizações**
+
+- Implementar seletores específicos
+- Adicionar middleware customizado
+- Otimizar persistência
+
+### **3. Funcionalidades**
+
+- Adicionar mais filtros avançados
+- Implementar exportação
+- Adicionar agrupamento
+
+## Dúvidas ou Sugestões?
+
+Abra uma issue ou contribua com melhorias!

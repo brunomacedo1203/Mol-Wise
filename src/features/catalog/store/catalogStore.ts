@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { ExtendedCompound } from "../hooks/common/useCompoundData";
-import type { CompoundCategory } from "../domain/types/ChemicalCompound";
+import type { CompoundCategory, BasicAdvancedFilters, AdvancedFilterState } from "../domain/types/ChemicalCompound";
 import type { TableColumnKey } from "../domain/types/TableColumnKey";
 
 type SortOrder = 'asc' | 'desc';
@@ -15,9 +15,12 @@ interface CatalogState {
   sortColumn: keyof ExtendedCompound;
   sortOrder: SortOrder;
   
-  // Filtros
+  // Filtros básicos
   selectedCategory: FilterCategory;
   selectedCategories: CompoundCategory[];
+  
+  // Filtros avançados
+  advancedFilters: AdvancedFilterState;
   
   // Colunas visíveis
   visibleColumns: Record<TableColumnKey, boolean>;
@@ -27,7 +30,7 @@ interface CatalogState {
   isLoading: boolean;
   error: Error | null;
   
-  // Actions
+  // Actions básicas
   setSearchTerm: (term: string) => void;
   setCurrentPage: (page: number) => void;
   setRowsPerPage: (rows: number) => void;
@@ -44,6 +47,11 @@ interface CatalogState {
   setCompounds: (compounds: ExtendedCompound[]) => void;
   setIsLoading: (loading: boolean) => void;
   setError: (error: Error | null) => void;
+  
+  // Actions para filtros avançados
+  setAdvancedFiltersOpen: (isOpen: boolean) => void;
+  setAdvancedFilters: (filters: BasicAdvancedFilters) => void;
+  resetAdvancedFilters: () => void;
   
   // Utilitários
   resetFilters: () => void;
@@ -69,6 +77,15 @@ const defaultVisibleColumns: Record<TableColumnKey, boolean> = {
   category: false,
 };
 
+const defaultAdvancedFilters: BasicAdvancedFilters = {
+  meltingPoint: { min: null, max: null },
+  boilingPoint: { min: null, max: null },
+  density: { min: null, max: null },
+  molarMass: { min: null, max: null },
+  physicalForms: [],
+  solubilityTypes: [],
+};
+
 export const useCatalogStore = create<CatalogState>()(
   persist(
     (set) => ({
@@ -82,13 +99,19 @@ export const useCatalogStore = create<CatalogState>()(
       selectedCategory: 'todas',
       selectedCategories: [],
       
+      advancedFilters: {
+        isOpen: false,
+        filters: defaultAdvancedFilters,
+        isActive: false,
+      },
+      
       visibleColumns: defaultVisibleColumns,
       
       compounds: [],
       isLoading: false,
       error: null,
       
-      // Actions
+      // Actions básicas
       setSearchTerm: (term) => set({ searchTerm: term, currentPage: 1 }),
       setCurrentPage: (page) => set({ currentPage: page }),
       setRowsPerPage: (rows) => set({ rowsPerPage: rows, currentPage: 1 }),
@@ -113,12 +136,41 @@ export const useCatalogStore = create<CatalogState>()(
       setIsLoading: (loading) => set({ isLoading: loading }),
       setError: (error) => set({ error }),
       
+      // Actions para filtros avançados
+      setAdvancedFiltersOpen: (isOpen) => set((state) => ({
+        advancedFilters: {
+          ...state.advancedFilters,
+          isOpen
+        }
+      })),
+      
+      setAdvancedFilters: (filters) => set((state) => ({
+        advancedFilters: {
+          ...state.advancedFilters,
+          filters,
+          isActive: true,
+        }
+      })),
+      
+      resetAdvancedFilters: () => set((state) => ({
+        advancedFilters: {
+          ...state.advancedFilters,
+          filters: defaultAdvancedFilters,
+          isActive: false,
+        }
+      })),
+      
       // Utilitários
       resetFilters: () => set({
         searchTerm: '',
         selectedCategory: 'todas',
         selectedCategories: [],
-        currentPage: 1
+        currentPage: 1,
+        advancedFilters: {
+          isOpen: false,
+          filters: defaultAdvancedFilters,
+          isActive: false,
+        }
       }),
       
       resetTableState: () => set({
@@ -128,7 +180,12 @@ export const useCatalogStore = create<CatalogState>()(
         sortOrder: 'asc',
         selectedCategory: 'todas',
         selectedCategories: [],
-        visibleColumns: defaultVisibleColumns
+        visibleColumns: defaultVisibleColumns,
+        advancedFilters: {
+          isOpen: false,
+          filters: defaultAdvancedFilters,
+          isActive: false,
+        }
       }),
     }),
     {
@@ -141,6 +198,7 @@ export const useCatalogStore = create<CatalogState>()(
         visibleColumns: state.visibleColumns,
         selectedCategory: state.selectedCategory,
         selectedCategories: state.selectedCategories,
+        advancedFilters: state.advancedFilters,
       }),
     }
   )

@@ -13,11 +13,16 @@ import { getCellValue } from "@/features/catalog/utils/getCellValue";
 import { CompoundTableToolbar } from "./CompoundTableToolbar";
 import { CompoundTableHeader } from "./CompoundTableHeader";
 import { CompoundTableRows } from "./CompoundTableRows";
+import { AdvancedFiltersPanel } from "./AdvancedFiltersPanel";
 import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
+import type { BasicAdvancedFilters } from "@/features/catalog/domain/types/ChemicalCompound";
 
-export function CompoundTable() {
+interface CompoundTableProps {
+  data: ExtendedCompound[];
+}
+
+export function CompoundTable({ data: _data }: CompoundTableProps) {
   const t = useTranslations();
-  const [columnsMenuOpen, setColumnsMenuOpen] = useState(false);
 
   // Usa o novo hook que integra com o store
   const {
@@ -25,7 +30,7 @@ export function CompoundTable() {
     isLoading,
     error,
     currentPage,
-    rowsPerPage,
+    rowsPerPage: _rowsPerPage,
     totalPages,
     searchTerm,
     selectedCategories,
@@ -33,36 +38,43 @@ export function CompoundTable() {
     sortOrder,
     totalCompounds: _totalCompounds,
     filteredCount: _filteredCount,
+    advancedFilters,
   } = useCatalogData();
 
   // Actions do store
   const {
     setSearchTerm,
+    setSelectedCategories,
     setCurrentPage,
-    setRowsPerPage,
+    setRowsPerPage: _setRowsPerPage,
     setSortColumn,
     toggleSortOrder,
-    setSelectedCategories,
-    visibleColumns,
+    setAdvancedFiltersOpen,
+    setAdvancedFilters,
+    resetAdvancedFilters,
     toggleColumn,
+    visibleColumns,
   } = useCatalogStore();
 
-  const centerAlignedColumns: TableColumnKey[] = ["solubilityNumeric"];
-
+  // Estado local para colunas
+  const [columnsMenuOpen, setColumnsMenuOpen] = useState(false);
   const allColumns = useCompoundColumns();
 
-  const cellValueGetter = useCallback(
-    (compound: ExtendedCompound, key: TableColumnKey) =>
-      getCellValue(compound, key, t),
+  // Função para obter valor da célula
+  const getCellValueForWidth = useCallback(
+    (compound: ExtendedCompound, key: TableColumnKey) => {
+      return getCellValue(compound, key, t);
+    },
     [t]
   );
 
   const columnWidths = useColumnWidths(
-    paginatedData as ExtendedCompound[],
+    paginatedData,
     allColumns,
-    cellValueGetter
+    getCellValueForWidth
   );
 
+  // Handlers
   const handleSafeSort = (key: TableColumnKey) => {
     if (
       typeof key === "string" &&
@@ -92,14 +104,35 @@ export function CompoundTable() {
     }
   };
 
+  const handleAdvancedFiltersChange = useCallback(
+    (filters: BasicAdvancedFilters) => {
+      setAdvancedFilters(filters);
+    },
+    [setAdvancedFilters]
+  );
+
+  const handleAdvancedFiltersReset = useCallback(() => {
+    resetAdvancedFilters();
+  }, [resetAdvancedFilters]);
+
+  const handleAdvancedFiltersToggle = useCallback(() => {
+    setAdvancedFiltersOpen(!advancedFilters.isOpen);
+  }, [advancedFilters.isOpen, setAdvancedFiltersOpen]);
+
   if (isLoading) {
-    return <div className="text-center">{t("compoundTable.loading")}</div>;
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-lg">{t("compoundTable.loading")}</div>
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <div className="text-center text-red-500">
-        {t("compoundTable.errorLoading")}
+      <div className="flex items-center justify-center p-8">
+        <div className="text-lg text-red-600">
+          {t("compoundTable.errorLoading")}
+        </div>
       </div>
     );
   }
@@ -107,11 +140,22 @@ export function CompoundTable() {
   return (
     <div
       className={`
-      w-full max-w-8xl mx-auto my-10 space-y-4 p-4 border 
-      border-border rounded-lg bg-background shadow-sm 
-      dark:bg-zinc-900 dark:border-zinc-700 
-    `}
+        w-full max-w-8xl mx-auto my-10 space-y-4 p-4 border 
+        border-border rounded-lg bg-background shadow-sm 
+        dark:bg-zinc-900 dark:border-zinc-700 
+      `}
     >
+      {/* Painel de Filtros Avançados */}
+      <AdvancedFiltersPanel
+        filters={advancedFilters.filters}
+        onFiltersChange={handleAdvancedFiltersChange}
+        onReset={handleAdvancedFiltersReset}
+        isOpen={advancedFilters.isOpen}
+        onToggle={handleAdvancedFiltersToggle}
+        isActive={advancedFilters.isActive}
+      />
+
+      {/* Toolbar com busca e filtros básicos */}
       <CompoundTableToolbar
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
@@ -134,42 +178,26 @@ export function CompoundTable() {
             sortColumn={sortColumn}
             sortOrder={sortOrder}
             handleSort={handleSafeSort}
-            centerAlignedColumns={centerAlignedColumns}
+            centerAlignedColumns={["solubilityNumeric"]}
           />
           <CompoundTableRows
             paginatedData={paginatedData}
             allColumns={allColumns}
             visibleColumns={visibleColumns}
             columnWidths={columnWidths}
-            getCellValue={cellValueGetter}
-            centerAlignedColumns={centerAlignedColumns}
+            getCellValue={getCellValueForWidth}
+            centerAlignedColumns={["solubilityNumeric"]}
             t={t}
           />
         </Table>
       </div>
 
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
-            {t("compoundTable.rowsPerPage")}
-          </span>
-          <select
-            value={rowsPerPage}
-            onChange={(e) => setRowsPerPage(Number(e.target.value))}
-            className="border rounded px-2 py-1 text-sm bg-background"
-          >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-          </select>
-        </div>
-        <TablePagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      {/* Paginação */}
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

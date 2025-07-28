@@ -335,7 +335,7 @@
     }
   },
   "catalog": {
-   "title": "Inorganic Compounds",
+    "title": "Inorganic Compounds",
     "subtitle": "Explore detailed information about inorganic compounds",
     "elements": {
       "title": "Elements"
@@ -355,6 +355,20 @@
       "density": "Density",
       "refractiveIndex": "Refractive Index",
       "solubility": "Solubility"
+    },
+    "advancedFilters": {
+      "title": "Advanced Filters",
+      "active": "active",
+      "reset": "Reset",
+      "apply": "Apply",
+      "meltingPoint": "Melting Point",
+      "boilingPoint": "Boiling Point",
+      "density": "Density",
+      "molarMass": "Molar Mass",
+      "physicalForms": "Physical Forms",
+      "solubilityTypes": "Solubility Types",
+      "min": "Min",
+      "max": "Max"
     },
     "compoundNames": {
       "NaCl": "Sodium Chloride",
@@ -528,6 +542,9 @@
     "Solid": "Solid",
     "Liquid": "Liquid",
     "Gas": "Gas",
+    "Crystals": "Crystals",
+    "Powder": "Powder",
+    "Solution": "Solution",
     "Blue crystals": "Blue crystals",
     "Colorless crystals": "Colorless crystals",
     "White solid (flakes/pellets)": "White solid (flakes/pellets)",
@@ -558,6 +575,12 @@
     "Liquid (viscous)": "Liquid (viscous)"
   },
   "solubilityTerms": {
+    "Soluble": "Soluble in water",
+    "Insoluble": "Insoluble in water",
+    "Sparingly": "Sparingly soluble in water",
+    "Highly": "Highly soluble in water",
+    "Miscible": "Miscible with water",
+    "Reacts": "Reacts with water",
     "Soluble in water": "Soluble in water",
     "Practically insoluble in water": "Practically insoluble in water",
     "Miscible with many liquids": "Miscible with many liquids",

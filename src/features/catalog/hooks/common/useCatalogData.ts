@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useCatalogStore } from '../../store/catalogStore';
 import { useCompoundData } from './useCompoundData';
 import type { ExtendedCompound } from './useCompoundData';
+import type { BasicAdvancedFilters } from '../../domain/types/ChemicalCompound';
 
 export function useCatalogData() {
   const t = useTranslations();
@@ -13,6 +14,7 @@ export function useCatalogData() {
     searchTerm,
     selectedCategory,
     selectedCategories,
+    advancedFilters,
     sortColumn,
     sortOrder,
     currentPage,
@@ -29,7 +31,60 @@ export function useCatalogData() {
     setError(error);
   }, [rawCompounds, isLoading, error, setCompounds, setIsLoading, setError]);
 
-  // Filtros
+  // Função para aplicar filtros avançados
+  const applyAdvancedFilters = (compounds: ExtendedCompound[], filters: BasicAdvancedFilters) => {
+    return compounds.filter((compound) => {
+      // Filtro por ponto de fusão
+      if (filters.meltingPoint.min !== null && compound.meltingPoint !== undefined) {
+        if (compound.meltingPoint < filters.meltingPoint.min) return false;
+      }
+      if (filters.meltingPoint.max !== null && compound.meltingPoint !== undefined) {
+        if (compound.meltingPoint > filters.meltingPoint.max) return false;
+      }
+
+      // Filtro por ponto de ebulição
+      if (filters.boilingPoint.min !== null && compound.boilingPoint !== undefined) {
+        if (compound.boilingPoint < filters.boilingPoint.min) return false;
+      }
+      if (filters.boilingPoint.max !== null && compound.boilingPoint !== undefined) {
+        if (compound.boilingPoint > filters.boilingPoint.max) return false;
+      }
+
+      // Filtro por densidade
+      if (filters.density.min !== null && compound.density !== undefined) {
+        if (compound.density < filters.density.min) return false;
+      }
+      if (filters.density.max !== null && compound.density !== undefined) {
+        if (compound.density > filters.density.max) return false;
+      }
+
+      // Filtro por massa molar
+      if (filters.molarMass.min !== null && compound.molarMass !== undefined) {
+        if (compound.molarMass < filters.molarMass.min) return false;
+      }
+      if (filters.molarMass.max !== null && compound.molarMass !== undefined) {
+        if (compound.molarMass > filters.molarMass.max) return false;
+      }
+
+      // Filtro por forma física
+      if (filters.physicalForms.length > 0 && compound.physicalForm) {
+        if (!filters.physicalForms.includes(compound.physicalForm)) return false;
+      }
+
+      // Filtro por solubilidade
+      if (filters.solubilityTypes.length > 0 && compound.solubility) {
+        const compoundSolubility = compound.solubility.toLowerCase();
+        const matchesSolubility = filters.solubilityTypes.some(type => 
+          compoundSolubility.includes(type.toLowerCase())
+        );
+        if (!matchesSolubility) return false;
+      }
+
+      return true;
+    });
+  };
+
+  // Filtros básicos
   const filteredData = useMemo(() => {
     let result = rawCompounds;
     const term = searchTerm.toLowerCase();
@@ -54,9 +109,14 @@ export function useCatalogData() {
         selectedCategories.includes(compound.category)
       );
     }
+
+    // Aplica filtros avançados se estiverem ativos
+    if (advancedFilters.isActive) {
+      result = applyAdvancedFilters(result, advancedFilters.filters);
+    }
     
     return result;
-  }, [rawCompounds, searchTerm, selectedCategory, selectedCategories]);
+  }, [rawCompounds, searchTerm, selectedCategory, selectedCategories, advancedFilters]);
 
   // Ordenação
   const sortedData = useMemo(() => {
@@ -127,10 +187,13 @@ export function useCatalogData() {
     rowsPerPage,
     totalPages,
     
-    // Filtros
+    // Filtros básicos
     searchTerm,
     selectedCategory,
     selectedCategories,
+    
+    // Filtros avançados
+    advancedFilters,
     
     // Ordenação
     sortColumn,
