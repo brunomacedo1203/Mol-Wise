@@ -600,7 +600,10 @@
     "Sparingly soluble (reacts with water)": "Sparingly soluble (reacts with water)",
     "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
     "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
-    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)"
+    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)",
+    "Soluble in water (5.6 g/100mL at 20°C)": "Soluble in water (5.6 g/100mL at 20°C)",
+    "In water: 12 g/100 mL (25 °C)": "In water: 12 g/100 mL (25 °C)",
+    "Highly soluble in water (forms H2SO3)": "Highly soluble in water (forms H2SO3)"
   },
   "compoundTable": {
     "loading": "Loading...",

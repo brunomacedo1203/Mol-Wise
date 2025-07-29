@@ -28,6 +28,11 @@ export function getSolubilityTranslation(
   t: (key: string) => string,
   solubility: string
 ): string {
+  // Se a solubilidade estiver vazia, retornar string vazia
+  if (!solubility || solubility.trim() === "") {
+    return "";
+  }
+  
   try {
     const translated = t(`solubilityTerms.${solubility}`);
     return translated || solubility;
