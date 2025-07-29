@@ -2,7 +2,7 @@ import { RARE_EARTHS_LABEL } from "../domain/types/elementCategories";
 
 export function getFilterOptions(t: (key: string) => string) {
   return [
-    { value: "ALL", label: t("filterOptions.ALL") },
+    // { value: "ALL", label: t("filterOptions.ALL") }, // Removido para evitar duplicidade
     { value: "Alkali metal", label: t("filterOptions.Alkali metal") },
     { value: "Alkaline earth metal", label: t("filterOptions.Alkaline earth metal") },
     { value: "Transition metal", label: t("filterOptions.Transition metal") },
@@ -14,6 +14,5 @@ export function getFilterOptions(t: (key: string) => string) {
     { value: "Lanthanide", label: t("filterOptions.Lanthanide") },
     { value: "Actinide", label: t("filterOptions.Actinide") },
     { value: RARE_EARTHS_LABEL, label: t("filterOptions.RARE_EARTHS") },
-
   ];
 } 

@@ -34,7 +34,7 @@ interface MultiSelectTriggerProps
     icon?: React.ComponentType<{ className?: string }>;
   }[];
   selectedValues: string[];
-
+  placeholder?: string;
   maxCount: number;
   animation: number;
   onTogglePopover: () => void;
@@ -51,7 +51,7 @@ export const MultiSelectTrigger = React.forwardRef<
     {
       options,
       selectedValues,
-
+      placeholder,
       maxCount,
       animation,
       variant,
@@ -136,8 +136,11 @@ export const MultiSelectTrigger = React.forwardRef<
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-end w-full">
-            <ChevronDown className="h-4 cursor-pointer text-muted-foreground mr-2" />
+          <div className="flex items-center justify-between w-full mx-auto">
+            <span className="text-sm text-muted-foreground mx-3">
+              {placeholder || "Select options"}
+            </span>
+            <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
           </div>
         )}
       </Button>

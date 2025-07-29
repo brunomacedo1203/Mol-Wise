@@ -21,7 +21,7 @@ interface MultiSelectProps
   }[];
   onValueChange: (value: string[]) => void;
   defaultValue?: string[];
-
+  placeholder?: string;
   animation?: number;
   maxCount?: number;
   modalPopover?: boolean;
@@ -40,6 +40,7 @@ export const MultiSelect = React.forwardRef<
       onValueChange,
       variant,
       defaultValue = [],
+      placeholder,
 
       animation = 0,
       maxCount = 3,
@@ -86,6 +87,7 @@ export const MultiSelect = React.forwardRef<
             {...props}
             options={options}
             selectedValues={currentSelectedValues}
+            placeholder={placeholder}
             maxCount={maxCount}
             animation={animation}
             variant={variant}
