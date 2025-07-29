@@ -605,6 +605,7 @@
   "compoundTable": {
     "loading": "Carregando...",
     "errorLoading": "Erro ao carregar dados.",
+    "search": "Pesquisar",
     "searchPlaceholder": "Pesquisar compostos...",
     "columns": "Colunas",
     "rowsPerPage": "Linhas por página:",

@@ -605,6 +605,7 @@
   "compoundTable": {
     "loading": "Loading...",
     "errorLoading": "Error loading data.",
+    "search": "Search",
     "searchPlaceholder": "Search compounds...",
     "columns": "Columns",
     "rowsPerPage": "Rows per page:",
