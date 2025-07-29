@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,6 +30,11 @@ export function AdvancedFiltersPanel({
   const t = useTranslations();
   const [localFilters, setLocalFilters] =
     useState<BasicAdvancedFilters>(filters);
+
+  // Sincronizar estado local com props quando elas mudarem
+  useEffect(() => {
+    setLocalFilters(filters);
+  }, [filters]);
 
   const handleRangeChange = (
     property: keyof Pick<
@@ -120,7 +125,7 @@ export function AdvancedFiltersPanel({
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4" />
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-sm font-semibold">
               {t("catalog.advancedFilters.title")}
             </h3>
             {isActive && activeFiltersCount > 0 && (

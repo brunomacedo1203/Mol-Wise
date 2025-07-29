@@ -21,6 +21,7 @@ interface MultiSelectProps
   }[];
   onValueChange: (value: string[]) => void;
   defaultValue?: string[];
+  value?: string[];
   placeholder?: string;
   animation?: number;
   maxCount?: number;
@@ -40,8 +41,8 @@ export const MultiSelect = React.forwardRef<
       onValueChange,
       variant,
       defaultValue = [],
+      value,
       placeholder,
-
       animation = 0,
       maxCount = 3,
       modalPopover = false,
@@ -63,17 +64,17 @@ export const MultiSelect = React.forwardRef<
     } = useMultiSelectLogic({
       id,
       options,
-      defaultValue,
+      defaultValue: value || defaultValue,
       onValueChange,
       maxCount,
     });
 
-    // Sincronizar com defaultValue quando mudar
+    // Sincronizar com value quando mudar (componente controlado)
     React.useEffect(() => {
-      if (defaultValue.length > 0) {
+      if (value !== undefined) {
         // A sincronização é feita dentro do hook useMultiSelectLogic
       }
-    }, [defaultValue, id]);
+    }, [value, id]);
 
     return (
       <Popover

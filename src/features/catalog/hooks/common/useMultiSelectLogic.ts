@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useMultiSelectStore } from "../../store/multiSelectStore";
 
 interface UseMultiSelectLogicProps {
@@ -27,6 +27,14 @@ export function useMultiSelectLogic({
 
   const isPopoverOpen = openPopovers[id] || false;
   const currentSelectedValues = selectedValues[id] || defaultValue;
+
+  // Sincronizar com defaultValue quando mudar externamente
+  useEffect(() => {
+    if (JSON.stringify(defaultValue) !== JSON.stringify(currentSelectedValues)) {
+      setSelectedValues(id, defaultValue);
+      onValueChange(defaultValue);
+    }
+  }, [defaultValue, id, setSelectedValues, onValueChange, currentSelectedValues]);
 
   const handleInputKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
