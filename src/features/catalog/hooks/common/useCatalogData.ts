@@ -66,9 +66,13 @@ export function useCatalogData() {
         if (compound.molarMass > filters.molarMass.max) return false;
       }
 
-      // Filtro por forma física
+      // Filtro por forma física - CORRIGIDO para busca por substring
       if (filters.physicalForms.length > 0 && compound.physicalForm) {
-        if (!filters.physicalForms.includes(compound.physicalForm)) return false;
+        const compoundForm = compound.physicalForm.toLowerCase();
+        const matchesForm = filters.physicalForms.some(form => 
+          compoundForm.includes(form.toLowerCase())
+        );
+        if (!matchesForm) return false;
       }
 
       // Filtro por solubilidade
