@@ -6,16 +6,16 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const multiSelectVariants = cva(
-  "m-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300",
+  "m-1 tranion ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300",
   {
     variants: {
       variant: {
         default:
-          "border-foreground/10 text-foreground bg-card hover:bg-card/80",
+          "border-foreground/10 text-foreground bg-blue-200 hover:bg-blue-200 dark:bg-blue-500 dark:hover:bg-blue-600 dark:text-white dark:border-blue-500/30",
         secondary:
-          "border-foreground/10 bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "border-foreground/10 bg-secondary text-secondary-foreground hover:bg-secondary/80 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:text-zinc-100 dark:border-zinc-600/30",
         destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80 dark:bg-red-600 dark:hover:bg-red-700 dark:text-white dark:border-red-500/30",
         inverted: "inverted",
       },
     },
@@ -94,7 +94,7 @@ export const MultiSelectTrigger = React.forwardRef<
                     )}
                     {option?.label}
                     <XCircle
-                      className="ml-2 h-4 w-4 cursor-pointer"
+                      className="ml-2 h-4 w-4 cursor-pointer hover:text-red-500 dark:hover:text-red-400 transition-colors"
                       onClick={(event) => {
                         event.stopPropagation();
                         onToggleOption(value);
@@ -106,7 +106,7 @@ export const MultiSelectTrigger = React.forwardRef<
               {selectedValues.length > maxCount && (
                 <Badge
                   className={cn(
-                    "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
+                    "bg-transparent text-foreground border-foreground/1 hover:bg-transparent dark:text-zinc-300 dark:border-zinc-600/30",
                     "animate-bounce",
                     multiSelectVariants({ variant })
                   )}
@@ -114,7 +114,7 @@ export const MultiSelectTrigger = React.forwardRef<
                 >
                   {`+ ${selectedValues.length - maxCount} more`}
                   <XCircle
-                    className="ml-2 h-4 w-4 cursor-pointer"
+                    className="ml-2 h-4 w-4 cursor-pointer hover:text-red-500 dark:hover:text-red-400 transition-colors"
                     onClick={(event) => {
                       event.stopPropagation();
                       onClearExtra();
@@ -125,7 +125,7 @@ export const MultiSelectTrigger = React.forwardRef<
             </div>
             <div className="flex items-center justify-between">
               <XIcon
-                className="h-4 mx-2 cursor-pointer text-muted-foreground"
+                className="h-4 mx-2 cursor-pointer text-muted-foreground hover:text-red-500 dark:hover:text-red-400 transition-colors"
                 onClick={(event) => {
                   event.stopPropagation();
                   onClear();
