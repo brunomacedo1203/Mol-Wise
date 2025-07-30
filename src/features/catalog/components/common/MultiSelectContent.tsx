@@ -10,6 +10,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { useTranslations } from "next-intl";
 
 interface MultiSelectContentProps {
   options: {
@@ -34,11 +35,15 @@ export function MultiSelectContent({
   onClear,
   onClose,
 }: MultiSelectContentProps) {
+  const t = useTranslations();
   return (
     <Command>
-      <CommandInput placeholder="Search..." onKeyDown={onInputKeyDown} />
+      <CommandInput
+        placeholder={t("multiSelect.searchPlaceholder")}
+        onKeyDown={onInputKeyDown}
+      />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>{t("multiSelect.noResults")}</CommandEmpty>
         <CommandGroup>
           <CommandItem
             key="all"
@@ -55,7 +60,7 @@ export function MultiSelectContent({
             >
               <CheckIcon className="h-4 w-4" />
             </div>
-            <span>(Select All)</span>
+            <span>{t("multiSelect.selectAll")}</span>
           </CommandItem>
           {options.map((option) => {
             const isSelected = selectedValues.includes(option.value);
@@ -92,7 +97,7 @@ export function MultiSelectContent({
                   onSelect={onClear}
                   className="flex-1 justify-center cursor-pointer"
                 >
-                  Clear
+                  {t("multiSelect.clear")}
                 </CommandItem>
                 <div className="w-px h-6 bg-border" />
               </>
@@ -101,7 +106,7 @@ export function MultiSelectContent({
               onSelect={onClose}
               className="flex-1 justify-center cursor-pointer max-w-full"
             >
-              Close
+              {t("multiSelect.close")}
             </CommandItem>
           </div>
         </CommandGroup>

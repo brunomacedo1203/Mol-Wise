@@ -617,5 +617,14 @@
     "next": "Next",
     "page": "Page",
     "pageOf": "Page {current} of {total}"
+  },
+  "multiSelect": {
+    "placeholder": "Select options",
+    "searchPlaceholder": "Search...",
+    "selectAll": "(Select All)",
+    "clear": "Clear",
+    "close": "Close",
+    "noResults": "No results found.",
+    "more": "+ {count} more"
   }
 } 

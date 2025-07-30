@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useGlobalMultiSelect } from "@/shared/hooks/useGlobalMultiSelect";
 import type { CustomMultiSelectConfig } from "@/shared/store/multiSelectGlobalStore";
+import { useTranslations } from "next-intl";
 
 interface MultiSelectTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -49,6 +50,8 @@ export const MultiSelectTrigger = React.forwardRef<
       icons,
       animation: globalAnimation,
     } = useGlobalMultiSelect(componentId, customConfig);
+
+    const t = useTranslations();
 
     return (
       <Button
@@ -114,9 +117,10 @@ export const MultiSelectTrigger = React.forwardRef<
                       animationDuration: `${globalAnimation.duration}s`,
                     }}
                   >
-                    {`+ ${
-                      selectedValues.length - (config.maxDisplayCount || 3)
-                    } more`}
+                    {t("multiSelect.more", {
+                      count:
+                        selectedValues.length - (config.maxDisplayCount || 3),
+                    })}
                     <XCircle
                       className={cn(
                         icons.remove.className,
@@ -155,7 +159,7 @@ export const MultiSelectTrigger = React.forwardRef<
         ) : (
           <div className="flex items-center justify-between w-full mx-auto">
             <span className="text-sm text-muted-foreground mx-3">
-              {placeholder || "Select options"}
+              {placeholder || t("multiSelect.placeholder")}
             </span>
             <ChevronDown
               className={cn(

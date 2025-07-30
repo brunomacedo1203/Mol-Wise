@@ -8,7 +8,7 @@
       "molarMass": "A massa molar de\"{formula}\" é: {mass} g/mol"
     },
     "welcome": "Bem-vindo",
-    "": "Carregando...",
+    "loading": "Carregando...",
     "error": "Erro",
     "success": "Sucesso",
     "chooseTool": "Escolha uma ferramenta na barra lateral para começar.",
@@ -617,5 +617,14 @@
     "next": "Próxima",
     "page": "Página",
     "pageOf": "Página {current} de {total}"
+  },
+  "multiSelect": {
+    "placeholder": "Selecionar opções",
+    "searchPlaceholder": "Pesquisar...",
+    "selectAll": "(Selecionar Todos)",
+    "clear": "Limpar",
+    "close": "Fechar",
+    "noResults": "Nenhum resultado encontrado.",
+    "more": "+ {count} mais"
   }
 } 
