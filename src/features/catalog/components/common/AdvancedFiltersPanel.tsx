@@ -120,8 +120,8 @@ export function AdvancedFiltersPanel({
   }));
 
   return (
-    <div className="mb-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-background dark:bg-zinc-900">
-      <div className="px-4 py-2 border-b border-zinc-300 dark:border-zinc-700">
+    <div className="mb-2 border border-zinc-400 dark:border-zinc-700 rounded-lg bg-background dark:bg-zinc-900">
+      <div className="px-4 py-2 border-b border-zinc-400 dark:border-zinc-700">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4" />
@@ -215,6 +215,11 @@ export function AdvancedFiltersPanel({
                 options={physicalFormOptions}
                 onValueChange={handlePhysicalFormChange}
                 defaultValue={localFilters.physicalForms}
+                componentId="advanced-filters-physical-forms"
+                customConfig={{
+                  maxDisplayCount: 2,
+                  showCount: true,
+                }}
               />
             </div>
 
@@ -228,12 +233,17 @@ export function AdvancedFiltersPanel({
                 options={solubilityOptions}
                 onValueChange={handleSolubilityChange}
                 defaultValue={localFilters.solubilityTypes}
+                componentId="advanced-filters-solubility"
+                customConfig={{
+                  maxDisplayCount: 3,
+                  showCount: true,
+                }}
               />
             </div>
           </div>
 
           {/* Botões na parte inferior */}
-          <div className="px-4 py-3 border-t border-zinc-300 dark:border-zinc-700">
+          <div className="px-4 py-3 border-t border-zinc-400 dark:border-zinc-700">
             <div className="flex items-center justify-end gap-2">
               <Button
                 variant="outline"

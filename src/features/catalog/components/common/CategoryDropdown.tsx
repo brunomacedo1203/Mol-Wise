@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/command";
 import { CATEGORY_TAGS } from "../../domain/categoryTags";
 import type { CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
+import { useGlobalMultiSelect } from "@/shared/hooks/useGlobalMultiSelect";
 
 interface CategoryDropdownProps {
   selectedCategories: CompoundCategory[];
@@ -33,6 +34,14 @@ export function CategoryDropdown({
   t,
 }: CategoryDropdownProps) {
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+  const { config, variants, icons, animation } = useGlobalMultiSelect(
+    "category-dropdown",
+    {
+      maxDisplayCount: 3,
+      showCount: true,
+      allowClear: true,
+    }
+  );
 
   const handleTogglePopover = () => {
     setIsPopoverOpen((prev) => !prev);
@@ -85,41 +94,76 @@ export function CategoryDropdown({
             {selectedCategories.length > 0 ? (
               <div className="flex justify-between items-center w-full">
                 <div className="flex flex-wrap items-center">
-                  {selectedCategories.slice(0, 3).map((category) => (
-                    <Badge
-                      key={category}
-                      className="m-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 border-foreground/10 text-foreground bg-card hover:bg-card/80"
-                    >
-                      {t(`catalog.categoryTags.${category}`)}
-                      <XCircle
-                        className="ml-2 h-4 w-4 cursor-pointer"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          toggleCategory(category);
-                        }}
-                      />
-                    </Badge>
-                  ))}
-                  {selectedCategories.length > 3 && (
-                    <Badge className="m-1 bg-transparent text-foreground border-foreground/1 hover:bg-transparent">
-                      {`+ ${selectedCategories.length - 3} more`}
-                      <XCircle
-                        className="ml-2 h-4 w-4 cursor-pointer"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          handleClear();
-                        }}
-                      />
-                    </Badge>
-                  )}
+                  {selectedCategories
+                    .slice(0, config.maxDisplayCount || 3)
+                    .map((category) => (
+                      <Badge
+                        key={category}
+                        className={cn(
+                          animation.bounce && "animate-bounce",
+                          variants({
+                            variant: config.variant,
+                            size: config.size,
+                          })
+                        )}
+                        style={{ animationDuration: `${animation.duration}s` }}
+                      >
+                        {t(`catalog.categoryTags.${category}`)}
+                        <XCircle
+                          className={cn(icons.remove.className)}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            toggleCategory(category);
+                          }}
+                        />
+                      </Badge>
+                    ))}
+                  {config.showCount &&
+                    selectedCategories.length >
+                      (config.maxDisplayCount || 3) && (
+                      <Badge
+                        className={cn(
+                          "bg-transparent text-foreground border-foreground/1 hover:bg-transparent dark:text-zinc-300 dark:border-zinc-600/30",
+                          animation.bounce && "animate-bounce",
+                          variants({
+                            variant: config.variant,
+                            size: config.size,
+                          })
+                        )}
+                      >
+                        {`+ ${
+                          selectedCategories.length -
+                          (config.maxDisplayCount || 3)
+                        } more`}
+                        <XCircle
+                          className={cn(icons.remove.className)}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleClear();
+                          }}
+                        />
+                      </Badge>
+                    )}
                 </div>
                 <div className="flex items-center justify-between">
-                  <ChevronDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                  {config.allowClear && (
+                    <XCircle
+                      className={cn(icons.clear.className)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleClear();
+                      }}
+                    />
+                  )}
+                  {config.allowClear && (
+                    <div className="w-px h-6 bg-border mx-2" />
+                  )}
+                  <ChevronDown className={cn(icons.dropdown.className)} />
                 </div>
               </div>
             ) : (
               <div className="flex items-center justify-end w-full">
-                <ChevronDown className="h-4 cursor-pointer text-muted-foreground mr-2" />
+                <ChevronDown className={cn(icons.dropdown.className, "mr-2")} />
               </div>
             )}
           </Button>

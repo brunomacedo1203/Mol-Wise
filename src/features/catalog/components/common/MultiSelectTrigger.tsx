@@ -3,31 +3,11 @@ import { XCircle, ChevronDown, XIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { cva, type VariantProps } from "class-variance-authority";
-
-const multiSelectVariants = cva(
-  "m-1 tranion ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-foreground/10 text-foreground bg-blue-200 hover:bg-blue-200 dark:bg-blue-500 dark:hover:bg-blue-600 dark:text-white dark:border-blue-500/30",
-        secondary:
-          "border-foreground/10 bg-secondary text-secondary-foreground hover:bg-secondary/80 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:text-zinc-100 dark:border-zinc-600/30",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80 dark:bg-red-600 dark:hover:bg-red-700 dark:text-white dark:border-red-500/30",
-        inverted: "inverted",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-);
+import { useGlobalMultiSelect } from "@/shared/hooks/useGlobalMultiSelect";
+import type { CustomMultiSelectConfig } from "@/shared/store/multiSelectGlobalStore";
 
 interface MultiSelectTriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof multiSelectVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   options: {
     label: string;
     value: string;
@@ -35,8 +15,8 @@ interface MultiSelectTriggerProps
   }[];
   selectedValues: string[];
   placeholder?: string;
-  maxCount: number;
-  animation: number;
+  componentId?: string;
+  customConfig?: CustomMultiSelectConfig;
   onTogglePopover: () => void;
   onToggleOption: (option: string) => void;
   onClear: () => void;
@@ -52,9 +32,8 @@ export const MultiSelectTrigger = React.forwardRef<
       options,
       selectedValues,
       placeholder,
-      maxCount,
-      animation,
-      variant,
+      componentId,
+      customConfig,
       className,
       onTogglePopover,
       onToggleOption,
@@ -64,6 +43,13 @@ export const MultiSelectTrigger = React.forwardRef<
     },
     ref
   ) => {
+    const {
+      config,
+      variants,
+      icons,
+      animation: globalAnimation,
+    } = useGlobalMultiSelect(componentId, customConfig);
+
     return (
       <Button
         ref={ref}
@@ -71,68 +57,99 @@ export const MultiSelectTrigger = React.forwardRef<
         onClick={onTogglePopover}
         className={cn(
           "flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto dark:border-zinc-400",
+          customConfig?.customStyles?.container,
           className
         )}
       >
         {selectedValues.length > 0 ? (
           <div className="flex justify-between items-center w-full">
             <div className="flex flex-wrap items-center">
-              {selectedValues.slice(0, maxCount).map((value) => {
-                const option = options.find((o) => o.value === value);
-                const IconComponent = option?.icon;
-                return (
+              {selectedValues
+                .slice(0, config.maxDisplayCount || 3)
+                .map((value) => {
+                  const option = options.find((o) => o.value === value);
+                  const IconComponent = option?.icon;
+                  return (
+                    <Badge
+                      key={value}
+                      className={cn(
+                        globalAnimation.bounce && "animate-bounce",
+                        variants({
+                          variant: config.variant,
+                          size: config.size,
+                        }),
+                        customConfig?.customStyles?.badge
+                      )}
+                      style={{
+                        animationDuration: `${globalAnimation.duration}s`,
+                      }}
+                    >
+                      {IconComponent && (
+                        <IconComponent className="h-4 w-4 mr-2" />
+                      )}
+                      {option?.label}
+                      <XCircle
+                        className={cn(
+                          icons.remove.className,
+                          customConfig?.customStyles?.icon
+                        )}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onToggleOption(value);
+                        }}
+                      />
+                    </Badge>
+                  );
+                })}
+              {config.showCount &&
+                selectedValues.length > (config.maxDisplayCount || 3) && (
                   <Badge
-                    key={value}
                     className={cn(
-                      "animate-bounce",
-                      multiSelectVariants({ variant })
+                      "bg-transparent text-foreground border-foreground/1 hover:bg-transparent dark:text-zinc-300 dark:border-zinc-600/30",
+                      globalAnimation.bounce && "animate-bounce",
+                      variants({ variant: config.variant, size: config.size }),
+                      customConfig?.customStyles?.badge
                     )}
-                    style={{ animationDuration: `${animation}s` }}
+                    style={{
+                      animationDuration: `${globalAnimation.duration}s`,
+                    }}
                   >
-                    {IconComponent && (
-                      <IconComponent className="h-4 w-4 mr-2" />
-                    )}
-                    {option?.label}
+                    {`+ ${
+                      selectedValues.length - (config.maxDisplayCount || 3)
+                    } more`}
                     <XCircle
-                      className="ml-2 h-4 w-4 cursor-pointer hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                      className={cn(
+                        icons.remove.className,
+                        customConfig?.customStyles?.icon
+                      )}
                       onClick={(event) => {
                         event.stopPropagation();
-                        onToggleOption(value);
+                        onClearExtra();
                       }}
                     />
                   </Badge>
-                );
-              })}
-              {selectedValues.length > maxCount && (
-                <Badge
-                  className={cn(
-                    "bg-transparent text-foreground border-foreground/1 hover:bg-transparent dark:text-zinc-300 dark:border-zinc-600/30",
-                    "animate-bounce",
-                    multiSelectVariants({ variant })
-                  )}
-                  style={{ animationDuration: `${animation}s` }}
-                >
-                  {`+ ${selectedValues.length - maxCount} more`}
-                  <XCircle
-                    className="ml-2 h-4 w-4 cursor-pointer hover:text-red-500 dark:hover:text-red-400 transition-colors"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onClearExtra();
-                    }}
-                  />
-                </Badge>
-              )}
+                )}
             </div>
             <div className="flex items-center justify-between">
-              <XIcon
-                className="h-4 mx-2 cursor-pointer text-muted-foreground hover:text-red-500 dark:hover:text-red-400 transition-colors"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onClear();
-                }}
+              {config.allowClear && (
+                <XIcon
+                  className={cn(
+                    icons.clear.className,
+                    customConfig?.customStyles?.icon
+                  )}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onClear();
+                  }}
+                />
+              )}
+              {config.allowClear && <div className="w-px h-6 bg-border mx-2" />}
+              <ChevronDown
+                className={cn(
+                  icons.dropdown.className,
+                  customConfig?.customStyles?.icon
+                )}
               />
-              <div className="w-px h-6 bg-border mx-2" />
-              <ChevronDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
             </div>
           </div>
         ) : (
@@ -140,7 +157,12 @@ export const MultiSelectTrigger = React.forwardRef<
             <span className="text-sm text-muted-foreground mx-3">
               {placeholder || "Select options"}
             </span>
-            <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+            <ChevronDown
+              className={cn(
+                icons.dropdown.className,
+                customConfig?.customStyles?.icon
+              )}
+            />
           </div>
         )}
       </Button>

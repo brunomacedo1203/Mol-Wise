@@ -11,6 +11,8 @@ import {
 import { useMultiSelectLogic } from "@/features/catalog/hooks/common/useMultiSelectLogic";
 import { MultiSelectTrigger } from "@/features/catalog/components/common/MultiSelectTrigger";
 import { MultiSelectContent } from "@/features/catalog/components/common/MultiSelectContent";
+import type { CustomMultiSelectConfig } from "@/shared/store/multiSelectGlobalStore";
+
 interface MultiSelectProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   id: string;
@@ -28,6 +30,8 @@ interface MultiSelectProps
   modalPopover?: boolean;
   className?: string;
   variant?: "default" | "secondary" | "destructive" | "inverted";
+  componentId?: string;
+  customConfig?: CustomMultiSelectConfig;
 }
 
 export const MultiSelect = React.forwardRef<
@@ -39,7 +43,6 @@ export const MultiSelect = React.forwardRef<
       id,
       options,
       onValueChange,
-      variant,
       defaultValue = [],
       value,
       placeholder,
@@ -47,6 +50,8 @@ export const MultiSelect = React.forwardRef<
       maxCount = 3,
       modalPopover = false,
       className,
+      componentId,
+      customConfig,
       ...props
     },
     ref
@@ -66,7 +71,7 @@ export const MultiSelect = React.forwardRef<
       options,
       defaultValue: value || defaultValue,
       onValueChange,
-      maxCount,
+      maxCount: customConfig?.maxDisplayCount || maxCount,
     });
 
     // Sincronizar com value quando mudar (componente controlado)
@@ -89,9 +94,8 @@ export const MultiSelect = React.forwardRef<
             options={options}
             selectedValues={currentSelectedValues}
             placeholder={placeholder}
-            maxCount={maxCount}
-            animation={animation}
-            variant={variant}
+            componentId={componentId}
+            customConfig={customConfig}
             className={className}
             onTogglePopover={handleTogglePopover}
             onToggleOption={toggleOption}
