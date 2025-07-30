@@ -1,3 +1,4 @@
+import GoogleAnalytics from "@/shared/components/GoogleAnalytics";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -8,7 +9,8 @@ import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Script from "next/script";
-import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider"; // ADICIONE ESTA LINHA
+import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
+import { GA_TRACKING_ID } from "@/lib/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +26,18 @@ const themeScript = `
       }
     } catch (e) {}
   })();
+`;
+
+// Script do Google Analytics
+const googleAnalyticsScript = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${GA_TRACKING_ID}', {
+    page_path: window.location.pathname,
+    anonymize_ip: true,
+    cookie_flags: 'SameSite=None;Secure'
+  });
 `;
 
 // Função que informa ao Next.js quais locales devem ser pré-renderizados
@@ -78,15 +92,31 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
+        {/* Script de Tema */}
         <Script
           id="theme-script"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
+
+        {/* Google Analytics - Script principal */}
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+          strategy="afterInteractive"
+        />
+
+        {/* Google Analytics - Configuração */}
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: googleAnalyticsScript }}
+        />
       </head>
       <body className={inter.className}>
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
+            <GoogleAnalytics />
             {children}
           </NextIntlClientProvider>
         </ThemeEffectProvider>
