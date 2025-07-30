@@ -358,6 +358,20 @@
     "solubilityNumeric": "Solubilidade\ng/100g H₂O",
     "solubilityQualitative": "Solubilidade\nqualitativa"
   },
+  "advancedFilters": {
+    "title": "Filtros Avançados",
+    "active": "ativos",
+    "reset": "Limpar",
+    "apply": "Aplicar",
+    "meltingPoint": "Ponto de Fusão",
+    "boilingPoint": "Ponto de Ebulição",
+    "density": "Densidade",
+    "molarMass": "Massa Molar",
+    "physicalForms": "Formas Físicas",
+    "solubilityTypes": "Tipos de Solubilidade",
+    "min": "Mín",
+    "max": "Máx"
+  },
   "compoundNames": {
     "NaCl": "Cloreto de Sódio",
     "CaCO3": "Carbonato de Cálcio",
@@ -510,6 +524,7 @@
   },
   "categoryTags": {
     "placeholder": "Filtre as funções inorgânicas",
+    "clearAll": "Limpar todas",
     "ácido": "Ácido",
     "base": "Base",
     "sal": "Sal",
@@ -528,6 +543,9 @@
     "Solid": "Sólido",
     "Liquid": "Líquido",
     "Gas": "Gasoso",
+    "Crystals": "Cristais",
+    "Powder": "Pó",
+    "Solution": "Solução",
     "Blue crystals": "Cristais azuis",
     "Colorless crystals": "Cristais incolores",
     "White solid (flakes/pellets)": "Sólido branco (flocos/grânulos)",
@@ -558,6 +576,12 @@
     "Liquid (viscous)": "Líquido (viscoso)"
   },
   "solubilityTerms": {
+    "Soluble": "Solúvel em água",
+    "Insoluble": "Insolúvel em água",
+    "Sparingly": "Pouco solúvel em água",
+    "Highly": "Altamente solúvel em água",
+    "Miscible": "Miscível com água",
+    "Reacts": "Reage com água",
     "Soluble in water": "Solúvel em água",
     "Practically insoluble in water": "Praticamente insolúvel em água",
     "Miscible with many liquids": "Miscível com muitos líquidos",
@@ -575,11 +599,16 @@
     "Fully soluble in water": "Totalmente solúvel em água",
     "Sparingly soluble (reacts with water)": "Pouco solúvel (reage com água)",
     "Reacts with water (forms H2SO3)": "Reage com água (forma H2SO3)",
-    "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)"
+    "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)",
+    "Very soluble in water (deliquescent)": "Muito solúvel em água (deliquescente)",
+    "Soluble in water (5.6 g/100mL at 20°C)": "Solúvel em água (5,6 g/100mL a 20°C)",
+    "In water: 12 g/100 mL (25 °C)": "Em água: 12 g/100 mL (25 °C)",
+    "Highly soluble in water (forms H2SO3)": "Altamente solúvel em água (forma H2SO3)"
   },
   "compoundTable": {
     "loading": "Carregando...",
     "errorLoading": "Erro ao carregar dados.",
+    "search": "Pesquisar",
     "searchPlaceholder": "Pesquisar compostos...",
     "columns": "Colunas",
     "rowsPerPage": "Linhas por página:",

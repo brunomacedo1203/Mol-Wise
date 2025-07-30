@@ -335,7 +335,7 @@
     }
   },
   "catalog": {
-   "title": "Inorganic Compounds",
+    "title": "Inorganic Compounds",
     "subtitle": "Explore detailed information about inorganic compounds",
     "elements": {
       "title": "Elements"
@@ -355,6 +355,20 @@
       "density": "Density",
       "refractiveIndex": "Refractive Index",
       "solubility": "Solubility"
+    },
+    "advancedFilters": {
+      "title": "Advanced Filters",
+      "active": "active",
+      "reset": "Reset",
+      "apply": "Apply",
+      "meltingPoint": "Melting Point",
+      "boilingPoint": "Boiling Point",
+      "density": "Density",
+      "molarMass": "Molar Mass",
+      "physicalForms": "Physical Forms",
+      "solubilityTypes": "Solubility Types",
+      "min": "Min",
+      "max": "Max"
     },
     "compoundNames": {
       "NaCl": "Sodium Chloride",
@@ -510,6 +524,7 @@
     },
     "categoryTags": {
       "placeholder": "Filter inorganic categories",
+      "clearAll": "Clear all",
       "ácido": "Acid",
       "base": "Base",
       "sal": "Salt",
@@ -528,6 +543,9 @@
     "Solid": "Solid",
     "Liquid": "Liquid",
     "Gas": "Gas",
+    "Crystals": "Crystals",
+    "Powder": "Powder",
+    "Solution": "Solution",
     "Blue crystals": "Blue crystals",
     "Colorless crystals": "Colorless crystals",
     "White solid (flakes/pellets)": "White solid (flakes/pellets)",
@@ -558,6 +576,12 @@
     "Liquid (viscous)": "Liquid (viscous)"
   },
   "solubilityTerms": {
+    "Soluble": "Soluble in water",
+    "Insoluble": "Insoluble in water",
+    "Sparingly": "Sparingly soluble in water",
+    "Highly": "Highly soluble in water",
+    "Miscible": "Miscible with water",
+    "Reacts": "Reacts with water",
     "Soluble in water": "Soluble in water",
     "Practically insoluble in water": "Practically insoluble in water",
     "Miscible with many liquids": "Miscible with many liquids",
@@ -576,11 +600,15 @@
     "Sparingly soluble (reacts with water)": "Sparingly soluble (reacts with water)",
     "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
     "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
-    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)"
+    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)",
+    "Soluble in water (5.6 g/100mL at 20°C)": "Soluble in water (5.6 g/100mL at 20°C)",
+    "In water: 12 g/100 mL (25 °C)": "In water: 12 g/100 mL (25 °C)",
+    "Highly soluble in water (forms H2SO3)": "Highly soluble in water (forms H2SO3)"
   },
   "compoundTable": {
     "loading": "Loading...",
     "errorLoading": "Error loading data.",
+    "search": "Search",
     "searchPlaceholder": "Search compounds...",
     "columns": "Columns",
     "rowsPerPage": "Rows per page:",

@@ -22,3 +22,29 @@ export type ExtendedCompound = ChemicalCompound & {
   commonName: string;
   category: "ácido" | "base" | "sal" | "óxido" | "desconhecida";
 };
+
+// Tipos para filtros avançados - Fase 1: Faixas de valores
+export interface ValueRange {
+  min: number | null;
+  max: number | null;
+}
+
+export interface BasicAdvancedFilters {
+  // Faixas de valores numéricos
+  meltingPoint: ValueRange;
+  boilingPoint: ValueRange;
+  density: ValueRange;
+  molarMass: ValueRange;
+  
+  // Estado físico (múltipla seleção)
+  physicalForms: string[];
+  
+  // Solubilidade (múltipla seleção)
+  solubilityTypes: string[];
+}
+
+export interface AdvancedFilterState {
+  isOpen: boolean;
+  filters: BasicAdvancedFilters;
+  isActive: boolean;
+}

@@ -1,19 +1,11 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
 import React from "react";
-import { extractLabelText } from "@/features/catalog/utils/extractLabelText";
-import { CategoryTagsSelector } from "../CategoryTagsSelector";
-import { CATEGORY_TAGS } from "../../domain/categoryTags";
 import type { CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
+import { ColumnsDropdown } from "./ColumnsDropdown";
+import { CategoryDropdown } from "./CategoryDropdown";
 
 interface CompoundTableToolbarProps {
   selectedCategories: CompoundCategory[];
@@ -28,8 +20,6 @@ interface CompoundTableToolbarProps {
   t: (key: string) => string;
 }
 
-export { CategoryTagsSelector };
-
 export function CompoundTableToolbar({
   selectedCategories,
   setSelectedCategories,
@@ -43,94 +33,38 @@ export function CompoundTableToolbar({
   t,
 }: CompoundTableToolbarProps) {
   return (
-    <div
-      className={`
-        w-full max-w-8xl mx-auto
-        bg-background dark:bg-zinc-900
-        border border-zinc-300 dark:border-zinc-600
-        p-4 rounded-lg shadow mb-6
-      `}
-    >
-      <div
-        className={`
-          w-full flex flex-col gap-4
-          md:flex-row md:items-center md:justify-between
-        `}
-      >
-        {/* Campo de busca */}
-        <div className="flex-1 min-w-[200px] flex justify-center md:justify-start">
+    <div className="p-2 border border-zinc-400 dark:border-zinc-600 rounded-lg bg-background dark:bg-zinc-900">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Campo de busca - Esquerda */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+            {t("compoundTable.search")}
+          </label>
           <Input
+            type="text"
             placeholder={t("compoundTable.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`
-              w-full md:w-72
-              bg-white dark:bg-zinc-900
-              border-2 border-border dark:border-zinc-400
-              rounded-md shadow-sm
-              focus:ring-2 focus:ring-primary/30
-              transition
-            `}
+            className="bg-white dark:bg-zinc-900 border-2 border-border dark:border-zinc-400 text-gray-700 dark:text-zinc-200"
           />
         </div>
 
-        {/* Filtro por categoria */}
-        <div className="flex-1 min-w-[250px] flex justify-center">
-          <CategoryTagsSelector
-            tags={CATEGORY_TAGS}
-            selected={selectedCategories}
-            onChange={setSelectedCategories}
-          />
-        </div>
+        {/* Dropdown de categorias - Centro */}
+        <CategoryDropdown
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          t={t}
+        />
 
-        {/* Botão de colunas */}
-        <div className="flex-1 min-w-[120px] flex justify-center md:justify-end">
-          <DropdownMenu
-            open={columnsMenuOpen}
-            onOpenChange={setColumnsMenuOpen}
-          >
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                className={`
-                  border-2 border-border dark:border-zinc-400
-                  bg-gray-50 dark:bg-zinc-800
-                  text-gray-700 dark:text-zinc-200
-                  hover:bg-gray-100 dark:hover:bg-zinc-700
-                  transition
-                `}
-              >
-                {t("compoundTable.columns")}
-              </Button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              className={`
-                w-48
-                bg-white dark:bg-zinc-900
-                border border-border dark:border-zinc-400
-                rounded-md shadow-lg
-              `}
-            >
-              {allColumns.map(({ key, label }) => (
-                <DropdownMenuCheckboxItem
-                  key={key}
-                  checked={visibleColumns[key]}
-                  onCheckedChange={() => toggleColumn(key)}
-                  onSelect={(e) => e.preventDefault()}
-                  className={`
-                    text-gray-700 dark:text-zinc-200
-                    hover:bg-gray-100 dark:hover:bg-zinc-800
-                    rounded
-                  `}
-                >
-                  {typeof label === "string" ? label : extractLabelText(label)}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {/* Dropdown de colunas - Direita */}
+        <ColumnsDropdown
+          allColumns={allColumns}
+          visibleColumns={visibleColumns}
+          toggleColumn={toggleColumn}
+          columnsMenuOpen={columnsMenuOpen}
+          setColumnsMenuOpen={setColumnsMenuOpen}
+          t={t}
+        />
       </div>
     </div>
   );

@@ -13,10 +13,28 @@ export function getCellValue(
   t: (key: string) => string
 ): string {
   function extractSolubilityQualitative(solubility: string) {
-    if (!/([\d,.]+)\s*g\/(?:100\s*(?:mL|g))\s*water/i.test(solubility)) {
-      return getSolubilityTranslation(t, solubility);
+    // Se a solubilidade estiver vazia, retornar string vazia
+    if (!solubility || solubility.trim() === "") {
+      return "";
     }
-    return "";
+    
+    // Se contém valores numéricos mas é uma descrição qualitativa (não apenas números)
+    if (/([\d,.]+)\s*g\/(?:100\s*(?:mL|g))\s*water/i.test(solubility)) {
+      // Verificar se é uma descrição qualitativa que contém números
+      if (solubility.includes("Soluble") || solubility.includes("Insoluble") || 
+          solubility.includes("Moderately") || solubility.includes("Highly") ||
+          solubility.includes("Slightly") || solubility.includes("Very") ||
+          solubility.includes("Fully") || solubility.includes("Sparingly") ||
+          solubility.includes("Miscible") || solubility.includes("Reacts") ||
+          solubility.includes("In water:")) {
+        return getSolubilityTranslation(t, solubility);
+      }
+      // Se for apenas números, retornar vazio
+      return "";
+    }
+    
+    // Para outros casos, usar a tradução normal
+    return getSolubilityTranslation(t, solubility);
   }
   switch (key) {
     case "id":
@@ -52,12 +70,7 @@ export function getCellValue(
     case "solubility":
       return getSolubilityTranslation(t, compound.solubility);
     case "commonName":
-      try {
-        const translated = t(`catalog.commonName.${compound.formula}`);
-        return translated || compound.commonName || "";
-      } catch {
-        return compound.commonName || "";
-      }
+      return compound.commonName || "";
     default:
       return "";
   }
