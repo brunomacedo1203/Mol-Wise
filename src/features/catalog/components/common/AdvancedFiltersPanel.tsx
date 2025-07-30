@@ -121,7 +121,11 @@ export function AdvancedFiltersPanel({
 
   return (
     <div className="mb-2 border border-zinc-400 dark:border-zinc-700 rounded-lg bg-background dark:bg-zinc-900">
-      <div className="px-4 py-2 border-b border-zinc-400 dark:border-zinc-700">
+      <div
+        className={`px-4 py-2 ${
+          isOpen ? "border-b border-zinc-400 dark:border-zinc-700" : ""
+        }`}
+      >
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4" />
@@ -146,7 +150,7 @@ export function AdvancedFiltersPanel({
 
       {isOpen && (
         <>
-          <div className="px-4 py-3 space-y-4">
+          <div className="px-4 py-1 space-y-1 mb-2">
             {/* Faixas de Valores */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {(
@@ -243,13 +247,13 @@ export function AdvancedFiltersPanel({
           </div>
 
           {/* Botões na parte inferior */}
-          <div className="px-4 py-3 border-t border-zinc-400 dark:border-zinc-700">
+          <div className="px-4 py-2 border-t border-zinc-400 dark:border-zinc-700">
             <div className="flex items-center justify-end gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleReset}
-                className="dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-100"
+                className="border-zinc-500 hover:border-zinc-600 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:border-zinc-500 dark:hover:border-zinc-400 dark:text-zinc-100"
               >
                 {t("catalog.advancedFilters.reset")}
               </Button>

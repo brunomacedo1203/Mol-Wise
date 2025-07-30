@@ -94,7 +94,7 @@ export function ColumnsDropdown({
                 ${
                   visibleCount === totalCount
                     ? "text-red-600 dark:text-red-400"
-                    : "text-blue-600 dark:text-blue-400"
+                    : "text-gray-700 dark:text-zinc-200"
                 }
               `}
             >
@@ -119,7 +119,7 @@ export function ColumnsDropdown({
                     transition flex items-center gap-2
                     ${
                       isSelected
-                        ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
+                        ? "text-gray-900 dark:text-zinc-100"
                         : "text-gray-700 dark:text-zinc-200"
                     }
                   `}
@@ -144,7 +144,7 @@ export function ColumnsDropdown({
           <div className="px-3 py-2 border-t border-zinc-200 dark:border-zinc-700">
             <button
               onClick={() => setColumnsMenuOpen(false)}
-              className="w-full text-center text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              className="w-full text-center text-sm text-gray-700 dark:text-zinc-200 hover:underline"
             >
               Close
             </button>
