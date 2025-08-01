@@ -69,10 +69,21 @@
     "calculators": "Calculators",
     "periodicTable": "Periodic Table",
     "catalog": "Catalog",
+    "visualization": "Visualization",
     "games": "Games",
     "menu": {
       "expand": "Expand menu",
       "collapse": "Collapse menu"
+    }
+  },
+  "molview": {
+    "title": "Molecule Viewer",
+    "subtitle": "Explore molecules interactively",
+    "description": "Explore molecules interactively using MolView. Enter chemical formulas, visualize 3D structures and explore different molecular representations."
+  },
+  "visualization": {
+    "molecules2D3D": {
+      "title": "2D/3D Molecules"
     }
   },
   "home": {
@@ -601,8 +612,8 @@
     "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
     "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
     "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)",
-    "Soluble in water (5.6 g/100mL at 20°C)": "Soluble in water (5.6 g/100mL at 20°C)",
-    "In water: 12 g/100 mL (25 °C)": "In water: 12 g/100 mL (25 °C)",
+    "Soluble_in_water_5_6_g_100mL_at_20C": "Soluble in water (5.6 g/100mL at 20°C)",
+    "In_water_12_g_100_mL_25_C": "In water: 12 g/100 mL (25 °C)",
     "Highly soluble in water (forms H2SO3)": "Highly soluble in water (forms H2SO3)"
   },
   "compoundTable": {
