@@ -2,9 +2,14 @@
 
 import { useRouter, useParams, usePathname } from "next/navigation";
 import { Languages } from "lucide-react";
-import { useTranslations } from 'next-intl';
+import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  className?: string;
+}
+
+export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
@@ -12,26 +17,34 @@ export default function LanguageSwitcher() {
 
   const toggleLanguage = () => {
     const newLocale = currentLocale === "pt" ? "en" : "pt";
-    // Manter a rota atual, apenas trocando o locale
     const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
     router.replace(newPath);
   };
 
-  const t = useTranslations('common.language');
+  const t = useTranslations("common.language");
 
   return (
     <button
       onClick={toggleLanguage}
-      className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-      aria-label={t('toggle')}
-      title={t('toggle')}
+      className={cn(
+        "relative w-20 h-9 flex items-center justify-center gap-2 rounded-full border transition-colors duration-300 outline-none shadow focus:ring-2 focus:ring-cyan-500/50",
+        "bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-900 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700",
+        className
+      )}
+      aria-label={t("toggle")}
+      tabIndex={0}
     >
-      <div className="flex items-center gap-1">
-        <Languages size={20} />
-        <span className="text-sm font-medium">
-          {currentLocale.toUpperCase()}
-        </span>
-      </div>
+      <Languages className="w-5 h-5" strokeWidth={1.5} />
+      <span
+        className={cn(
+          "text-base font-semibold transition-colors duration-200",
+          currentLocale === "en"
+            ? "text-blue-500 dark:text-blue-400"
+            : "text-green-600 dark:text-green-400"
+        )}
+      >
+        {currentLocale.toUpperCase()}
+      </span>
     </button>
   );
 }
