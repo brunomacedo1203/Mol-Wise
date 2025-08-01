@@ -37,7 +37,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       <Languages className="w-5 h-5" strokeWidth={1.5} />
       <span
         className={cn(
-          "text-base font-semibold transition-colors duration-200",
+          "text-base font-semibold transition-colors duration-200 mt-1",
           currentLocale === "en"
             ? "text-blue-500 dark:text-blue-400"
             : "text-green-600 dark:text-green-400"
