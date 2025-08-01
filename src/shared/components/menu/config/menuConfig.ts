@@ -1,4 +1,4 @@
-import { Calculator, FlaskConical, Book, FunctionSquare } from "lucide-react";
+import { Calculator, FlaskConical, Book, FunctionSquare, Atom } from "lucide-react";
 import { MENU_SECTIONS } from "../constants";
 import { MenuSectionConfig } from "../types";
 
@@ -32,6 +32,19 @@ export const menuSectionsConfig: MenuSectionConfig[] = [
         translationKey: "catalog.title", 
         type: "link",
         href: (locale: string) => `/${locale}/catalog`,
+      } as const
+    ],
+  },
+  {
+    id: MENU_SECTIONS.MOLVIEW,
+    icon: Atom,
+    translationKey: "navigation.molview",
+    items: [
+      {
+        icon: Atom,
+        translationKey: "molview.title", 
+        type: "link",
+        href: (locale: string) => `/${locale}/molview`,
       } as const
     ],
   },
