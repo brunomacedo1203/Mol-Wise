@@ -3,7 +3,7 @@ export const MENU_STORAGE_KEY = "menuState";
 export const MENU_SECTIONS = {
   CALCULATORS: "calculators",
   CATALOG: "catalog",
-  MOLVIEW: "molview", // Nova seção
+  VISUALIZATION: "visualization", // Seção de visualização
   // GAMES: "games", // Comentado temporariamente
 } as const;
 
