@@ -161,6 +161,22 @@ const MolecularFormulaInput = ({
     [onChange, updateFormattedContent]
   );
 
+  // Handlers para permitir seleção de texto no input
+  const handleInputMouseDown = useCallback((e: React.MouseEvent) => {
+    // Impede que o evento se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
+  const handleInputMouseMove = useCallback((e: React.MouseEvent) => {
+    // Permite seleção de texto durante o arraste do mouse
+    e.stopPropagation();
+  }, []);
+
+  const handleInputClick = useCallback((e: React.MouseEvent) => {
+    // Impede que o clique se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
   // Handlers para permitir seleção de texto no resultado
   const handleResultMouseDown = useCallback((e: React.MouseEvent) => {
     // Impede que o evento se propague para o Rnd
@@ -193,6 +209,9 @@ const MolecularFormulaInput = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           onPaste={handlePaste}
+          onMouseDown={handleInputMouseDown}
+          onMouseMove={handleInputMouseMove}
+          onClick={handleInputClick}
           className={`molecular-formula-input border 
             ${
               errorMessage
@@ -204,7 +223,7 @@ const MolecularFormulaInput = ({
             text-xl min-h-[3rem] max-h-48 cursor-text
             transition-all whitespace-pre-wrap break-words overflow-y-auto
             ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
-            outline-none
+            outline-none select-text
           `}
           spellCheck={false}
           aria-label="Chemical formula input"

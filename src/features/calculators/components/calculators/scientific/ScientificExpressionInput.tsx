@@ -1,4 +1,5 @@
-import { useRef, useEffect, useCallback, useState } from "react";
+"use client";
+import { useRef, useCallback, useState } from "react";
 import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
 
 interface ScientificExpressionInputProps {
@@ -19,118 +20,73 @@ const ScientificExpressionInput = ({
   className,
 }: ScientificExpressionInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const lastKnownContentRef = useRef<string>("");
   const [isFocused, setIsFocused] = useState(false);
 
-  // Keep track of the actual DOM content to compare with the controlled 'value'
-  const lastKnownContentRef = useRef<string>(value || "");
-
-  // Função para obter a posição atual do cursor
   const getCursorPosition = useCallback(() => {
     const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0 && contentRef.current) {
-      const range = selection.getRangeAt(0);
-      const preCaretRange = range.cloneRange();
-      preCaretRange.selectNodeContents(contentRef.current);
-      preCaretRange.setEnd(range.endContainer, range.endOffset);
-      return preCaretRange.toString().length;
-    }
-    return 0;
+    if (!selection || !contentRef.current) return 0;
+
+    const range = selection.getRangeAt(0);
+    const preCursorRange = range.cloneRange();
+    preCursorRange.selectNodeContents(contentRef.current);
+    preCursorRange.setEnd(range.endContainer, range.endOffset);
+    return preCursorRange.toString().length;
   }, []);
 
-  // Função para definir a posição do cursor
   const setCursorPositionAt = useCallback((position: number) => {
     if (!contentRef.current) return;
 
-    const range = document.createRange();
-    const selection = window.window.getSelection();
+    const selection = window.getSelection();
+    if (!selection) return;
 
-    if (contentRef.current.firstChild) {
-      const textLength = contentRef.current.textContent?.length || 0;
-      const safePosition = Math.min(position, textLength);
+    const walker = document.createTreeWalker(
+      contentRef.current,
+      NodeFilter.SHOW_TEXT,
+      null
+    );
 
-      try {
-        range.setStart(contentRef.current.firstChild, safePosition);
+    let currentNode: Node | null = null;
+    let currentIndex = 0;
+
+    while ((currentNode = walker.nextNode())) {
+      const len = currentNode.textContent?.length || 0;
+      if (position <= currentIndex + len) {
+        const range = document.createRange();
+        range.setStart(currentNode, position - currentIndex);
         range.collapse(true);
-        selection?.removeAllRanges();
-        selection?.addRange(range);
-      } catch (_error) {
-        console.error("Error restoring cursor position:", _error);
-        // Fallback: posicionar no final
-        range.setStart(contentRef.current.firstChild, textLength);
-        range.collapse(true);
-        selection?.removeAllRanges();
-        selection?.addRange(range);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return;
       }
+      currentIndex += len;
+    }
+
+    // Se não encontrou posição, coloca no final
+    const lastNode = contentRef.current.lastChild;
+    if (lastNode && lastNode.nodeType === Node.TEXT_NODE) {
+      const range = document.createRange();
+      range.setStart(lastNode, lastNode.textContent?.length || 0);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
     }
   }, []);
 
-  // Sincronizar o conteúdo do DOM com o valor controlado
-  useEffect(() => {
-    if (contentRef.current && contentRef.current.textContent !== value) {
-      const currentCursorPosition = getCursorPosition();
-      contentRef.current.textContent = value;
-
-      // Restaurar posição do cursor se o componente estiver focado
-      if (isFocused) {
-        setCursorPositionAt(currentCursorPosition);
-      }
-    }
-  }, [value, isFocused, getCursorPosition, setCursorPositionAt]);
-
   const handleInput = useCallback(
     (e: React.FormEvent<HTMLDivElement>) => {
-      const currentContent = e.currentTarget.textContent || "";
-      const previousContent = lastKnownContentRef.current;
-
-      // Determine the character that was just added
-      let newChar = "";
-      if (currentContent.length > previousContent.length) {
-        newChar = currentContent.substring(previousContent.length);
-      } else {
-        // If content length decreased or stayed same, it's not a simple addition
-        // For simplicity, we'll assume a single char addition if length increased
-      }
-
-      // Only validate if a single '0' was added that would create an invalid sequence
-      if (newChar === "0") {
-        // Check if the resulting full string (previousContent + newChar) is invalid
-        if (!isValidZeroInsertion(previousContent, newChar)) {
-          // If invalid, revert DOM content and prevent state update
-          if (contentRef.current) {
-            contentRef.current.textContent = previousContent;
-            // Restore cursor position
-            const range = document.createRange();
-            const selection = window.getSelection();
-            if (selection && contentRef.current.firstChild) {
-              range.setStart(
-                contentRef.current.firstChild,
-                previousContent.length
-              );
-              range.collapse(true);
-              selection.removeAllRanges();
-              selection.addRange(range);
-            }
-          }
-          return; // Stop here, do not call onChange
-        }
-      }
-
-      // If valid, or not a '0' being added, update the state
-      onChange(currentContent);
-      lastKnownContentRef.current = currentContent; // Update last known content after successful change
+      const newContent = e.currentTarget.textContent || "";
+      lastKnownContentRef.current = newContent;
+      onChange(newContent);
     },
     [onChange]
   );
 
-  // Interceptar colagem para validar
   const handlePaste = useCallback(
     (e: React.ClipboardEvent<HTMLDivElement>) => {
       e.preventDefault();
-
       const pastedText = e.clipboardData.getData("text/plain");
       const currentCursorPosition = getCursorPosition();
-
-      // Construir o novo valor após a colagem
       const beforeCursor = value.substring(0, currentCursorPosition);
       const afterCursor = value.substring(currentCursorPosition);
 
@@ -185,6 +141,22 @@ const ScientificExpressionInput = ({
     }
   }, [value]);
 
+  // Handlers para permitir seleção de texto no input
+  const handleInputMouseDown = useCallback((e: React.MouseEvent) => {
+    // Impede que o evento se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
+  const handleInputMouseMove = useCallback((e: React.MouseEvent) => {
+    // Permite seleção de texto durante o arraste do mouse
+    e.stopPropagation();
+  }, []);
+
+  const handleInputClick = useCallback((e: React.MouseEvent) => {
+    // Impede que o clique se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
   const shouldShowPlaceholder = !isFocused && (!value || value.length === 0);
 
   return (
@@ -201,6 +173,9 @@ const ScientificExpressionInput = ({
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onMouseDown={handleInputMouseDown}
+          onMouseMove={handleInputMouseMove}
+          onClick={handleInputClick}
           className={`molecular-formula-input border 
             ${
               errorMessage
@@ -212,7 +187,7 @@ const ScientificExpressionInput = ({
             text-xl h-[3rem] cursor-text
             transition-all whitespace-pre-wrap break-words
             ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
-            outline-none text-right font-mono
+            outline-none text-right font-mono select-text
           `}
           spellCheck={false}
           aria-label="Scientific expression input"
