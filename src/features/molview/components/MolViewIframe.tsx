@@ -9,7 +9,7 @@ export function MolViewIframe({
 }: MolViewIframeProps) {
   return (
     <iframe
-      src="https://app.molview.org/"
+      src="https://molview.org/"
       width={width}
       height={height}
       className={`border-0 rounded-lg shadow-lg ${className}`}
