@@ -11,6 +11,17 @@ interface ScientificExpressionInputProps {
   className?: string;
 }
 
+// Função para formatar a expressão visualmente
+const formatExpression = (expression: string): string => {
+  if (!expression) return "";
+
+  // Adicionar espaços ao redor de operadores para melhor legibilidade
+  return expression
+    .replace(/([+\-*/^])/g, " $1 ") // Espaços ao redor de operadores
+    .replace(/\s+/g, " ") // Múltiplos espaços para um só
+    .trim();
+};
+
 const ScientificExpressionInput = ({
   value = "",
   onChange,
@@ -26,7 +37,8 @@ const ScientificExpressionInput = ({
   // Sincronizar o value prop com o conteúdo do contentEditable
   useEffect(() => {
     if (contentRef.current && value !== lastKnownContentRef.current) {
-      contentRef.current.textContent = value;
+      const formattedValue = formatExpression(value);
+      contentRef.current.textContent = formattedValue;
       lastKnownContentRef.current = value;
     }
   }, [value]);
@@ -84,8 +96,10 @@ const ScientificExpressionInput = ({
   const handleInput = useCallback(
     (e: React.FormEvent<HTMLDivElement>) => {
       const newContent = e.currentTarget.textContent || "";
-      lastKnownContentRef.current = newContent;
-      onChange(newContent);
+      // Remover formatação visual para armazenar apenas o valor puro
+      const cleanContent = newContent.replace(/\s+/g, "");
+      lastKnownContentRef.current = cleanContent;
+      onChange(cleanContent);
     },
     [onChange]
   );
@@ -144,7 +158,8 @@ const ScientificExpressionInput = ({
     setIsFocused(false);
     // On blur, ensure the displayed content matches the value (e.g., after a paste)
     if (typeof value === "string" && contentRef.current) {
-      contentRef.current.textContent = value;
+      const formattedValue = formatExpression(value);
+      contentRef.current.textContent = formattedValue;
       lastKnownContentRef.current = value;
     }
   }, [value]);
@@ -196,6 +211,7 @@ const ScientificExpressionInput = ({
             transition-all whitespace-pre-wrap break-words
             ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
             outline-none text-right font-mono select-text
+            tracking-wide
           `}
           spellCheck={false}
           aria-label="Scientific expression input"

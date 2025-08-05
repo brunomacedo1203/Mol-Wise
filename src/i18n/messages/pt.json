@@ -160,7 +160,16 @@
       "errors": {
         "invalidExpression": "Expressão inválida",
         "empty": "A expressão não pode estar vazia",
+        "divisionByZero": "Divisão por zero não é permitida",
         "generic": "Ocorreu um erro ao calcular"
+      },
+      "history": {
+        "title": "Histórico de Cálculos",
+        "show": "Mostrar Histórico",
+        "hide": "Ocultar Histórico",
+        "clear": "Limpar Histórico",
+        "empty": "Nenhum cálculo realizado ainda",
+        "clickToUse": "Clique para usar este resultado"
       }
     }
   },

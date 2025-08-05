@@ -1,12 +1,13 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useParams } from "next/navigation";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useScientificCalculator } from "@/features/calculators/hooks/calculators/scientific/useScientificCalculator";
 import ScientificKeyboard from "@/features/calculators/components/calculators/scientific/ScientificKeyboard";
 import { CalculatorContainer } from "@/features/calculators/components/common";
 import ScientificExpressionInput from "./ScientificExpressionInput";
+import CalculationHistory from "./CalculationHistory";
 
 type ScientificCalculatorProps = Omit<
   CalculatorBaseProps,
@@ -34,11 +35,13 @@ export default function ScientificCalculator({
   const t = useTranslations("calculators.scientific");
   const params = useParams();
   const locale = params.locale as string;
+  const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
   const {
     formula,
     result,
     errorMessage,
+    calculationHistory,
     handleFormulaChange,
     calculate,
     handleKeyPress,
@@ -46,6 +49,7 @@ export default function ScientificCalculator({
     handleMemory,
     backspace,
     reset,
+    clearHistory,
   } = useScientificCalculator({
     initialFormula,
     initialResult,
@@ -55,6 +59,7 @@ export default function ScientificCalculator({
     getErrorMessage: (type: string) => {
       if (type === "invalidExpression") return t("errors.invalidExpression");
       if (type === "empty") return t("errors.empty");
+      if (type === "divisionByZero") return t("errors.divisionByZero");
       return "";
     },
   });
@@ -75,6 +80,17 @@ export default function ScientificCalculator({
     e.stopPropagation();
   }, []);
 
+  // Handler para usar resultado do histórico
+  const handleUseHistoryResult = useCallback(
+    (historyResult: string) => {
+      // Converter vírgula para ponto se necessário
+      const cleanResult =
+        locale === "pt" ? historyResult.replace(/,/g, ".") : historyResult;
+      handleFormulaChange(cleanResult);
+    },
+    [handleFormulaChange, locale]
+  );
+
   return (
     <CalculatorContainer
       id={id}
@@ -93,24 +109,42 @@ export default function ScientificCalculator({
             errorMessage={errorMessage}
             placeholder={t("input.placeholder")}
           />
-          <div className="h-[2rem] w-full px-3 overflow-hidden flex items-center">
+          <div className="h-[3.5rem] w-full px-3 overflow-hidden flex items-center">
             {result ? (
-              <div
-                className="text-blue-600 dark:text-blue-400 text-left text-2xl font-mono break-words select-text cursor-text"
-                onMouseDown={handleResultMouseDown}
-                onMouseMove={handleResultMouseMove}
-                onClick={handleResultClick}
-              >
-                = {result}
+              <div className="flex flex-col w-full animate-in fade-in duration-200">
+                {/* Histórico da expressão */}
+                <div className="text-gray-500 dark:text-gray-400 text-sm font-mono truncate">
+                  {formula}
+                </div>
+                {/* Resultado (usado automaticamente no próximo cálculo) */}
+                <div className="flex items-center justify-between">
+                  <div
+                    className="text-blue-600 dark:text-blue-400 text-left text-2xl font-mono break-words select-text cursor-text"
+                    onMouseDown={handleResultMouseDown}
+                    onMouseMove={handleResultMouseMove}
+                    onClick={handleResultClick}
+                  >
+                    = {result}
+                  </div>
+                </div>
               </div>
             ) : errorMessage ? (
-              <div className="text-red-500 dark:text-red-400 text-left text-xl font-sans break-words">
+              <div className="text-red-500 dark:text-red-400 text-left text-xl font-sans break-words animate-in fade-in duration-200">
                 {errorMessage}
               </div>
             ) : (
               <span className="block invisible text-2xl">0</span>
             )}
           </div>
+
+          {/* Componente de Histórico */}
+          <CalculationHistory
+            history={calculationHistory}
+            onUseResult={handleUseHistoryResult}
+            onClearHistory={clearHistory}
+            isVisible={isHistoryVisible}
+            onToggleVisibility={() => setIsHistoryVisible(!isHistoryVisible)}
+          />
         </div>
       }
       actions={
