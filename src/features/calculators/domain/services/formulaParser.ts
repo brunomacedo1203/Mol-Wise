@@ -1,6 +1,9 @@
 export function parseFormulaForEvaluation(formula: string): string {
   let parsedFormula = formula;
 
+  // Converter vírgulas para pontos (separador decimal brasileiro)
+  parsedFormula = parsedFormula.replace(/,/g, ".");
+
   // Substituir funções científicas para o formato mathjs
   parsedFormula = parsedFormula.replace(/sin\(/g, "sin(");
   parsedFormula = parsedFormula.replace(/cos\(/g, "cos(");

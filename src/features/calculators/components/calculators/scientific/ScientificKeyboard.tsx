@@ -6,6 +6,7 @@ import KeyboardBtn from "@/shared/components/keyboard/KeyboardBtn";
 import { ReloadIcon } from "@/shared/components/icons/ReloadIcon";
 import { BackspaceIcon } from "@/shared/components/icons/BackspaceIcon";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { ScientificButton } from "./ScientificButton";
 import { SCIENTIFIC_BUTTONS } from "@/features/calculators/domain/types/scientific-constants";
 import { chunkArray } from "@/features/calculators/utils/chunkArray";
@@ -18,6 +19,8 @@ export default function ScientificKeyboard({
   onReset,
 }: ScientificKeyboardProps) {
   const t = useTranslations("calculators.scientific");
+  const params = useParams();
+  const locale = params.locale as string;
 
   const scientificButtonMap = new Map(
     SCIENTIFIC_BUTTONS.map((btn) => [btn.value, btn])
@@ -32,6 +35,19 @@ export default function ScientificKeyboard({
     }))
   );
 
+  // Função para obter o separador decimal baseado no locale
+  const getDecimalSeparator = () => {
+    return locale === "pt" ? "," : ".";
+  };
+
+  // Função para obter o label correto baseado no locale
+  const getLocalizedLabel = (value: string) => {
+    if (value === ".") {
+      return getDecimalSeparator();
+    }
+    return value;
+  };
+
   const numericAndOperatorLayoutRows = [
     ["7", "8", "9", "/"],
     ["4", "5", "6", "*"],
@@ -43,8 +59,8 @@ export default function ScientificKeyboard({
     ...scientificLayoutRows,
     ...numericAndOperatorLayoutRows.map((row) =>
       row.map((value) => ({
-        label: value,
-        value,
+        label: getLocalizedLabel(value),
+        value: value, // Mantém o valor original para onKeyPress
         type:
           value === "+" || value === "-" || value === "*" || value === "/"
             ? "operator"
@@ -75,15 +91,23 @@ export default function ScientificKeyboard({
                   />
                 );
               } else {
+                // Aplicar localização apenas no label do botão
+                const displayLabel =
+                  button.value === "." && locale === "pt" ? "," : button.value;
+
+                // Determinar o valor que será enviado para onKeyPress
+                const keyPressValue =
+                  button.value === "." && locale === "pt" ? "," : button.value;
+
                 return (
                   <KeyboardBtn
                     key={button.value}
-                    onClick={() => onKeyPress?.(button.value)}
+                    onClick={() => onKeyPress?.(keyPressValue)}
                     className={
                       button.colSpan ? `col-span-${button.colSpan}` : ""
                     }
                   >
-                    {button.label}
+                    {displayLabel}
                   </KeyboardBtn>
                 );
               }

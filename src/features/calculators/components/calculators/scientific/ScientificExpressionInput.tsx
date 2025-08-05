@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useCallback, useState } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
 
 interface ScientificExpressionInputProps {
@@ -22,6 +22,14 @@ const ScientificExpressionInput = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const lastKnownContentRef = useRef<string>("");
   const [isFocused, setIsFocused] = useState(false);
+
+  // Sincronizar o value prop com o conteúdo do contentEditable
+  useEffect(() => {
+    if (contentRef.current && value !== lastKnownContentRef.current) {
+      contentRef.current.textContent = value;
+      lastKnownContentRef.current = value;
+    }
+  }, [value]);
 
   const getCursorPosition = useCallback(() => {
     const selection = window.getSelection();

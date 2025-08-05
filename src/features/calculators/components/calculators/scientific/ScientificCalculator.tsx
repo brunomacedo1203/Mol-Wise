@@ -1,6 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import { useParams } from "next/navigation";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useScientificCalculator } from "@/features/calculators/hooks/calculators/scientific/useScientificCalculator";
 import ScientificKeyboard from "@/features/calculators/components/calculators/scientific/ScientificKeyboard";
@@ -31,6 +32,8 @@ export default function ScientificCalculator({
   onKeyboardVisibilityChange,
 }: ScientificCalculatorProps) {
   const t = useTranslations("calculators.scientific");
+  const params = useParams();
+  const locale = params.locale as string;
 
   const {
     formula,
@@ -48,6 +51,7 @@ export default function ScientificCalculator({
     initialResult,
     onFormulaChange,
     onResultChange,
+    locale,
     getErrorMessage: (type: string) => {
       if (type === "invalidExpression") return t("errors.invalidExpression");
       if (type === "empty") return t("errors.empty");

@@ -9,6 +9,7 @@ interface UseScientificCalculatorProps {
   onFormulaChange?: (formula: string) => void;
   onResultChange?: (result: string | null) => void;
   getErrorMessage?: (type: 'invalidExpression' | 'empty') => string;
+  locale?: string;
 }
 
 interface UseScientificCalculatorReturn {
@@ -51,6 +52,7 @@ export function useScientificCalculator({
   onFormulaChange,
   onResultChange,
   getErrorMessage,
+  locale,
 }: UseScientificCalculatorProps): UseScientificCalculatorReturn {
   const [formula, setFormula] = useState(initialFormula);
   const [result, setResult] = useState<string | null>(initialResult);
@@ -79,9 +81,14 @@ export function useScientificCalculator({
 
       const calculatedResult = evaluate(formulaWithRad);
 
-      const formattedResult = Number.isInteger(calculatedResult)
+      let formattedResult = Number.isInteger(calculatedResult)
         ? calculatedResult.toString()
         : calculatedResult.toFixed(8).replace(/\.?0+$/, "");
+
+      // Converter ponto para vírgula se o locale for português
+      if (locale === "pt") {
+        formattedResult = formattedResult.replace(/\./g, ",");
+      }
 
       setResult(formattedResult);
       onResultChange?.(formattedResult);
@@ -90,7 +97,7 @@ export function useScientificCalculator({
       setErrorMessage(getErrorMessage ? getErrorMessage('invalidExpression') : "Expressão inválida");
       setResult(null);
     }
-  }, [formula, onResultChange, getErrorMessage]);
+  }, [formula, onResultChange, getErrorMessage, locale]);
 
   const reset = useCallback(() => {
     setFormula("");

@@ -29,7 +29,6 @@ export function CalculatorPageContent() {
 
   const renderCalculator = (calculator: (typeof calculators)[0]) => {
     const commonProps = {
-      key: calculator.id,
       id: calculator.id,
       onClose: () => removeCalculator(calculator.id),
       initialPosition: calculator.position,
@@ -54,9 +53,9 @@ export function CalculatorPageContent() {
 
     switch (calculator.type) {
       case "molar-mass":
-        return <MolarMassCalculator {...commonProps} />;
+        return <MolarMassCalculator key={calculator.id} {...commonProps} />;
       case "scientific":
-        return <ScientificCalculator {...commonProps} />;
+        return <ScientificCalculator key={calculator.id} {...commonProps} />;
       default:
         return null;
     }
