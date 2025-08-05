@@ -71,7 +71,7 @@ export default function ScientificKeyboard({
   ];
 
   return (
-    <div className="flex flex-col items-center w-full gap-0 py-2 rounded-xl shadow">
+    <div className="flex flex-col items-center w-full gap-0 py-1 rounded-xl shadow">
       <div className="grid grid-cols-8 gap-1 w-[482px] mx-auto">
         {fullKeyboardLayout.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
@@ -119,7 +119,7 @@ export default function ScientificKeyboard({
         ))}
       </div>
 
-      <div className="flex gap-2 mt-2 items-center justify-center w-full px-4">
+      <div className="flex gap-2 mt-1 items-center justify-center w-full px-4">
         <KeyboardBtn onClick={onReset} className="bg-white w-10 h-10">
           <ReloadIcon size={24} />
         </KeyboardBtn>

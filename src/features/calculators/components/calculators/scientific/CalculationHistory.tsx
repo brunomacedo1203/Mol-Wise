@@ -51,7 +51,7 @@ const CalculationHistory = ({
     return (
       <button
         onClick={onToggleVisibility}
-        className="w-full p-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors border-t border-gray-200 dark:border-gray-700"
+        className="w-full p-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors border-t border-gray-200 dark:border-gray-700"
       >
         📋 {t("history.show")}
       </button>
@@ -66,7 +66,7 @@ const CalculationHistory = ({
       onClick={handleHistoryClick}
     >
       {/* Header do Histórico */}
-      <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800">
+      <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800">
         <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
           📋 {t("history.title")}
         </h3>

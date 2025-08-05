@@ -100,7 +100,7 @@ const ScientificExpressionInput = ({
   );
 
   return (
-    <div className="flex flex-col w-full space-y-2">
+    <div className="flex flex-col w-full space-y-1">
       <div className="relative">
         <input
           ref={inputRef}
