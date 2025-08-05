@@ -1,147 +1,32 @@
 "use client";
-import { useRef, useCallback, useState, useEffect } from "react";
-import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
+import { useRef, useCallback, useState } from "react";
 
+// Props do componente de entrada de expressão científica
 interface ScientificExpressionInputProps {
-  value?: string;
-  onChange: (val: string) => void;
+  value: string;
+  onChange: (newFormula: string) => void;
   onEnterPress: () => void;
-  errorMessage?: string | null;
-  placeholder?: string;
-  className?: string;
+  errorMessage: string | null;
+  placeholder: string;
+  result: string | null;
 }
 
-// Função para formatar a expressão visualmente
-const formatExpression = (expression: string): string => {
-  if (!expression) return "";
-
-  // Adicionar espaços ao redor de operadores para melhor legibilidade
-  return expression
-    .replace(/([+\-*/^])/g, " $1 ") // Espaços ao redor de operadores
-    .replace(/\s+/g, " ") // Múltiplos espaços para um só
-    .trim();
-};
-
 const ScientificExpressionInput = ({
-  value = "",
+  value,
   onChange,
   onEnterPress,
   errorMessage,
-  placeholder = "Digite uma expressão...",
-  className,
+  placeholder,
+  result,
 }: ScientificExpressionInputProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const lastKnownContentRef = useRef<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
 
-  // Sincronizar o value prop com o conteúdo do contentEditable
-  useEffect(() => {
-    if (contentRef.current && value !== lastKnownContentRef.current) {
-      const formattedValue = formatExpression(value);
-      contentRef.current.textContent = formattedValue;
-      lastKnownContentRef.current = value;
-    }
-  }, [value]);
-
-  const getCursorPosition = useCallback(() => {
-    const selection = window.getSelection();
-    if (!selection || !contentRef.current) return 0;
-
-    const range = selection.getRangeAt(0);
-    const preCursorRange = range.cloneRange();
-    preCursorRange.selectNodeContents(contentRef.current);
-    preCursorRange.setEnd(range.endContainer, range.endOffset);
-    return preCursorRange.toString().length;
-  }, []);
-
-  const setCursorPositionAt = useCallback((position: number) => {
-    if (!contentRef.current) return;
-
-    const selection = window.getSelection();
-    if (!selection) return;
-
-    const walker = document.createTreeWalker(
-      contentRef.current,
-      NodeFilter.SHOW_TEXT,
-      null
-    );
-
-    let currentNode: Node | null = null;
-    let currentIndex = 0;
-
-    while ((currentNode = walker.nextNode())) {
-      const len = currentNode.textContent?.length || 0;
-      if (position <= currentIndex + len) {
-        const range = document.createRange();
-        range.setStart(currentNode, position - currentIndex);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        return;
-      }
-      currentIndex += len;
-    }
-
-    // Se não encontrou posição, coloca no final
-    const lastNode = contentRef.current.lastChild;
-    if (lastNode && lastNode.nodeType === Node.TEXT_NODE) {
-      const range = document.createRange();
-      range.setStart(lastNode, lastNode.textContent?.length || 0);
-      range.collapse(true);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  }, []);
-
-  const handleInput = useCallback(
-    (e: React.FormEvent<HTMLDivElement>) => {
-      const newContent = e.currentTarget.textContent || "";
-      // Remover formatação visual para armazenar apenas o valor puro
-      const cleanContent = newContent.replace(/\s+/g, "");
-      lastKnownContentRef.current = cleanContent;
-      onChange(cleanContent);
-    },
-    [onChange]
-  );
-
-  const handlePaste = useCallback(
-    (e: React.ClipboardEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      const pastedText = e.clipboardData.getData("text/plain");
-      const currentCursorPosition = getCursorPosition();
-      const beforeCursor = value.substring(0, currentCursorPosition);
-      const afterCursor = value.substring(currentCursorPosition);
-
-      // Validar caractere por caractere do texto colado
-      let validatedText = "";
-      for (let i = 0; i < pastedText.length; i++) {
-        const char = pastedText[i];
-
-        if (char === "0") {
-          const beforeChar = beforeCursor + validatedText;
-          if (isValidZeroInsertion(beforeChar, "0")) {
-            validatedText += char;
-          }
-          // Se inválido, pular o caractere
-        } else {
-          validatedText += char;
-        }
-      }
-
-      // Aplicar o texto validado
-      const finalValue = beforeCursor + validatedText + afterCursor;
-      onChange(finalValue);
-
-      // Posicionar cursor após o texto colado válido
-      setTimeout(() => {
-        setCursorPositionAt(currentCursorPosition + validatedText.length);
-      }, 0);
-    },
-    [value, onChange, getCursorPosition, setCursorPositionAt]
-  );
+  // Valor do input: fórmula + resultado quando disponível
+  const displayValue = result && !errorMessage ? `${value} = ${result}` : value;
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter") {
         e.preventDefault();
         onEnterPress();
@@ -156,74 +41,45 @@ const ScientificExpressionInput = ({
 
   const handleBlur = useCallback(() => {
     setIsFocused(false);
-    // On blur, ensure the displayed content matches the value (e.g., after a paste)
-    if (typeof value === "string" && contentRef.current) {
-      const formattedValue = formatExpression(value);
-      contentRef.current.textContent = formattedValue;
-      lastKnownContentRef.current = value;
-    }
-  }, [value]);
-
-  // Handlers para permitir seleção de texto no input
-  const handleInputMouseDown = useCallback((e: React.MouseEvent) => {
-    // Impede que o evento se propague para o Rnd
-    e.stopPropagation();
   }, []);
 
-  const handleInputMouseMove = useCallback((e: React.MouseEvent) => {
-    // Permite seleção de texto durante o arraste do mouse
-    e.stopPropagation();
-  }, []);
-
-  const handleInputClick = useCallback((e: React.MouseEvent) => {
-    // Impede que o clique se propague para o Rnd
-    e.stopPropagation();
-  }, []);
-
-  const shouldShowPlaceholder = !isFocused && (!value || value.length === 0);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      // Extrai apenas a parte da fórmula (antes do "=")
+      const inputValue = e.target.value;
+      const formulaPart = inputValue.split(" = ")[0];
+      onChange(formulaPart);
+    },
+    [onChange]
+  );
 
   return (
-    <div className={`w-full ${className}`}>
-      <div
-        className="relative w-full min-h-[3rem] max-h-32"
-        onClick={() => contentRef.current?.focus()}
-      >
-        <div
-          ref={contentRef}
-          contentEditable
-          onInput={handleInput}
-          onPaste={handlePaste}
+    <div className="flex flex-col w-full space-y-2">
+      <div className="relative">
+        <input
+          ref={inputRef}
+          type="text"
+          value={displayValue}
+          onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onMouseDown={handleInputMouseDown}
-          onMouseMove={handleInputMouseMove}
-          onClick={handleInputClick}
-          className={`molecular-formula-input border 
-            ${
-              errorMessage
-                ? "border-red-500 dark:border-red-400"
-                : "border-gray-300 dark:border-white/20"
-            }
-            rounded-xl pt-2 pb-2 px-3 text-gray-900 dark:text-white 
-            bg-white dark:bg-white/5 dark:border-white/20
-            text-xl h-[3rem] cursor-text
-            transition-all whitespace-pre-wrap break-words
-            ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
-            outline-none text-right font-mono select-text
-            tracking-wide
-          `}
-          spellCheck={false}
-          aria-label="Scientific expression input"
+          placeholder={placeholder}
+          className={`w-full px-3 py-2 text-lg font-mono bg-white dark:bg-gray-800 border rounded-lg shadow-sm transition-all duration-200 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+            errorMessage
+              ? "border-red-500 focus:border-red-500 focus:ring-red-200 dark:focus:ring-red-800"
+              : isFocused
+              ? "border-blue-500 focus:border-blue-500 focus:ring-blue-200 dark:focus:ring-blue-800"
+              : "border-gray-300 dark:border-gray-600 focus:border-gray-400 dark:focus:border-gray-500 focus:ring-gray-200 dark:focus:ring-gray-700"
+          } focus:outline-none focus:ring-2`}
         />
-        {shouldShowPlaceholder && (
-          <span
-            className={`absolute inset-0 w-full h-full flex items-center pl-3 pointer-events-none select-none text-xl font-sans whitespace-pre-wrap break-words text-gray-400 dark:text-white/40`}
-          >
-            {placeholder}
-          </span>
-        )}
       </div>
+
+      {errorMessage && (
+        <div className="text-red-500 dark:text-red-400 text-sm font-medium px-1">
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 };

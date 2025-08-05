@@ -64,26 +64,9 @@ export default function ScientificCalculator({
     },
   });
 
-  // Handlers para permitir seleção de texto no resultado
-  const handleResultMouseDown = useCallback((e: React.MouseEvent) => {
-    // Impede que o evento se propague para o Rnd
-    e.stopPropagation();
-  }, []);
-
-  const handleResultMouseMove = useCallback((e: React.MouseEvent) => {
-    // Permite seleção de texto durante o arraste do mouse
-    e.stopPropagation();
-  }, []);
-
-  const handleResultClick = useCallback((e: React.MouseEvent) => {
-    // Impede que o clique se propague para o Rnd
-    e.stopPropagation();
-  }, []);
-
   // Handler para usar resultado do histórico
   const handleUseHistoryResult = useCallback(
     (historyResult: string) => {
-      // Converter vírgula para ponto se necessário
       const cleanResult =
         locale === "pt" ? historyResult.replace(/,/g, ".") : historyResult;
       handleFormulaChange(cleanResult);
@@ -108,36 +91,8 @@ export default function ScientificCalculator({
             onEnterPress={calculate}
             errorMessage={errorMessage}
             placeholder={t("input.placeholder")}
+            result={result}
           />
-          <div className="h-[3.5rem] w-full px-3 overflow-hidden flex items-center">
-            {result ? (
-              <div className="flex flex-col w-full animate-in fade-in duration-200">
-                {/* Histórico da expressão */}
-                <div className="text-gray-500 dark:text-gray-400 text-sm font-mono truncate">
-                  {formula}
-                </div>
-                {/* Resultado (usado automaticamente no próximo cálculo) */}
-                <div className="flex items-center justify-between">
-                  <div
-                    className="text-blue-600 dark:text-blue-400 text-left text-2xl font-mono break-words select-text cursor-text"
-                    onMouseDown={handleResultMouseDown}
-                    onMouseMove={handleResultMouseMove}
-                    onClick={handleResultClick}
-                  >
-                    = {result}
-                  </div>
-                </div>
-              </div>
-            ) : errorMessage ? (
-              <div className="text-red-500 dark:text-red-400 text-left text-xl font-sans break-words animate-in fade-in duration-200">
-                {errorMessage}
-              </div>
-            ) : (
-              <span className="block invisible text-2xl">0</span>
-            )}
-          </div>
-
-          {/* Componente de Histórico */}
           <CalculationHistory
             history={calculationHistory}
             onUseResult={handleUseHistoryResult}
