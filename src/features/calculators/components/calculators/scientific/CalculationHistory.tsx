@@ -31,6 +31,22 @@ const CalculationHistory = ({
       .trim();
   }, []);
 
+  // Handlers para permitir seleção de texto no histórico
+  const handleHistoryMouseDown = useCallback((e: React.MouseEvent) => {
+    // Impede que o evento se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
+  const handleHistoryMouseMove = useCallback((e: React.MouseEvent) => {
+    // Permite seleção de texto durante o arraste do mouse
+    e.stopPropagation();
+  }, []);
+
+  const handleHistoryClick = useCallback((e: React.MouseEvent) => {
+    // Impede que o clique se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
   if (!isVisible) {
     return (
       <button
@@ -43,7 +59,12 @@ const CalculationHistory = ({
   }
 
   return (
-    <div className="border-t border-gray-200 dark:border-gray-700">
+    <div
+      className="border-t border-gray-200 dark:border-gray-700"
+      onMouseDown={handleHistoryMouseDown}
+      onMouseMove={handleHistoryMouseMove}
+      onClick={handleHistoryClick}
+    >
       {/* Header do Histórico */}
       <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800">
         <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">

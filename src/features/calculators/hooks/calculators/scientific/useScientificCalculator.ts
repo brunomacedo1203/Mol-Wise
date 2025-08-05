@@ -27,6 +27,7 @@ interface UseScientificCalculatorReturn {
   useResult: () => void;
   clearHistory: () => void;
   justCalculated: boolean; // NOVO: expõe flag
+  updateCursorPosition: (position: number) => void;
 }
 
 function degToRad(deg: number): number {
@@ -34,6 +35,7 @@ function degToRad(deg: number): number {
 }
 
 function convertTrigArgsToRad(expr: string): string {
+  // Apenas converte sin, cos, tan (não as inversas)
   return expr.replace(/(sin|cos|tan)\s*\(([^)]+)\)/gi, (match, fn, arg) => {
     try {
       const simpleNumber = Number(arg);
@@ -86,7 +88,8 @@ export function useScientificCalculator({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [memory, setMemory] = useState<number | null>(null);
   const [calculationHistory, setCalculationHistory] = useState<Array<{ expression: string; result: string; timestamp: number }>>([]);
-  const [justCalculated, setJustCalculated] = useState(false); // NOVO
+  const [justCalculated, setJustCalculated] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState(0);
 
   const handleFormulaChange = useCallback(
     (newFormula: string) => {
@@ -154,9 +157,23 @@ export function useScientificCalculator({
     handleFormulaChange(formula.slice(0, -1));
   }, [formula, handleFormulaChange]);
 
+  const insertAtCursor = useCallback(
+    (char: string) => {
+      // Insere o caractere na posição do cursor
+      const beforeCursor = formula.slice(0, cursorPosition);
+      const afterCursor = formula.slice(cursorPosition);
+      const newFormula = beforeCursor + char + afterCursor;
+      handleFormulaChange(newFormula);
+      // Atualiza a posição do cursor para depois do caractere inserido
+      setCursorPosition(cursorPosition + char.length);
+    },
+    [formula, cursorPosition, handleFormulaChange]
+  );
+
   const handleKeyPress = useCallback(
     (key: string) => {
       const isOperator = ["+", "-", "*", "/"].includes(key);
+      const isParenthesis = ["(", ")"].includes(key);
 
       if (result && justCalculated && isOperator) {
         const cleanResult = locale === "pt" ? result.replace(/,/g, ".") : result;
@@ -164,7 +181,7 @@ export function useScientificCalculator({
         setJustCalculated(false);
         return;
       }
-      if (result && justCalculated && !isOperator) {
+      if (result && justCalculated && !isOperator && !isParenthesis) {
         handleFormulaChange(key);
         setJustCalculated(false);
         return;
@@ -173,13 +190,14 @@ export function useScientificCalculator({
         backspace();
       } else if (key === "0") {
         if (isValidZeroInsertion(formula, key)) {
-          handleFormulaChange(formula + key);
+          insertAtCursor(key);
         }
       } else {
-        handleFormulaChange(formula + key);
+        // Inserção normal no final
+        insertAtCursor(key);
       }
     },
-    [formula, handleFormulaChange, backspace, result, locale, justCalculated]
+    [formula, handleFormulaChange, backspace, result, locale, justCalculated, insertAtCursor]
   );
 
   const handleFunction = useCallback(
@@ -190,9 +208,10 @@ export function useScientificCalculator({
         setJustCalculated(false);
         return;
       }
-      handleFormulaChange(formula + func);
+      // Usar insertAtCursor em vez de adicionar no final
+      insertAtCursor(func);
     },
-    [formula, handleFormulaChange, result, locale, justCalculated]
+    [formula, handleFormulaChange, result, locale, justCalculated, insertAtCursor]
   );
 
   const handleMemory = useCallback(
@@ -224,6 +243,13 @@ export function useScientificCalculator({
     }
   }, [result, handleFormulaChange, locale]);
 
+  const updateCursorPosition = useCallback(
+    (position: number) => {
+      setCursorPosition(position);
+    },
+    []
+  );
+
   const clearHistory = useCallback(() => {
     setCalculationHistory([]);
   }, []);
@@ -242,6 +268,7 @@ export function useScientificCalculator({
     handleMemory,
     useResult,
     clearHistory,
-    justCalculated, // <-- ADICIONE isto ao retorno!
+    justCalculated,
+    updateCursorPosition,
   };
 }

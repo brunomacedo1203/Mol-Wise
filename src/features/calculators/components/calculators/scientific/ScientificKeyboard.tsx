@@ -85,6 +85,7 @@ export default function ScientificKeyboard({
                     key={button.value}
                     button={scientificConfig}
                     onClick={onFunction}
+                    locale={locale}
                     className={
                       button.colSpan ? `col-span-${button.colSpan}` : ""
                     }
@@ -103,9 +104,11 @@ export default function ScientificKeyboard({
                   <KeyboardBtn
                     key={button.value}
                     onClick={() => onKeyPress?.(keyPressValue)}
-                    className={
-                      button.colSpan ? `col-span-${button.colSpan}` : ""
-                    }
+                    className={`text-lg font-semibold ${
+                      button.type === "operator"
+                        ? "text-blue-600 dark:text-blue-400 font-bold"
+                        : "text-gray-900 dark:text-white font-semibold"
+                    } ${button.colSpan ? `col-span-${button.colSpan}` : ""}`}
                   >
                     {displayLabel}
                   </KeyboardBtn>
@@ -121,8 +124,8 @@ export default function ScientificKeyboard({
           <ReloadIcon size={24} />
         </KeyboardBtn>
         <KeyboardBtn
-          onClick={() => onFunction && onFunction("(")}
-          className="bg-white w-10 h-10"
+          onClick={() => onKeyPress("(")}
+          className="bg-white w-10 h-10 text-lg font-bold text-gray-900 dark:text-white"
         >
           (
         </KeyboardBtn>
@@ -134,8 +137,8 @@ export default function ScientificKeyboard({
           {t("keyboard.calculate")}
         </KeyboardBtn>
         <KeyboardBtn
-          onClick={() => onFunction && onFunction(")")}
-          className="bg-white w-10 h-10"
+          onClick={() => onKeyPress(")")}
+          className="bg-white w-10 h-10 text-lg font-bold text-gray-900 dark:text-white"
         >
           )
         </KeyboardBtn>

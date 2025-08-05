@@ -50,6 +50,7 @@ export default function ScientificCalculator({
     backspace,
     reset,
     clearHistory,
+    updateCursorPosition,
   } = useScientificCalculator({
     initialFormula,
     initialResult,
@@ -92,6 +93,8 @@ export default function ScientificCalculator({
             errorMessage={errorMessage}
             placeholder={t("input.placeholder")}
             result={result}
+            onCursorPositionChange={updateCursorPosition}
+            locale={locale}
           />
           <CalculationHistory
             history={calculationHistory}
