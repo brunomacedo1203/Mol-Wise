@@ -2,7 +2,6 @@
 
 import { VisualizationContainerProps } from "../types/visualization.types";
 import { MoleculeSearch } from "./MoleculeSearch";
-// import { MoleculeViewer2D } from "./MoleculeViewer2D";
 import { MoleculeViewer3D } from "./MoleculeViewer3D";
 import { useVisualizationStore } from "../store/visualizationStore";
 
@@ -39,15 +38,10 @@ export function VisualizationContainer({
         </button>
       </div>
 
-      {/* Temporariamente comentado para resolver o erro do RDKit */}
-      {/* {viewMode === "2D" && smilesData && (
-        <MoleculeViewer2D smiles={smilesData} />
-      )} */}
-
       {viewMode === "2D" && smilesData && (
         <div className="border p-4 rounded bg-gray-50 dark:bg-zinc-800 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Visualização 2D temporariamente indisponível
+            Visualização 2D será reimplementada com ChemDoodle.
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
             SMILES: {smilesData}

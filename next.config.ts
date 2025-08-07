@@ -1,3 +1,4 @@
+// next.config.ts
 import { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
 
@@ -10,7 +11,10 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Adicionando suporte a WebAssembly
+  experimental: {
+  // ⚠️ Mantido como false pois @rdkit/rdkit depende de WebAssembly via ESM
+  esmExternals: false,
+  },
   webpack(config) {
     config.experiments = config.experiments || {};
     config.experiments.asyncWebAssembly = true;

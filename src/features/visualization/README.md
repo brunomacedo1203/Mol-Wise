@@ -1,191 +1,185 @@
-# MolView Feature
+# Visualization Feature
 
-## Visão Geral
+## 🎯 Visão Geral
 
-Esta feature incorpora o MolView (visualizador de moléculas) no Mol Wise via iframe, permitindo aos usuários explorar moléculas de forma interativa sem sair da aplicação.
+Esta feature permite a visualização interativa de moléculas químicas em **2D (via RDKit-JS)** e **3D (via 3Dmol.js)**, usando dados obtidos da **PubChem API**. O estado da visualização é gerenciado globalmente com **Zustand**, e os componentes seguem a arquitetura modular do projeto Mol Wise.
 
-## Arquitetura
+---
+
+## 🧱 Arquitetura da Feature
 
 ```
-src/features/molview/
+src/features/visualization/
 ├── components/
-│   └── MolViewIframe.tsx    # Componente principal do iframe
+│   ├── MoleculeSearch.tsx          # Input de busca (nome ou fórmula)
+│   ├── MoleculeViewer2D.tsx        # Renderizador 2D usando RDKit-JS
+│   ├── MoleculeViewer3D.tsx        # Renderizador 3D usando 3Dmol.js
+│   └── VisualizationContainer.tsx  # Componente principal que agrupa tudo
+│
+├── store/
+│   └── visualizationStore.ts       # Zustand global state
+│
 ├── types/
-│   └── molview.types.ts     # Definições TypeScript
-├── index.ts                 # Exportações da feature
-└── README.md               # Esta documentação
+│   └── visualization.types.ts      # Tipagens TypeScript da feature
+│
+├── utils/
+│   └── pubchemAPI.ts               # Função para buscar SMILES e SDF da PubChem
+│
+├── index.ts                        # Exportações da feature
+└── README.md                       # Esta documentação
 ```
 
-## Componentes
+---
 
-### MolViewIframe
+## 🧪 Componentes
 
-Componente principal que renderiza o iframe do MolView.
+### MoleculeSearch
 
-**Props:**
+Componente de input com botão de busca. Realiza chamada à API da PubChem e atualiza o estado global.
 
-- `width?: string` - Largura do iframe (padrão: '100%')
-- `height?: string` - Altura do iframe (padrão: '600px')
-- `className?: string` - Classes CSS adicionais
+### MoleculeViewer2D
 
-**Características:**
+Renderiza a estrutura 2D da molécula usando o SMILES com a biblioteca RDKit-JS compilada para WebAssembly.
 
-- URL: `https://app.molview.org/`
-- Sandbox habilitado para segurança
-- Lazy loading para performance
-- Título acessível
-- Classes Tailwind para estilo
+### MoleculeViewer3D
 
-**Exemplo de uso:**
+Renderiza a estrutura 3D da molécula usando o SDF da PubChem e a biblioteca 3Dmol.js via CDN.
 
-```tsx
-import { MolViewIframe } from "@/features/molview";
+### VisualizationContainer
 
-<MolViewIframe width="100%" height="700px" className="w-full" />;
-```
+Componente principal da feature. Contém:
 
-## Tipos TypeScript
+- Barra de busca
+- Botões de alternância entre visualização 2D/3D
+- Renderização condicional com base no estado
 
-### MolViewIframeProps
+---
 
-```typescript
-export interface MolViewIframeProps {
-  width?: string;
-  height?: string;
-  className?: string;
+## 🧠 Estado Global (Zustand)
+
+```ts
+interface VisualizationState {
+  query: string;
+  smilesData: string;
+  sdfData: string;
+  viewMode: "2D" | "3D";
+  setQuery: (value: string) => void;
+  setSmilesData: (value: string) => void;
+  setSdfData: (value: string) => void;
+  setViewMode: (mode: "2D" | "3D") => void;
 }
 ```
 
-## Página de Implementação
+---
 
-A página está localizada em `src/app/[locale]/molview/page.tsx` e inclui:
+## 🌐 Integração com PubChem
 
-- Layout responsivo
-- Título e descrição
-- Componente MolViewIframe integrado
-- Suporte a internacionalização
+As buscas são realizadas por nome ou fórmula. Dois endpoints são utilizados:
 
-## Menu de Navegação
+- **SMILES:**  
+  `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/QUERY/property/CanonicalSMILES/TXT`
 
-### Configuração Adicionada
+- **SDF (3D):**  
+  `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/QUERY/SDF`
+
+---
+
+## 📄 Página da Feature
+
+Local: `src/app/[locale]/visualization/page.tsx`
+
+- Utiliza o componente `VisualizationContainer`
+- Suporte a i18n com `next-intl`
+- Responsivo e acessível
+
+---
+
+## 🧭 Navegação
 
 **Constantes (`src/shared/components/menu/constants.ts`):**
 
-```typescript
+```ts
 export const MENU_SECTIONS = {
   CALCULATORS: "calculators",
   CATALOG: "catalog",
-  MOLVIEW: "molview", // Nova seção
+  VISUALIZATION: "visualization",
 } as const;
 ```
 
 **Configuração do Menu (`src/shared/components/menu/config/menuConfig.ts`):**
 
-```typescript
+```ts
 {
-  id: MENU_SECTIONS.MOLVIEW,
+  id: MENU_SECTIONS.VISUALIZATION,
   icon: Atom,
-  translationKey: "navigation.molview",
+  translationKey: "navigation.visualization",
   items: [
     {
       icon: Atom,
-      translationKey: "molview.title",
+      translationKey: "visualization.title",
       type: "link",
-      href: (locale: string) => `/${locale}/molview`,
+      href: (locale: string) => `/${locale}/visualization`,
     } as const
   ],
 }
 ```
 
-## Internacionalização
+---
 
-### Chaves de Tradução Necessárias
+## 🈳 Internacionalização
 
-**Português (`src/messages/pt.json`):**
+### Chaves necessárias
 
-```json
-{
-  "navigation": {
-    "molview": "MolView"
-  },
-  "molview": {
-    "title": "Visualizador de Moléculas"
-  }
-}
-```
-
-**Inglês (`src/messages/en.json`):**
+**`pt.json`**
 
 ```json
 {
   "navigation": {
-    "molview": "MolView"
+    "visualization": "Visualização"
   },
-  "molview": {
-    "title": "Molecule Viewer"
+  "visualization": {
+    "title": "Visualizador de Moléculas",
+    "subtitle": "Explore estruturas químicas em 2D e 3D",
+    "description": "Digite o nome de uma molécula para visualizá-la usando dados da PubChem."
   }
 }
 ```
 
-## Segurança
+**`en.json`**
 
-### Configurações do iframe
-
-- **Sandbox**: `allow-scripts allow-same-origin allow-forms`
-- **Loading**: `lazy` para performance
-- **Title**: Atributo acessível definido
-
-### Content Security Policy (Opcional)
-
-Se necessário, adicionar ao `next.config.ts`:
-
-```typescript
-async headers() {
-  return [
-    {
-      source: '/(.*)',
-      headers: [
-        {
-          key: 'Content-Security-Policy',
-          value: "frame-src 'self' https://app.molview.org;"
-        }
-      ]
-    }
-  ];
+```json
+{
+  "navigation": {
+    "visualization": "Visualization"
+  },
+  "visualization": {
+    "title": "Molecule Viewer",
+    "subtitle": "Explore molecular structures in 2D and 3D",
+    "description": "Enter a molecule name to visualize its structure using PubChem data."
+  }
 }
 ```
 
-## Benefícios da Implementação
+---
 
-✅ **Simplicidade**: Estrutura enxuta e focada  
-✅ **Performance**: Lazy loading e otimizações  
-✅ **Acessibilidade**: Título e atributos adequados  
-✅ **Segurança**: Sandbox configurado  
-✅ **Responsividade**: Funciona em todos os dispositivos  
-✅ **Internacionalização**: Suporte completo a i18n  
-✅ **TypeScript**: Tipagem completa  
-✅ **Manutenibilidade**: Código limpo e documentado
+## ✅ Benefícios da Implementação
 
-## Fluxo de Uso
+- **✔️ Open Source**: Uso de RDKit-JS e 3Dmol.js (ambas BSD)
+- **✔️ Client-side**: Nenhum backend necessário
+- **✔️ Escalável**: Pronto para novos formatos de input (CID, fórmula, etc)
+- **✔️ Educacional**: Ideal para fins didáticos e científicos
+- **✔️ Separação de responsabilidades**: Cada parte da lógica em seu próprio componente
+- **✔️ Internamente consistente com arquitetura do Mol Wise**
 
-1. Usuário acessa `/molview` via menu de navegação
-2. Página carrega com título e descrição
-3. iframe do MolView é renderizado
-4. Usuário interage diretamente com o MolView
-5. Mol Wise não controla ou envia dados para o MolView
+---
 
-## Considerações Técnicas
+## 🔄 Fluxo de Uso
 
-- **Sem Controle**: O Mol Wise não controla o MolView
-- **URL Externa**: `https://app.molview.org/`
-- **Responsividade**: iframe se adapta ao container
-- **Performance**: Lazy loading reduz tempo de carregamento
-- **SEO**: Página indexável com meta tags adequadas
+1. Usuário acessa `/visualization`
+2. Digita o nome de uma molécula (ex: "etanol")
+3. A aplicação busca o SMILES e SDF na PubChem
+4. RDKit gera a estrutura 2D (SVG)
+5. 3Dmol.js renderiza a estrutura 3D
+6. Usuário alterna entre os modos 2D e 3D
 
-## Próximos Passos (Opcionais)
-
-- [ ] Adicionar loading state visual
-- [ ] Implementar error handling
-- [ ] Adicionar analytics de uso
-- [ ] Criar testes unitários
-- [ ] Adicionar mais configurações de tema
+---
