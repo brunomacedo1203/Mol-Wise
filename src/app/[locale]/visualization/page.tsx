@@ -1,13 +1,13 @@
 "use client";
 
 import Page from "@/shared/components/layout/Page";
-import { MolViewIframe } from "@/features/molview";
+import { VisualizationContainer } from "@/features/visualization";
 import { useEffect } from "react";
 import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import { useTranslations } from "next-intl";
 
-export default function MolViewPage() {
-  const t = useTranslations("molview");
+export default function VisualizationPage() {
+  const t = useTranslations("visualization");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function MolViewPage() {
             {t("description")}
           </p>
 
-          <MolViewIframe width="100%" height="700px" className="w-full" />
+          <VisualizationContainer className="w-full" />
         </div>
       </div>
     </Page>

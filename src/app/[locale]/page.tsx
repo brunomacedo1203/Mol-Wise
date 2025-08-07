@@ -1,29 +1,29 @@
 "use client";
 
 import Page from "@/shared/components/layout/Page";
+import { VisualizationContainer } from "@/features/visualization";
 import { useEffect } from "react";
 import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import { useTranslations } from "next-intl";
 
-export default function Home() {
-  const t = useTranslations("home");
-  const commonT = useTranslations("common");
+export default function VisualizationPage() {
+  const t = useTranslations("visualization");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+
   useEffect(() => {
-    setSubtitle(commonT("chooseTool"));
+    setSubtitle(t("subtitle"));
     return () => setSubtitle("");
-  }, [setSubtitle, commonT]);
+  }, [setSubtitle, t]);
 
   return (
     <Page title={t("title")}>
-      <div className="flex-1 flex justify-center items-center w-full h-full">
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-6xl font-bold mb-4 text-blue-700">
-            {t("welcome")}
-          </h1>
+      <div className="flex-1 flex flex-col w-full h-full">
+        <div className="max-w-6xl mx-auto w-full px-4 py-8">
           <p className="text-lg text-zinc-700 mb-8 dark:text-zinc-100">
-            {t("subtitle")}
+            {t("description")}
           </p>
+
+          <VisualizationContainer className="w-full" />
         </div>
       </div>
     </Page>

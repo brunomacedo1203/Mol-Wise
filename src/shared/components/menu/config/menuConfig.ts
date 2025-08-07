@@ -44,7 +44,7 @@ export const menuSectionsConfig: MenuSectionConfig[] = [
         icon: Atom,
         translationKey: "visualization.molecules2D3D.title", 
         type: "link",
-        href: (locale: string) => `/${locale}/molview`,
+        href: (locale: string) => `/${locale}/visualization`,
       } as const
     ],
   },

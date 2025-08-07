@@ -76,12 +76,10 @@
       "collapse": "Collapse menu"
     }
   },
-  "molview": {
+  "visualization": {
     "title": "Molecule Viewer",
     "subtitle": "Explore molecules interactively",
-    "description": "Explore molecules interactively using MolView. Enter chemical formulas, visualize 3D structures and explore different molecular representations."
-  },
-  "visualization": {
+    "description": "Enter chemical formulas, visualize 2D and 3D structures and explore different molecular representations.",
     "molecules2D3D": {
       "title": "2D/3D Molecules"
     }
