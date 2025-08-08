@@ -3,6 +3,7 @@
 import { VisualizationContainerProps } from "../types/visualization.types";
 import { MoleculeSearch } from "./MoleculeSearch";
 import { MoleculeViewer3D } from "./MoleculeViewer3D";
+import { MoleculeViewer2D } from "./MoleculeViewer2D";
 import { useVisualizationStore } from "../store/visualizationStore";
 
 export function VisualizationContainer({
@@ -23,7 +24,9 @@ export function VisualizationContainer({
         <button
           onClick={() => setViewMode("2D")}
           className={`px-3 py-1 mr-2 rounded ${
-            viewMode === "2D" ? "bg-blue-500 text-white" : "bg-gray-200"
+            viewMode === "2D"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 dark:bg-zinc-700"
           }`}
         >
           2D
@@ -31,7 +34,9 @@ export function VisualizationContainer({
         <button
           onClick={() => setViewMode("3D")}
           className={`px-3 py-1 rounded ${
-            viewMode === "3D" ? "bg-blue-500 text-white" : "bg-gray-200"
+            viewMode === "3D"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 dark:bg-zinc-700"
           }`}
         >
           3D
@@ -39,14 +44,7 @@ export function VisualizationContainer({
       </div>
 
       {viewMode === "2D" && smilesData && (
-        <div className="border p-4 rounded bg-gray-50 dark:bg-zinc-800 text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Visualização 2D será reimplementada com ChemDoodle.
-          </p>
-          <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-            SMILES: {smilesData}
-          </p>
-        </div>
+        <MoleculeViewer2D smiles={smilesData} />
       )}
 
       {viewMode === "3D" && sdfData && <MoleculeViewer3D sdfData={sdfData} />}
