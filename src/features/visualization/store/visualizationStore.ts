@@ -1,23 +1,21 @@
 import { create } from "zustand";
 
+type ViewMode = "2D" | "3D";
+
 interface VisualizationState {
-  query: string;
-  smilesData: string;
-  sdfData: string;
-  viewMode: "2D" | "3D";
-  setQuery: (value: string) => void;
-  setSmilesData: (data: string) => void;
-  setSdfData: (data: string) => void;
-  setViewMode: (mode: "2D" | "3D") => void;
+  viewMode: ViewMode;
+  smilesData: string | null;
+  sdfData: string | null;
+  setViewMode: (m: ViewMode) => void;
+  setSmilesData: (s: string | null) => void;
+  setSdfData: (s: string | null) => void;
 }
 
 export const useVisualizationStore = create<VisualizationState>((set) => ({
-  query: "",
-  smilesData: "",
-  sdfData: "",
   viewMode: "2D",
-  setQuery: (value) => set({ query: value }),
-  setSmilesData: (data) => set({ smilesData: data }),
-  setSdfData: (data) => set({ sdfData: data }),
-  setViewMode: (mode) => set({ viewMode: mode }),
+  smilesData: null,
+  sdfData: null,
+  setViewMode: (m) => set({ viewMode: m }),
+  setSmilesData: (s) => set({ smilesData: s }),
+  setSdfData: (s) => set({ sdfData: s }),
 }));

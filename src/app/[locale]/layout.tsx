@@ -104,6 +104,12 @@ export default async function LocaleLayout({
           strategy="afterInteractive"
         />
 
+        {/* 3Dmol.js */}
+        <Script
+          src="https://3Dmol.org/build/3Dmol-min.js"
+          strategy="afterInteractive"
+        />
+
         {/* Google Analytics */}
         <Script
           async

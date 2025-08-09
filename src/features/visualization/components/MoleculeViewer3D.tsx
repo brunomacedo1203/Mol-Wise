@@ -1,41 +1,86 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useVisualizationStore } from "../store/visualizationStore";
+import { waitFor3Dmol } from "../utils/waitFor3Dmol";
+import type { ThreeDMolViewer, ThreeDMolNamespace } from "../types/3dmol";
 
-interface MoleculeViewer3DProps {
-  sdfData: string;
-}
+export function MoleculeViewer3D() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const viewerRef = useRef<ThreeDMolViewer | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [libReady, setLibReady] = useState(false);
 
-export function MoleculeViewer3D({ sdfData }: MoleculeViewer3DProps) {
-  const viewerRef = useRef<HTMLDivElement>(null);
+  const sdfData = useVisualizationStore((s) => s.sdfData);
 
+  // Inicializa o viewer 3D (apenas uma vez)
   useEffect(() => {
-    if (!sdfData) return;
+    let disposed = false;
+    const el = containerRef.current; // captura para cleanup
 
-    const script = document.createElement("script");
-    script.src = "https://3Dmol.org/build/3Dmol-min.js";
-    script.async = true;
-    script.onload = () => {
-      if (viewerRef.current && window.$3Dmol) {
-        const $3Dmol = window.$3Dmol;
-        viewerRef.current.innerHTML = "";
+    async function init() {
+      setErr(null);
+      try {
+        const $3Dmol: ThreeDMolNamespace = await waitFor3Dmol();
+        if (disposed || !el) return;
 
-        const viewer = $3Dmol.createViewer(viewerRef.current, {
+        viewerRef.current = $3Dmol.createViewer(el, {
           backgroundColor: "white",
         });
-
-        viewer.addModel(sdfData, "sdf");
-        viewer.setStyle(
-          {},
-          { stick: { radius: 0.15 }, sphere: { scale: 0.25 } }
+        setLibReady(true);
+      } catch (e: unknown) {
+        setErr(
+          e instanceof Error
+            ? e.message
+            : "Falha ao inicializar o visualizador 3D."
         );
-        viewer.zoomTo();
-        viewer.render();
       }
+    }
+
+    void init();
+    return () => {
+      disposed = true;
+      if (el) el.innerHTML = "";
+      viewerRef.current = null;
     };
+  }, []);
 
-    document.body.appendChild(script);
-  }, [sdfData]);
+  // Atualiza o modelo quando sdfData mudar
+  useEffect(() => {
+    async function updateModel() {
+      if (!viewerRef.current || !libReady || !sdfData) return;
+      try {
+        const v = viewerRef.current;
+        v.clear();
+        v.addModel(sdfData, "sdf");
+        v.setStyle(
+          {},
+          {
+            stick: { radius: 0.15 },
+            sphere: { radius: 0.4 },
+          }
+        );
+        v.zoomTo();
+        v.render();
+      } catch {
+        setErr("Não foi possível renderizar o modelo 3D (SDF inválido?).");
+      }
+    }
+    void updateModel();
+  }, [sdfData, libReady]);
 
-  return <div ref={viewerRef} style={{ width: "100%", height: "500px" }} />;
+  return (
+    <div className="w-full">
+      <div
+        ref={containerRef}
+        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900"
+      />
+      {!libReady && !err && (
+        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+          Carregando visualizador 3D...
+        </p>
+      )}
+      {err && <p className="mt-2 text-sm text-red-600">{err}</p>}
+    </div>
+  );
 }

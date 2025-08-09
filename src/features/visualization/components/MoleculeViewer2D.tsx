@@ -1,83 +1,84 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { loadKekule } from "../utils/loadKekule";
+import { waitForKekule } from "../utils/waitForKekule";
+import { useVisualizationStore } from "../store/visualizationStore";
+import type { KekuleChemViewer, KekuleNamespace } from "../types/kekule";
 
-interface Props {
-  smiles: string;
-  className?: string;
-}
-
-export function MoleculeViewer2D({ smiles, className }: Props) {
+export function MoleculeViewer2D() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const viewerRef = useRef<KekuleViewer | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const viewerRef = useRef<KekuleChemViewer | null>(null);
+  const [err, setErr] = useState<string | null>(null);
 
+  const smiles = useVisualizationStore((s) => s.smilesData);
+
+  // Inicializa o viewer 2D (apenas uma vez)
   useEffect(() => {
-    let cancelled = false;
+    let disposed = false;
 
     async function init() {
+      setErr(null);
       try {
-        setError(null);
+        const Kekule: KekuleNamespace = await waitForKekule();
+        if (disposed || !containerRef.current) return;
 
-        // Validação inicial
-        if (!smiles || !smiles.trim()) {
-          throw new Error("SMILES inválido ou não encontrado.");
-        }
-
-        const Kekule = await loadKekule();
-        if (cancelled || !containerRef.current) return;
-
+        // Destroi instância anterior se houver
         if (viewerRef.current?.finalize) {
           viewerRef.current.finalize();
+          viewerRef.current = null;
         }
 
-        const viewer = new Kekule.ChemWidget.Viewer(containerRef.current);
-        viewer.setEnableToolbar(false);
-        viewer.setEnableDirectInteraction(true);
-        viewer.setPadding({ top: 10, right: 10, bottom: 10, left: 10 });
-
-        try {
-          const mol = Kekule.IO.loadFormatData(smiles.trim(), "smi");
-          viewer.setChemObj(mol);
-          if (viewer.zoomToFit) viewer.zoomToFit();
-        } catch {
-          throw new Error("Erro ao processar estrutura 2D.");
-        }
-
+        // >>> CORREÇÃO AQUI: usar ChemWidget.Viewer (não Kekule.ChemViewer)
+        const viewer = new Kekule.ChemWidget.Viewer(containerRef.current, {
+          renderType: "2D",
+        });
+        viewer.setRenderType("2D");
+        viewer.setEnableToolbar?.(false);
+        viewer.setToolButtonsVisible?.(false);
+        viewer.setAutoAdjustAspect?.(true);
         viewerRef.current = viewer;
       } catch (e: unknown) {
-        console.error(e);
-        if (e instanceof Error) {
-          setError(e.message);
-        } else {
-          setError("Falha ao renderizar estrutura 2D.");
-        }
+        setErr(
+          e instanceof Error
+            ? e.message
+            : "Falha ao inicializar o visualizador 2D."
+        );
       }
     }
 
-    init();
-
+    void init();
     return () => {
-      cancelled = true;
+      disposed = true;
       if (viewerRef.current?.finalize) {
         viewerRef.current.finalize();
+        viewerRef.current = null;
       }
     };
+  }, []);
+
+  // Atualiza a molécula sempre que smiles mudar
+  useEffect(() => {
+    async function updateMol() {
+      if (!viewerRef.current || !smiles) return;
+      try {
+        const Kekule = await waitForKekule();
+        const mol = Kekule.IO.loadFormatData(smiles, "smi");
+        viewerRef.current.setChemObj(mol);
+        viewerRef.current.setZoom?.(1.0);
+      } catch {
+        setErr("Não foi possível renderizar a molécula (SMILES inválido?).");
+      }
+    }
+    void updateMol();
   }, [smiles]);
 
-  if (error) {
-    return (
-      <div className="text-sm text-red-600 dark:text-red-400">{error}</div>
-    );
-  }
-
   return (
-    <div
-      ref={containerRef}
-      className={
-        className ?? "w-full h-80 rounded-xl border border-border bg-background"
-      }
-    />
+    <div className="w-full">
+      <div
+        ref={containerRef}
+        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900"
+      />
+      {err && <p className="mt-2 text-sm text-red-600">{err}</p>}
+    </div>
   );
 }

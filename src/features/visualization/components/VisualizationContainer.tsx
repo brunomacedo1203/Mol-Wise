@@ -1,16 +1,18 @@
 "use client";
 
-import { VisualizationContainerProps } from "../types/visualization.types";
 import { MoleculeSearch } from "./MoleculeSearch";
-import { MoleculeViewer3D } from "./MoleculeViewer3D";
 import { MoleculeViewer2D } from "./MoleculeViewer2D";
+import { MoleculeViewer3D } from "./MoleculeViewer3D";
 import { useVisualizationStore } from "../store/visualizationStore";
 
 export function VisualizationContainer({
   width = "100%",
-  className,
-}: VisualizationContainerProps) {
-  const { smilesData, sdfData, viewMode, setViewMode } =
+  className = "",
+}: {
+  width?: string;
+  className?: string;
+}) {
+  const { viewMode, setViewMode, smilesData, sdfData } =
     useVisualizationStore();
 
   return (
@@ -20,34 +22,38 @@ export function VisualizationContainer({
     >
       <MoleculeSearch />
 
-      <div className="flex justify-end mb-2">
+      <div className="flex justify-end mb-2 gap-2">
         <button
           onClick={() => setViewMode("2D")}
-          className={`px-3 py-1 mr-2 rounded ${
+          className={`px-3 py-1 rounded border ${
             viewMode === "2D"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 dark:bg-zinc-700"
+              ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+              : "bg-transparent text-zinc-800 dark:text-zinc-100"
           }`}
         >
           2D
         </button>
         <button
           onClick={() => setViewMode("3D")}
-          className={`px-3 py-1 rounded ${
+          className={`px-3 py-1 rounded border ${
             viewMode === "3D"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 dark:bg-zinc-700"
+              ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+              : "bg-transparent text-zinc-800 dark:text-zinc-100"
           }`}
         >
           3D
         </button>
       </div>
 
-      {viewMode === "2D" && smilesData && (
-        <MoleculeViewer2D smiles={smilesData} />
-      )}
+      {viewMode === "2D" && <MoleculeViewer2D />}
+      {viewMode === "3D" && <MoleculeViewer3D />}
 
-      {viewMode === "3D" && sdfData && <MoleculeViewer3D sdfData={sdfData} />}
+      {!smilesData && !sdfData && (
+        <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
+          Dica: pesquise por <b>nome</b> (ex.: benzene), <b>fórmula</b> (ex.:
+          NaCl) ou <b>SMILES</b> (ex.: C1=CC=CC=C1).
+        </p>
+      )}
     </div>
   );
 }
