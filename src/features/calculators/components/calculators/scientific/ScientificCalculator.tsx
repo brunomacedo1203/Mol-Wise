@@ -57,6 +57,7 @@ export default function ScientificCalculator({
     onFormulaChange,
     onResultChange,
     locale,
+    calculatorId: id,
     getErrorMessage: (type: string) => {
       if (type === "invalidExpression") return t("errors.invalidExpression");
       if (type === "empty") return t("errors.empty");

@@ -1,6 +1,7 @@
 "use client";
 import { useCallback } from "react";
 import { useMolarMassCalculatorAdapter } from "@/core/application/hooks/useMolarMassCalculatorAdapter";
+import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
 
 // Props para o hook de calculadora de massa molar
 interface UseMolarMassCalculatorProps {
@@ -8,6 +9,7 @@ interface UseMolarMassCalculatorProps {
   initialResult?: string | null;
   onFormulaChange?: (formula: string) => void;
   onResultChange?: (result: string | null) => void;
+  calculatorId: number;
 }
 
 // Retorno do hook de calculadora de massa molar
@@ -30,7 +32,10 @@ export default function useMolarMassCalculator({
   initialResult = null,
   onFormulaChange,
   onResultChange,
+  calculatorId,
 }: UseMolarMassCalculatorProps): UseMolarMassCalculatorReturn {
+  const resetCalculatorState = useCalculatorInstancesStore((state) => state.resetCalculatorState);
+  
   const {
     formula,
     handleFormulaChange: _handleFormulaChange,
@@ -57,7 +62,9 @@ export default function useMolarMassCalculator({
   const reset = useCallback(() => {
     _reset();
     onResultChange?.(null);
-  }, [_reset, onResultChange]);
+    // Limpa o estado no store persistido
+    resetCalculatorState(calculatorId);
+  }, [_reset, onResultChange, resetCalculatorState, calculatorId]);
 
   const backspace = useCallback(
     () => handleFormulaChange(formula.slice(0, -1)),

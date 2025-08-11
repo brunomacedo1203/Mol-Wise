@@ -49,6 +49,7 @@ export default function MolarMassCalculator({
     initialResult,
     onFormulaChange,
     onResultChange,
+    calculatorId: id,
   });
 
   const t = useTranslations("calculators.molarMass");

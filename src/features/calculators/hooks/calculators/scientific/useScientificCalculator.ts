@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { evaluate } from "mathjs";
 import { parseFormulaForEvaluation } from "@/features/calculators/domain/services/formulaParser";
 import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
+import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
 
 interface UseScientificCalculatorProps {
   initialFormula?: string;
@@ -10,6 +11,7 @@ interface UseScientificCalculatorProps {
   onResultChange?: (result: string | null) => void;
   getErrorMessage?: (type: 'invalidExpression' | 'empty' | 'divisionByZero') => string;
   locale?: string;
+  calculatorId: number;
 }
 
 interface UseScientificCalculatorReturn {
@@ -82,7 +84,10 @@ export function useScientificCalculator({
   onResultChange,
   getErrorMessage,
   locale,
+  calculatorId,
 }: UseScientificCalculatorProps): UseScientificCalculatorReturn {
+  const resetCalculatorState = useCalculatorInstancesStore((state) => state.resetCalculatorState);
+  
   const [formula, setFormula] = useState(initialFormula);
   const [result, setResult] = useState<string | null>(initialResult);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -151,7 +156,9 @@ export function useScientificCalculator({
     setErrorMessage(null);
     setJustCalculated(false);
     onResultChange?.(null);
-  }, [onResultChange]);
+    // Limpa o estado no store persistido
+    resetCalculatorState(calculatorId);
+  }, [onResultChange, resetCalculatorState, calculatorId]);
 
   const backspace = useCallback(() => {
     handleFormulaChange(formula.slice(0, -1));
@@ -211,7 +218,7 @@ export function useScientificCalculator({
       // Usar insertAtCursor em vez de adicionar no final
       insertAtCursor(func);
     },
-    [formula, handleFormulaChange, result, locale, justCalculated, insertAtCursor]
+    [handleFormulaChange, result, locale, justCalculated, insertAtCursor]
   );
 
   const handleMemory = useCallback(

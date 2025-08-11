@@ -9,6 +9,7 @@ interface CalculatorInstancesState {
   removeCalculator: (id: number) => void;
   updateCalculator: (id: number, updates: Partial<CalculatorInstance>) => void;
   clearCalculators: () => void;
+  resetCalculatorState: (id: number) => void;
 }
 
 export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
@@ -42,6 +43,22 @@ export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
         }));
       },
       clearCalculators: () => set({ calculators: [] }),
+      resetCalculatorState: (id: number) => {
+        set((state) => ({
+          calculators: state.calculators.map((calc) =>
+            calc.id === id 
+              ? { 
+                  ...calc, 
+                  state: { 
+                    ...calc.state, 
+                    formula: "", 
+                    result: null 
+                  } 
+                } 
+              : calc
+          ),
+        }));
+      },
     }),
     { name: "molwise_calculator_instances" }
   )
