@@ -13,6 +13,7 @@ export function MoleculeViewer3D() {
 
   const sdfData = useVisualizationStore((s) => s.sdfData);
 
+  // init viewer
   useEffect(() => {
     let disposed = false;
     const el = containerRef.current;
@@ -24,7 +25,8 @@ export function MoleculeViewer3D() {
         if (disposed || !el) return;
 
         viewerRef.current = $3Dmol.createViewer(el, {
-          backgroundColor: "white",
+          backgroundColor: "transparent", // herda do card
+          backgroundAlpha: 0,
         });
         setLibReady(true);
       } catch (e: unknown) {
@@ -44,6 +46,7 @@ export function MoleculeViewer3D() {
     };
   }, []);
 
+  // update model
   useEffect(() => {
     async function updateModel() {
       if (!viewerRef.current || !libReady || !sdfData) return;
@@ -60,6 +63,22 @@ export function MoleculeViewer3D() {
     }
     void updateModel();
   }, [sdfData, libReady]);
+
+  // acompanha troca de tema (se quiser forçar cor de fundo sólida)
+  useEffect(() => {
+    const html = document.documentElement;
+    const obs = new MutationObserver(() => {
+      const v = viewerRef.current;
+      if (!v) return;
+      // Ex.: forçar fundo sólido. Se preferir transparente, pode remover.
+      const isDark = html.classList.contains("dark");
+      // @ts-expect-error método interno mas funciona na prática
+      v.setBackgroundColor(isDark ? "#0a0a0a" : "#ffffff");
+      v.render();
+    });
+    obs.observe(html, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <div className="absolute inset-0 min-h-0">

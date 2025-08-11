@@ -7,12 +7,12 @@ import { useTranslations } from "next-intl";
 type OpenChemLibModule = typeof import("openchemlib");
 type ViewBox = { minX: number; minY: number; width: number; height: number };
 
-/** 🔧 Ajustes finos do enquadramento inicial (fáceis de calibrar) */
-const INITIAL_SCALE = 2.5; // 1.0 = sem zoom; >1 aproxima um pouco
-const INITIAL_Y_OFFSET_PX = 0; // px: positivo desce, negativo sobe
-const PRESERVE_RATIO = "xMidYMid meet"; // centraliza no palco (antes era xMidYMin)
+/** ======= Ajustes do enquadramento inicial ======= */
+const INITIAL_SCALE = 2.5; // >1 aproxima (maior desenho)
+const INITIAL_Y_OFFSET_PX = 0; // + desce | - sobe
+const PRESERVE_RATIO = "xMidYMid meet"; // centraliza no palco
 
-/** Apertar viewBox e aplicar offset vertical */
+/** Aperta o viewBox e aplica offset vertical */
 function tightenViewBox(
   svg: string,
   scaleFactor = 1.15,
@@ -32,16 +32,101 @@ function tightenViewBox(
   const dx = (width - newW) / 2;
   const dy = (height - newH) / 2;
 
-  // offset em px no sistema de coords do viewBox (1:1 com unidades do SVG)
   const newMinX = minX + dx;
   const newMinY = minY + dy + verticalOffsetPx;
-
   return svg.replace(
     /viewBox="[^"]+"/,
     `viewBox="${newMinX} ${newMinY} ${newW} ${newH}"`
   );
 }
 
+/** ======= Theming robusto (salva originais e reaplica no toggle) ======= */
+function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
+  if (!svg) return;
+
+  const isDark = mode === "dark";
+  const baseStroke = isDark
+    ? "#e5e7eb" /* zinc-200 */
+    : "#111827"; /* gray-900 */
+  const baseFill = baseStroke;
+
+  // Salva originais 1x
+  if (!svg.hasAttribute("data-themed-init")) {
+    svg.setAttribute("data-themed-init", "true");
+
+    svg.querySelectorAll<SVGElement>("[stroke]").forEach((el) => {
+      const s = el.getAttribute("stroke");
+      if (s != null) el.setAttribute("data-stroke-original", s);
+    });
+
+    svg.querySelectorAll<SVGElement>("[fill]").forEach((el) => {
+      const f = el.getAttribute("fill");
+      if (f != null) el.setAttribute("data-fill-original", f);
+    });
+
+    svg.querySelectorAll<SVGElement>("[stroke-width]").forEach((el) => {
+      const sw = el.getAttribute("stroke-width");
+      if (sw != null) el.setAttribute("data-stroke-width-original", sw);
+    });
+  }
+
+  // Utilitário
+  const isBlack = (v?: string | null) =>
+    !v ||
+    /^#?000000$/i.test(v) ||
+    v.toLowerCase() === "black" ||
+    v.toLowerCase() === "rgb(0,0,0)";
+
+  // Stroke
+  svg.querySelectorAll<SVGElement>("[stroke]").forEach((el) => {
+    const orig = el.getAttribute("data-stroke-original");
+    const wasBlack = isBlack(orig);
+    if (isDark) {
+      el.setAttribute("stroke", wasBlack ? baseStroke : orig ?? baseStroke);
+    } else {
+      el.setAttribute("stroke", orig ?? baseStroke);
+    }
+  });
+
+  // Fill
+  svg.querySelectorAll<SVGElement>("[fill]").forEach((el) => {
+    const orig = el.getAttribute("data-fill-original");
+    const wasBlack = isBlack(orig);
+    if (isDark) {
+      el.setAttribute("fill", wasBlack ? baseFill : orig ?? baseFill);
+    } else {
+      el.setAttribute("fill", orig ?? baseFill);
+    }
+  });
+
+  // Textos
+  svg.querySelectorAll<SVGElement>("text").forEach((t) => {
+    const orig =
+      t.getAttribute("data-fill-original") ?? t.getAttribute("fill") ?? "";
+    const wasBlack = isBlack(orig);
+    if (isDark) {
+      t.setAttribute(
+        "fill",
+        wasBlack ? baseFill : t.getAttribute("data-fill-original") ?? orig
+      );
+    } else {
+      t.setAttribute("fill", t.getAttribute("data-fill-original") ?? orig);
+    }
+  });
+
+  // Espessura (boost no dark, restore no light)
+  svg
+    .querySelectorAll<SVGElement>("[data-stroke-width-original]")
+    .forEach((el) => {
+      const orig = el.getAttribute("data-stroke-width-original");
+      if (!orig) return;
+      const n = parseFloat(orig);
+      if (Number.isNaN(n)) return;
+      el.setAttribute("stroke-width", isDark ? String(n * 1.15) : orig);
+    });
+}
+
+/** ======= Componente ======= */
 export function MoleculeViewer2D() {
   const svgHostRef = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState(false);
@@ -55,9 +140,10 @@ export function MoleculeViewer2D() {
   const vbRef = useRef<ViewBox | null>(null);
   const vbInitialRef = useRef<ViewBox | null>(null);
 
+  // Carrega OCL
   useEffect(() => {
     let disposed = false;
-    async function loadOCL() {
+    (async () => {
       try {
         const mod: OpenChemLibModule = await import("openchemlib");
         const OCL: OpenChemLibModule =
@@ -68,13 +154,13 @@ export function MoleculeViewer2D() {
       } catch (e) {
         console.error(e);
       }
-    }
-    void loadOCL();
+    })();
     return () => {
       disposed = true;
     };
   }, []);
 
+  // Utils viewBox
   const readViewBox = useCallback((svg: SVGSVGElement): ViewBox | null => {
     const vb = svg.getAttribute("viewBox");
     if (!vb) return null;
@@ -98,6 +184,7 @@ export function MoleculeViewer2D() {
     writeViewBox(svg, vbRef.current);
   }, [writeViewBox]);
 
+  // Zoom (scroll)
   const handleWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
       const svg = svgElRef.current;
@@ -136,6 +223,7 @@ export function MoleculeViewer2D() {
     [writeViewBox]
   );
 
+  // Pan (Shift + scroll)
   const handleWheelPan = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
       if (!e.shiftKey) return;
@@ -158,6 +246,7 @@ export function MoleculeViewer2D() {
     [writeViewBox]
   );
 
+  // Drag
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef<{ x: number; y: number; vb: ViewBox | null }>({
     x: 0,
@@ -214,6 +303,7 @@ export function MoleculeViewer2D() {
     }
   }, []);
 
+  // Touch
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
       if (!vbRef.current || e.touches.length !== 1) return;
@@ -268,6 +358,7 @@ export function MoleculeViewer2D() {
     resetViewBox();
   }, [resetViewBox]);
 
+  // Render principal
   useEffect(() => {
     async function render() {
       const host = svgHostRef.current;
@@ -303,7 +394,6 @@ export function MoleculeViewer2D() {
           mol.ensureHelperArrays?.(OCL.Molecule?.cHelperNeighbours ?? 0);
         } catch {}
 
-        // mede o palco disponível
         const rect = host.getBoundingClientRect();
         const w = Math.max(200, Math.floor(rect.width || 400));
         const h = Math.max(150, Math.floor(rect.height || 300));
@@ -314,7 +404,6 @@ export function MoleculeViewer2D() {
           }
         ).toSVG(w, h, { autoCrop: true, margin: 6 });
 
-        // 📌 aplica o enquadramento inicial “bom” que você curtia
         const initialFramed = tightenViewBox(
           rawSvg,
           INITIAL_SCALE,
@@ -325,7 +414,6 @@ export function MoleculeViewer2D() {
           .replace("<svg", `<svg preserveAspectRatio="${PRESERVE_RATIO}"`)
           .replace(
             "<svg",
-            // mantém o fix do scroll: sem overflow visível
             '<svg style="width:100%;height:100%;display:block;overflow:hidden;cursor:grab;touch-action:none"'
           );
 
@@ -334,10 +422,18 @@ export function MoleculeViewer2D() {
         const svgEl = host.querySelector("svg") as SVGSVGElement | null;
         svgElRef.current = svgEl;
 
+        // Aplica tema atual
+        const mode: "dark" | "light" =
+          document.documentElement.classList.contains("dark")
+            ? "dark"
+            : "light";
+        if (svgEl) applyThemeToSVG(svgEl, mode);
+
+        // Guarda viewBox
         const vb = svgEl ? readViewBox(svgEl) : null;
         if (vb) {
           vbRef.current = { ...vb };
-          vbInitialRef.current = { ...vb }; // reset volta pra esse framing
+          vbInitialRef.current = { ...vb };
         }
       } catch (e) {
         console.error(e);
@@ -345,6 +441,20 @@ export function MoleculeViewer2D() {
     }
     void render();
   }, [sdf, smiles, ready, readViewBox]);
+
+  // Observa troca de tema e reaplica SEMPRE a partir dos originais
+  useEffect(() => {
+    const html = document.documentElement;
+    const obs = new MutationObserver(() => {
+      const mode: "dark" | "light" = html.classList.contains("dark")
+        ? "dark"
+        : "light";
+      const svg = svgElRef.current;
+      if (svg) applyThemeToSVG(svg, mode);
+    });
+    obs.observe(html, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
 
   const onWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {

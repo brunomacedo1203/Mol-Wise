@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 
 export default function VisualizationPage() {
   const t = useTranslations("visualization");
-  const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+  const setSubtitle = useSubtitleStore((s) => s.setSubtitle);
   const { viewMode, setViewMode, smilesData, sdfData } =
     useVisualizationStore();
 
@@ -24,7 +24,7 @@ export default function VisualizationPage() {
     <Page title={t("title")}>
       <div className="flex-1 flex flex-col w-full h-full min-h-0">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+        <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
           <p className="text-lg text-zinc-700 mb-4 dark:text-zinc-100">
             {t("description")}
           </p>
@@ -36,7 +36,9 @@ export default function VisualizationPage() {
           <div className="flex justify-end gap-2">
             <button
               onClick={() => setViewMode("2D")}
-              className={`px-4 py-2 rounded-lg border transition-colors duration-200 ${
+              className={`px-4 py-2 rounded-lg border transition-colors duration-200
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60
+              ${
                 viewMode === "2D"
                   ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
                   : "bg-transparent text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
@@ -46,7 +48,9 @@ export default function VisualizationPage() {
             </button>
             <button
               onClick={() => setViewMode("3D")}
-              className={`px-4 py-2 rounded-lg border transition-colors duration-200 ${
+              className={`px-4 py-2 rounded-lg border transition-colors duration-200
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60
+              ${
                 viewMode === "3D"
                   ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
                   : "bg-transparent text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
@@ -57,9 +61,16 @@ export default function VisualizationPage() {
           </div>
         </div>
 
-        {/* Palco de visualização */}
+        {/* Palco */}
         <div className="flex-1 min-h-0 p-6 bg-zinc-50 dark:bg-zinc-900">
-          <div className="relative h-[60vh] min-h-[360px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden">
+          <div
+            className="relative h-[60vh] min-h-[360px]
+                          rounded-xl border
+                          bg-white dark:bg-zinc-900
+                          border-zinc-200 dark:border-zinc-800
+                          shadow-sm dark:shadow-none
+                          overflow-hidden"
+          >
             {viewMode === "2D" && <MoleculeViewer2D />}
             {viewMode === "3D" && <MoleculeViewer3D />}
           </div>
