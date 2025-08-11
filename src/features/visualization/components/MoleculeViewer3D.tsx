@@ -70,10 +70,10 @@ export function MoleculeViewer3D() {
   }, [sdfData, libReady]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div
         ref={containerRef}
-        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center"
+        className="w-full h-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center"
         style={{ position: "relative" }}
       />
       {!libReady && !err && (

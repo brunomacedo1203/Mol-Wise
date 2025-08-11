@@ -192,8 +192,8 @@ export function MoleculeViewer2D() {
         } catch {}
 
         // Baseia o desenho no tamanho real do host
-        const w = Math.max(600, Math.floor(host.clientWidth || 600));
-        const h = Math.max(220, Math.floor(host.clientHeight || 220));
+        const w = Math.max(800, Math.floor(host.clientWidth || 800));
+        const h = Math.max(600, Math.floor(host.clientHeight || 600));
 
         const svg = (
           mol as unknown as {
@@ -246,12 +246,12 @@ export function MoleculeViewer2D() {
   );
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div
         ref={svgHostRef}
         onWheel={onWheel}
         onDoubleClick={handleDoubleClick}
-        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center select-none"
+        className="w-full h-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center select-none"
         style={{ touchAction: "none" }}
         title="Scroll para zoom; Shift + scroll para pan; duplo clique para resetar"
       />
