@@ -1,19 +1,49 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useVisualizationStore } from "../store/visualizationStore";
 
 type OpenChemLibModule = typeof import("openchemlib");
 
+type ViewBox = { minX: number; minY: number; width: number; height: number };
+
+function tightenViewBox(svg: string, scaleFactor = 1.3): string {
+  const m = svg.match(/viewBox="([\d.\-\s]+)"/);
+  if (!m) return svg;
+  const [minX, minY, width, height] = m[1].trim().split(/\s+/).map(Number) as [
+    number,
+    number,
+    number,
+    number
+  ];
+
+  const newW = width / scaleFactor;
+  const dx = (width - newW) / 2;
+  const dy = (height - height / scaleFactor) / 2;
+
+  const newMinX = minX + dx;
+  const newMinY = minY + dy;
+
+  return svg.replace(
+    /viewBox="[^"]+"/,
+    `viewBox="${newMinX} ${newMinY} ${newW} ${height / scaleFactor}"`
+  );
+}
+
 export function MoleculeViewer2D() {
   const svgHostRef = useRef<HTMLDivElement | null>(null);
-  const [err, setErr] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
   const smiles = useVisualizationStore((s) => s.smilesData);
   const sdf = useVisualizationStore((s) => s.sdfData);
 
   const oclRef = useRef<OpenChemLibModule | null>(null);
+  const svgElRef = useRef<SVGSVGElement | null>(null);
+
+  // Guarda o viewBox atual e o inicial (para reset)
+  const vbRef = useRef<ViewBox | null>(null);
+  const vbInitialRef = useRef<ViewBox | null>(null);
+
   useEffect(() => {
     let disposed = false;
     async function loadOCL() {
@@ -26,9 +56,6 @@ export function MoleculeViewer2D() {
         setReady(true);
       } catch (e) {
         console.error(e);
-        setErr(
-          "Falha ao carregar OpenChemLib. Verifique a instalação do pacote."
-        );
       }
     }
     void loadOCL();
@@ -37,9 +64,102 @@ export function MoleculeViewer2D() {
     };
   }, []);
 
+  // Helpers p/ ler/escrever viewBox
+  const readViewBox = useCallback((svg: SVGSVGElement): ViewBox | null => {
+    const vb = svg.getAttribute("viewBox");
+    if (!vb) return null;
+    const parts = vb.trim().split(/\s+/).map(Number);
+    if (parts.length !== 4 || parts.some((n) => Number.isNaN(n))) return null;
+    const [minX, minY, width, height] = parts;
+    return { minX, minY, width, height };
+  }, []);
+
+  const writeViewBox = useCallback((svg: SVGSVGElement, vb: ViewBox) => {
+    svg.setAttribute(
+      "viewBox",
+      `${vb.minX} ${vb.minY} ${vb.width} ${vb.height}`
+    );
+  }, []);
+
+  // Reset para o estado inicial
+  const resetViewBox = useCallback(() => {
+    const svg = svgElRef.current;
+    if (!svg || !vbInitialRef.current) return;
+    vbRef.current = { ...vbInitialRef.current };
+    writeViewBox(svg, vbRef.current);
+  }, [writeViewBox]);
+
+  // Zoom com a roda (centralizado no cursor)
+  const handleWheel = useCallback(
+    (e: React.WheelEvent<HTMLDivElement>) => {
+      const svg = svgElRef.current;
+      if (!svg || !vbRef.current) return;
+      e.preventDefault();
+
+      const rect = svg.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width; // 0..1
+      const relY = (e.clientY - rect.top) / rect.height; // 0..1
+
+      const vb = vbRef.current;
+      // deltaY > 0 => out; deltaY < 0 => in
+      const zoom = Math.pow(1.0015, e.deltaY);
+      const newWidth = vb.width * zoom;
+
+      // Limites de zoom relativos ao inicial
+      const init = vbInitialRef.current ?? vb;
+      const aspect = init.height / init.width;
+      const minW = init.width * 0.1; // 10% (máxima aproximação)
+      const maxW = init.width * 4.0; // 400% (máximo afastamento)
+
+      const clampedW = Math.min(Math.max(newWidth, minW), maxW);
+      const clampedH = clampedW * aspect;
+
+      const dx = (vb.width - clampedW) * relX;
+      const dy = (vb.height - clampedH) * relY;
+
+      const next: ViewBox = {
+        minX: vb.minX + dx,
+        minY: vb.minY + dy,
+        width: clampedW,
+        height: clampedH,
+      };
+
+      vbRef.current = next;
+      writeViewBox(svg, next);
+    },
+    [writeViewBox]
+  );
+
+  // Pan com Shift + roda (opcional)
+  const handleWheelPan = useCallback(
+    (e: React.WheelEvent<HTMLDivElement>) => {
+      if (!e.shiftKey) return;
+      const svg = svgElRef.current;
+      if (!svg || !vbRef.current) return;
+      e.preventDefault();
+
+      const vb = vbRef.current;
+      const panFactor = 0.0015; // maior = pan mais rápido
+      const next: ViewBox = {
+        minX: vb.minX + vb.width * panFactor * e.deltaY,
+        minY: vb.minY + vb.height * panFactor * e.deltaX,
+        width: vb.width,
+        height: vb.height,
+      };
+
+      vbRef.current = next;
+      writeViewBox(svg, next);
+    },
+    [writeViewBox]
+  );
+
+  // Duplo clique para resetar
+  const handleDoubleClick = useCallback(() => {
+    resetViewBox();
+  }, [resetViewBox]);
+
   useEffect(() => {
     async function render() {
-      setErr(null);
       const host = svgHostRef.current;
       const OCL = oclRef.current;
       if (!host || !OCL || !ready) return;
@@ -59,9 +179,9 @@ export function MoleculeViewer2D() {
         }
         if (!mol) {
           host.innerHTML = "";
-          setErr(
-            "Sem dados válidos para renderizar (SDF/SMILES indisponíveis)."
-          );
+          svgElRef.current = null;
+          vbRef.current = null;
+          vbInitialRef.current = null;
           return;
         }
         try {
@@ -71,28 +191,71 @@ export function MoleculeViewer2D() {
           mol.ensureHelperArrays?.(OCL.Molecule?.cHelperNeighbours ?? 0);
         } catch {}
 
+        // Baseia o desenho no tamanho real do host
+        const w = Math.max(600, Math.floor(host.clientWidth || 600));
+        const h = Math.max(220, Math.floor(host.clientHeight || 220));
+
         const svg = (
           mol as unknown as {
             toSVG: (w: number, h: number, opts?: unknown) => string;
           }
-        ).toSVG(640, 420, { autoCrop: true });
-        host.innerHTML = svg;
+        ).toSVG(w, h, {
+          autoCrop: true,
+          margin: 6, // menos espaço “morto” ao redor
+        });
+
+        // 🔎 Aumenta o tamanho INICIAL apertando o viewBox (ex.: 30%)
+        const initialZoomed = tightenViewBox(svg, 1.3);
+
+        // Responsivo + centralizado
+        const svgWithStyle = initialZoomed
+          .replace("<svg", '<svg preserveAspectRatio="xMidYMid meet"')
+          .replace(
+            "<svg",
+            '<svg style="max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; cursor: grab;"'
+          );
+
+        host.innerHTML = svgWithStyle;
+
+        // Guarda referências pós-zoom-inicial
+        const svgEl = host.querySelector("svg") as SVGSVGElement | null;
+        svgElRef.current = svgEl;
+
+        const vb = svgEl ? readViewBox(svgEl) : null;
+        if (vb) {
+          vbRef.current = { ...vb };
+          vbInitialRef.current = { ...vb }; // inicial já “apertado” = estado de reset
+        }
       } catch (e) {
         console.error(e);
-        setErr("Não foi possível renderizar a estrutura 2D com OpenChemLib.");
       }
     }
     void render();
-  }, [sdf, smiles, ready]);
+  }, [sdf, smiles, ready, readViewBox]);
+
+  // Handlers no wrapper
+  const onWheel = useCallback(
+    (e: React.WheelEvent<HTMLDivElement>) => {
+      if (e.shiftKey) {
+        handleWheelPan(e);
+      } else {
+        handleWheel(e);
+      }
+    },
+    [handleWheel, handleWheelPan]
+  );
 
   return (
     <div className="w-full">
       <div
         ref={svgHostRef}
-        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden"
+        onWheel={onWheel}
+        onDoubleClick={handleDoubleClick}
+        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center select-none"
+        style={{ touchAction: "none" }}
+        title="Scroll para zoom; Shift + scroll para pan; duplo clique para resetar"
       />
-      {err && <p className="mt-2 text-sm text-red-600">{err}</p>}
-      {!err && !ready && (
+      {!ready && (
         <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
           Carregando motor 2D…
         </p>

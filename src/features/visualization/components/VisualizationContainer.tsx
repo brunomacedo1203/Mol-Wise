@@ -25,28 +25,30 @@ export function VisualizationContainer({
       <div className="flex justify-end mb-2 gap-2">
         <button
           onClick={() => setViewMode("2D")}
-          className={`px-3 py-1 rounded border ${
+          className={`px-3 py-1 rounded border transition-colors duration-200 ${
             viewMode === "2D"
               ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-              : "bg-transparent text-zinc-800 dark:text-zinc-100"
+              : "bg-transparent text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           }`}
         >
           2D
         </button>
         <button
           onClick={() => setViewMode("3D")}
-          className={`px-3 py-1 rounded border ${
+          className={`px-3 py-1 rounded border transition-colors duration-200 ${
             viewMode === "3D"
               ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-              : "bg-transparent text-zinc-800 dark:text-zinc-100"
+              : "bg-transparent text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           }`}
         >
           3D
         </button>
       </div>
 
-      {viewMode === "2D" && <MoleculeViewer2D />}
-      {viewMode === "3D" && <MoleculeViewer3D />}
+      <div className="min-h-[420px]">
+        {viewMode === "2D" && <MoleculeViewer2D />}
+        {viewMode === "3D" && <MoleculeViewer3D />}
+      </div>
 
       {!smilesData && !sdfData && (
         <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">

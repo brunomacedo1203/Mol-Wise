@@ -27,7 +27,7 @@ const KeyboardBtn = ({
     "border border-neutral-300 bg-white text-neutral-900",
     "dark:bg-transparent dark:border-white/20 dark:text-white",
     "shadow-none",
-    "text-base font-semibold",
+    "text-base font-normal",
     !noDefaultHover && "hover:bg-neutral-100 dark:hover:bg-white/5",
     "transition-colors duration-150 select-none",
     "active:translate-y-[1px] active:shadow-none",

@@ -73,7 +73,8 @@ export function MoleculeViewer3D() {
     <div className="w-full">
       <div
         ref={containerRef}
-        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900"
+        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center"
+        style={{ position: "relative" }}
       />
       {!libReady && !err && (
         <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
