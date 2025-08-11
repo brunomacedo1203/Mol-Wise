@@ -22,19 +22,17 @@ export default function VisualizationPage() {
 
   return (
     <Page title={t("title")}>
-      <div className="flex-1 flex flex-col w-full h-full">
-        {/* Header com descrição e controles */}
+      <div className="flex-1 flex flex-col w-full h-full min-h-0">
+        {/* Header */}
         <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
           <p className="text-lg text-zinc-700 mb-4 dark:text-zinc-100">
             {t("description")}
           </p>
 
-          {/* Barra de pesquisa */}
           <div className="mb-4">
             <MoleculeSearch />
           </div>
 
-          {/* Botões de alternância 2D/3D */}
           <div className="flex justify-end gap-2">
             <button
               onClick={() => setViewMode("2D")}
@@ -59,10 +57,12 @@ export default function VisualizationPage() {
           </div>
         </div>
 
-        {/* Área principal de visualização - muito maior agora! */}
-        <div className="flex-1 p-6 bg-zinc-50 dark:bg-zinc-900">
-          {viewMode === "2D" && <MoleculeViewer2D />}
-          {viewMode === "3D" && <MoleculeViewer3D />}
+        {/* Palco de visualização */}
+        <div className="flex-1 min-h-0 p-6 bg-zinc-50 dark:bg-zinc-900">
+          <div className="relative h-[60vh] min-h-[360px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden">
+            {viewMode === "2D" && <MoleculeViewer2D />}
+            {viewMode === "3D" && <MoleculeViewer3D />}
+          </div>
 
           {!smilesData && !sdfData && (
             <div className="text-center py-12">

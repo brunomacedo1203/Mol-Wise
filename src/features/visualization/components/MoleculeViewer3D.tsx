@@ -13,10 +13,9 @@ export function MoleculeViewer3D() {
 
   const sdfData = useVisualizationStore((s) => s.sdfData);
 
-  // Inicializa o viewer 3D (apenas uma vez)
   useEffect(() => {
     let disposed = false;
-    const el = containerRef.current; // captura para cleanup
+    const el = containerRef.current;
 
     async function init() {
       setErr(null);
@@ -45,7 +44,6 @@ export function MoleculeViewer3D() {
     };
   }, []);
 
-  // Atualiza o modelo quando sdfData mudar
   useEffect(() => {
     async function updateModel() {
       if (!viewerRef.current || !libReady || !sdfData) return;
@@ -53,13 +51,7 @@ export function MoleculeViewer3D() {
         const v = viewerRef.current;
         v.clear();
         v.addModel(sdfData, "sdf");
-        v.setStyle(
-          {},
-          {
-            stick: { radius: 0.15 },
-            sphere: { radius: 0.4 },
-          }
-        );
+        v.setStyle({}, { stick: { radius: 0.15 }, sphere: { radius: 0.4 } });
         v.zoomTo();
         v.render();
       } catch {
@@ -70,18 +62,22 @@ export function MoleculeViewer3D() {
   }, [sdfData, libReady]);
 
   return (
-    <div className="w-full h-full">
+    <div className="absolute inset-0 min-h-0">
       <div
         ref={containerRef}
-        className="w-full h-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center"
-        style={{ position: "relative" }}
+        className="w-full h-full"
+        style={{ position: "relative", overflow: "hidden" }}
       />
       {!libReady && !err && (
-        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="absolute bottom-2 left-3 text-sm text-zinc-500 dark:text-zinc-400 pointer-events-none">
           Carregando visualizador 3D...
         </p>
       )}
-      {err && <p className="mt-2 text-sm text-red-600">{err}</p>}
+      {err && (
+        <p className="absolute bottom-2 left-3 text-sm text-red-600 pointer-events-none">
+          {err}
+        </p>
+      )}
     </div>
   );
 }

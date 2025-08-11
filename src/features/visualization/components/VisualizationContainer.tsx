@@ -18,7 +18,7 @@ export function VisualizationContainer({
   return (
     <div
       style={{ width }}
-      className={`rounded-lg shadow-lg p-4 bg-white dark:bg-zinc-900 ${className}`}
+      className={`h-full rounded-lg p-4 bg-white dark:bg-zinc-900 ${className}`}
     >
       <MoleculeSearch />
 
@@ -45,7 +45,7 @@ export function VisualizationContainer({
         </button>
       </div>
 
-      <div className="min-h-[420px]">
+      <div className="relative h-[60vh] min-h-[360px] overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
         {viewMode === "2D" && <MoleculeViewer2D />}
         {viewMode === "3D" && <MoleculeViewer3D />}
       </div>
