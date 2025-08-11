@@ -55,6 +55,7 @@ export function VisualizationContainer({
                       bg-white dark:bg-zinc-900
                       border-zinc-200 dark:border-zinc-800
                       shadow-sm dark:shadow-none"
+        style={{ overflow: 'hidden' }}
       >
         {viewMode === "2D" && <MoleculeViewer2D />}
         {viewMode === "3D" && <MoleculeViewer3D />}

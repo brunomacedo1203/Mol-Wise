@@ -8,7 +8,7 @@ type OpenChemLibModule = typeof import("openchemlib");
 type ViewBox = { minX: number; minY: number; width: number; height: number };
 
 /** ======= Ajustes do enquadramento inicial ======= */
-const INITIAL_SCALE = 2.5; // >1 aproxima (maior desenho)
+const INITIAL_SCALE = 3; // >1 aproxima (maior desenho)
 const INITIAL_Y_OFFSET_PX = 0; // + desce | - sobe
 const PRESERVE_RATIO = "xMidYMid meet"; // centraliza no palco
 
@@ -177,6 +177,63 @@ export function MoleculeViewer2D() {
     );
   }, []);
 
+  // Função utilitária para limitar o viewBox
+  const clampViewBox = useCallback((vb: ViewBox, init: ViewBox): ViewBox => {
+    // Calcula os limites máximos de deslocamento
+    // Permitimos um deslocamento de até 30% da dimensão inicial para cada lado
+    // Valor intermediário que permite mais liberdade de movimento sem perder a molécula
+    const maxOffsetX = init.width * 0.37;
+    const maxOffsetY = init.height * 0.25;
+
+    // Limita as coordenadas para não ultrapassar os limites
+    const clampedMinX = Math.max(
+      init.minX - maxOffsetX,
+      Math.min(init.minX + maxOffsetX, vb.minX)
+    );
+    const clampedMinY = Math.max(
+      init.minY - maxOffsetY,
+      Math.min(init.minY + maxOffsetY, vb.minY)
+    );
+
+    // Verifica se o viewBox está muito ampliado (zoom out extremo)
+    // e centraliza a molécula se necessário
+    const maxWidth = init.width * 4.0; // Consistente com o limite de zoom
+    const maxHeight = init.height * 4.0;
+
+    let finalWidth = vb.width;
+    let finalHeight = vb.height;
+
+    // Se o zoom estiver muito ampliado, ajusta para o tamanho máximo
+    if (finalWidth > maxWidth) {
+      finalWidth = maxWidth;
+    }
+    if (finalHeight > maxHeight) {
+      finalHeight = maxHeight;
+    }
+
+    // Garante que a molécula permaneça visível mesmo em zoom extremo
+    // Centraliza a molécula se o viewBox estiver muito deslocado
+    if (
+      Math.abs(clampedMinX - init.minX) > maxOffsetX * 0.95 ||
+      Math.abs(clampedMinY - init.minY) > maxOffsetY * 0.95
+    ) {
+      // Se estiver próximo do limite, centraliza suavemente
+      return {
+        minX: clampedMinX,
+        minY: clampedMinY,
+        width: finalWidth,
+        height: finalHeight,
+      };
+    }
+
+    return {
+      minX: clampedMinX,
+      minY: clampedMinY,
+      width: finalWidth,
+      height: finalHeight,
+    };
+  }, []);
+
   const resetViewBox = useCallback(() => {
     const svg = svgElRef.current;
     if (!svg || !vbInitialRef.current) return;
@@ -188,7 +245,7 @@ export function MoleculeViewer2D() {
   const handleWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
       const svg = svgElRef.current;
-      if (!svg || !vbRef.current) return;
+      if (!svg || !vbRef.current || !vbInitialRef.current) return;
       e.preventDefault();
 
       const rect = svg.getBoundingClientRect();
@@ -199,7 +256,7 @@ export function MoleculeViewer2D() {
       const zoom = Math.pow(1.0015, e.deltaY);
       const newWidth = vb.width * zoom;
 
-      const init = vbInitialRef.current ?? vb;
+      const init = vbInitialRef.current;
       const aspect = init.height / init.width;
       const minW = init.width * 0.1;
       const maxW = init.width * 4.0;
@@ -217,10 +274,12 @@ export function MoleculeViewer2D() {
         height: clampedH,
       };
 
-      vbRef.current = next;
-      writeViewBox(svg, next);
+      // Aplica limites ao viewBox para zoom extremo
+      const clamped = clampViewBox(next, init);
+      vbRef.current = clamped;
+      writeViewBox(svg, clamped);
     },
-    [writeViewBox]
+    [writeViewBox, clampViewBox]
   );
 
   // Pan (Shift + scroll)
@@ -228,7 +287,7 @@ export function MoleculeViewer2D() {
     (e: React.WheelEvent<HTMLDivElement>) => {
       if (!e.shiftKey) return;
       const svg = svgElRef.current;
-      if (!svg || !vbRef.current) return;
+      if (!svg || !vbRef.current || !vbInitialRef.current) return;
       e.preventDefault();
 
       const vb = vbRef.current;
@@ -240,10 +299,12 @@ export function MoleculeViewer2D() {
         height: vb.height,
       };
 
-      vbRef.current = next;
-      writeViewBox(svg, next);
+      // Aplica limites ao viewBox
+      const clamped = clampViewBox(next, vbInitialRef.current);
+      vbRef.current = clamped;
+      writeViewBox(svg, clamped);
     },
-    [writeViewBox]
+    [writeViewBox, clampViewBox]
   );
 
   // Drag
@@ -270,7 +331,13 @@ export function MoleculeViewer2D() {
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!isDragging || !dragStartRef.current.vb || !vbRef.current) return;
+      if (
+        !isDragging ||
+        !dragStartRef.current.vb ||
+        !vbRef.current ||
+        !vbInitialRef.current
+      )
+        return;
 
       const dx = e.clientX - dragStartRef.current.x;
       const dy = e.clientY - dragStartRef.current.y;
@@ -289,10 +356,12 @@ export function MoleculeViewer2D() {
         height: vbRef.current.height,
       };
 
-      vbRef.current = next;
-      writeViewBox(svg, next);
+      // Aplica limites ao viewBox durante o drag
+      const clamped = clampViewBox(next, vbInitialRef.current);
+      vbRef.current = clamped;
+      writeViewBox(svg, clamped);
     },
-    [isDragging, writeViewBox]
+    [isDragging, writeViewBox, clampViewBox]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -323,6 +392,7 @@ export function MoleculeViewer2D() {
         !isDragging ||
         !dragStartRef.current.vb ||
         !vbRef.current ||
+        !vbInitialRef.current ||
         e.touches.length !== 1
       )
         return;
@@ -345,10 +415,12 @@ export function MoleculeViewer2D() {
         height: vbRef.current.height,
       };
 
-      vbRef.current = next;
-      writeViewBox(svg, next);
+      // Aplica limites ao viewBox durante o touch
+      const clamped = clampViewBox(next, vbInitialRef.current);
+      vbRef.current = clamped;
+      writeViewBox(svg, clamped);
     },
-    [isDragging, writeViewBox]
+    [isDragging, writeViewBox, clampViewBox]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -414,7 +486,7 @@ export function MoleculeViewer2D() {
           .replace("<svg", `<svg preserveAspectRatio="${PRESERVE_RATIO}"`)
           .replace(
             "<svg",
-            '<svg style="width:100%;height:100%;display:block;overflow:hidden;cursor:grab;touch-action:none"'
+            '<svg style="width:100%;height:100%;display:block;overflow:hidden;cursor:grab;touch-action:none;max-width:100%;max-height:100%"'
           );
 
         host.innerHTML = svgWithStyle;
@@ -486,6 +558,8 @@ export function MoleculeViewer2D() {
           touchAction: "none",
           overflow: "hidden",
           cursor: "grab",
+          maxWidth: "100%",
+          maxHeight: "100%",
         }}
         title={t("tooltip")}
       />
