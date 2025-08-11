@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useVisualizationStore } from "../store/visualizationStore";
+import { useTranslations } from "next-intl";
 
 type OpenChemLibModule = typeof import("openchemlib");
 
@@ -153,6 +154,101 @@ export function MoleculeViewer2D() {
     [writeViewBox]
   );
 
+  // Estado para controlar o arrastar
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartRef = useRef<{ x: number; y: number; vb: ViewBox | null }>({ x: 0, y: 0, vb: null });
+
+  // Iniciar o arrastar
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!vbRef.current) return;
+    setIsDragging(true);
+    dragStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      vb: { ...vbRef.current }
+    };
+    // Mudar o cursor para indicar que está arrastando
+    if (svgHostRef.current) {
+      const svg = svgHostRef.current.querySelector('svg');
+      if (svg) svg.style.cursor = 'grabbing';
+    }
+  }, []);
+
+  // Arrastar
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !dragStartRef.current.vb || !vbRef.current) return;
+    
+    const dx = e.clientX - dragStartRef.current.x;
+    const dy = e.clientY - dragStartRef.current.y;
+    
+    const svg = svgElRef.current;
+    if (!svg) return;
+    
+    const rect = svg.getBoundingClientRect();
+    const scaleX = vbRef.current.width / rect.width;
+    const scaleY = vbRef.current.height / rect.height;
+    
+    const next: ViewBox = {
+      minX: dragStartRef.current.vb.minX - dx * scaleX,
+      minY: dragStartRef.current.vb.minY - dy * scaleY,
+      width: vbRef.current.width,
+      height: vbRef.current.height
+    };
+    
+    vbRef.current = next;
+    writeViewBox(svg, next);
+  }, [isDragging, writeViewBox]);
+
+  // Finalizar o arrastar
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    // Restaurar o cursor
+    if (svgHostRef.current) {
+      const svg = svgHostRef.current.querySelector('svg');
+      if (svg) svg.style.cursor = 'grab';
+    }
+  }, []);
+
+  // Eventos de toque para dispositivos móveis
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!vbRef.current || e.touches.length !== 1) return;
+    setIsDragging(true);
+    dragStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+      vb: { ...vbRef.current }
+    };
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || !dragStartRef.current.vb || !vbRef.current || e.touches.length !== 1) return;
+    e.preventDefault(); // Prevenir scroll da página
+    
+    const dx = e.touches[0].clientX - dragStartRef.current.x;
+    const dy = e.touches[0].clientY - dragStartRef.current.y;
+    
+    const svg = svgElRef.current;
+    if (!svg) return;
+    
+    const rect = svg.getBoundingClientRect();
+    const scaleX = vbRef.current.width / rect.width;
+    const scaleY = vbRef.current.height / rect.height;
+    
+    const next: ViewBox = {
+      minX: dragStartRef.current.vb.minX - dx * scaleX,
+      minY: dragStartRef.current.vb.minY - dy * scaleY,
+      width: vbRef.current.width,
+      height: vbRef.current.height
+    };
+    
+    vbRef.current = next;
+    writeViewBox(svg, next);
+  }, [isDragging, writeViewBox]);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
   // Duplo clique para resetar
   const handleDoubleClick = useCallback(() => {
     resetViewBox();
@@ -212,7 +308,7 @@ export function MoleculeViewer2D() {
           .replace("<svg", '<svg preserveAspectRatio="xMidYMid meet"')
           .replace(
             "<svg",
-            '<svg style="max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; cursor: grab;"'
+            '<svg style="max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; cursor: grab; touch-action: none;"'
           );
 
         host.innerHTML = svgWithStyle;
@@ -245,15 +341,26 @@ export function MoleculeViewer2D() {
     [handleWheel, handleWheelPan]
   );
 
+  // Obter traduções para os controles
+  const t = useTranslations("visualization.controls");
+
   return (
     <div className="w-full h-full">
       <div
         ref={svgHostRef}
         onWheel={onWheel}
         onDoubleClick={handleDoubleClick}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         className="w-full h-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center select-none"
         style={{ touchAction: "none" }}
-        title="Scroll para zoom; Shift + scroll para pan; duplo clique para resetar"
+        title={t("tooltip")}
       />
       {!ready && (
         <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">

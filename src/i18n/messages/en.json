@@ -82,6 +82,13 @@
     "description": "Enter chemical formulas, visualize 2D and 3D structures and explore different molecular representations.",
     "molecules2D3D": {
       "title": "2D/3D Molecules"
+    },
+    "controls": {
+      "dragToMove": "Click and drag to move",
+      "scrollToZoom": "Scroll to zoom",
+      "shiftScrollToPan": "Shift + scroll to pan",
+      "doubleClickToReset": "Double click to reset",
+      "tooltip": "Click and drag to move; Scroll to zoom; Shift + scroll to pan; Double click to reset"
     }
   },
   "home": {
@@ -645,4 +652,4 @@
     "noResults": "No results found.",
     "more": "+ {count} more"
   }
-} 
+}
