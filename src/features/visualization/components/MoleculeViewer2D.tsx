@@ -1,84 +1,102 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { waitForKekule } from "../utils/waitForKekule";
 import { useVisualizationStore } from "../store/visualizationStore";
-import type { KekuleChemViewer, KekuleNamespace } from "../types/kekule";
+
+type OpenChemLibModule = typeof import("openchemlib");
 
 export function MoleculeViewer2D() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const viewerRef = useRef<KekuleChemViewer | null>(null);
+  const svgHostRef = useRef<HTMLDivElement | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
 
   const smiles = useVisualizationStore((s) => s.smilesData);
+  const sdf = useVisualizationStore((s) => s.sdfData);
 
-  // Inicializa o viewer 2D (apenas uma vez)
+  const oclRef = useRef<OpenChemLibModule | null>(null);
   useEffect(() => {
     let disposed = false;
-
-    async function init() {
-      setErr(null);
+    async function loadOCL() {
       try {
-        const Kekule: KekuleNamespace = await waitForKekule();
-        if (disposed || !containerRef.current) return;
-
-        // Destroi instância anterior se houver
-        if (viewerRef.current?.finalize) {
-          viewerRef.current.finalize();
-          viewerRef.current = null;
-        }
-
-        // >>> CORREÇÃO AQUI: usar ChemWidget.Viewer (não Kekule.ChemViewer)
-        const viewer = new Kekule.ChemWidget.Viewer(containerRef.current, {
-          renderType: "2D",
-        });
-        viewer.setRenderType("2D");
-        viewer.setEnableToolbar?.(false);
-        viewer.setToolButtonsVisible?.(false);
-        viewer.setAutoAdjustAspect?.(true);
-        viewerRef.current = viewer;
-      } catch (e: unknown) {
+        const mod: OpenChemLibModule = await import("openchemlib");
+        const OCL: OpenChemLibModule =
+          (mod as unknown as { default?: OpenChemLibModule }).default ?? mod;
+        if (disposed) return;
+        oclRef.current = OCL;
+        setReady(true);
+      } catch (e) {
+        console.error(e);
         setErr(
-          e instanceof Error
-            ? e.message
-            : "Falha ao inicializar o visualizador 2D."
+          "Falha ao carregar OpenChemLib. Verifique a instalação do pacote."
         );
       }
     }
-
-    void init();
+    void loadOCL();
     return () => {
       disposed = true;
-      if (viewerRef.current?.finalize) {
-        viewerRef.current.finalize();
-        viewerRef.current = null;
-      }
     };
   }, []);
 
-  // Atualiza a molécula sempre que smiles mudar
   useEffect(() => {
-    async function updateMol() {
-      if (!viewerRef.current || !smiles) return;
+    async function render() {
+      setErr(null);
+      const host = svgHostRef.current;
+      const OCL = oclRef.current;
+      if (!host || !OCL || !ready) return;
+
       try {
-        const Kekule = await waitForKekule();
-        const mol = Kekule.IO.loadFormatData(smiles, "smi");
-        viewerRef.current.setChemObj(mol);
-        viewerRef.current.setZoom?.(1.0);
-      } catch {
-        setErr("Não foi possível renderizar a molécula (SMILES inválido?).");
+        let mol: import("openchemlib").Molecule | null = null;
+
+        if (sdf) {
+          try {
+            mol = OCL.Molecule.fromMolfile(sdf);
+          } catch {}
+        }
+        if (!mol && smiles) {
+          try {
+            mol = OCL.Molecule.fromSmiles(smiles);
+          } catch {}
+        }
+        if (!mol) {
+          host.innerHTML = "";
+          setErr(
+            "Sem dados válidos para renderizar (SDF/SMILES indisponíveis)."
+          );
+          return;
+        }
+        try {
+          mol.addImplicitHydrogens?.();
+        } catch {}
+        try {
+          mol.ensureHelperArrays?.(OCL.Molecule?.cHelperNeighbours ?? 0);
+        } catch {}
+
+        const svg = (
+          mol as unknown as {
+            toSVG: (w: number, h: number, opts?: unknown) => string;
+          }
+        ).toSVG(640, 420, { autoCrop: true });
+        host.innerHTML = svg;
+      } catch (e) {
+        console.error(e);
+        setErr("Não foi possível renderizar a estrutura 2D com OpenChemLib.");
       }
     }
-    void updateMol();
-  }, [smiles]);
+    void render();
+  }, [sdf, smiles, ready]);
 
   return (
     <div className="w-full">
       <div
-        ref={containerRef}
-        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900"
+        ref={svgHostRef}
+        className="w-full h-[420px] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden"
       />
       {err && <p className="mt-2 text-sm text-red-600">{err}</p>}
+      {!err && !ready && (
+        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+          Carregando motor 2D…
+        </p>
+      )}
     </div>
   );
 }

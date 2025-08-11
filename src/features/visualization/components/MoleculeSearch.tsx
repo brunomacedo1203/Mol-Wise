@@ -15,20 +15,30 @@ export function MoleculeSearch() {
 
   async function handleSearch(e?: React.FormEvent) {
     e?.preventDefault();
+    const q = input.trim();
+    if (!q) return;
+
     setErr(null);
     setLoading(true);
+
     try {
-      // Busca ambos: SMILES (2D) e SDF (3D)
-      const [smiles, sdf] = await Promise.all([
-        getSmiles(input),
-        getSdf(input).catch(() => null), // se não houver 3D, tentamos fallback dentro do getSdf
+      const [smilesRes, sdfRes] = await Promise.allSettled([
+        getSmiles(q),
+        getSdf(q),
       ]);
 
-      setSmiles(smiles);
-      if (sdf) setSdf(sdf);
-      else setSdf(null);
+      const smiles = smilesRes.status === "fulfilled" ? smilesRes.value : null;
+      const sdf = sdfRes.status === "fulfilled" ? sdfRes.value : null;
 
-      // começa em 2D por padrão
+      setSmiles(smiles);
+      setSdf(sdf);
+
+      if (!smiles && !sdf) {
+        throw new Error(
+          "Não foi possível obter dados na PubChem (SMILES/SDF). Tente outro nome/fórmula/SMILES/CID."
+        );
+      }
+
       setViewMode("2D");
     } catch (error: unknown) {
       setErr(
@@ -46,12 +56,11 @@ export function MoleculeSearch() {
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="Digite nome, fórmula, SMILES ou CID (ex.: benzene, NaCl, C1=CC=CC=C1, 241)"
+        placeholder="Digite nome, fórmula, SMILES ou CID (ex.: water, H2O, C1=CC=CC=C1, 241)"
         className="flex-1 px-3 py-2 rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100"
       />
       <button
         type="submit"
-        onClick={() => handleSearch()}
         disabled={loading || !input.trim()}
         className="px-4 py-2 rounded bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 disabled:opacity-50"
       >

@@ -1,8 +1,8 @@
 "use client";
 
 import { MoleculeSearch } from "./MoleculeSearch";
-import { MoleculeViewer2D } from "./MoleculeViewer2D";
 import { MoleculeViewer3D } from "./MoleculeViewer3D";
+import { MoleculeViewer2D } from "./MoleculeViewer2D";
 import { useVisualizationStore } from "../store/visualizationStore";
 
 export function VisualizationContainer({
@@ -51,7 +51,8 @@ export function VisualizationContainer({
       {!smilesData && !sdfData && (
         <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
           Dica: pesquise por <b>nome</b> (ex.: benzene), <b>fórmula</b> (ex.:
-          NaCl) ou <b>SMILES</b> (ex.: C1=CC=CC=C1).
+          NaCl),
+          <b> SMILES</b> (ex.: C1=CC=CC=C1) ou <b>CID</b> (ex.: 241).
         </p>
       )}
     </div>

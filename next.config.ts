@@ -11,10 +11,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  experimental: {
-  // ⚠️ Mantido como false pois @rdkit/rdkit depende de WebAssembly via ESM
-  esmExternals: false,
-  },
   webpack(config) {
     config.experiments = config.experiments || {};
     config.experiments.asyncWebAssembly = true;

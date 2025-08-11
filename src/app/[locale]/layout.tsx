@@ -94,17 +94,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
 
-        {/* Kekule.js */}
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/kekule/dist/themes/default/kekule.css"
-        />
-        <Script
-          src="https://unpkg.com/kekule/dist/kekule.js"
-          strategy="afterInteractive"
-        />
-
-        {/* 3Dmol.js */}
+        {/* 3Dmol.js (mantém o 3D) */}
         <Script
           src="https://3Dmol.org/build/3Dmol-min.js"
           strategy="afterInteractive"

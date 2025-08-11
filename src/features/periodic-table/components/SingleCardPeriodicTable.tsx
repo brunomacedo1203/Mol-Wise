@@ -4,7 +4,7 @@ interface SingleCardPeriodicTableProps {
   name: string;
   molarMass: number;
   showColummNumber?: number;
-  highlightClass?: string; // agora é só o nome da classe ou ""
+  highlightClass?: string;
 }
 
 export default function SingleCardPeriodicTable({

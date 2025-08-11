@@ -2,7 +2,7 @@
 
 ## 🎯 Visão Geral
 
-Esta feature permite a visualização interativa de moléculas químicas em **2D (via RDKit-JS)** e **3D (via 3Dmol.js)**, usando dados obtidos da **PubChem API**. O estado da visualização é gerenciado globalmente com **Zustand**, e os componentes seguem a arquitetura modular do projeto Mol Wise.
+Esta feature permite a visualização interativa de moléculas químicas em **2D (via OpenChemLib - OCL)** e **3D (via 3Dmol.js)**, usando dados obtidos da **PubChem API**. O estado da visualização é gerenciado globalmente com **Zustand**, e os componentes seguem a arquitetura modular do projeto Mol Wise.
 
 ---
 
@@ -11,8 +11,8 @@ Esta feature permite a visualização interativa de moléculas químicas em **2D
 ```
 src/features/visualization/
 ├── components/
-│   ├── MoleculeSearch.tsx          # Input de busca (nome ou fórmula)
-│   ├── MoleculeViewer2D.tsx        # Renderizador 2D usando RDKit-JS
+│   ├── MoleculeSearch.tsx          # Input de busca (nome, fórmula, SMILES ou CID)
+│   ├── MoleculeViewer2D.tsx        # Renderizador 2D usando OpenChemLib (SVG)
 │   ├── MoleculeViewer3D.tsx        # Renderizador 3D usando 3Dmol.js
 │   └── VisualizationContainer.tsx  # Componente principal que agrupa tudo
 │
@@ -20,10 +20,11 @@ src/features/visualization/
 │   └── visualizationStore.ts       # Zustand global state
 │
 ├── types/
-│   └── visualization.types.ts      # Tipagens TypeScript da feature
+│   └── 3dmol.d.ts                  # Tipagens auxiliares do 3Dmol.js
 │
 ├── utils/
-│   └── pubchemAPI.ts               # Função para buscar SMILES e SDF da PubChem
+│   ├── pubchemAPI.ts               # Busca SMILES/SDF na PubChem (resolve CID)
+│   └── waitFor3Dmol.ts             # Aguardador do namespace $3Dmol no client
 │
 ├── index.ts                        # Exportações da feature
 └── README.md                       # Esta documentação
@@ -39,11 +40,14 @@ Componente de input com botão de busca. Realiza chamada à API da PubChem e atu
 
 ### MoleculeViewer2D
 
-Renderiza a estrutura 2D da molécula usando o SMILES com a biblioteca RDKit-JS compilada para WebAssembly.
+Renderiza a estrutura 2D da molécula gerando um SVG com **OpenChemLib (OCL)**.
+
+- Prioriza dados em **SDF/Molfile** quando disponíveis
+- Fallback para **SMILES** (OCL gera coordenadas 2D automaticamente)
 
 ### MoleculeViewer3D
 
-Renderiza a estrutura 3D da molécula usando o SDF da PubChem e a biblioteca 3Dmol.js via CDN.
+Renderiza a estrutura 3D da molécula usando o **SDF** da PubChem e a biblioteca **3Dmol.js** via CDN.
 
 ### VisualizationContainer
 
@@ -58,15 +62,15 @@ Componente principal da feature. Contém:
 ## 🧠 Estado Global (Zustand)
 
 ```ts
+type ViewMode = "2D" | "3D";
+
 interface VisualizationState {
-  query: string;
-  smilesData: string;
-  sdfData: string;
-  viewMode: "2D" | "3D";
-  setQuery: (value: string) => void;
-  setSmilesData: (value: string) => void;
-  setSdfData: (value: string) => void;
-  setViewMode: (mode: "2D" | "3D") => void;
+  viewMode: ViewMode;
+  smilesData: string | null;
+  sdfData: string | null;
+  setViewMode: (mode: ViewMode) => void;
+  setSmilesData: (value: string | null) => void;
+  setSdfData: (value: string | null) => void;
 }
 ```
 
@@ -74,13 +78,16 @@ interface VisualizationState {
 
 ## 🌐 Integração com PubChem
 
-As buscas são realizadas por nome ou fórmula. Dois endpoints são utilizados:
+As buscas aceitam nome, fórmula, SMILES ou CID. A lógica resolve um **CID** e então busca dados robustos:
 
-- **SMILES:**  
-  `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/QUERY/property/CanonicalSMILES/TXT`
+- **SMILES (IsomericSMILES):**  
+  `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/QUERY/property/IsomericSMILES/TXT`
 
-- **SDF (3D):**  
-  `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/QUERY/SDF`
+- **SDF (preferência 3D com fallback 2D por CID):**
+  1. `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/CID/SDF?record_type=3d`
+  2. `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/CID/SDF`
+
+> Observação: quando a entrada é fórmula ou SMILES, a aplicação resolve o CID antes de buscar o SDF.
 
 ---
 
@@ -164,22 +171,22 @@ export const MENU_SECTIONS = {
 
 ## ✅ Benefícios da Implementação
 
-- **✔️ Open Source**: Uso de RDKit-JS e 3Dmol.js (ambas BSD)
+- **✔️ Open Source**: Uso de OpenChemLib e 3Dmol.js (BSD)
 - **✔️ Client-side**: Nenhum backend necessário
 - **✔️ Escalável**: Pronto para novos formatos de input (CID, fórmula, etc)
 - **✔️ Educacional**: Ideal para fins didáticos e científicos
 - **✔️ Separação de responsabilidades**: Cada parte da lógica em seu próprio componente
-- **✔️ Internamente consistente com arquitetura do Mol Wise**
+- **✔️ Consistente com arquitetura do Mol Wise**
 
 ---
 
 ## 🔄 Fluxo de Uso
 
 1. Usuário acessa `/visualization`
-2. Digita o nome de uma molécula (ex: "etanol")
-3. A aplicação busca o SMILES e SDF na PubChem
-4. RDKit gera a estrutura 2D (SVG)
-5. 3Dmol.js renderiza a estrutura 3D
+2. Digita o nome/fórmula/SMILES/CID (ex: "etanol", "H2O", "C1=CC=CC=C1", "241")
+3. A aplicação resolve CID na PubChem e busca SMILES e SDF
+4. OpenChemLib gera a estrutura 2D (SVG)
+5. 3Dmol.js renderiza a estrutura 3D (SDF)
 6. Usuário alterna entre os modos 2D e 3D
 
 ---

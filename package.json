@@ -31,6 +31,7 @@
     "mathjs": "^14.5.2",
     "next": "15.3.1",
     "next-intl": "^4.1.0",
+    "openchemlib": "^9.6.0",
     "re-resizable": "^6.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
