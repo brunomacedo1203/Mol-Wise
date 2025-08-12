@@ -40,6 +40,189 @@ function tightenViewBox(
   );
 }
 
+/** ======= Remove rótulos CIP (R/S) e nomes de compostos do SVG ======= */
+function removeCIPLabelsAndNames(svgString: string): string {
+  // Cria um parser temporário para processar o SVG
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgString, "image/svg+xml");
+  const svg = doc.documentElement;
+
+  // Remove todos os elementos <text> que contêm apenas "R" ou "S"
+  const textElements = svg.querySelectorAll("text");
+  textElements.forEach((textEl) => {
+    const content = textEl.textContent?.trim();
+
+    // Remove rótulos CIP (R/S)
+    if (content === "R" || content === "S") {
+      textEl.remove();
+      return;
+    }
+
+    // Remove nomes de compostos (texto longo que não são rótulos de átomos)
+    // Heurística: se o texto tem mais de 3 caracteres e não é um elemento químico comum
+    if (content && content.length > 3) {
+      // Lista de elementos químicos e rótulos comuns que devemos preservar
+      const preservedLabels = [
+        // Elementos químicos comuns
+        "H",
+        "He",
+        "Li",
+        "Be",
+        "B",
+        "C",
+        "N",
+        "O",
+        "F",
+        "Ne",
+        "Na",
+        "Mg",
+        "Al",
+        "Si",
+        "P",
+        "S",
+        "Cl",
+        "Ar",
+        "K",
+        "Ca",
+        "Sc",
+        "Ti",
+        "V",
+        "Cr",
+        "Mn",
+        "Fe",
+        "Co",
+        "Ni",
+        "Cu",
+        "Zn",
+        "Ga",
+        "Ge",
+        "As",
+        "Se",
+        "Br",
+        "Kr",
+        "Rb",
+        "Sr",
+        "Y",
+        "Zr",
+        "Nb",
+        "Mo",
+        "Tc",
+        "Ru",
+        "Rh",
+        "Pd",
+        "Ag",
+        "Cd",
+        "In",
+        "Sn",
+        "Sb",
+        "Te",
+        "I",
+        "Xe",
+        "Cs",
+        "Ba",
+        "La",
+        "Ce",
+        "Pr",
+        "Nd",
+        "Pm",
+        "Sm",
+        "Eu",
+        "Gd",
+        "Tb",
+        "Dy",
+        "Ho",
+        "Er",
+        "Tm",
+        "Yb",
+        "Lu",
+        "Hf",
+        "Ta",
+        "W",
+        "Re",
+        "Os",
+        "Ir",
+        "Pt",
+        "Au",
+        "Hg",
+        "Tl",
+        "Pb",
+        "Bi",
+        "Po",
+        "At",
+        "Rn",
+        "Fr",
+        "Ra",
+        "Ac",
+        "Th",
+        "Pa",
+        "U",
+        "Np",
+        "Pu",
+        "Am",
+        "Cm",
+        "Bk",
+        "Cf",
+        "Es",
+        "Fm",
+        "Md",
+        "No",
+        "Lr",
+        "Rf",
+        "Db",
+        "Sg",
+        "Bh",
+        "Hs",
+        "Mt",
+        "Ds",
+        "Rg",
+        "Cn",
+        "Nh",
+        "Fl",
+        "Mc",
+        "Lv",
+        "Ts",
+        "Og",
+        // Números e cargas
+        "+",
+        "-",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        // Combinações comuns
+        "NH",
+        "OH",
+        "CH",
+        "NH2",
+        "NH3",
+        "CH2",
+        "CH3",
+        "COOH",
+        "COO",
+      ];
+
+      // Se não é um rótulo preservado e tem mais de 3 caracteres, provavelmente é um nome
+      const isPreserved = preservedLabels.some(
+        (label) => content === label || content.startsWith(label)
+      );
+
+      if (!isPreserved) {
+        textEl.remove();
+      }
+    }
+  });
+
+  // Serializa o SVG de volta para string
+  const serializer = new XMLSerializer();
+  return serializer.serializeToString(svg);
+}
+
 /** ======= Theming robusto (salva originais e reaplica no toggle) ======= */
 function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
   if (!svg) return;
@@ -476,8 +659,11 @@ export function MoleculeViewer2D() {
           }
         ).toSVG(w, h, { autoCrop: true, margin: 6 });
 
+        // Remove os rótulos CIP (R/S) e nomes de compostos do SVG
+        const svgWithoutCIP = removeCIPLabelsAndNames(rawSvg);
+
         const initialFramed = tightenViewBox(
-          rawSvg,
+          svgWithoutCIP,
           INITIAL_SCALE,
           INITIAL_Y_OFFSET_PX
         );
