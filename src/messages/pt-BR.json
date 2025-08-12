@@ -1,4 +1,4 @@
-  "calculators": {
+"calculators": {
     "molarMass": {
       "title": "Calculadora de Massa Molar",
       "subtitle": "Calcule a massa molar de compostos químicos",
@@ -6,6 +6,14 @@
         "showKeyboard": "Mostrar teclado",
         "hideKeyboard": "Ocultar teclado",
         "calculate": "Calcular"
+      },
+      "history": {
+        "title": "Histórico",
+        "show": "Mostrar histórico",
+        "hide": "Ocultar",
+        "clear": "Limpar histórico",
+        "empty": "Nenhum cálculo no histórico",
+        "clickToUse": "Clique para usar este resultado"
       },
       "errors": {
         "invalidElement": "Elemento inválido: {symbol}",
@@ -22,8 +30,18 @@
         "hideKeyboard": "Ocultar teclado",
         "calculate": "Calcular"
       },
+      "history": {
+        "title": "Histórico",
+        "show": "Mostrar histórico",
+        "hide": "Ocultar",
+        "clear": "Limpar histórico",
+        "empty": "Nenhum cálculo no histórico",
+        "clickToUse": "Clique para usar este resultado"
+      },
       "errors": {
-        "invalidExpression": "Expressão inválida"
+        "invalidExpression": "Expressão inválida",
+        "empty": "A expressão não pode estar vazia",
+        "divisionByZero": "Divisão por zero não é permitida"
       }
     }
-  } 
+  }

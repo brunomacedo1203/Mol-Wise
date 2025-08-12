@@ -1,10 +1,12 @@
 "use client";
 import { useTranslations } from "next-intl";
+import { useState, useCallback } from "react";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useMolarMassCalculator } from "@/features/calculators/hooks";
 import {
   MolecularFormulaInput,
   KeyboardCalculate,
+  CalculationHistory,
 } from "@/features/calculators/components/calculators/molar-mass";
 import { CalculatorContainer } from "@/features/calculators/components/common";
 
@@ -33,10 +35,13 @@ export default function MolarMassCalculator({
   isKeyboardVisible = true,
   onKeyboardVisibilityChange,
 }: MolarMassCalculatorProps) {
+  const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  
   const {
     formula,
     molarMass,
     errorMessage,
+    calculationHistory,
     handleFormulaChange,
     calculate,
     reset,
@@ -44,6 +49,7 @@ export default function MolarMassCalculator({
     handleFormulaBtn,
     handleParenthesis,
     backspace,
+    clearHistory,
   } = useMolarMassCalculator({
     initialFormula,
     initialResult,
@@ -51,6 +57,8 @@ export default function MolarMassCalculator({
     onResultChange,
     calculatorId: id,
   });
+  
+  // Não precisamos mais deste handler, pois vamos passar handleFormulaChange diretamente
 
   const t = useTranslations("calculators.molarMass");
 
@@ -64,13 +72,22 @@ export default function MolarMassCalculator({
       isKeyboardVisible={isKeyboardVisible}
       onKeyboardVisibilityChange={onKeyboardVisibilityChange}
       input={
-        <MolecularFormulaInput
-          value={formula}
-          onChange={handleFormulaChange}
-          onEnterPress={calculate}
-          errorMessage={errorMessage}
-          resultHtml={molarMass || undefined}
-        />
+        <div className="flex flex-col w-full">
+          <MolecularFormulaInput
+            value={formula}
+            onChange={handleFormulaChange}
+            onEnterPress={() => { calculate(); }}
+            errorMessage={errorMessage}
+            resultHtml={molarMass || undefined}
+          />
+          <CalculationHistory
+            history={calculationHistory}
+            onUseResult={handleFormulaChange}
+            onClearHistory={clearHistory}
+            isVisible={isHistoryVisible}
+            onToggleVisibility={() => setIsHistoryVisible(!isHistoryVisible)}
+          />
+        </div>
       }
       actions={
         <KeyboardCalculate

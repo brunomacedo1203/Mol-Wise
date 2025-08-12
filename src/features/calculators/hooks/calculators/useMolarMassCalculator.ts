@@ -16,7 +16,7 @@ interface UseMolarMassCalculatorReturn {
   molarMass: string | null;
   errorMessage: string | null;
   handleFormulaChange: (newFormula: string) => void;
-  calculate: () => void;
+  calculate: () => Promise<string | null>;
   reset: () => void;
   backspace: () => void;
   handleKeyPress: (key: string) => void;
@@ -48,10 +48,11 @@ export function useMolarMassCalculator({
     [_handleFormulaChange, onFormulaChange]
   );
 
-  const calculate = useCallback(() => {
-    _calculate();
-    onResultChange?.(molarMass);
+  const calculate = useCallback(async () => {
+    const result = await _calculate();
+    onResultChange?.(result || molarMass);
     onFormulaChange?.(formula);
+    return result || molarMass;
   }, [_calculate, molarMass, formula, onResultChange, onFormulaChange]);
 
   const reset = useCallback(() => {

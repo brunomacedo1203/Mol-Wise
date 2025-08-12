@@ -1,7 +1,8 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useMolarMassCalculatorAdapter } from "@/core/application/hooks/useMolarMassCalculatorAdapter";
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
+import { formatWithSub } from "@/shared/utils/formatWithSub";
 
 // Props para o hook de calculadora de massa molar
 interface UseMolarMassCalculatorProps {
@@ -17,13 +18,15 @@ interface UseMolarMassCalculatorReturn {
   formula: string;
   molarMass: string | null;
   errorMessage: string | null;
+  calculationHistory: Array<{ formula: string; rawFormula: string; result: string; timestamp: number }>;
   handleFormulaChange: (newFormula: string) => void;
-  calculate: () => void;
+  calculate: () => Promise<string | null>;
   reset: () => void;
   backspace: () => void;
   handleKeyPress: (key: string) => void;
   handleFormulaBtn: (value: string) => void;
   handleParenthesis: (paren: string) => void;
+  clearHistory: () => void;
 }
 
 // Hook para gerenciar o estado e lógica da calculadora de massa molar
@@ -35,6 +38,11 @@ export default function useMolarMassCalculator({
   calculatorId,
 }: UseMolarMassCalculatorProps): UseMolarMassCalculatorReturn {
   const resetCalculatorState = useCalculatorInstancesStore((state) => state.resetCalculatorState);
+  
+  // Estado para o histórico de cálculos
+  const [calculationHistory, setCalculationHistory] = useState<
+    Array<{ formula: string; rawFormula: string; result: string; timestamp: number }>
+  >([]);
   
   const {
     formula,
@@ -53,10 +61,30 @@ export default function useMolarMassCalculator({
     [_handleFormulaChange, onFormulaChange]
   );
 
-  const calculate = useCallback(() => {
-    _calculate();
-    onResultChange?.(molarMass);
+  const calculate = useCallback(async () => {
+    // Executa o cálculo (função assíncrona)
+    const result = await _calculate();
+    
+    // Adiciona ao histórico após o cálculo ser realizado
+    // Usa o resultado retornado por _calculate() ou o estado molarMass se disponível
+    const currentResult = result || molarMass;
+    
+    if (currentResult) {
+      setCalculationHistory(prev => [
+        {
+          formula: formatWithSub(formula), // Formata a fórmula com subscritos
+          rawFormula: formula, // Armazena a fórmula original sem formatação
+          result: currentResult,
+          timestamp: Date.now()
+        },
+        ...prev.slice(0, 9) // Mantém apenas os 10 cálculos mais recentes
+      ]);
+    }
+    
+    onResultChange?.(currentResult);
     onFormulaChange?.(formula);
+    
+    return currentResult;
   }, [_calculate, molarMass, formula, onResultChange, onFormulaChange]);
 
   const reset = useCallback(() => {
@@ -65,6 +93,16 @@ export default function useMolarMassCalculator({
     // Limpa o estado no store persistido
     resetCalculatorState(calculatorId);
   }, [_reset, onResultChange, resetCalculatorState, calculatorId]);
+  
+  // Função para limpar o histórico de cálculos
+  const clearHistory = useCallback(() => {
+    setCalculationHistory([]);
+  }, []);
+  
+  // Função interna para usar um resultado do histórico
+  const _useHistoryResult = useCallback((result: string) => {
+    handleFormulaChange(result);
+  }, [handleFormulaChange]);
 
   const backspace = useCallback(
     () => handleFormulaChange(formula.slice(0, -1)),
@@ -98,6 +136,7 @@ export default function useMolarMassCalculator({
     formula,
     molarMass,
     errorMessage,
+    calculationHistory,
     handleFormulaChange,
     calculate,
     reset,
@@ -105,5 +144,6 @@ export default function useMolarMassCalculator({
     handleKeyPress,
     handleFormulaBtn,
     handleParenthesis,
+    clearHistory,
   };
-} 
+}
