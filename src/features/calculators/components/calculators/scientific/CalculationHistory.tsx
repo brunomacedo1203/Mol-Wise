@@ -1,5 +1,5 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
 interface CalculationHistoryProps {
@@ -9,6 +9,9 @@ interface CalculationHistoryProps {
   isVisible: boolean;
   onToggleVisibility: () => void;
 }
+
+/** Altura visual para exibir exatamente 1 item do histórico */
+const ONE_ROW_HEIGHT = "7rem"; // ajuste fino se achar que está cortando/sobrando
 
 const CalculationHistory = ({
   history,
@@ -31,21 +34,23 @@ const CalculationHistory = ({
       .trim();
   }, []);
 
-  // Handlers para permitir seleção de texto no histórico
-  const handleHistoryMouseDown = useCallback((e: React.MouseEvent) => {
-    // Impede que o evento se propague para o Rnd
-    e.stopPropagation();
-  }, []);
+  // Mesmo padrão do componente de massa molar: um único handler "stop"
+  const stop = useCallback((e: React.MouseEvent) => e.stopPropagation(), []);
 
-  const handleHistoryMouseMove = useCallback((e: React.MouseEvent) => {
-    // Permite seleção de texto durante o arraste do mouse
-    e.stopPropagation();
-  }, []);
-
-  const handleHistoryClick = useCallback((e: React.MouseEvent) => {
-    // Impede que o clique se propague para o Rnd
-    e.stopPropagation();
-  }, []);
+  // Mesmo padrão de altura da lista:
+  // - vazio: pequeno
+  // - com >=1 item: altura fixa para 1 item (scroll do 2º em diante)
+  const listStyle = useMemo<React.CSSProperties>(() => {
+    if (history.length === 0) {
+      return { maxHeight: "2.75rem" };
+    }
+    return {
+      minHeight: ONE_ROW_HEIGHT,
+      maxHeight: ONE_ROW_HEIGHT,
+      scrollbarGutter:
+        "stable both-edges" as React.CSSProperties["scrollbarGutter"],
+    };
+  }, [history.length]);
 
   if (!isVisible) {
     return (
@@ -61,9 +66,9 @@ const CalculationHistory = ({
   return (
     <div
       className="border-t border-gray-200 dark:border-gray-700"
-      onMouseDown={handleHistoryMouseDown}
-      onMouseMove={handleHistoryMouseMove}
-      onClick={handleHistoryClick}
+      onMouseDown={stop}
+      onMouseMove={stop}
+      onClick={stop}
     >
       {/* Header do Histórico */}
       <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800">
@@ -88,10 +93,16 @@ const CalculationHistory = ({
         </div>
       </div>
 
-      {/* Lista de Cálculos */}
-      <div className="max-h-48 overflow-y-auto">
+      {/* Lista – 1 item visível; rolagem a partir do segundo (mesmo padrão) */}
+      <div
+        role="log"
+        aria-live="polite"
+        aria-relevant="additions text"
+        className="overflow-y-auto"
+        style={listStyle}
+      >
         {history.length === 0 ? (
-          <div className="p-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+          <div className="p-2 text-center text-gray-500 dark:text-gray-400 text-sm">
             {t("history.empty")}
           </div>
         ) : (
@@ -103,7 +114,7 @@ const CalculationHistory = ({
                 onClick={() => onUseResult(calculation.result)}
               >
                 {/* Expressão */}
-                <div className="text-sm text-gray-600 dark:text-gray-400 font-mono ">
+                <div className="text-sm text-gray-600 dark:text-gray-400 font-mono">
                   {formatExpression(calculation.expression)}
                 </div>
 

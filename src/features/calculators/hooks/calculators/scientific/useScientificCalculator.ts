@@ -9,7 +9,9 @@ interface UseScientificCalculatorProps {
   initialResult?: string | null;
   onFormulaChange?: (formula: string) => void;
   onResultChange?: (result: string | null) => void;
-  getErrorMessage?: (type: 'invalidExpression' | 'empty' | 'divisionByZero') => string;
+  getErrorMessage?: (
+    type: "invalidExpression" | "empty" | "divisionByZero"
+  ) => string;
   locale?: string;
   calculatorId: number;
 }
@@ -28,7 +30,7 @@ interface UseScientificCalculatorReturn {
   handleMemory: (action: "store" | "recall" | "clear") => void;
   useResult: () => void;
   clearHistory: () => void;
-  justCalculated: boolean; // NOVO: expõe flag
+  justCalculated: boolean;
   updateCursorPosition: (position: number) => void;
 }
 
@@ -37,7 +39,7 @@ function degToRad(deg: number): number {
 }
 
 function convertTrigArgsToRad(expr: string): string {
-  // Apenas converte sin, cos, tan (não as inversas)
+  // Converte sin, cos, tan (não as inversas) de graus para radianos quando possível
   return expr.replace(/(sin|cos|tan)\s*\(([^)]+)\)/gi, (match, fn, arg) => {
     try {
       const simpleNumber = Number(arg);
@@ -86,13 +88,35 @@ export function useScientificCalculator({
   locale,
   calculatorId,
 }: UseScientificCalculatorProps): UseScientificCalculatorReturn {
-  const resetCalculatorState = useCalculatorInstancesStore((state) => state.resetCalculatorState);
-  
+  const resetCalculatorState = useCalculatorInstancesStore(
+    (state) => state.resetCalculatorState
+  );
+
   const [formula, setFormula] = useState(initialFormula);
   const [result, setResult] = useState<string | null>(initialResult);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [memory, setMemory] = useState<number | null>(null);
-  const [calculationHistory, setCalculationHistory] = useState<Array<{ expression: string; result: string; timestamp: number }>>([]);
+  const [calculationHistory, setCalculationHistory] = useState<
+    Array<{ expression: string; result: string; timestamp: number }>
+  >(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(
+        `molwise_scientific_history_${calculatorId}`
+      );
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error(
+            "Erro ao carregar histórico da calculadora científica:",
+            e
+          );
+        }
+      }
+    }
+    return [];
+  });
+
   const [justCalculated, setJustCalculated] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
 
@@ -100,9 +124,9 @@ export function useScientificCalculator({
     (newFormula: string) => {
       setFormula(newFormula);
       setErrorMessage(null);
-      setJustCalculated(false); // Zera flag a cada edição manual
-      setResult(null); // Limpa o resultado anterior quando a fórmula é alterada
-      onResultChange?.(null); // Notifica que o resultado foi limpo
+      setJustCalculated(false);
+      setResult(null);
+      onResultChange?.(null);
       onFormulaChange?.(newFormula);
     },
     [onFormulaChange, onResultChange]
@@ -112,14 +136,22 @@ export function useScientificCalculator({
     try {
       if (!formula.trim()) {
         setResult(null);
-        setErrorMessage(getErrorMessage ? getErrorMessage('empty') : "A expressão não pode estar vazia");
+        setErrorMessage(
+          getErrorMessage ? getErrorMessage("empty") : "A expressão não pode estar vazia"
+        );
         return;
       }
+
       if (!validateDivisionByZero(formula)) {
         setResult(null);
-        setErrorMessage(getErrorMessage ? getErrorMessage('divisionByZero') : "Divisão por zero não é permitida");
+        setErrorMessage(
+          getErrorMessage
+            ? getErrorMessage("divisionByZero")
+            : "Divisão por zero não é permitida"
+        );
         return;
       }
+
       const formulaToEvaluate = parseFormulaForEvaluation(formula);
       const formulaWithRad = convertTrigArgsToRad(formulaToEvaluate);
       const calculatedResult = evaluate(formulaWithRad);
@@ -131,24 +163,34 @@ export function useScientificCalculator({
       if (locale === "pt") {
         formattedResult = formattedResult.replace(/\./g, ",");
       }
+
       setResult(formattedResult);
-      setJustCalculated(true); // ATIVA flag após cálculo
+      setJustCalculated(true);
       onResultChange?.(formattedResult);
       setErrorMessage(null);
 
-      setCalculationHistory(prev => [
-        {
-          expression: formula,
-          result: formattedResult,
-          timestamp: Date.now()
-        },
-        ...prev.slice(0, 9)
-      ]);
+      // ✅ Atualiza histórico sem depender de 'calculationHistory' no array de deps
+      setCalculationHistory((prev) => {
+        const newHistory = [
+          { expression: formula, result: formattedResult, timestamp: Date.now() },
+          ...prev.slice(0, 9),
+        ];
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            `molwise_scientific_history_${calculatorId}`,
+            JSON.stringify(newHistory)
+          );
+        }
+        return newHistory;
+      });
     } catch {
-      setErrorMessage(getErrorMessage ? getErrorMessage('invalidExpression') : "Expressão inválida");
+      setErrorMessage(
+        getErrorMessage ? getErrorMessage("invalidExpression") : "Expressão inválida"
+      );
       setResult(null);
     }
-  }, [formula, onResultChange, getErrorMessage, locale]);
+  }, [formula, onResultChange, getErrorMessage, locale, calculatorId]);
 
   const reset = useCallback(() => {
     setFormula("");
@@ -166,12 +208,10 @@ export function useScientificCalculator({
 
   const insertAtCursor = useCallback(
     (char: string) => {
-      // Insere o caractere na posição do cursor
       const beforeCursor = formula.slice(0, cursorPosition);
       const afterCursor = formula.slice(cursorPosition);
       const newFormula = beforeCursor + char + afterCursor;
       handleFormulaChange(newFormula);
-      // Atualiza a posição do cursor para depois do caractere inserido
       setCursorPosition(cursorPosition + char.length);
     },
     [formula, cursorPosition, handleFormulaChange]
@@ -188,11 +228,13 @@ export function useScientificCalculator({
         setJustCalculated(false);
         return;
       }
+
       if (result && justCalculated && !isOperator && !isParenthesis) {
         handleFormulaChange(key);
         setJustCalculated(false);
         return;
       }
+
       if (key === "⌫") {
         backspace();
       } else if (key === "0") {
@@ -200,7 +242,6 @@ export function useScientificCalculator({
           insertAtCursor(key);
         }
       } else {
-        // Inserção normal no final
         insertAtCursor(key);
       }
     },
@@ -215,7 +256,6 @@ export function useScientificCalculator({
         setJustCalculated(false);
         return;
       }
-      // Usar insertAtCursor em vez de adicionar no final
       insertAtCursor(func);
     },
     [handleFormulaChange, result, locale, justCalculated, insertAtCursor]
@@ -250,16 +290,16 @@ export function useScientificCalculator({
     }
   }, [result, handleFormulaChange, locale]);
 
-  const updateCursorPosition = useCallback(
-    (position: number) => {
-      setCursorPosition(position);
-    },
-    []
-  );
+  const updateCursorPosition = useCallback((position: number) => {
+    setCursorPosition(position);
+  }, []);
 
   const clearHistory = useCallback(() => {
     setCalculationHistory([]);
-  }, []);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(`molwise_scientific_history_${calculatorId}`);
+    }
+  }, [calculatorId]);
 
   return {
     formula,

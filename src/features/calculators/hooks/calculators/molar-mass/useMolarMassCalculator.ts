@@ -18,7 +18,12 @@ interface UseMolarMassCalculatorReturn {
   formula: string;
   molarMass: string | null;
   errorMessage: string | null;
-  calculationHistory: Array<{ formula: string; rawFormula: string; result: string; timestamp: number }>;
+  calculationHistory: Array<{
+    formula: string;
+    rawFormula: string;
+    result: string;
+    timestamp: number;
+  }>;
   handleFormulaChange: (newFormula: string) => void;
   calculate: () => Promise<string | null>;
   reset: () => void;
@@ -37,13 +42,32 @@ export default function useMolarMassCalculator({
   onResultChange,
   calculatorId,
 }: UseMolarMassCalculatorProps): UseMolarMassCalculatorReturn {
-  const resetCalculatorState = useCalculatorInstancesStore((state) => state.resetCalculatorState);
-  
-  // Estado para o histórico de cálculos
+  const resetCalculatorState = useCalculatorInstancesStore(
+    (state) => state.resetCalculatorState
+  );
+
+  // Estado para o histórico de cálculos com persistência no localStorage
   const [calculationHistory, setCalculationHistory] = useState<
     Array<{ formula: string; rawFormula: string; result: string; timestamp: number }>
-  >([]);
-  
+  >(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(
+        `molwise_molar_mass_history_${calculatorId}`
+      );
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error(
+            "Erro ao carregar histórico da calculadora de massa molar:",
+            e
+          );
+        }
+      }
+    }
+    return [];
+  });
+
   const {
     formula,
     handleFormulaChange: _handleFormulaChange,
@@ -64,28 +88,47 @@ export default function useMolarMassCalculator({
   const calculate = useCallback(async () => {
     // Executa o cálculo (função assíncrona)
     const result = await _calculate();
-    
-    // Adiciona ao histórico após o cálculo ser realizado
+
     // Usa o resultado retornado por _calculate() ou o estado molarMass se disponível
     const currentResult = result || molarMass;
-    
+
     if (currentResult) {
-      setCalculationHistory(prev => [
-        {
-          formula: formatWithSub(formula), // Formata a fórmula com subscritos
-          rawFormula: formula, // Armazena a fórmula original sem formatação
-          result: currentResult,
-          timestamp: Date.now()
-        },
-        ...prev.slice(0, 9) // Mantém apenas os 10 cálculos mais recentes
-      ]);
+      // Formata a fórmula com subscritos e "sanitiza" mantendo apenas <sub>
+      const formattedFormula = formatWithSub(formula);
+      const sanitizedFormula = formattedFormula.replace(
+        /<(?!\/?(sub)\b)[^>]+>/gi,
+        ""
+      );
+
+      // Atualiza o histórico com base no estado anterior (evita depender de calculationHistory)
+      setCalculationHistory((prev) => {
+        const newHistory = [
+          {
+            formula: sanitizedFormula, // HTML com <sub>
+            rawFormula: formula, // texto puro digitado
+            result: currentResult,
+            timestamp: Date.now(),
+          },
+          ...prev.slice(0, 9), // mantém no máximo 10 itens
+        ];
+
+        // Persiste no localStorage
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            `molwise_molar_mass_history_${calculatorId}`,
+            JSON.stringify(newHistory)
+          );
+        }
+
+        return newHistory;
+      });
     }
-    
+
     onResultChange?.(currentResult);
     onFormulaChange?.(formula);
-    
+
     return currentResult;
-  }, [_calculate, molarMass, formula, onResultChange, onFormulaChange]);
+  }, [_calculate, molarMass, formula, onResultChange, onFormulaChange, calculatorId]);
 
   const reset = useCallback(() => {
     _reset();
@@ -93,16 +136,15 @@ export default function useMolarMassCalculator({
     // Limpa o estado no store persistido
     resetCalculatorState(calculatorId);
   }, [_reset, onResultChange, resetCalculatorState, calculatorId]);
-  
+
   // Função para limpar o histórico de cálculos
   const clearHistory = useCallback(() => {
     setCalculationHistory([]);
-  }, []);
-  
-  // Função interna para usar um resultado do histórico
-  const _useHistoryResult = useCallback((result: string) => {
-    handleFormulaChange(result);
-  }, [handleFormulaChange]);
+    // Limpa o histórico no localStorage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(`molwise_molar_mass_history_${calculatorId}`);
+    }
+  }, [calculatorId]);
 
   const backspace = useCallback(
     () => handleFormulaChange(formula.slice(0, -1)),
