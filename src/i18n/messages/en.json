@@ -202,7 +202,11 @@
       "Halogen": "Halogen",
       "Noble gas": "Noble Gas",
       "Lanthanide": "Lanthanide",
-      "Actinide": "Actinide"
+      "Actinide": "Actinide",
+     "Boron Family": "Boron Family",
+      "Carbon Family": "Carbon Family",
+      "Nitrogen Family": "Nitrogen Family",
+      "Chalcogens Family": "Chalcogens "
     },
     "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
     "element": {

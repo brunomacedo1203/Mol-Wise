@@ -204,7 +204,11 @@
       "Halogen": "Halogênio",
       "Noble gas": "Gás Nobre",
       "Lanthanide": "Lantanídeo",
-      "Actinide": "Actinídeo"
+      "Actinide": "Actinídeo",
+      "Boron Family": "Família de Boro",
+      "Carbon Family": "Família de Carbono",
+      "Nitrogen Family": "Família de Nitrogênio",
+      "Chalcogens Family": "Calcogênios "
     },
     "ariaLabel": "Elemento {name} ({symbol}), número atômico {atomicNumber}",
     "element": {

@@ -109,6 +109,7 @@ const elementsData = [
     row: 2,
     column: 13,
     showColummNumber: 13,
+    isBoronFamily: true,
   },
   {
     symbol: "C",
@@ -132,6 +133,7 @@ const elementsData = [
     row: 2,
     column: 14,
     showColummNumber: 14,
+    isCarbonFamily: true,
   },
   {
     symbol: "N",
@@ -154,6 +156,7 @@ const elementsData = [
     row: 2,
     column: 15,
     showColummNumber: 15,
+    isNitrogenFamily: true,
   },
   {
     symbol: "O",
@@ -177,6 +180,7 @@ const elementsData = [
     row: 2,
     column: 16,
     showColummNumber: 16,
+    isOxygenFamily: true,
   },
   {
     symbol: "F",
@@ -285,6 +289,7 @@ const elementsData = [
     period: 3,
     row: 3,
     column: 13,
+    isBoronFamily: true,
   },
   {
     symbol: "Si",
@@ -307,6 +312,7 @@ const elementsData = [
     period: 3,
     row: 3,
     column: 14,
+    isCarbonFamily: true,
   },
   {
     symbol: "P",
@@ -329,6 +335,7 @@ const elementsData = [
     period: 3,
     row: 3,
     column: 15,
+    isNitrogenFamily: true,
   },
   {
     symbol: "S",
@@ -351,6 +358,7 @@ const elementsData = [
     period: 3,
     row: 3,
     column: 16,
+    isOxygenFamily: true,
   },
   {
     symbol: "Cl",
@@ -677,6 +685,7 @@ const elementsData = [
     period: 4,
     row: 4,
     column: 13,
+    isBoronFamily: true,
   },
   {
     symbol: "Ge",
@@ -699,6 +708,7 @@ const elementsData = [
     period: 4,
     row: 4,
     column: 14,
+    isCarbonFamily: true,
   },
   {
     symbol: "As",
@@ -721,6 +731,7 @@ const elementsData = [
     period: 4,
     row: 4,
     column: 15,
+    isNitrogenFamily: true,
   },
   {
     symbol: "Se",
@@ -743,6 +754,7 @@ const elementsData = [
     period: 4,
     row: 4,
     column: 16,
+    isOxygenFamily: true,
   },
   {
     symbol: "Br",
@@ -1062,6 +1074,7 @@ const elementsData = [
     period: 5,
     row: 5,
     column: 13,
+    isBoronFamily: true,
   },
   {
     symbol: "Sn",
@@ -1083,6 +1096,7 @@ const elementsData = [
     period: 5,
     row: 5,
     column: 14,
+    isCarbonFamily: true,
   },
   {
     symbol: "Sb",
@@ -1104,6 +1118,7 @@ const elementsData = [
     period: 5,
     row: 5,
     column: 15,
+    isNitrogenFamily: true,
   },
   {
     symbol: "Te",
@@ -1125,6 +1140,7 @@ const elementsData = [
     period: 5,
     row: 5,
     column: 16,
+    isOxygenFamily: true,
   },
   {
     symbol: "I",
@@ -1755,6 +1771,7 @@ const elementsData = [
     period: 6,
     row: 6,
     column: 13,
+    isBoronFamily: true,
   },
   {
     symbol: "Pb",
@@ -1777,6 +1794,7 @@ const elementsData = [
     period: 6,
     row: 6,
     column: 14,
+    isCarbonFamily: true,
   },
   {
     symbol: "Bi",
@@ -1799,6 +1817,7 @@ const elementsData = [
     period: 6,
     row: 6,
     column: 15,
+    isNitrogenFamily: true,
   },
   {
     symbol: "Po",
@@ -1821,6 +1840,7 @@ const elementsData = [
     period: 6,
     row: 6,
     column: 16,
+    isOxygenFamily: true,
   },
   {
     symbol: "At",
@@ -2344,6 +2364,7 @@ const elementsData = [
     period: 7,
     row: 7,
     column: 13,
+    isBoronFamily: true,
   },
   {
     symbol: "Fl",
@@ -2358,6 +2379,7 @@ const elementsData = [
     period: 7,
     row: 7,
     column: 14,
+    isCarbonFamily: true,
   },
   {
     symbol: "Mc",
@@ -2372,6 +2394,7 @@ const elementsData = [
     period: 7,
     row: 7,
     column: 15,
+    isNitrogenFamily: true,
   },
   {
     symbol: "Lv",
@@ -2386,6 +2409,7 @@ const elementsData = [
     period: 7,
     row: 7,
     column: 16,
+    isOxygenFamily: true,
   },
   {
     symbol: "Ts",
