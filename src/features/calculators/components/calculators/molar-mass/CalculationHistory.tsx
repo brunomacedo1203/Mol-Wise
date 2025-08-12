@@ -121,20 +121,16 @@ const CalculationHistory = ({
               }
               formulaHtml = sanitizeSubSup(formulaHtml);
 
-              // Frase de resultado com a fórmula em <sub>
+              // Formatar a fórmula com subscritos para exibição
               const formattedFormulaForResult = sanitizeSubSup(
                 formatWithSub(calculation.rawFormula)
               );
-              let resultHtml = decodeHtmlDeep(calculation.result);
-              if (calculation.rawFormula) {
-                resultHtml = resultHtml
-                  .split(calculation.rawFormula)
-                  .join(formattedFormulaForResult);
-              }
-              if (!/<\/?sub>/i.test(resultHtml)) {
-                resultHtml = formatWithSub(resultHtml);
-              }
-              resultHtml = sanitizeSubSup(resultHtml);
+              
+              // Construir o texto do resultado usando as chaves de tradução
+              const resultText = `${t("result.prefix")} ${formattedFormulaForResult} ${t("result.suffix")} ${calculation.result} ${t("result.unit")}`;
+              
+              // Sanitizar o HTML do resultado
+              const resultHtml = sanitizeSubSup(resultText);
 
               return (
                 <div
