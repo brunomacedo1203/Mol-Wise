@@ -103,7 +103,7 @@ const CalculationHistory = ({
                 onClick={() => onUseResult(calculation.result)}
               >
                 {/* Expressão */}
-                <div className="text-sm text-gray-600 dark:text-gray-400 font-mono mb-1">
+                <div className="text-sm text-gray-600 dark:text-gray-400 font-mono ">
                   {formatExpression(calculation.expression)}
                 </div>
 

@@ -20,7 +20,7 @@ export default function KeyboardCalculate({
   onBackspace,
 }: KeyboardCalculateProps) {
   return (
-    <div className="flex flex-col items-center w-full gap-0 py-2  rounded-xl shadow">
+    <div className="flex flex-col items-center w-full    rounded-xl shadow">
       <div className="w-full flex justify-center">
         <Keyboard onKeyPress={onKeyPress} />
       </div>

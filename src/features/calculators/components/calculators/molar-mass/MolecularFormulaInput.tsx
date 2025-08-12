@@ -242,7 +242,7 @@ const MolecularFormulaInput = ({
       </div>
       <div
         ref={resultRef}
-        className="result-html text-blue-600 dark:text-blue-400 text-left text-lg min-h-8 mt-3 -mb-2 w-full overflow-hidden break-words select-text cursor-text"
+        className="result-html text-blue-600 dark:text-blue-400 text-left text-lg min-h-8 mt-1  w-full overflow-hidden break-words select-text cursor-text"
         style={{ wordWrap: "break-word", hyphens: "auto" }}
         dangerouslySetInnerHTML={
           resultHtml ? { __html: resultHtml } : undefined

@@ -2,7 +2,12 @@ import { useCallback } from "react";
 import { useTranslations } from "next-intl";
 
 interface CalculationHistoryProps {
-  history: Array<{ formula: string; rawFormula: string; result: string; timestamp: number }>;
+  history: Array<{
+    formula: string;
+    rawFormula: string;
+    result: string;
+    timestamp: number;
+  }>;
   onUseResult: (formula: string) => void;
   onClearHistory: () => void;
   isVisible: boolean;
@@ -43,7 +48,7 @@ const CalculationHistory = ({
     return (
       <button
         onClick={onToggleVisibility}
-        className="w-full p-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors border-t border-gray-200 dark:border-gray-700"
+        className="w-full p-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors "
       >
         📋 {t("history.show")}
       </button>
@@ -83,7 +88,7 @@ const CalculationHistory = ({
       {/* Lista de Cálculos */}
       <div className="max-h-48 overflow-y-auto">
         {history.length === 0 ? (
-          <div className="p-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+          <div className="p-2 text-center text-gray-500 dark:text-gray-400 text-sm">
             {t("history.empty")}
           </div>
         ) : (
@@ -95,8 +100,8 @@ const CalculationHistory = ({
                 onClick={() => onUseResult(calculation.rawFormula)}
               >
                 {/* Fórmula */}
-                <div 
-                  className="text-sm text-gray-600 dark:text-gray-400 font-mono mb-1"
+                <div
+                  className="text-sm text-gray-600 dark:text-gray-400 font-mono "
                   dangerouslySetInnerHTML={{ __html: calculation.formula }}
                 />
 

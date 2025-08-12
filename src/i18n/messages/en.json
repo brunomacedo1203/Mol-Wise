@@ -129,6 +129,14 @@
         "invalidElement": "The symbol \"{symbol}\" was not found",
         "invalidFormula": "Invalid chemical formula",
         "mismatchedParentheses": "Mismatched parentheses in the formula"
+      },
+      "history": {
+        "title": "Calculation History",
+        "show": "Show History",
+        "hide": "Hide History",
+        "clear": "Clear History",
+        "empty": "No calculations performed yet",
+        "clickToUse": "Click to use this formula"
       }
     },
     "scientific": {
@@ -166,15 +174,16 @@
         "divisionByZero": "Division by zero is not allowed",
         "generic": "An error occurred while calculating"
       },
-      "history": {
-        "title": "Calculation History",
-        "show": "Show History",
-        "hide": "Hide History",
-        "clear": "Clear History",
-        "empty": "No calculations performed yet",
-        "clickToUse": "Click to use this result"
+        "history": {
+          "title": "Calculation History",
+          "show": "Show History",
+          "hide": "Hide History",
+          "clear": "Clear History",
+          "empty": "No calculations performed yet",
+          "clickToUse": "Click to use this result"
+        }
       }
-    }
+    
   },
   "periodicTable": {
     "title": "Periodic Table",

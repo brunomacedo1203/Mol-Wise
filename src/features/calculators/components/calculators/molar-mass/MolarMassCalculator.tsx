@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useMolarMassCalculator } from "@/features/calculators/hooks";
 import {
