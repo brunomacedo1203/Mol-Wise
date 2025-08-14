@@ -34,7 +34,9 @@ const PeriodicTableFilterDropdown: React.FC<
       placeholder={placeholder || "Selecione a(s) classificação(ões)"}
       maxCount={4}
       animation={0}
-      className="w-[325px] h-[44px] bg-white dark:bg-zinc-800 border-2 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-zinc-100 shadow-sm overflow-hidden"
+      customConfig={{
+        maxDisplayCount: 1,
+      }}
     />
   );
 };

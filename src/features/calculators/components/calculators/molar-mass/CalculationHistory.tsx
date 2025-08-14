@@ -41,6 +41,7 @@ const CalculationHistory = ({
   isVisible,
   onToggleVisibility,
 }: CalculationHistoryProps) => {
+  // Usando o namespace correto para as traduções
   const t = useTranslations("calculators.molarMass");
 
   const formatTime = useCallback((timestamp: number) => {
@@ -121,16 +122,20 @@ const CalculationHistory = ({
               }
               formulaHtml = sanitizeSubSup(formulaHtml);
 
-              // Formatar a fórmula com subscritos para exibição
+              // Frase de resultado com a fórmula em <sub>
               const formattedFormulaForResult = sanitizeSubSup(
                 formatWithSub(calculation.rawFormula)
               );
-              
-              // Construir o texto do resultado usando as chaves de tradução
-              const resultText = `${t("result.prefix")} ${formattedFormulaForResult} ${t("result.suffix")} ${calculation.result} ${t("result.unit")}`;
-              
-              // Sanitizar o HTML do resultado
-              const resultHtml = sanitizeSubSup(resultText);
+              let resultHtml = decodeHtmlDeep(calculation.result);
+              if (calculation.rawFormula) {
+                resultHtml = resultHtml
+                  .split(calculation.rawFormula)
+                  .join(formattedFormulaForResult);
+              }
+              if (!/<\/?sub>/i.test(resultHtml)) {
+                resultHtml = formatWithSub(resultHtml);
+              }
+              resultHtml = sanitizeSubSup(resultHtml);
 
               return (
                 <div
