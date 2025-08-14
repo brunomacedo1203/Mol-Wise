@@ -1,8 +1,8 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useMolarMassCalculator } from "@/features/calculators/hooks";
+import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import {
   MolecularFormulaInput,
   KeyboardCalculate,
@@ -35,7 +35,12 @@ export default function MolarMassCalculator({
   isKeyboardVisible = true,
   onKeyboardVisibilityChange,
 }: MolarMassCalculatorProps) {
-  const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  const isHistoryVisible = useCalculatorHistoryStore(
+    (state) => state.historyVisibility[id] || false
+  );
+  const toggleHistoryVisibility = useCalculatorHistoryStore(
+    (state) => state.toggleHistoryVisibility
+  );
   
   const {
     formula,
@@ -85,7 +90,7 @@ export default function MolarMassCalculator({
             onUseResult={handleFormulaChange}
             onClearHistory={clearHistory}
             isVisible={isHistoryVisible}
-            onToggleVisibility={() => setIsHistoryVisible(!isHistoryVisible)}
+            onToggleVisibility={() => toggleHistoryVisibility(id)}
           />
         </div>
       }

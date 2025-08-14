@@ -118,7 +118,7 @@ const CalculationHistory = ({
                   {formatExpression(calculation.expression)}
                 </div>
 
-                {/* Resultado */}
+                {/* Resultado - traduzido dinamicamente */}
                 <div className="text-lg font-mono text-blue-600 dark:text-blue-400">
                   = {calculation.result}
                 </div>

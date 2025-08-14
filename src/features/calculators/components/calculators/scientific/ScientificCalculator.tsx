@@ -1,7 +1,8 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useParams } from "next/navigation";
+import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useScientificCalculator } from "@/features/calculators/hooks/calculators/scientific/useScientificCalculator";
 import ScientificKeyboard from "@/features/calculators/components/calculators/scientific/ScientificKeyboard";
@@ -35,7 +36,12 @@ export default function ScientificCalculator({
   const t = useTranslations("calculators.scientific");
   const params = useParams();
   const locale = params.locale as string;
-  const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  const isHistoryVisible = useCalculatorHistoryStore(
+    (state) => state.historyVisibility[id] || false
+  );
+  const toggleHistoryVisibility = useCalculatorHistoryStore(
+    (state) => state.toggleHistoryVisibility
+  );
 
   const {
     formula,
@@ -102,7 +108,7 @@ export default function ScientificCalculator({
             onUseResult={handleUseHistoryResult}
             onClearHistory={clearHistory}
             isVisible={isHistoryVisible}
-            onToggleVisibility={() => setIsHistoryVisible(!isHistoryVisible)}
+            onToggleVisibility={() => toggleHistoryVisibility(id)}
           />
         </div>
       }

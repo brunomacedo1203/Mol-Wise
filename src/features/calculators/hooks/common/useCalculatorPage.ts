@@ -1,4 +1,5 @@
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
+import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import { UseCalculatorPageProps, UseCalculatorPageReturn } from "@/features/calculators/domain/types";
 import { useEffect } from "react";
 
@@ -12,6 +13,7 @@ export function useCalculatorPage({
   const addCalculator = useCalculatorInstancesStore((state) => state.addCalculator);
   const removeCalculator = useCalculatorInstancesStore((state) => state.removeCalculator);
   const updateCalculator = useCalculatorInstancesStore((state) => state.updateCalculator);
+  const resetHistoryVisibility = useCalculatorHistoryStore((state) => state.resetHistoryVisibility);
 
   // Adiciona uma calculadora quando o hook é montado
   useEffect(() => {
@@ -39,6 +41,7 @@ export function useCalculatorPage({
     calculator,
     handlers: {
       onClose: () => {
+        resetHistoryVisibility(calculator.id);
         removeCalculator(calculator.id);
         onCalculatorRemove?.();
       },
@@ -58,4 +61,4 @@ export function useCalculatorPage({
         }),
     },
   };
-} 
+}

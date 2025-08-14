@@ -67,9 +67,14 @@ export function useMolarMassCalculatorAdapter(
       const totalMolarMass = await calculateCore(formattedFormula);
       if (totalMolarMass !== null) {
         const resultText = `${t('calculators.molarMass.result.prefix')} ${formatWithSub(formattedFormula)} ${t('calculators.molarMass.result.suffix')} ${totalMolarMass.toFixed(2)} ${t('calculators.molarMass.result.unit')}`;
+        // Armazenamos o texto formatado para exibição imediata
         setMolarMass(resultText);
         setErrorMessage("");
-        return resultText;
+        // Retornamos o valor numérico e a fórmula para armazenamento no histórico
+        return {
+          displayText: resultText,
+          value: totalMolarMass.toFixed(2)
+        };
       }
       return null;
     } catch (error: unknown) {

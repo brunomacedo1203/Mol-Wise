@@ -89,10 +89,8 @@ export default function useMolarMassCalculator({
     // Executa o cálculo (função assíncrona)
     const result = await _calculate();
 
-    // Usa o resultado retornado por _calculate() ou o estado molarMass se disponível
-    const currentResult = result || molarMass;
-
-    if (currentResult) {
+    // Verifica se temos um resultado válido
+    if (result && typeof result === 'object' && 'displayText' in result) {
       // Formata a fórmula com subscritos e "sanitiza" mantendo apenas <sub>
       const formattedFormula = formatWithSub(formula);
       const sanitizedFormula = formattedFormula.replace(
@@ -106,7 +104,7 @@ export default function useMolarMassCalculator({
           {
             formula: sanitizedFormula, // HTML com <sub>
             rawFormula: formula, // texto puro digitado
-            result: currentResult,
+            result: result.value, // Armazenamos apenas o valor numérico
             timestamp: Date.now(),
           },
           ...prev.slice(0, 9), // mantém no máximo 10 itens
@@ -122,12 +120,20 @@ export default function useMolarMassCalculator({
 
         return newHistory;
       });
+
+      // Passa o texto formatado para exibição
+      onResultChange?.(result.displayText);
+      onFormulaChange?.(formula);
+
+      return result.displayText;
+    } else if (molarMass) {
+      // Fallback para o estado atual se não tivermos um resultado válido
+      onResultChange?.(molarMass);
+      onFormulaChange?.(formula);
+      return molarMass;
     }
 
-    onResultChange?.(currentResult);
-    onFormulaChange?.(formula);
-
-    return currentResult;
+    return null;
   }, [_calculate, molarMass, formula, onResultChange, onFormulaChange, calculatorId]);
 
   const reset = useCallback(() => {

@@ -172,7 +172,11 @@ export function useScientificCalculator({
       // ✅ Atualiza histórico sem depender de 'calculationHistory' no array de deps
       setCalculationHistory((prev) => {
         const newHistory = [
-          { expression: formula, result: formattedResult, timestamp: Date.now() },
+          { 
+            expression: formula, 
+            result: formattedResult, // Armazenamos o valor numérico para tradução dinâmica
+            timestamp: Date.now() 
+          },
           ...prev.slice(0, 9),
         ];
 
