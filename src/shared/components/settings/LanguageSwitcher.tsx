@@ -28,7 +28,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       onClick={toggleLanguage}
       className={cn(
         "relative w-20 h-9 flex items-center justify-center gap-2 rounded-full border transition-colors duration-300 outline-none shadow focus:ring-2 focus:ring-cyan-500/50",
-        "bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-900 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700",
+        "bg-zinc-100 border-zinc-400 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-900 dark:border-zinc-400 dark:text-zinc-200 dark:hover:bg-zinc-700",
         className
       )}
       aria-label={t("toggle")}
@@ -37,7 +37,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       <Languages className="w-5 h-5" strokeWidth={1.5} />
       <span
         className={cn(
-          "text-base font-semibold transition-colors duration-200 mt-1",
+          "text-base font-semibold transition-colors duration-200 ",
           currentLocale === "en"
             ? "text-blue-500 dark:text-blue-400"
             : "text-green-600 dark:text-green-400"

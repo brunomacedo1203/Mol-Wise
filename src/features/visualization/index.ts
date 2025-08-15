@@ -1,1 +1,1 @@
-export { VisualizationContainer } from "./components/VisualizationContainer";
+export { VisualizationPageContent } from "./components/VisualizationPageContent";

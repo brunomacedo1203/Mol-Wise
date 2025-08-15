@@ -80,6 +80,11 @@
     "title": "Molecule Viewer",
     "subtitle": "Explore molecules interactively",
     "description": "Enter chemical formulas, visualize 2D and 3D structures and explore different molecular representations.",
+    "placeholder": "Search by name, formula, SMILES or CID...",
+    "tip": "Tip",
+    "example": "Try searching for",
+    "notFound": "Molecule not found",
+    "error": "Error searching for molecule",
     "molecules2D3D": {
       "title": "2D/3D Molecules"
     },

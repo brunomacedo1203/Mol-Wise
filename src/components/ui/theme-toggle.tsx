@@ -20,8 +20,8 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
     <button
       onClick={toggleTheme}
       className={cn(
-        "relative w-20 h-9 flex items-center rounded-full border transition-colors duration-300 outline-none shadow focus:ring-2 focus:ring-cyan-500/50",
-        isDark ? "bg-zinc-900 border-zinc-600" : "bg-zinc-100 border-zinc-200",
+        "relative w-20 h-9 flex items-center rounded-full border  transition-colors duration-300 outline-none shadow focus:ring-2 focus:ring-cyan-500/50",
+        isDark ? "bg-zinc-900 border-zinc-400" : "bg-zinc-100 border-zinc-400",
         className
       )}
       aria-label={t("toggle")}

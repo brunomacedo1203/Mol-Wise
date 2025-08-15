@@ -81,6 +81,11 @@
     "title": "Visualizador de Moléculas",
     "subtitle": "Explore moléculas de forma interativa",
     "description": "Digite fórmulas químicas, visualize estruturas 2D e 3D e explore diferentes representações moleculares.",
+    "placeholder": "Busque por nome, fórmula, SMILES ou CID...",
+    "tip": "Dica",
+    "example": "Experimente buscar por",
+    "notFound": "Molécula não encontrada",
+    "error": "Erro ao buscar molécula",
     "molecules2D3D": {
       "title": "Moléculas 2D/3D"
     },

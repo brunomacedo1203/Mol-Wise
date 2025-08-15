@@ -1,7 +1,7 @@
 "use client";
 
 import Page from "@/shared/components/layout/Page";
-import { VisualizationContainer } from "@/features/visualization";
+import { VisualizationPageContent } from "@/features/visualization/components/VisualizationPageContent";
 import { useEffect } from "react";
 import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import { useTranslations } from "next-intl";
@@ -22,8 +22,7 @@ export default function VisualizationPage() {
           <p className="text-lg text-zinc-700 mb-8 dark:text-zinc-100">
             {t("description")}
           </p>
-
-          <VisualizationContainer className="w-full" />
+          <VisualizationPageContent />
         </div>
       </div>
     </Page>
