@@ -1,16 +1,10 @@
+// src/features/visualization/components/MoleculeToolbar.tsx
 "use client";
 
 import { useState } from "react";
 import { getSmiles, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
-import {
-  Search,
-  Loader2,
-  ZoomIn,
-  ZoomOut,
-  Trash2,
-  Download,
-} from "lucide-react";
+import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
 import { useTranslations } from "next-intl";
 
 export function MoleculeToolbar() {
@@ -68,7 +62,8 @@ export function MoleculeToolbar() {
         shadow-lg ring-1 ring-zinc-200 dark:ring-zinc-800 
         transition-shadow"
     >
-      {/* 🔍 Zoom Buttons */}
+      {/* ⛔️ HIDDEN: Zoom Buttons (ZoomOut/ZoomIn) — keep commented until implemented */}
+      {/*
       <div className="flex items-center gap-2">
         <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
           <ZoomOut className="w-5 h-5" />
@@ -77,8 +72,9 @@ export function MoleculeToolbar() {
           <ZoomIn className="w-5 h-5" />
         </button>
       </div>
+      */}
 
-      {/* 🔎 Search + ViewMode + CH */}
+      {/* 🔎 Search + ViewMode (mantidos) */}
       <form
         onSubmit={handleSearch}
         className="flex items-center gap-2 flex-1 max-w-md"
@@ -113,6 +109,8 @@ export function MoleculeToolbar() {
             type="submit"
             disabled={loading || !input.trim()}
             className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+            aria-label={t("search")}
+            title={t("search")}
           >
             {loading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -132,6 +130,7 @@ export function MoleculeToolbar() {
             shadow-inner dark:shadow-none
             transition-all duration-300"
           title={`Switch to ${viewMode === "2D" ? "3D" : "2D"}`}
+          aria-label="Toggle 2D/3D"
         >
           <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
             2D
@@ -149,7 +148,8 @@ export function MoleculeToolbar() {
           </div>
         </button>
 
-        {/* 🧪 Botão CH */}
+        {/* ⛔️ HIDDEN: CH button — keep commented until implemented */}
+        {/*
         <button
           className="h-10 w-10 rounded-full flex items-center justify-center text-base font-semibold
             dark:from-zinc-900 dark:to-zinc-800
@@ -160,17 +160,20 @@ export function MoleculeToolbar() {
         >
           CH
         </button>
+        */}
       </form>
 
-      {/* 🗑️ Trash & ⬇️ Download */}
+      {/* ⛔️ HIDDEN: Trash & Download — keep commented until implemented */}
+      {/*
       <div className="flex items-center gap-2">
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800" title="Clear">
           <Trash2 className="w-5 h-5" />
         </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800" title="Download">
           <Download className="w-5 h-5" />
         </button>
       </div>
+      */}
     </div>
   );
 }
