@@ -15,27 +15,20 @@ export function VisualizationPageContent() {
       {/* Toolbar horizontal */}
       <MoleculeToolbar />
 
-      {/* Área principal */}
-      <main className="flex-1 min-h-0 p-4 sm:p-6 bg-zinc-50 dark:bg-zinc-900">
-        <div
-          className="relative h-[70vh] min-h-[400px]
-                    rounded-xl border
-                    bg-white dark:bg-zinc-900
-                    border-zinc-200 dark:border-zinc-800
-                    shadow-sm overflow-hidden"
-        >
-          {viewMode === "2D" ? <MoleculeViewer2D /> : <MoleculeViewer3D />}
-        </div>
+      {/* Área principal sem restrições */}
+      <div className="flex-1 min-h-0 p-0 relative overflow-hidden">
+        {viewMode === "2D" ? <MoleculeViewer2D /> : <MoleculeViewer3D />}
+      </div>
 
-        {!smilesData && !sdfData && (
-          <div className="text-center py-6">
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              💡 <b>{t("tip")}:</b> {t("example")} <b>benzene</b>, <b>NaCl</b>
-              , <b>C1=CC=CC=C1</b>, <b>241</b>.
-            </p>
-          </div>
-        )}
-      </main>
+      {/* Dica quando nada é carregado */}
+      {!smilesData && !sdfData && (
+        <div className="text-center py-6">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            💡 <b>{t("tip")}:</b> {t("example")} <b>benzene</b>, <b>NaCl</b>,{" "}
+            <b>C1=CC=CC=C1</b>, <b>241</b>.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

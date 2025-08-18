@@ -223,6 +223,52 @@ function removeCIPLabelsAndNames(svgString: string): string {
   return serializer.serializeToString(svg);
 }
 
+/** ======= Nova função para calcular o bounding box real da molécula ======= */
+function getContentBounds(svg: SVGSVGElement): ViewBox | null {
+  try {
+    // Seleciona todos os elementos gráficos que fazem parte da molécula
+    const graphicElements = svg.querySelectorAll(
+      "line, circle, ellipse, path, polygon, polyline, text"
+    );
+
+    if (graphicElements.length === 0) return null;
+
+    let minX = Infinity,
+      minY = Infinity,
+      maxX = -Infinity,
+      maxY = -Infinity;
+
+    graphicElements.forEach((element) => {
+      try {
+        const bbox = (element as SVGGraphicsElement).getBBox();
+        if (bbox.width > 0 && bbox.height > 0) {
+          minX = Math.min(minX, bbox.x);
+          minY = Math.min(minY, bbox.y);
+          maxX = Math.max(maxX, bbox.x + bbox.width);
+          maxY = Math.max(maxY, bbox.y + bbox.height);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    if (minX === Infinity || minY === Infinity) return null;
+
+    // Adiciona uma pequena margem para evitar cortes nas bordas
+    const margin = Math.max((maxX - minX) * 0.05, (maxY - minY) * 0.05, 5);
+
+    return {
+      minX: minX - margin,
+      minY: minY - margin,
+      width: maxX - minX + margin * 2,
+      height: maxY - minY + margin * 2,
+    };
+  } catch (e) {
+    console.warn("Erro ao calcular content bounds:", e);
+    return null;
+  }
+}
+
 /** ======= Theming robusto (salva originais e reaplica no toggle) ======= */
 function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
   if (!svg) return;
@@ -322,6 +368,7 @@ export function MoleculeViewer2D() {
 
   const vbRef = useRef<ViewBox | null>(null);
   const vbInitialRef = useRef<ViewBox | null>(null);
+  const contentBoundsRef = useRef<ViewBox | null>(null);
 
   // Carrega OCL
   useEffect(() => {
@@ -334,8 +381,8 @@ export function MoleculeViewer2D() {
         if (disposed) return;
         oclRef.current = OCL;
         setReady(true);
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
     })();
     return () => {
@@ -360,60 +407,66 @@ export function MoleculeViewer2D() {
     );
   }, []);
 
-  // Função utilitária para limitar o viewBox
+  // Nova função de limitação baseada no conteúdo real
   const clampViewBox = useCallback((vb: ViewBox, init: ViewBox): ViewBox => {
-    // Calcula os limites máximos de deslocamento
-    // Permitimos um deslocamento de até 30% da dimensão inicial para cada lado
-    // Valor intermediário que permite mais liberdade de movimento sem perder a molécula
-    const maxOffsetX = init.width * 0.37;
-    const maxOffsetY = init.height * 0.25;
+    const contentBounds = contentBoundsRef.current;
+    if (!contentBounds) {
+      // Fallback para o comportamento anterior se não conseguirmos calcular os bounds
+      const maxOffsetX = init.width * 0.37;
+      const maxOffsetY = init.height * 0.25;
 
-    // Limita as coordenadas para não ultrapassar os limites
-    const clampedMinX = Math.max(
-      init.minX - maxOffsetX,
-      Math.min(init.minX + maxOffsetX, vb.minX)
-    );
-    const clampedMinY = Math.max(
-      init.minY - maxOffsetY,
-      Math.min(init.minY + maxOffsetY, vb.minY)
-    );
+      const clampedMinX = Math.max(
+        init.minX - maxOffsetX,
+        Math.min(init.minX + maxOffsetX, vb.minX)
+      );
+      const clampedMinY = Math.max(
+        init.minY - maxOffsetY,
+        Math.min(init.minY + maxOffsetY, vb.minY)
+      );
 
-    // Verifica se o viewBox está muito ampliado (zoom out extremo)
-    // e centraliza a molécula se necessário
-    const maxWidth = init.width * 4.0; // Consistente com o limite de zoom
-    const maxHeight = init.height * 4.0;
+      const maxWidth = init.width * 4.0;
+      const maxHeight = init.height * 4.0;
 
-    let finalWidth = vb.width;
-    let finalHeight = vb.height;
-
-    // Se o zoom estiver muito ampliado, ajusta para o tamanho máximo
-    if (finalWidth > maxWidth) {
-      finalWidth = maxWidth;
-    }
-    if (finalHeight > maxHeight) {
-      finalHeight = maxHeight;
-    }
-
-    // Garante que a molécula permaneça visível mesmo em zoom extremo
-    // Centraliza a molécula se o viewBox estiver muito deslocado
-    if (
-      Math.abs(clampedMinX - init.minX) > maxOffsetX * 0.95 ||
-      Math.abs(clampedMinY - init.minY) > maxOffsetY * 0.95
-    ) {
-      // Se estiver próximo do limite, centraliza suavemente
       return {
         minX: clampedMinX,
         minY: clampedMinY,
-        width: finalWidth,
-        height: finalHeight,
+        width: Math.min(vb.width, maxWidth),
+        height: Math.min(vb.height, maxHeight),
       };
     }
+
+    // Limites de zoom baseados no tamanho inicial
+    const minWidth = init.width * 0.1;
+    const maxWidth = init.width * 4.0;
+    const aspect = init.height / init.width;
+
+    // Clamp do zoom
+    const clampedWidth = Math.min(Math.max(vb.width, minWidth), maxWidth);
+    const clampedHeight = clampedWidth * aspect;
+
+    // Calcula os limites para que a molécula não saia da vista
+    // A molécula deve estar sempre pelo menos parcialmente visível
+    const moleculeLeft = contentBounds.minX;
+    const moleculeRight = contentBounds.minX + contentBounds.width;
+    const moleculeTop = contentBounds.minY;
+    const moleculeBottom = contentBounds.minY + contentBounds.height;
+
+    // Limites do viewBox: deve mostrar pelo menos uma parte da molécula
+    // Permite que a molécula chegue até as bordas, mas não desapareça completamente
+    const maxMinX = moleculeRight - clampedWidth * 0.1; // Mostra pelo menos 10% da molécula
+    const minMinX = moleculeLeft - clampedWidth * 0.9; // Mostra pelo menos 10% da molécula
+    const maxMinY = moleculeBottom - clampedHeight * 0.1;
+    const minMinY = moleculeTop - clampedHeight * 0.9;
+
+    // Aplica os limites
+    const clampedMinX = Math.max(minMinX, Math.min(maxMinX, vb.minX));
+    const clampedMinY = Math.max(minMinY, Math.min(maxMinY, vb.minY));
 
     return {
       minX: clampedMinX,
       minY: clampedMinY,
-      width: finalWidth,
-      height: finalHeight,
+      width: clampedWidth,
+      height: clampedHeight,
     };
   }, []);
 
@@ -609,6 +662,7 @@ export function MoleculeViewer2D() {
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
   }, []);
+
   const handleDoubleClick = useCallback(() => {
     resetViewBox();
   }, [resetViewBox]);
@@ -639,6 +693,7 @@ export function MoleculeViewer2D() {
           svgElRef.current = null;
           vbRef.current = null;
           vbInitialRef.current = null;
+          contentBoundsRef.current = null;
           return;
         }
 
@@ -672,7 +727,7 @@ export function MoleculeViewer2D() {
           .replace("<svg", `<svg preserveAspectRatio="${PRESERVE_RATIO}"`)
           .replace(
             "<svg",
-            '<svg style="width:100%;height:100%;display:block;overflow:hidden;cursor:grab;touch-action:none;max-width:100%;max-height:100%"'
+            '<svg style="width:100%;height:100%;display:block;cursor:grab;touch-action:none;"'
           );
 
         host.innerHTML = svgWithStyle;
@@ -693,8 +748,17 @@ export function MoleculeViewer2D() {
           vbRef.current = { ...vb };
           vbInitialRef.current = { ...vb };
         }
-      } catch (e) {
-        console.error(e);
+
+        // Calcula o bounding box real do conteúdo da molécula
+        if (svgEl) {
+          // Precisamos aguardar um pouco para que o SVG seja completamente renderizado
+          setTimeout(() => {
+            const contentBounds = getContentBounds(svgEl);
+            contentBoundsRef.current = contentBounds;
+          }, 50);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
     void render();
@@ -725,7 +789,13 @@ export function MoleculeViewer2D() {
   const t = useTranslations("visualization.controls");
 
   return (
-    <div className="absolute inset-0 min-h-0">
+    <div
+      className="w-full h-full relative"
+      style={{
+        contain: "layout style paint",
+        overflow: "hidden",
+      }}
+    >
       <div
         ref={svgHostRef}
         onWheel={onWheel}
@@ -744,8 +814,7 @@ export function MoleculeViewer2D() {
           touchAction: "none",
           overflow: "hidden",
           cursor: "grab",
-          maxWidth: "100%",
-          maxHeight: "100%",
+          contain: "layout style paint",
         }}
         title={t("tooltip")}
       />

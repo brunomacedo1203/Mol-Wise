@@ -7,7 +7,7 @@ export function themeInitScript() {
           if (theme === "dark" || (!theme && systemPrefersDark)) {
             document.documentElement.classList.add("dark");
           }
-        } catch(e) {}
+        } catch(_) {}
       })();
     `;
   }

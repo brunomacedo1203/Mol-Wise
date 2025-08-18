@@ -71,10 +71,10 @@ export function MoleculeToolbar() {
       {/* 🔍 Zoom Buttons */}
       <div className="flex items-center gap-2">
         <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <ZoomOut className="w-4 h-4" />
+          <ZoomOut className="w-5 h-5" />
         </button>
         <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <ZoomIn className="w-4 h-4" />
+          <ZoomIn className="w-5 h-5" />
         </button>
       </div>
 
@@ -105,7 +105,9 @@ export function MoleculeToolbar() {
               dark:border-zinc-700 bg-white dark:bg-zinc-900
               placeholder:text-zinc-400 dark:placeholder:text-zinc-500
               focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            disabled={showErrorInInput} // impede editar enquanto mostra erro
+            placeholder={
+              showErrorInInput ? err ?? t("error") : t("placeholder")
+            }
           />
           <button
             type="submit"
@@ -149,8 +151,8 @@ export function MoleculeToolbar() {
 
         {/* 🧪 Botão CH */}
         <button
-          className="h-11 w-12 rounded-full flex items-center justify-center text-sm font-semibold
-             dark:from-zinc-900 dark:to-zinc-800
+          className="h-10 w-10 rounded-full flex items-center justify-center text-base font-semibold
+            dark:from-zinc-900 dark:to-zinc-800
             shadow-inner dark:shadow-none
             hover:shadow-md hover:bg-zinc-200 dark:hover:bg-zinc-700
             text-zinc-700 dark:text-zinc-300 transition-all"
@@ -163,10 +165,10 @@ export function MoleculeToolbar() {
       {/* 🗑️ Trash & ⬇️ Download */}
       <div className="flex items-center gap-2">
         <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <Trash2 className="w-4 h-4" />
+          <Trash2 className="w-5 h-5" />
         </button>
         <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <Download className="w-4 h-4" />
+          <Download className="w-5 h-5" />
         </button>
       </div>
     </div>
