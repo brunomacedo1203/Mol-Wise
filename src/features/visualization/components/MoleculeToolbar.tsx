@@ -12,7 +12,6 @@ export function MoleculeToolbar() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [showErrorInInput, setShowErrorInInput] = useState(false);
 
   const setSmiles = useVisualizationStore((s) => s.setSmilesData);
   const setSdf = useVisualizationStore((s) => s.setSdfData);
@@ -25,7 +24,6 @@ export function MoleculeToolbar() {
     if (!q) return;
 
     setErr(null);
-    setShowErrorInInput(false);
     setLoading(true);
 
     try {
@@ -46,7 +44,6 @@ export function MoleculeToolbar() {
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : t("error");
       setErr(message);
-      setShowErrorInInput(true);
       setSmiles(null);
       setSdf(null);
     } finally {
@@ -54,9 +51,16 @@ export function MoleculeToolbar() {
     }
   }
 
+  // Função para limpar o erro quando o usuário interage com o input
+  const clearError = () => {
+    if (err) {
+      setErr(null);
+    }
+  };
+
   return (
     <div
-      className="flex items-center justify-center mt-4 gap-2 max-w-4xl mx-auto px-4 py-2 
+      className="relative flex items-center justify-center mt-4 gap-2 max-w-4xl mx-auto px-4 py-2 
         rounded-full border border-zinc-300 dark:border-zinc-600 
         bg-white dark:bg-zinc-900 
         shadow-lg ring-1 ring-zinc-200 dark:ring-zinc-800 
@@ -79,31 +83,25 @@ export function MoleculeToolbar() {
         onSubmit={handleSearch}
         className="flex items-center gap-2 flex-1 max-w-md"
       >
-        {/* 🔎 Input com mensagem de erro substituindo o valor */}
+        {/* 🔎 Input com tratamento correto do erro */}
         <div className="relative w-full">
           <input
-            value={showErrorInInput ? err ?? "" : input}
+            value={input}
             onChange={(e) => {
               setInput(e.target.value);
-              setShowErrorInInput(false);
-              setErr(null);
+              clearError();
             }}
-            onFocus={() => {
-              setShowErrorInInput(false);
-              setErr(null);
-            }}
+            onFocus={clearError}
             className={`w-full h-10 pl-4 pr-10 rounded-full border text-sm transition-all
               ${
-                showErrorInInput
-                  ? "border-red-500 text-red-600 placeholder-red-500"
+                err
+                  ? "border-red-500 text-zinc-900 dark:text-zinc-100"
                   : "border-zinc-400 text-zinc-900 dark:text-zinc-100"
               }
               dark:border-zinc-700 bg-white dark:bg-zinc-900
               placeholder:text-zinc-400 dark:placeholder:text-zinc-500
               focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            placeholder={
-              showErrorInInput ? err ?? t("error") : t("placeholder")
-            }
+            placeholder={t("placeholder")}
           />
           <button
             type="submit"
@@ -162,6 +160,17 @@ export function MoleculeToolbar() {
         </button>
         */}
       </form>
+
+      {/* 🚨 Mensagem de erro fora do input */}
+      {err && (
+        <div
+          className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-2 
+          bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-sm rounded-lg
+          border border-red-300 dark:border-red-700 shadow-sm z-10 min-w-58 text-center"
+        >
+          {err}
+        </div>
+      )}
 
       {/* ⛔️ HIDDEN: Trash & Download — keep commented until implemented */}
       {/*

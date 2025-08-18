@@ -19,7 +19,7 @@ export function MoleculeViewer3D() {
   const getView3D = useVisualizationStore((s) => s.getView3D);
   const setView3D = useVisualizationStore((s) => s.setView3D);
 
-  // Inicializa visualizador
+  // 🟢 CORREÇÃO: Inicializa visualizador apenas uma vez (sem smiles/sdfData)
   useEffect(() => {
     let disposed = false;
     const el = containerRef.current;
@@ -30,9 +30,13 @@ export function MoleculeViewer3D() {
         const $3Dmol: ThreeDMolNamespace = await waitFor3Dmol();
         if (disposed || !el) return;
 
+        // Detecta tema atual
+        const isDark = document.documentElement.classList.contains("dark");
+        const bgColor = isDark ? "#0a0a0a" : "#f4f4f5"; // zinc-100 para tema claro
+
         viewerRef.current = $3Dmol.createViewer(el, {
-          backgroundColor: "transparent",
-          backgroundAlpha: 0,
+          backgroundColor: bgColor,
+          backgroundAlpha: 1, // Opaco para manter consistência visual
         });
         setLibReady(true);
       } catch (e: unknown) {
@@ -46,28 +50,42 @@ export function MoleculeViewer3D() {
 
     void init();
     return () => {
-      // 🟡 Salva visão antes de desmontar
-      const v = viewerRef.current;
-      if (v) {
-        const key = getMoleculeKey(smiles ?? null, sdfData ?? null);
-        try {
-          const view = v.getView?.();
-          if (view) setView3D(key, view);
-        } catch {
-          // ignora
-        }
-      }
-
       disposed = true;
       if (el) el.innerHTML = "";
       viewerRef.current = null;
     };
+  }, []); // ✅ SEM dependências - inicializa apenas uma vez
+
+  // 🟢 CORREÇÃO: Salva visão da molécula anterior antes de trocar
+  const prevMoleculeRef = useRef<{
+    smiles: string | null;
+    sdfData: string | null;
+  } | null>(null);
+
+  useEffect(() => {
+    // Salva visão da molécula anterior
+    if (prevMoleculeRef.current && viewerRef.current) {
+      const prevKey = getMoleculeKey(
+        prevMoleculeRef.current.smiles,
+        prevMoleculeRef.current.sdfData
+      );
+      try {
+        const view = viewerRef.current.getView?.();
+        if (view) setView3D(prevKey, view);
+      } catch {
+        // ignora
+      }
+    }
+
+    // Atualiza referência da molécula atual
+    prevMoleculeRef.current = { smiles, sdfData };
   }, [smiles, sdfData, setView3D]);
 
-  // Atualiza modelo
+  // Atualiza modelo quando dados mudam
   useEffect(() => {
     async function updateModel() {
       if (!viewerRef.current || !libReady || !sdfData) return;
+
       try {
         const v = viewerRef.current;
         v.clear();
@@ -84,10 +102,13 @@ export function MoleculeViewer3D() {
         }
 
         v.render();
-      } catch {
+        setErr(null); // 🟢 Limpa erros anteriores
+      } catch (e) {
+        console.error("Erro ao renderizar modelo 3D:", e);
         setErr("Não foi possível renderizar o modelo 3D (SDF inválido?).");
       }
     }
+
     void updateModel();
   }, [sdfData, libReady, smiles, getView3D]);
 
@@ -95,7 +116,7 @@ export function MoleculeViewer3D() {
   useEffect(() => {
     const el = containerRef.current;
     const v = viewerRef.current;
-    if (!el || !v) return;
+    if (!el || !v || !libReady) return; // 🟢 Adiciona verificação libReady
 
     const save = () => {
       const key = getMoleculeKey(smiles ?? null, sdfData ?? null);
@@ -123,17 +144,26 @@ export function MoleculeViewer3D() {
 
   // Ajusta tema automaticamente
   useEffect(() => {
+    if (!libReady) return; // 🟢 Só executa quando viewer estiver pronto
+
     const html = document.documentElement;
-    const obs = new MutationObserver(() => {
+    const updateTheme = () => {
       const v = viewerRef.current;
       if (!v) return;
       const isDark = html.classList.contains("dark");
-      v.setBackgroundColor(isDark ? "#0a0a0a" : "#ffffff");
+      // Usa zinc-100 (#f4f4f5) para tema claro ao invés de branco puro
+      const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
+      v.setBackgroundColor(bgColor);
       v.render();
-    });
+    };
+
+    // Aplica tema inicial
+    updateTheme();
+
+    const obs = new MutationObserver(updateTheme);
     obs.observe(html, { attributes: true, attributeFilter: ["class"] });
     return () => obs.disconnect();
-  }, []);
+  }, [libReady]);
 
   // Atualiza chave atual da molécula
   useEffect(() => {
