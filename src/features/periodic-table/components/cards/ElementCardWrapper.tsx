@@ -6,6 +6,16 @@ import {
   CATEGORY_COLOR_MAP,
   RARE_EARTHS_LABEL,
   RARE_EARTHS_COLOR,
+  // ===== Novas famílias =====
+  BORON_FAMILY_LABEL,
+  CARBON_FAMILY_LABEL,
+  NITROGEN_FAMILY_LABEL,
+  OXYGEN_FAMILY_LABEL,
+  // use as cores diretamente para simplificar
+  BORON_FAMILY_COLOR,
+  CARBON_FAMILY_COLOR,
+  NITROGEN_FAMILY_COLOR,
+  OXYGEN_FAMILY_COLOR,
 } from "../../domain/types/elementCategories";
 
 interface ElementCardWrapperProps {
@@ -29,12 +39,32 @@ export default function ElementCardWrapper({
   const t = useTranslations("periodicTable");
   const translatedElementName = t(`elements.${element.symbol}`);
 
+  // Casos especiais existentes
   const terrasRarasAtiva = highlightedCategories.includes(RARE_EARTHS_LABEL);
   const isTerraRara = !!element.isRareEarth;
 
+  // --- FIX: verificar cada família separadamente (sem "escolher uma só") ---
+  const boronAtiva = highlightedCategories.includes(BORON_FAMILY_LABEL);
+  const carbonAtiva = highlightedCategories.includes(CARBON_FAMILY_LABEL);
+  const nitrogenAtiva = highlightedCategories.includes(NITROGEN_FAMILY_LABEL);
+  const oxygenAtiva = highlightedCategories.includes(OXYGEN_FAMILY_LABEL);
+
   let highlightClass = "";
   if (terrasRarasAtiva && isTerraRara) {
+    // 1) Terras Raras tem prioridade quando selecionado
     highlightClass = RARE_EARTHS_COLOR;
+
+    // 2) Famílias novas usando os booleanos do elementsData (cada uma independente)
+  } else if (boronAtiva && element.isBoronFamily) {
+    highlightClass = BORON_FAMILY_COLOR;
+  } else if (carbonAtiva && element.isCarbonFamily) {
+    highlightClass = CARBON_FAMILY_COLOR;
+  } else if (nitrogenAtiva && element.isNitrogenFamily) {
+    highlightClass = NITROGEN_FAMILY_COLOR;
+  } else if (oxygenAtiva && element.isOxygenFamily) {
+    highlightClass = OXYGEN_FAMILY_COLOR;
+
+    // 3) Fallback para as categorias padrão
   } else if (highlightedCategories.includes(element.category)) {
     highlightClass = CATEGORY_COLOR_MAP[element.category] || "";
   }
@@ -80,12 +110,9 @@ export default function ElementCardWrapper({
           highlightedElement?.atomicNumber === element.atomicNumber;
         const isClick = highlightSource === "click";
 
-        // Se é o mesmo elemento e já está com highlight de click, remove
         if (isSame && isClick) {
           setHighlight(null, null);
-        }
-        // Senão, aplica highlight de click
-        else {
+        } else {
           setHighlight(element, "click");
         }
       }}

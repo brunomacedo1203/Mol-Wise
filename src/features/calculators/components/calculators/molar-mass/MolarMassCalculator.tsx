@@ -2,9 +2,11 @@
 import { useTranslations } from "next-intl";
 import { CalculatorBaseProps } from "@/features/calculators/domain/types";
 import { useMolarMassCalculator } from "@/features/calculators/hooks";
+import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import {
   MolecularFormulaInput,
   KeyboardCalculate,
+  CalculationHistory,
 } from "@/features/calculators/components/calculators/molar-mass";
 import { CalculatorContainer } from "@/features/calculators/components/common";
 
@@ -33,10 +35,18 @@ export default function MolarMassCalculator({
   isKeyboardVisible = true,
   onKeyboardVisibilityChange,
 }: MolarMassCalculatorProps) {
+  const isHistoryVisible = useCalculatorHistoryStore(
+    (state) => state.historyVisibility[id] || false
+  );
+  const toggleHistoryVisibility = useCalculatorHistoryStore(
+    (state) => state.toggleHistoryVisibility
+  );
+  
   const {
     formula,
     molarMass,
     errorMessage,
+    calculationHistory,
     handleFormulaChange,
     calculate,
     reset,
@@ -44,12 +54,16 @@ export default function MolarMassCalculator({
     handleFormulaBtn,
     handleParenthesis,
     backspace,
+    clearHistory,
   } = useMolarMassCalculator({
     initialFormula,
     initialResult,
     onFormulaChange,
     onResultChange,
+    calculatorId: id,
   });
+  
+  // Não precisamos mais deste handler, pois vamos passar handleFormulaChange diretamente
 
   const t = useTranslations("calculators.molarMass");
 
@@ -63,13 +77,22 @@ export default function MolarMassCalculator({
       isKeyboardVisible={isKeyboardVisible}
       onKeyboardVisibilityChange={onKeyboardVisibilityChange}
       input={
-        <MolecularFormulaInput
-          value={formula}
-          onChange={handleFormulaChange}
-          onEnterPress={calculate}
-          errorMessage={errorMessage}
-          resultHtml={molarMass || undefined}
-        />
+        <div className="flex flex-col w-full">
+          <MolecularFormulaInput
+            value={formula}
+            onChange={handleFormulaChange}
+            onEnterPress={() => { calculate(); }}
+            errorMessage={errorMessage}
+            resultHtml={molarMass || undefined}
+          />
+          <CalculationHistory
+            history={calculationHistory}
+            onUseResult={handleFormulaChange}
+            onClearHistory={clearHistory}
+            isVisible={isHistoryVisible}
+            onToggleVisibility={() => toggleHistoryVisibility(id)}
+          />
+        </div>
       }
       actions={
         <KeyboardCalculate

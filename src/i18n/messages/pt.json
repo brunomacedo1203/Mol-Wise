@@ -70,10 +70,31 @@
     "calculators": "Calculadoras",
     "periodicTable": "Tabela Periódica",
     "catalog": "Catálogo",
+    "visualization": "Visualização",
     "games": "Jogos",
     "menu": {
       "expand": "Expandir menu",
       "collapse": "Recolher menu"
+    }
+  },
+  "visualization": {
+    "title": "Visualizador de Moléculas",
+    "subtitle": "Explore moléculas de forma interativa",
+    "description": "Digite fórmulas químicas, visualize estruturas 2D e 3D e explore diferentes representações moleculares.",
+    "placeholder": "Busque por nome, fórmula, SMILES ou CID...",
+    "tip": "Dica",
+    "example": "Experimente buscar por",
+    "notFound": "Molécula não encontrada",
+    "error": "Erro ao buscar molécula",
+    "molecules2D3D": {
+      "title": "Moléculas 2D/3D"
+    },
+    "controls": {
+      "dragToMove": "Clique e arraste para mover",
+      "scrollToZoom": "Scroll para zoom",
+      "shiftScrollToPan": "Shift + scroll para pan",
+      "doubleClickToReset": "Duplo clique para resetar",
+      "tooltip": "Clique e arraste para mover; Scroll para zoom; Shift + scroll para pan; duplo clique para resetar"
     }
   },
   "home": {
@@ -115,6 +136,14 @@
         "invalidFormula": "Fórmula química inválida",
         "mismatchedParentheses": "Parênteses não correspondem na fórmula",
         "generic": "Ocorreu um erro ao calcular a massa molar"
+      },
+      "history": {
+        "title": "Histórico de Cálculos",
+        "show": "Mostrar Histórico",
+        "hide": "Ocultar Histórico",
+        "clear": "Limpar Histórico",
+        "empty": "Nenhum cálculo realizado ainda",
+        "clickToUse": "Clique para usar esta fórmula"
       }
     },
     "scientific": {
@@ -149,8 +178,18 @@
       "errors": {
         "invalidExpression": "Expressão inválida",
         "empty": "A expressão não pode estar vazia",
+        "divisionByZero": "Divisão por zero não é permitida",
         "generic": "Ocorreu um erro ao calcular"
-      }
+      },
+     "history": {
+      "title": "Histórico de Cálculos",
+      "show": "Mostrar Histórico",
+      "hide": "Ocultar Histórico",
+      "clear": "Limpar Histórico",
+      "empty": "Nenhum cálculo realizado ainda",
+      "clickToUse": "Clique para usar este resultado"
+    }
+      
     }
   },
   "periodicTable": {
@@ -170,7 +209,11 @@
       "Halogen": "Halogênio",
       "Noble gas": "Gás Nobre",
       "Lanthanide": "Lantanídeo",
-      "Actinide": "Actinídeo"
+      "Actinide": "Actinídeo",
+      "Boron Family": "Família de Boro",
+      "Carbon Family": "Família de Carbono",
+      "Nitrogen Family": "Família de Nitrogênio",
+      "Chalcogens Family": "Calcogênios "
     },
     "ariaLabel": "Elemento {name} ({symbol}), número atômico {atomicNumber}",
     "element": {
@@ -601,8 +644,8 @@
     "Reacts with water (forms H2SO3)": "Reage com água (forma H2SO3)",
     "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)",
     "Very soluble in water (deliquescent)": "Muito solúvel em água (deliquescente)",
-    "Soluble in water (5.6 g/100mL at 20°C)": "Solúvel em água (5,6 g/100mL a 20°C)",
-    "In water: 12 g/100 mL (25 °C)": "Em água: 12 g/100 mL (25 °C)",
+    "Soluble_in_water_5_6_g_100mL_at_20C": "Solúvel em água (5,6 g/100mL a 20°C)",
+    "In_water_12_g_100_mL_25_C": "Em água: 12 g/100 mL (25 °C)",
     "Highly soluble in water (forms H2SO3)": "Altamente solúvel em água (forma H2SO3)"
   },
   "compoundTable": {
@@ -627,4 +670,4 @@
     "noResults": "Nenhum resultado encontrado.",
     "more": "+ {count} mais"
   }
-} 
+}

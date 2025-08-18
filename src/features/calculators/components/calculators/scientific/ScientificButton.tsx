@@ -6,19 +6,41 @@ interface ScientificButtonProps {
   button: ScientificButtonConfig;
   onClick: (value: string) => void;
   className?: string;
+  locale?: string;
 }
 
 export function ScientificButton({
   button,
   onClick,
   className,
+  locale = "en",
 }: ScientificButtonProps) {
+  // Função para traduzir labels das funções trigonométricas
+  const getLocalizedLabel = (label: string) => {
+    if (locale === "pt") {
+      // Traduções para português
+      const translations: Record<string, string> = {
+        sin: "sen",
+        cos: "cos",
+        tan: "tg",
+        "sin⁻¹": "sen⁻¹",
+        "cos⁻¹": "cos⁻¹",
+        "tan⁻¹": "tg⁻¹",
+      };
+      return translations[label] || label;
+    }
+    return label;
+  };
+
   return (
     <KeyboardBtn
       onClick={() => onClick(button.value)}
-      className={cn("text-lg font-medium", className)}
+      className={cn(
+        "text-lg font-semibold text-gray-900 dark:text-white",
+        className
+      )}
     >
-      {button.label}
+      {getLocalizedLabel(button.label || "")}
     </KeyboardBtn>
   );
 }

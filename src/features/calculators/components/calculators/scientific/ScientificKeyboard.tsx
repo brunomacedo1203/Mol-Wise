@@ -6,6 +6,7 @@ import KeyboardBtn from "@/shared/components/keyboard/KeyboardBtn";
 import { ReloadIcon } from "@/shared/components/icons/ReloadIcon";
 import { BackspaceIcon } from "@/shared/components/icons/BackspaceIcon";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { ScientificButton } from "./ScientificButton";
 import { SCIENTIFIC_BUTTONS } from "@/features/calculators/domain/types/scientific-constants";
 import { chunkArray } from "@/features/calculators/utils/chunkArray";
@@ -18,6 +19,8 @@ export default function ScientificKeyboard({
   onReset,
 }: ScientificKeyboardProps) {
   const t = useTranslations("calculators.scientific");
+  const params = useParams();
+  const locale = params.locale as string;
 
   const scientificButtonMap = new Map(
     SCIENTIFIC_BUTTONS.map((btn) => [btn.value, btn])
@@ -32,6 +35,19 @@ export default function ScientificKeyboard({
     }))
   );
 
+  // Função para obter o separador decimal baseado no locale
+  const getDecimalSeparator = () => {
+    return locale === "pt" ? "," : ".";
+  };
+
+  // Função para obter o label correto baseado no locale
+  const getLocalizedLabel = (value: string) => {
+    if (value === ".") {
+      return getDecimalSeparator();
+    }
+    return value;
+  };
+
   const numericAndOperatorLayoutRows = [
     ["7", "8", "9", "/"],
     ["4", "5", "6", "*"],
@@ -43,8 +59,8 @@ export default function ScientificKeyboard({
     ...scientificLayoutRows,
     ...numericAndOperatorLayoutRows.map((row) =>
       row.map((value) => ({
-        label: value,
-        value,
+        label: getLocalizedLabel(value),
+        value: value, // Mantém o valor original para onKeyPress
         type:
           value === "+" || value === "-" || value === "*" || value === "/"
             ? "operator"
@@ -55,7 +71,7 @@ export default function ScientificKeyboard({
   ];
 
   return (
-    <div className="flex flex-col items-center w-full gap-0 py-2 rounded-xl shadow">
+    <div className="flex flex-col items-center w-full gap-0  rounded-xl shadow">
       <div className="grid grid-cols-8 gap-1 w-[482px] mx-auto">
         {fullKeyboardLayout.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
@@ -69,21 +85,32 @@ export default function ScientificKeyboard({
                     key={button.value}
                     button={scientificConfig}
                     onClick={onFunction}
+                    locale={locale}
                     className={
                       button.colSpan ? `col-span-${button.colSpan}` : ""
                     }
                   />
                 );
               } else {
+                // Aplicar localização apenas no label do botão
+                const displayLabel =
+                  button.value === "." && locale === "pt" ? "," : button.value;
+
+                // Determinar o valor que será enviado para onKeyPress
+                const keyPressValue =
+                  button.value === "." && locale === "pt" ? "," : button.value;
+
                 return (
                   <KeyboardBtn
                     key={button.value}
-                    onClick={() => onKeyPress?.(button.value)}
-                    className={
-                      button.colSpan ? `col-span-${button.colSpan}` : ""
-                    }
+                    onClick={() => onKeyPress?.(keyPressValue)}
+                    className={`text-lg font-semibold ${
+                      button.type === "operator"
+                        ? "text-blue-600 dark:text-blue-400 font-bold"
+                        : "text-gray-900 dark:text-white font-semibold"
+                    } ${button.colSpan ? `col-span-${button.colSpan}` : ""}`}
                   >
-                    {button.label}
+                    {displayLabel}
                   </KeyboardBtn>
                 );
               }
@@ -92,13 +119,13 @@ export default function ScientificKeyboard({
         ))}
       </div>
 
-      <div className="flex gap-2 mt-2 items-center justify-center w-full px-4">
+      <div className="flex gap-2 mt-1 items-center justify-center w-full px-4">
         <KeyboardBtn onClick={onReset} className="bg-white w-10 h-10">
           <ReloadIcon size={24} />
         </KeyboardBtn>
         <KeyboardBtn
-          onClick={() => onFunction && onFunction("(")}
-          className="bg-white w-10 h-10"
+          onClick={() => onKeyPress("(")}
+          className="bg-white w-10 h-10 text-lg font-bold text-gray-900 dark:text-white"
         >
           (
         </KeyboardBtn>
@@ -110,8 +137,8 @@ export default function ScientificKeyboard({
           {t("keyboard.calculate")}
         </KeyboardBtn>
         <KeyboardBtn
-          onClick={() => onFunction && onFunction(")")}
-          className="bg-white w-10 h-10"
+          onClick={() => onKeyPress(")")}
+          className="bg-white w-10 h-10 text-lg font-bold text-gray-900 dark:text-white"
         >
           )
         </KeyboardBtn>

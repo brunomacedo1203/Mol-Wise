@@ -7,6 +7,7 @@ import { defaultConfig } from "../domain/types/config";
 
 type HighlightSource = "hover" | "search" | "click" | null;
 
+
 interface PeriodicTableState {
   selectedElement: Element | null;
   setSelectedElement: (element: Element | null) => void;
@@ -20,6 +21,9 @@ interface PeriodicTableState {
 
   filters: string[];
   setFilters: (filters: string[]) => void;
+
+  searchValue: string;                  
+  setSearchValue: (value: string) => void;
 }
 
 export const usePeriodicTableStore = create<PeriodicTableState>()(
@@ -33,7 +37,6 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
 
       setHighlight: (element, source) => {
         set({ highlightedElement: element, highlightSource: source });
-        // Removido o timeout para highlight de busca
       },
 
       config: defaultConfig,
@@ -42,6 +45,9 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
 
       filters: [],
       setFilters: (filters) => set({ filters }),
+
+      searchValue: "",                            
+      setSearchValue: (value) => set({ searchValue: value }), 
     }),
     {
       name: "molwise_periodic_table",

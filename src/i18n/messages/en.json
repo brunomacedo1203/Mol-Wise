@@ -69,10 +69,31 @@
     "calculators": "Calculators",
     "periodicTable": "Periodic Table",
     "catalog": "Catalog",
+    "visualization": "Visualization",
     "games": "Games",
     "menu": {
       "expand": "Expand menu",
       "collapse": "Collapse menu"
+    }
+  },
+  "visualization": {
+    "title": "Molecule Viewer",
+    "subtitle": "Explore molecules interactively",
+    "description": "Enter chemical formulas, visualize 2D and 3D structures and explore different molecular representations.",
+    "placeholder": "Search by name, formula, SMILES or CID...",
+    "tip": "Tip",
+    "example": "Try searching for",
+    "notFound": "Molecule not found",
+    "error": "Error searching for molecule",
+    "molecules2D3D": {
+      "title": "2D/3D Molecules"
+    },
+    "controls": {
+      "dragToMove": "Click and drag to move",
+      "scrollToZoom": "Scroll to zoom",
+      "shiftScrollToPan": "Shift + scroll to pan",
+      "doubleClickToReset": "Double click to reset",
+      "tooltip": "Click and drag to move; Scroll to zoom; Shift + scroll to pan; Double click to reset"
     }
   },
   "home": {
@@ -113,6 +134,14 @@
         "invalidElement": "The symbol \"{symbol}\" was not found",
         "invalidFormula": "Invalid chemical formula",
         "mismatchedParentheses": "Mismatched parentheses in the formula"
+      },
+      "history": {
+        "title": "Calculation History",
+        "show": "Show History",
+        "hide": "Hide History",
+        "clear": "Clear History",
+        "empty": "No calculations performed yet",
+        "clickToUse": "Click to use this formula"
       }
     },
     "scientific": {
@@ -147,9 +176,19 @@
       "errors": {
         "invalidExpression": "Invalid expression",
         "empty": "The expression cannot be empty",
+        "divisionByZero": "Division by zero is not allowed",
         "generic": "An error occurred while calculating"
+      },
+        "history": {
+          "title": "Calculation History",
+          "show": "Show History",
+          "hide": "Hide History",
+          "clear": "Clear History",
+          "empty": "No calculations performed yet",
+          "clickToUse": "Click to use this result"
+        }
       }
-    }
+    
   },
   "periodicTable": {
     "title": "Periodic Table",
@@ -168,7 +207,11 @@
       "Halogen": "Halogen",
       "Noble gas": "Noble Gas",
       "Lanthanide": "Lanthanide",
-      "Actinide": "Actinide"
+      "Actinide": "Actinide",
+     "Boron Family": "Boron Family",
+      "Carbon Family": "Carbon Family",
+      "Nitrogen Family": "Nitrogen Family",
+      "Chalcogens Family": "Chalcogens "
     },
     "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
     "element": {
@@ -601,8 +644,8 @@
     "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
     "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
     "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)",
-    "Soluble in water (5.6 g/100mL at 20°C)": "Soluble in water (5.6 g/100mL at 20°C)",
-    "In water: 12 g/100 mL (25 °C)": "In water: 12 g/100 mL (25 °C)",
+    "Soluble_in_water_5_6_g_100mL_at_20C": "Soluble in water (5.6 g/100mL at 20°C)",
+    "In_water_12_g_100_mL_25_C": "In water: 12 g/100 mL (25 °C)",
     "Highly soluble in water (forms H2SO3)": "Highly soluble in water (forms H2SO3)"
   },
   "compoundTable": {
@@ -627,4 +670,4 @@
     "noResults": "No results found.",
     "more": "+ {count} more"
   }
-} 
+}

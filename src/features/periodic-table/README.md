@@ -1,8 +1,10 @@
 # Tabela Periódica
 
-Esta feature contém os componentes, hooks, contextos e tipos necessários para implementar uma tabela periódica interativa dos elementos químicos.
+Esta feature contém os componentes, hooks, contextos e tipos necessários para implementar uma tabela periódica interativa dos elementos químicos com **busca internacionalizada**, **destaques por categoria** e **tradução automática via i18n**.
 
-## Estrutura de Diretórios
+---
+
+## 📂 Estrutura de Diretórios
 
 ```
 periodic-table/
@@ -20,121 +22,159 @@ periodic-table/
 │       └── PeriodicTable.tsx
 ├── contexts/            # Contextos React
 │   └── PeriodicTableContext.tsx
-├── data/               # Dados dos elementos químicos
+├── data/                # Dados dos elementos químicos
 │   └── elements.ts
-├── domain/             # Tipos e interfaces do domínio
+├── domain/              # Tipos e interfaces do domínio
 │   └── types/
-│       ├── config.ts   # Tipos de configuração
-│       ├── element.ts  # Tipos dos elementos
-│       └── table.ts    # Tipos da tabela
-├── hooks/              # Hooks customizados
+│       ├── config.ts
+│       ├── element.ts
+│       └── table.ts
+├── hooks/               # Hooks customizados
 │   └── usePeriodicTable.ts
-└── README.md
+└── utils/
+    └── elementSearch.ts # Função de busca internacionalizada
 ```
 
-## Componentes
+---
 
-### Componentes Comuns
+## 📜 Tutorial Passo a Passo da Implementação
 
-- `PeriodicTableContainer`: Container principal que fornece o contexto da tabela
-- `PeriodicTableHeader`: Cabeçalho com controles de configuração
-- `PeriodicTableLegend`: Legenda mostrando as categorias dos elementos
+A seguir está o guia completo da implementação da **busca internacionalizada** e **destaques por categoria**.
 
-### Componentes Específicos
+### 1️⃣ Criar utilitário de busca internacionalizada
 
-- `ElementCard`: Card individual de um elemento químico
-- `ElementCardsGrid`: Grid responsável por organizar os cards dos elementos
-- `ElementDetailsPanel`: Painel lateral com detalhes do elemento selecionado
-- `PeriodicTable`: Componente principal que integra todos os outros
+Arquivo: `src/features/periodic-table/utils/elementSearch.ts`
 
-## Contextos
+```ts
+import { useTranslations } from "next-intl";
+import { elements } from "../data/elements";
+import { Element } from "../domain/types/element";
 
-- `PeriodicTableContext`: Gerencia o estado global da tabela periódica, incluindo:
-  - Elemento selecionado
-  - Configurações de exibição
-  - Funções de atualização
+export function useElementSearch() {
+  const t = useTranslations("periodicTable.elements");
 
-## Hooks
+  return (query: string): Element | null => {
+    const lowerQuery = query.toLowerCase();
 
-- `usePeriodicTable`: Hook para acessar e manipular o estado da tabela periódica
-
-## Tipos
-
-### Configuração
-
-```typescript
-interface PeriodicTableConfig {
-  showAtomicNumber: boolean;
-  showAtomicMass: boolean;
-  showElementName: boolean;
-  showElementSymbol: boolean;
+    return (
+      elements.find(
+        (el) =>
+          el.symbol.toLowerCase() === lowerQuery ||
+          el.name.toLowerCase() === lowerQuery ||
+          t(el.symbol).toLowerCase() === lowerQuery
+      ) || null
+    );
+  };
 }
 ```
 
-### Elemento Químico
+---
 
-```typescript
-interface Element {
-  atomicNumber: number;
-  symbol: string;
-  name: string;
-  atomicMass: number;
-  category: "metal" | "nonmetal" | "metalloid";
-  phase: "gas" | "liquid" | "solid";
-  group: number;
-  period: number;
-  density: number;
-  meltingPoint: number;
-  boilingPoint: number;
-  electronegativity: number;
-  ionizationEnergy: number;
-  electronConfiguration: string;
-  description: string;
+### 2️⃣ Modificar o componente de busca
+
+Arquivo: `src/features/periodic-table/components/common/PeriodicTableHeader.tsx`
+
+- Alterar o evento de busca para usar `useElementSearch`.
+- Passar o resultado encontrado para o contexto da tabela.
+
+```tsx
+import { useElementSearch } from "../../utils/elementSearch";
+
+const searchElement = useElementSearch();
+
+const handleSearch = (value: string) => {
+  const foundElement = searchElement(value);
+  if (foundElement) {
+    setHighlight(foundElement, "search");
+  }
+};
+```
+
+---
+
+### 3️⃣ Criar constantes e categorias traduzíveis
+
+Arquivo: `src/features/periodic-table/domain/types/elementCategories.ts`
+
+```ts
+export const BORON_FAMILY_LABEL = "Boron Family";
+export const CARBON_FAMILY_LABEL = "Carbon Family";
+export const NITROGEN_FAMILY_LABEL = "Nitrogen Family";
+export const OXYGEN_FAMILY_LABEL = "Chalcogens Family"; // padronizado
+```
+
+---
+
+### 4️⃣ Ajustar o wrapper do card para highlights
+
+Arquivo: `src/features/periodic-table/components/specific/cards/ElementCardWrapper.tsx`
+
+- Garantir que `highlightSource` diferencie hover, search e click.
+- Aplicar anéis coloridos e animações conforme a interação.
+
+---
+
+### 5️⃣ Corrigir/Adicionar traduções nos JSONs
+
+Arquivo: `public/locales/en/periodicTable.json`
+
+```json
+{
+  "filterOptions": {
+    "Boron Family": "Boron Family",
+    "Carbon Family": "Carbon Family",
+    "Nitrogen Family": "Nitrogen Family",
+    "Chalcogens Family": "Chalcogens (Oxygen Family)"
+  }
 }
 ```
 
-## Uso
+Arquivo: `public/locales/pt/periodicTable.json`
+
+```json
+{
+  "filterOptions": {
+    "Boron Family": "Família de Boro",
+    "Carbon Family": "Família de Carbono",
+    "Nitrogen Family": "Família de Nitrogênio",
+    "Chalcogens Family": "Calcogênios (Família do Oxigênio)"
+  }
+}
+```
+
+---
+
+## 🧪 Exemplo Prático
 
 ```tsx
 import { PeriodicTable } from "./components/specific/PeriodicTable";
+import { Element } from "./domain/types/element";
 
-function App() {
+export default function App() {
   const handleElementSelect = (element: Element | null) => {
     console.log("Elemento selecionado:", element);
   };
 
-  const handleConfigChange = (config: PeriodicTableConfig) => {
-    console.log("Configuração alterada:", config);
-  };
-
-  return (
-    <PeriodicTable
-      onElementSelect={handleElementSelect}
-      onConfigChange={handleConfigChange}
-    />
-  );
+  return <PeriodicTable onElementSelect={handleElementSelect} />;
 }
 ```
 
-## Busca Internacionalizada de Elementos
+---
 
-A busca por elementos químicos no painel de detalhes da tabela periódica agora é **totalmente internacionalizada** e integrada ao sistema de traduções (i18n) do projeto.
+## 🔹 Vantagens da Implementação
 
-- O usuário pode digitar o símbolo, o nome em inglês ou o nome em português do elemento.
-- O sistema utiliza as traduções presentes nos arquivos `pt.json` e `en.json` para identificar o elemento, sem necessidade de manter um dicionário manual de nomes em português.
-- A lógica de busca foi extraída para um utilitário reutilizável: `src/features/periodic-table/utils/elementSearch.ts`.
+- **Internacionalização automática** — qualquer atualização de tradução já reflete na busca.
+- **Menos código duplicado** — sem precisar manter listas de nomes separadas por idioma.
+- **UX aprimorada** — feedback visual diferenciado para hover, clique e busca.
+- **Fácil manutenção** — novos elementos ou categorias exigem apenas ajuste em um único lugar.
 
-**Exemplo de uso do hook:**
+---
 
-```tsx
-import { useElementSearch } from "../utils/elementSearch";
+## 📌 Ordem Recomendada de Implementação para Novos Desenvolvedores
 
-const searchElement = useElementSearch();
-const result = searchElement("ferro"); // Retorna o elemento Fe
-```
-
-**Vantagens:**
-
-- Sempre que as traduções forem atualizadas, a busca já funciona para o novo nome.
-- Menos código duplicado e mais alinhado com o padrão do projeto.
-- Manutenção e escalabilidade muito melhores.
+1. Criar `elementSearch.ts` e validar a busca por símbolo e nome em ambos os idiomas.
+2. Ajustar `PeriodicTableHeader.tsx` para integrar a busca.
+3. Criar/ajustar constantes em `elementCategories.ts`.
+4. Ajustar `ElementCardWrapper.tsx` para highlights.
+5. Revisar e alinhar traduções nos JSONs.
+6. Testar a tabela nos dois idiomas e validar busca + destaques.

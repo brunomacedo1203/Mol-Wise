@@ -1,6 +1,7 @@
 import { MolarMassCalculator } from "@/features/calculators/components/calculators/molar-mass";
 import { ScientificCalculator } from "@/features/calculators/components/calculators/scientific";
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
+import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import { CloseAllButton } from "@/shared/components/buttons/CloseAllButton";
 import { PositionWithWidth } from "@/features/calculators/domain/types";
 import React from "react";
@@ -21,6 +22,11 @@ export function CalculatorPageContent() {
   const clearCalculators = useCalculatorInstancesStore(
     (state) => state.clearCalculators
   );
+  
+  // Obter função para limpar o estado de visibilidade do histórico
+  const resetHistoryVisibility = useCalculatorHistoryStore(
+    (state) => state.resetHistoryVisibility
+  );
 
   // Se não houver calculadoras, não renderiza nada
   if (calculators.length === 0) {
@@ -29,9 +35,11 @@ export function CalculatorPageContent() {
 
   const renderCalculator = (calculator: (typeof calculators)[0]) => {
     const commonProps = {
-      key: calculator.id,
       id: calculator.id,
-      onClose: () => removeCalculator(calculator.id),
+      onClose: () => {
+        resetHistoryVisibility(calculator.id);
+        removeCalculator(calculator.id);
+      },
       initialPosition: calculator.position,
       onPositionChange: (position: PositionWithWidth) =>
         updateCalculator(calculator.id, { position }),
@@ -54,9 +62,9 @@ export function CalculatorPageContent() {
 
     switch (calculator.type) {
       case "molar-mass":
-        return <MolarMassCalculator {...commonProps} />;
+        return <MolarMassCalculator key={calculator.id} {...commonProps} />;
       case "scientific":
-        return <ScientificCalculator {...commonProps} />;
+        return <ScientificCalculator key={calculator.id} {...commonProps} />;
       default:
         return null;
     }
@@ -65,7 +73,14 @@ export function CalculatorPageContent() {
   return (
     <div id="main-content-area" className="w-full min-h-screen relative">
       <div className="absolute top-4 left-4 z-50">
-        <CloseAllButton count={calculators.length} onClick={clearCalculators} />
+        <CloseAllButton 
+          count={calculators.length} 
+          onClick={() => {
+            // Limpar o estado de visibilidade do histórico para todas as calculadoras
+            calculators.forEach(calc => resetHistoryVisibility(calc.id));
+            clearCalculators();
+          }} 
+        />
       </div>
       {calculators.map(renderCalculator)}
     </div>

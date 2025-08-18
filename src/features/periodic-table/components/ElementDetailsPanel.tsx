@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
 import { useElementSearch } from "../utils/elementSearch";
 import { getElementFields } from "../utils/elementFields";
+import { trackElementSearch } from "../events/searchEvents";
 
 interface ElementDetailsPanelProps {
   element: Element | null;
@@ -19,8 +20,19 @@ export default function ElementDetailsPanel({
   const searchElement = useElementSearch();
   const searchedElement = searchElement(search);
   const elementToShow = searchedElement || element;
+
   const t = useTranslations("periodicTable");
-  const setHighlight = usePeriodicTableStore((state) => state.setHighlight);
+  const { setHighlight, setSearchValue } = usePeriodicTableStore();
+
+  // Atualiza busca global e envia evento de tracking
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setSearchValue(value);
+
+    if (value.trim() !== "") {
+      trackElementSearch(value);
+    }
+  };
 
   // Atualiza o destaque na tabela quando um elemento é buscado
   useEffect(() => {
@@ -48,7 +60,7 @@ export default function ElementDetailsPanel({
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
           placeholder={t("subtitle")}
           className={`
           w-full px-2 py-1 h-10 border-cyan-500 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 

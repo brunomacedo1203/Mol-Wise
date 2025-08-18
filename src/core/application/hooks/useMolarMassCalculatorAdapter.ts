@@ -59,18 +59,24 @@ export function useMolarMassCalculatorAdapter(
     const validationError = validateFormula(formula);
     if (validationError) {
       setErrorMessage(validationError);
-      return;
+      return null;
     }
 
     const formattedFormula = normalizeFormula(formula);
     try {
       const totalMolarMass = await calculateCore(formattedFormula);
       if (totalMolarMass !== null) {
-        setMolarMass(
-          `${t('calculators.molarMass.result.prefix')} ${formatWithSub(formattedFormula)} ${t('calculators.molarMass.result.suffix')} ${totalMolarMass.toFixed(2)} ${t('calculators.molarMass.result.unit')}`
-        );
+        const resultText = `${t('calculators.molarMass.result.prefix')} ${formatWithSub(formattedFormula)} ${t('calculators.molarMass.result.suffix')} ${totalMolarMass.toFixed(2)} ${t('calculators.molarMass.result.unit')}`;
+        // Armazenamos o texto formatado para exibição imediata
+        setMolarMass(resultText);
         setErrorMessage("");
+        // Retornamos o valor numérico e a fórmula para armazenamento no histórico
+        return {
+          displayText: resultText,
+          value: totalMolarMass.toFixed(2)
+        };
       }
+      return null;
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
@@ -79,6 +85,7 @@ export function useMolarMassCalculatorAdapter(
         setErrorMessage(t('calculators.molarMass.errors.generic'));
       }
       setMolarMass(null);
+      return null;
     }
   };
 
@@ -91,4 +98,4 @@ export function useMolarMassCalculatorAdapter(
     reset,
     isLoading
   };
-} 
+}

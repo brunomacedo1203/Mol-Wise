@@ -14,7 +14,6 @@ import { GA_TRACKING_ID } from "@/lib/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// Script para evitar flash de tema incorreto
 const themeScript = `
   (function() {
     try {
@@ -28,7 +27,6 @@ const themeScript = `
   })();
 `;
 
-// Script do Google Analytics
 const googleAnalyticsScript = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -40,12 +38,10 @@ const googleAnalyticsScript = `
   });
 `;
 
-// Função que informa ao Next.js quais locales devem ser pré-renderizados
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// Função que gera metadados dinâmicos baseados no locale
 export async function generateMetadata({
   params,
 }: {
@@ -82,7 +78,6 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  // Garante que o locale recebido é válido
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -92,21 +87,25 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        {/* Script de Tema */}
+        {/* Tema */}
         <Script
           id="theme-script"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
 
-        {/* Google Analytics - Script principal */}
+        {/* 3Dmol.js (mantém o 3D) */}
+        <Script
+          src="https://3Dmol.org/build/3Dmol-min.js"
+          strategy="afterInteractive"
+        />
+
+        {/* Google Analytics */}
         <Script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
           strategy="afterInteractive"
         />
-
-        {/* Google Analytics - Configuração */}
         <Script
           id="google-analytics"
           strategy="afterInteractive"

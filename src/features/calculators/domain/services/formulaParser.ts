@@ -1,6 +1,13 @@
 export function parseFormulaForEvaluation(formula: string): string {
   let parsedFormula = formula;
 
+  // Converter vírgulas para pontos (separador decimal brasileiro)
+  parsedFormula = parsedFormula.replace(/,/g, ".");
+
+  // Traduzir funções trigonométricas do português para inglês
+  parsedFormula = parsedFormula.replace(/sen\(/g, "sin(");
+  parsedFormula = parsedFormula.replace(/tg\(/g, "tan(");
+
   // Substituir funções científicas para o formato mathjs
   parsedFormula = parsedFormula.replace(/sin\(/g, "sin(");
   parsedFormula = parsedFormula.replace(/cos\(/g, "cos(");
@@ -12,7 +19,7 @@ export function parseFormulaForEvaluation(formula: string): string {
   parsedFormula = parsedFormula.replace(/ln\(/g, "log("); // Math.js usa log() para ln
   parsedFormula = parsedFormula.replace(/exp\(/g, "exp(");
   parsedFormula = parsedFormula.replace(/sqrt\(/g, "sqrt(");
-  parsedFormula = parsedFormula.replace(/cbrt\(/g, "cbrt(");
+  parsedFormula = parsedFormula.replace(/nthRoot\(/g, "nthRoot("); // Corrigido para nthRoot
   parsedFormula = parsedFormula.replace(/abs\(/g, "abs(");
   parsedFormula = parsedFormula.replace(/mod\(/g, "mod(");
 
@@ -20,15 +27,25 @@ export function parseFormulaForEvaluation(formula: string): string {
   parsedFormula = parsedFormula.replace(/π/g, "PI");
   parsedFormula = parsedFormula.replace(/e/g, "E");
 
-  // Tratar o fatorial
-  parsedFormula = parsedFormula.replace(/(\d+)!/g, "factorial($1)");
+  // Tratar o fatorial - melhorado para expressões complexas
+  parsedFormula = parsedFormula.replace(/(\d+(?:\.\d+)?)!/g, "factorial($1)");
 
-  // Tratar potenciação (x^y) - mathjs usa pow(x, y)
-  parsedFormula = parsedFormula.replace(/(\w+)\^(\w+)/g, "pow($1, $2)");
+  // Tratar potenciação (x^y) - melhorado para números e expressões
+  parsedFormula = parsedFormula.replace(/([a-zA-Z0-9.]+)\^([a-zA-Z0-9.]+)/g, "pow($1, $2)");
 
-  // Para a raiz cúbica (∛), precisamos de um tratamento especial se não for uma função nativa como sqrt
-  // Se a raiz cúbica for 'nthRoot', use nthRoot(x, 3)
+  // Para a raiz cúbica (∛), manter compatibilidade com símbolo
   parsedFormula = parsedFormula.replace(/∛\(([^)]+)\)/g, "nthRoot($1, 3)");
 
   return parsedFormula;
+}
+
+// Função para traduzir funções para português na exibição
+export function translateFormulaToPortuguese(formula: string): string {
+  let translatedFormula = formula;
+
+  // Traduzir funções trigonométricas para português
+  translatedFormula = translatedFormula.replace(/sin\(/g, "sen(");
+  translatedFormula = translatedFormula.replace(/tan\(/g, "tg(");
+
+  return translatedFormula;
 } 

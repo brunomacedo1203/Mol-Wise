@@ -18,7 +18,7 @@ const KeyboardBtn = ({
   disabled = false,
   type = "button",
   title,
-  noDefaultHover = false, // <-- DEFAULT FALSE
+  noDefaultHover = false,
 }: KeyboardBtnProps) => {
   const estilosBase = [
     "min-w-[41px] min-h-[34px] px-2 py-2",
@@ -27,7 +27,7 @@ const KeyboardBtn = ({
     "border border-neutral-300 bg-white text-neutral-900",
     "dark:bg-transparent dark:border-white/20 dark:text-white",
     "shadow-none",
-    "text-base font-normal",
+    "text-base !font-normal",
     !noDefaultHover && "hover:bg-neutral-100 dark:hover:bg-white/5",
     "transition-colors duration-150 select-none",
     "active:translate-y-[1px] active:shadow-none",
@@ -35,11 +35,20 @@ const KeyboardBtn = ({
   ]
     .filter(Boolean)
     .join(" ");
+
+  // Handler universal para mouse/touch/caneta
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+    e.preventDefault();
+    e.stopPropagation();
+    onClick?.();
+  };
+
   return (
     <button
       type={type}
       className={`${estilosBase} ${className}`}
-      onClick={onClick}
+      onPointerDown={handlePointerDown}
       disabled={disabled}
       title={title}
     >

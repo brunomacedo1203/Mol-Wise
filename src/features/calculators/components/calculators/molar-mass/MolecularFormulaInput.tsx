@@ -19,6 +19,7 @@ const MolecularFormulaInput = ({
   resultHtml,
 }: MolecularFormulaInputProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const updateFormattedContent = useCallback(
     (rawText: string, preserveCursor: boolean = false) => {
@@ -160,6 +161,38 @@ const MolecularFormulaInput = ({
     [onChange, updateFormattedContent]
   );
 
+  // Handlers para permitir seleção de texto no input
+  const handleInputMouseDown = useCallback((e: React.MouseEvent) => {
+    // Impede que o evento se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
+  const handleInputMouseMove = useCallback((e: React.MouseEvent) => {
+    // Permite seleção de texto durante o arraste do mouse
+    e.stopPropagation();
+  }, []);
+
+  const handleInputClick = useCallback((e: React.MouseEvent) => {
+    // Impede que o clique se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
+  // Handlers para permitir seleção de texto no resultado
+  const handleResultMouseDown = useCallback((e: React.MouseEvent) => {
+    // Impede que o evento se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
+  const handleResultMouseMove = useCallback((e: React.MouseEvent) => {
+    // Permite seleção de texto durante o arraste do mouse
+    e.stopPropagation();
+  }, []);
+
+  const handleResultClick = useCallback((e: React.MouseEvent) => {
+    // Impede que o clique se propague para o Rnd
+    e.stopPropagation();
+  }, []);
+
   const shouldShowPlaceholder = !isFocused && (!value || value.length === 0);
 
   return (
@@ -176,6 +209,9 @@ const MolecularFormulaInput = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           onPaste={handlePaste}
+          onMouseDown={handleInputMouseDown}
+          onMouseMove={handleInputMouseMove}
+          onClick={handleInputClick}
           className={`molecular-formula-input border 
             ${
               errorMessage
@@ -187,7 +223,7 @@ const MolecularFormulaInput = ({
             text-xl min-h-[3rem] max-h-48 cursor-text
             transition-all whitespace-pre-wrap break-words overflow-y-auto
             ${isFocused ? "ring-2 ring-blue-500 ring-opacity-50" : ""}
-            outline-none
+            outline-none select-text
           `}
           spellCheck={false}
           aria-label="Chemical formula input"
@@ -205,11 +241,15 @@ const MolecularFormulaInput = ({
         )}
       </div>
       <div
-        className="result-html text-blue-600 dark:text-blue-400 text-left text-lg min-h-8 mt-3 -mb-2 w-full overflow-hidden break-words"
+        ref={resultRef}
+        className="result-html text-blue-600 dark:text-blue-400 text-left text-lg min-h-8 mt-1  w-full overflow-hidden break-words select-text cursor-text"
         style={{ wordWrap: "break-word", hyphens: "auto" }}
         dangerouslySetInnerHTML={
           resultHtml ? { __html: resultHtml } : undefined
         }
+        onMouseDown={handleResultMouseDown}
+        onMouseMove={handleResultMouseMove}
+        onClick={handleResultClick}
       />
     </div>
   );
