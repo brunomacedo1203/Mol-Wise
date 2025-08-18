@@ -1,13 +1,14 @@
+// src/features/visualization/components/MoleculeViewer2D.tsx
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { useTranslations } from "next-intl";
 import { ViewBox } from "../types/viewer2d.types";
 import { useViewer2DRenderer } from "../hooks/useViewer2DRenderer";
 import { useViewer2DInteractions } from "../hooks/useViewer2DInteractions";
-
-
+import { writeViewBox } from "../utils/viewBoxUtils";
+import { getMoleculeKey } from "../utils/moleculeKey";
 
 /** ======= Componente ======= */
 export function MoleculeViewer2D() {
@@ -20,6 +21,9 @@ export function MoleculeViewer2D() {
   const smiles = useVisualizationStore((s) => s.smilesData);
   const sdf = useVisualizationStore((s) => s.sdfData);
 
+  const setCurrentMolKey = useVisualizationStore((s) => s.setCurrentMolKey);
+  const getZoom2D = useVisualizationStore((s) => s.getZoom2D);
+
   // Hook de renderização
   const { ready } = useViewer2DRenderer({
     svgHostRef,
@@ -30,8 +34,6 @@ export function MoleculeViewer2D() {
     sdf,
     smiles,
   });
-
-
 
   // Hook de interações
   const {
@@ -51,19 +53,26 @@ export function MoleculeViewer2D() {
     contentBoundsRef,
   });
 
+  // Define a chave da molécula e restaura o viewBox salvo quando pronto
+  useEffect(() => {
+    const key = getMoleculeKey(smiles, sdf);
+    setCurrentMolKey(key);
 
-
-
+    if (ready && svgElRef.current) {
+      const saved = getZoom2D(key);
+      if (saved) {
+        writeViewBox(svgElRef.current, saved);
+        vbRef.current = saved;
+      }
+    }
+  }, [ready, smiles, sdf, setCurrentMolKey, getZoom2D]);
 
   const t = useTranslations("visualization.controls");
 
   return (
     <div
       className="w-full h-full relative"
-      style={{
-        contain: "layout style paint",
-        overflow: "hidden",
-      }}
+      style={{ contain: "layout style paint", overflow: "hidden" }}
     >
       <div
         ref={svgHostRef}

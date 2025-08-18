@@ -1,3 +1,4 @@
+// src/features/visualization/hooks/useViewer2DInteractions.ts
 import { useCallback, useRef, useState } from "react";
 import { ViewBox } from "../types/viewer2d.types";
 import { writeViewBox, clampViewBox } from "../utils/viewBoxUtils";
@@ -7,6 +8,8 @@ import {
   MAX_ZOOM,
   WHEEL_PAN_SENSITIVITY,
 } from "../constants/viewer2d.constants";
+import { useVisualizationStore } from "../store/visualizationStore";
+import { getMoleculeKey } from "../utils/moleculeKey";
 
 interface UseViewer2DInteractionsProps {
   svgElRef: React.RefObject<SVGSVGElement | null>;
@@ -30,12 +33,27 @@ export function useViewer2DInteractions({
     vb: null,
   });
 
+  // acesso à store p/ persistir zoom
+  const smiles = useVisualizationStore((s) => s.smilesData);
+  const sdf = useVisualizationStore((s) => s.sdfData);
+  const setZoom2D = useVisualizationStore((s) => s.setZoom2D);
+
+  const saveVB = useCallback(
+    (vb: ViewBox) => {
+      const key = getMoleculeKey(smiles, sdf);
+      setZoom2D(key, vb);
+    },
+    [smiles, sdf, setZoom2D]
+  );
+
   const resetViewBox = useCallback(() => {
     const svg = svgElRef.current;
-    if (!svg || !vbInitialRef.current) return;
-    vbRef.current = { ...vbInitialRef.current };
-    writeViewBox(svg, vbRef.current);
-  }, [svgElRef, vbRef, vbInitialRef]);
+    if (!svg || !vbRef.current || !vbInitialRef.current) return;
+    const init = vbInitialRef.current;
+    vbRef.current = { ...init };
+    writeViewBox(svg, init);
+    saveVB(init); // persiste reset
+  }, [svgElRef, vbRef, vbInitialRef, saveVB]);
 
   // Zoom (scroll)
   const handleWheel = useCallback(
@@ -70,36 +88,38 @@ export function useViewer2DInteractions({
         height: clampedH,
       };
 
-      // Aplica limites ao viewBox para zoom extremo
-      const clamped = clampViewBox(next, init, contentBoundsRef.current);
+      const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
+      saveVB(clamped);
     },
-    [svgElRef, vbRef, vbInitialRef, contentBoundsRef]
+    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB]
   );
 
-  // Pan (Shift + scroll)
+  // Pan com wheel (Shift)
   const handleWheelPan = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
-      if (!e.shiftKey) return;
       const svg = svgElRef.current;
       if (!svg || !vbRef.current || !vbInitialRef.current) return;
       e.preventDefault();
 
       const vb = vbRef.current;
+      const dx = e.deltaX * WHEEL_PAN_SENSITIVITY;
+      const dy = e.deltaY * WHEEL_PAN_SENSITIVITY;
+
       const next: ViewBox = {
-        minX: vb.minX + vb.width * WHEEL_PAN_SENSITIVITY * e.deltaY,
-        minY: vb.minY + vb.height * WHEEL_PAN_SENSITIVITY * e.deltaX,
+        minX: vb.minX + dx,
+        minY: vb.minY + dy,
         width: vb.width,
         height: vb.height,
       };
 
-      // Aplica limites ao viewBox
       const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
+      saveVB(clamped);
     },
-    [svgElRef, vbRef, vbInitialRef, contentBoundsRef]
+    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB]
   );
 
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -129,24 +149,21 @@ export function useViewer2DInteractions({
       const dx = e.clientX - dragStartRef.current.x;
       const dy = e.clientY - dragStartRef.current.y;
 
-      const svg = svgElRef.current;
-      if (!svg) return;
-
-      const rect = svg.getBoundingClientRect();
-      const scaleX = vbRef.current.width / rect.width;
-      const scaleY = vbRef.current.height / rect.height;
+      const scaleX = dragStartRef.current.vb.width / (svgElRef.current?.clientWidth || 1);
+      const scaleY = dragStartRef.current.vb.height / (svgElRef.current?.clientHeight || 1);
 
       const next: ViewBox = {
         minX: dragStartRef.current.vb.minX - dx * scaleX,
         minY: dragStartRef.current.vb.minY - dy * scaleY,
-        width: vbRef.current.width,
-        height: vbRef.current.height,
+        width: dragStartRef.current.vb.width,
+        height: dragStartRef.current.vb.height,
       };
 
-      // Aplica limites ao viewBox durante o drag
+      const svg = svgElRef.current!;
       const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
+      // não salva a cada move para não sobrecarregar; salvamos no mouseUp
     },
     [isDragging, svgElRef, vbRef, vbInitialRef, contentBoundsRef]
   );
@@ -157,21 +174,20 @@ export function useViewer2DInteractions({
       const svg = svgHostRef.current.querySelector("svg");
       if (svg) svg.style.cursor = "grab";
     }
-  }, [svgHostRef]);
+    if (vbRef.current) saveVB(vbRef.current);
+  }, [svgHostRef, vbRef, saveVB]);
 
   // Touch
-  const handleTouchStart = useCallback(
-    (e: React.TouchEvent<HTMLDivElement>) => {
-      if (!vbRef.current || e.touches.length !== 1) return;
-      setIsDragging(true);
-      dragStartRef.current = {
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY,
-        vb: { ...vbRef.current },
-      };
-    },
-    [vbRef]
-  );
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!vbRef.current) return;
+    setIsDragging(true);
+    const t = e.touches[0];
+    dragStartRef.current = {
+      x: t.clientX,
+      y: t.clientY,
+      vb: { ...vbRef.current },
+    };
+  }, [vbRef]);
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
@@ -179,40 +195,37 @@ export function useViewer2DInteractions({
         !isDragging ||
         !dragStartRef.current.vb ||
         !vbRef.current ||
-        !vbInitialRef.current ||
-        e.touches.length !== 1
+        !vbInitialRef.current
       )
         return;
-      e.preventDefault();
 
-      const dx = e.touches[0].clientX - dragStartRef.current.x;
-      const dy = e.touches[0].clientY - dragStartRef.current.y;
+      const t = e.touches[0];
+      const dx = t.clientX - dragStartRef.current.x;
+      const dy = t.clientY - dragStartRef.current.y;
 
-      const svg = svgElRef.current;
-      if (!svg) return;
-
-      const rect = svg.getBoundingClientRect();
-      const scaleX = vbRef.current.width / rect.width;
-      const scaleY = vbRef.current.height / rect.height;
+      const scaleX = dragStartRef.current.vb.width / (svgElRef.current?.clientWidth || 1);
+      const scaleY = dragStartRef.current.vb.height / (svgElRef.current?.clientHeight || 1);
 
       const next: ViewBox = {
         minX: dragStartRef.current.vb.minX - dx * scaleX,
         minY: dragStartRef.current.vb.minY - dy * scaleY,
-        width: vbRef.current.width,
-        height: vbRef.current.height,
+        width: dragStartRef.current.vb.width,
+        height: dragStartRef.current.vb.height,
       };
 
-      // Aplica limites ao viewBox durante o touch
+      const svg = svgElRef.current!;
       const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
+      // salvar apenas no touchEnd
     },
     [isDragging, svgElRef, vbRef, vbInitialRef, contentBoundsRef]
   );
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
-  }, []);
+    if (vbRef.current) saveVB(vbRef.current);
+  }, [saveVB, vbRef]);
 
   const handleDoubleClick = useCallback(() => {
     resetViewBox();

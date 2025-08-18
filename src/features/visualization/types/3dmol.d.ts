@@ -1,4 +1,9 @@
-// Torna este .d.ts um MÓDULO (exports em topo) e, ao mesmo tempo, faz augmentation do window.
+// src/features/visualization/types/3dmol.d.ts
+
+// Tipos para o 3Dmol.js
+export interface MolView {
+  [key: string]: unknown;
+}
 
 export interface ThreeDMolViewer {
   clear: () => void;
@@ -9,12 +14,25 @@ export interface ThreeDMolViewer {
   ) => void;
   zoomTo: () => void;
   render: () => void;
+  zoom: (factor: number) => void;
+  rotate: (angle: number, axis: [number, number, number]) => void;
+  translate: (x: number, y: number, z: number) => void;
+  getZoom?: () => number;
+  setBackgroundColor: (color: string) => void;
+
+  // Métodos para salvar/restaurar a visão
+  getView?: () => MolView;
+  setView: (view: MolView) => void;
 }
 
 export interface ThreeDMolNamespace {
   createViewer: (
     element: HTMLElement,
-    options?: Record<string, unknown>
+    options?: {
+      backgroundColor?: string;
+      backgroundAlpha?: number;
+      [key: string]: unknown;
+    }
   ) => ThreeDMolViewer;
 }
 
