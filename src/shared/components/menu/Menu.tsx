@@ -3,13 +3,29 @@
 import { motion } from "framer-motion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { Table2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { MENU_WIDTHS, MENU_CLASSES } from "./constants";
 import { MenuItem } from "./components/MenuItem";
 import { MenuAccordion } from "./components/MenuAccordion";
 import { MenuProps } from "./types";
 import { useMenuItems } from "./hooks/useMenuItems";
+
+// Definindo os itens isolados diretamente no componente por enquanto
+import { Table2, LucideIcon } from "lucide-react";
+
+interface StandaloneItem {
+  icon: LucideIcon;
+  translationKey: string;
+  href: (locale: string) => string;
+}
+
+const menuStandaloneItems: StandaloneItem[] = [
+  {
+    icon: Table2,
+    translationKey: "navigation.periodicTable",
+    href: (locale: string) => `/${locale}/periodicTable`,
+  },
+];
 
 export default function Menu({ collapsed }: MenuProps) {
   const { menuSections, locale, t } = useMenuItems();
@@ -23,17 +39,21 @@ export default function Menu({ collapsed }: MenuProps) {
           collapsed ? MENU_WIDTHS.COLLAPSED : MENU_WIDTHS.EXPANDED
         )}
       >
-        <MenuItem
-          icon={Table2}
-          label={t("navigation.periodicTable")}
-          href={`/${locale}/periodicTable`}
-          isActive={pathname === `/${locale}/periodicTable`}
-          isCollapsed={collapsed}
-        />
-
         <ScrollArea className="flex-1 scrollbar-hide overflow-x-hidden ">
           <ul className="flex flex-col w-full">
-            {" "}
+            {/* Itens isolados primeiro */}
+            {menuStandaloneItems.map((item: StandaloneItem) => (
+              <MenuItem
+                key={`${item.translationKey}-standalone`}
+                icon={item.icon}
+                label={t(item.translationKey)}
+                href={item.href(locale)}
+                isActive={pathname === item.href(locale)}
+                isCollapsed={collapsed}
+              />
+            ))}
+
+            {/* Depois as seções com submenu */}
             {menuSections.map((section) => (
               <MenuAccordion key={section.id} section={section} />
             ))}

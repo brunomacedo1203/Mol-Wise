@@ -1,9 +1,10 @@
 export const MENU_STORAGE_KEY = "menuState";
 
 export const MENU_SECTIONS = {
+  PERIODIC_TABLE: "periodicTable",
   CALCULATORS: "calculators",
   CATALOG: "catalog",
-  VISUALIZATION: "visualization", // Seção de visualização
+  VISUALIZATION: "visualization",
   // GAMES: "games", // Comentado temporariamente
 } as const;
 
@@ -32,4 +33,4 @@ export const MENU_CLASSES = {
   SUBMENU: "rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[160px] w-full mb-2",
   SUBMENU_ITEM:  "flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm mt-1 " +
   " hover:bg-zinc-200 dark:hover:bg-zinc-600",
-} as const; 
+} as const;

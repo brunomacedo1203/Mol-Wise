@@ -1,8 +1,37 @@
-import { Calculator, FlaskConical, Book, FunctionSquare, Eye, Atom } from "lucide-react";
+import { Calculator, FlaskConical, Book, FunctionSquare, Eye, Atom, LucideIcon } from "lucide-react";
 import { MENU_SECTIONS } from "../constants";
-import { MenuSectionConfig } from "../types";
 
+// Definindo os tipos localmente caso não estejam disponíveis
+interface MenuItemConfig {
+  icon: LucideIcon;
+  translationKey: string;
+  type: "link" | "calculator";
+  href?: (locale: string) => string;
+  calculatorId?: string;
+}
+
+interface MenuSectionConfig {
+  id: string;
+  icon: LucideIcon;
+  translationKey: string;
+  items: MenuItemConfig[];
+}
+
+// Seções com submenu
 export const menuSectionsConfig: MenuSectionConfig[] = [
+  {
+    id: MENU_SECTIONS.VISUALIZATION,
+    icon: Eye,
+    translationKey: "navigation.visualization",
+    items: [
+      {
+        icon: Atom,
+        translationKey: "visualization.molecules2D3D.title", 
+        type: "link",
+        href: (locale: string) => `/${locale}/visualization`,
+      } as const
+    ],
+  },
   {
     id: MENU_SECTIONS.CALCULATORS,
     icon: Calculator,
@@ -35,17 +64,4 @@ export const menuSectionsConfig: MenuSectionConfig[] = [
       } as const
     ],
   },
-  {
-    id: MENU_SECTIONS.VISUALIZATION,
-    icon: Eye,
-    translationKey: "navigation.visualization",
-    items: [
-      {
-        icon: Atom,
-        translationKey: "visualization.molecules2D3D.title", 
-        type: "link",
-        href: (locale: string) => `/${locale}/visualization`,
-      } as const
-    ],
-  },
-]; 
+];
