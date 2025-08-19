@@ -14,8 +14,6 @@ import { GA_TRACKING_ID } from "@/lib/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
-
 const googleAnalyticsScript = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -41,14 +39,23 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: "%s | Mol Class",
-      default: "Mol Class",
+      template: "%s | MolClass",
+      default: "MolClass",
     },
     description: t("description", {
       defaultValue:
         "This application is designed to help students and teachers with chemical calculations, data visualization, and content organization.",
     }),
     metadataBase: new URL("https://molclass.com"),
+    icons: {
+      icon: [
+        { url: "/favicon-green.ico", sizes: "any" },
+        { url: "/favicon-green.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [
+        { url: "/favicon-green.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
     alternates: {
       languages: {
         "pt-BR": "/pt",
@@ -76,8 +83,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-
-
         {/* 3Dmol.js (mantém o 3D) */}
         <Script
           src="https://3Dmol.org/build/3Dmol-min.js"

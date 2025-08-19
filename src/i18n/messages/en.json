@@ -11,7 +11,7 @@
     "error": "Error",
     "success": "Success",
     "chooseTool": "Choose a tool in the sidebar to get started.",
-    "description": "This application is designed to help students and teachers with chemical calculations, data visualization, and content organization.",
+    "description": "This application is designed to help students and teachers with chemical calculations data visualization, and content organization.",
     "actions": {
       "calculate": "Calculate",
       "reset": "Reset",
