@@ -7,42 +7,18 @@ export function ThemeEffectProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const theme = useThemeStore((s) => s.theme);
-  const setTheme = useThemeStore((s) => s.setTheme);
+  const isInitialized = useThemeStore((s) => s.isInitialized);
+  const initializeTheme = useThemeStore((s) => s.initializeTheme);
 
-  // Sincroniza zustand com localStorage/matchMedia no client
+  // Inicializa o tema apenas uma vez no lado do cliente
   useEffect(() => {
-    if (theme === undefined) {
-      const stored = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      const initial =
-        stored === "light" || stored === "dark"
-          ? stored
-          : prefersDark
-          ? "dark"
-          : "light";
-      setTheme(initial);
-      if (initial === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+    if (!isInitialized) {
+      initializeTheme();
     }
-  }, [theme, setTheme]);
+  }, [isInitialized, initializeTheme]);
 
-  useEffect(() => {
-    if (theme !== undefined) {
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    }
-  }, [theme]);
-
-  if (theme === undefined) return null; // Evita renderizar até saber o tema
+  // Evita renderizar até o tema ser inicializado
+  if (!isInitialized) return null;
 
   return <>{children}</>;
 }

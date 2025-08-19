@@ -14,18 +14,7 @@ import { GA_TRACKING_ID } from "@/lib/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const themeScript = `
-  (function() {
-    try {
-      var theme = localStorage.getItem('theme');
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    } catch (e) {}
-  })();
-`;
+
 
 const googleAnalyticsScript = `
   window.dataLayer = window.dataLayer || [];
@@ -87,12 +76,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        {/* Tema */}
-        <Script
-          id="theme-script"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: themeScript }}
-        />
+
 
         {/* 3Dmol.js (mantém o 3D) */}
         <Script
