@@ -52,7 +52,7 @@ export default function useMolarMassCalculator({
   >(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem(
-        `molwise_molar_mass_history_${calculatorId}`
+        `molclass_molar_mass_history_${calculatorId}`
       );
       if (saved) {
         try {
@@ -113,7 +113,7 @@ export default function useMolarMassCalculator({
         // Persiste no localStorage
         if (typeof window !== "undefined") {
           localStorage.setItem(
-            `molwise_molar_mass_history_${calculatorId}`,
+            `molclass_molar_mass_history_${calculatorId}`,
             JSON.stringify(newHistory)
           );
         }
@@ -148,7 +148,7 @@ export default function useMolarMassCalculator({
     setCalculationHistory([]);
     // Limpa o histórico no localStorage
     if (typeof window !== "undefined") {
-      localStorage.removeItem(`molwise_molar_mass_history_${calculatorId}`);
+      localStorage.removeItem(`molclass_molar_mass_history_${calculatorId}`);
     }
   }, [calculatorId]);
 

@@ -27,7 +27,7 @@ export const useSidebarStore = create<SidebarState>()(
       setOpenSections: (sections) => set({ openSections: sections }),
     }),
     {
-      name: "molwise_sidebar", // chave do localStorage
+      name: "molclass_sidebar", // chave do localStorage
     }
   )
-); 
+);

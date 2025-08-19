@@ -1,4 +1,4 @@
-# Mol Wise
+# Mol Class
 
 Uma aplicação web moderna para cálculos e consultas em química, incluindo uma tabela periódica interativa e **múltiplas calculadoras químicas instanciáveis**.
 
@@ -178,7 +178,7 @@ periodic-table/
 
 ---
 
-# 💡 Como funciona a feature de destaque por categoria na Tabela Periódica (Mol Wise)
+# 💡 Como funciona a feature de destaque por categoria na Tabela Periódica (Mol Class)
 
 ---
 
@@ -311,7 +311,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 🧭 Estrutura e Funcionamento do Menu
 
-O menu lateral do Mol Wise é altamente modular, responsivo e suporta múltiplas seções, submenus e integração com internacionalização (i18n). Ele é implementado em `src/shared/components/menu/` e utiliza contexto para controle de estado (colapsado/expandido, seções abertas, etc).
+O menu lateral do Mol Class é altamente modular, responsivo e suporta múltiplas seções, submenus e integração com internacionalização (i18n). Ele é implementado em `src/shared/components/menu/` e utiliza contexto para controle de estado (colapsado/expandido, seções abertas, etc).
 
 ### Estrutura de Arquivos do Menu
 

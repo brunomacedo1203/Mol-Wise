@@ -50,7 +50,7 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
       setSearchValue: (value) => set({ searchValue: value }), 
     }),
     {
-      name: "molwise_periodic_table",
+      name: "molclass_periodic_table",
     }
   )
 );

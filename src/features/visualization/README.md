@@ -2,7 +2,7 @@
 
 ## 🎯 Visão Geral
 
-Esta feature permite a visualização interativa de moléculas químicas em **2D (via OpenChemLib - OCL)** e **3D (via 3Dmol.js)**, usando dados obtidos da **PubChem API**. O estado da visualização é gerenciado globalmente com **Zustand**, e os componentes seguem a arquitetura modular do projeto Mol Wise.
+Esta feature permite a visualização interativa de moléculas químicas em **2D (via OpenChemLib - OCL)** e **3D (via 3Dmol.js)**, usando dados obtidos da **PubChem API**. O estado da visualização é gerenciado globalmente com **Zustand**, e os componentes seguem a arquitetura modular do projeto Mol Class.
 
 ---
 
@@ -176,7 +176,7 @@ export const MENU_SECTIONS = {
 - **✔️ Escalável**: Pronto para novos formatos de input (CID, fórmula, etc)
 - **✔️ Educacional**: Ideal para fins didáticos e científicos
 - **✔️ Separação de responsabilidades**: Cada parte da lógica em seu próprio componente
-- **✔️ Consistente com arquitetura do Mol Wise**
+- **✔️ Consistente com arquitetura do Mol Class**
 
 ---
 

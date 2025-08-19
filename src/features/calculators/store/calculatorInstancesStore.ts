@@ -60,6 +60,6 @@ export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
         }));
       },
     }),
-    { name: "molwise_calculator_instances" }
+    { name: "molclass_calculator_instances" }
   )
-); 
+);

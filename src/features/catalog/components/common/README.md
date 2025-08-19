@@ -191,7 +191,7 @@ export const useMyEntityStore = create<MyEntityState>()(
       // Implementação similar ao catalogStore
     }),
     {
-      name: "molwise_my_entity",
+      name: "molclass_my_entity",
       partialize: (state) => ({
         // Persistir apenas os estados necessários
       }),

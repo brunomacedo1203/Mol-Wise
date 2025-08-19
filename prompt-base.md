@@ -1,6 +1,6 @@
-# 🧠 Prompt base para o projeto Mol Wise 
+# 🧠 Prompt base para o projeto Mol Class 
 
-Olá! Este chat faz parte do desenvolvimento de um projeto chamado **Mol Wise**, uma aplicação web educacional voltada para o ensino e estudo de **Química**, especialmente para estudantes e professores.
+Olá! Este chat faz parte do desenvolvimento de um projeto chamado **Mol Class**, uma aplicação web educacional voltada para o ensino e estudo de **Química**, especialmente para estudantes e professores.
 
 Este prompt contém o contexto e as diretrizes que **devem ser consideradas em todas as respostas deste chat.**
 
@@ -30,9 +30,9 @@ Sempre que eu te pedir para elaborar um post para o LinkedIn, você vai fazer um
 
 [OBS: Versão em português abaixo]
 
-🧪 Mol Wise – Update!
+🧪 Mol Class – Update!
 
-Hey everyone! Here’s a quick update on my project Mol Wise — a chemistry-focused web app I’ve been building to help students and teachers with chemical calculations and element data.
+Hey everyone! Here's a quick update on my project Mol Class — a chemistry-focused web app I've been building to help students and teachers with chemical calculations and element data.
 
 Since the last post, I’ve made some improvements:
 
@@ -58,9 +58,9 @@ hashtag#Chemistry hashtag#WebDevelopment hashtag#React hashtag#NextJS hashtag#Ta
 
 [Versão em português]
 
-🧪 Mol Wise – Atualização!
+🧪 Mol Class – Atualização!
 
-Olá, pessoal! Passando para compartilhar as atualizações mais recentes do Mol Wise, uma aplicação web voltada para estudantes e professores de Química, que estou desenvolvendo com foco em cálculos químicos e visualização de dados.
+Olá, pessoal! Passando para compartilhar as atualizações mais recentes do Mol Class, uma aplicação web voltada para estudantes e professores de Química, que estou desenvolvendo com foco em cálculos químicos e visualização de dados.
 
 Atualizações desde o último post:
 

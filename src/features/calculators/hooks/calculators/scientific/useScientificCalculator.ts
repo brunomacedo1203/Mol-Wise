@@ -101,7 +101,7 @@ export function useScientificCalculator({
   >(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem(
-        `molwise_scientific_history_${calculatorId}`
+        `molclass_scientific_history_${calculatorId}`
       );
       if (saved) {
         try {
@@ -182,7 +182,7 @@ export function useScientificCalculator({
 
         if (typeof window !== "undefined") {
           localStorage.setItem(
-            `molwise_scientific_history_${calculatorId}`,
+            `molclass_scientific_history_${calculatorId}`,
             JSON.stringify(newHistory)
           );
         }
@@ -301,7 +301,7 @@ export function useScientificCalculator({
   const clearHistory = useCallback(() => {
     setCalculationHistory([]);
     if (typeof window !== "undefined") {
-      localStorage.removeItem(`molwise_scientific_history_${calculatorId}`);
+      localStorage.removeItem(`molclass_scientific_history_${calculatorId}`);
     }
   }, [calculatorId]);
 

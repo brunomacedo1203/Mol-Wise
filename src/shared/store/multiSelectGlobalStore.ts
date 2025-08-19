@@ -175,11 +175,11 @@ export const useMultiSelectGlobalStore = create<MultiSelectGlobalState>()(
       getAnimation: () => globalAnimationConfig,
     }),
     {
-      name: "molwise_multiselect_global",
+      name: "molclass_multi_select_global",
       partialize: (state) => ({
         globalConfig: state.globalConfig,
         componentConfigs: state.componentConfigs,
       }),
     }
   )
-); 
+);

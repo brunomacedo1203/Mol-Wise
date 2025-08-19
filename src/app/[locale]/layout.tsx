@@ -41,14 +41,14 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: "%s | Mol Wise",
-      default: "Mol Wise",
+      template: "%s | Mol Class",
+      default: "Mol Class",
     },
     description: t("description", {
       defaultValue:
         "This application is designed to help students and teachers with chemical calculations, data visualization, and content organization.",
     }),
-    metadataBase: new URL("https://molwise.vercel.app"),
+    metadataBase: new URL("https://molclass.com"),
     alternates: {
       languages: {
         "pt-BR": "/pt",

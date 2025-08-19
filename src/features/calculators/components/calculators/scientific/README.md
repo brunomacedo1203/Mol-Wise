@@ -1,8 +1,8 @@
-# Calculadora Científica - MolWise
+# Calculadora Científica - MolClass
 
 ## 📋 Visão Geral
 
-A calculadora científica é um componente do MolWise que permite realizar cálculos matemáticos avançados. Ela foi implementada como uma extensão do sistema de calculadoras existente, mantendo a consistência visual e funcional com a calculadora de massa molar.
+A calculadora científica é um componente do MolClass que permite realizar cálculos matemáticos avançados. Ela foi implementada como uma extensão do sistema de calculadoras existente, mantendo a consistência visual e funcional com a calculadora de massa molar.
 
 ### 🎯 Objetivos
 

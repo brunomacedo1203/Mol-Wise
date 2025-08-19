@@ -152,11 +152,11 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: "%s | Mol Wise",
-      default: "Mol Wise",
+      template: "%s | Mol Class",
+      default: "Mol Class",
     },
     description: t("description"),
-    metadataBase: new URL("https://molwise.vercel.app"),
+    metadataBase: new URL("https://molclass.vercel.app"),
     alternates: {
       languages: {
         "pt-BR": "/pt",

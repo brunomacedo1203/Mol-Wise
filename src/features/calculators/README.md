@@ -1,6 +1,6 @@
 # Calculadoras - Guia de Implementação
 
-Este guia detalha como implementar novas calculadoras químicas no Mol Wise, usando a calculadora de massa molar como exemplo.
+Este guia detalha como implementar novas calculadoras químicas no Mol Class, usando a calculadora de massa molar como exemplo.
 
 ## Estrutura do Módulo
 

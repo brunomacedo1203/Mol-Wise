@@ -167,7 +167,7 @@ export const useCatalogStore = create<CatalogState>()(
         }),
     }),
     {
-      name: "molwise_catalog",
+      name: "molclass_catalog",
       partialize: (state) => ({
         searchTerm: state.searchTerm,
         selectedCategory: state.selectedCategory,
@@ -332,7 +332,7 @@ const handleReset = () => {
 
 ```typescript
 {
-  name: "molwise_catalog", // Chave no localStorage
+  name: "molclass_catalog", // Chave no localStorage
   partialize: (state) => ({
     // Apenas os campos que devem ser persistidos
     searchTerm: state.searchTerm,

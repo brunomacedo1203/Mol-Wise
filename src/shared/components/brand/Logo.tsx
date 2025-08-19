@@ -23,7 +23,7 @@ export default function Logo({ collapsed, onClick }: LogoProps) {
           ${collapsed ? "hidden" : "block"}
         `}
       >
-        Mol&nbsp;Wise
+        Mol&nbsp;Class
       </span>
     </Link>
   );

@@ -8,5 +8,5 @@ export function useSectionTitle() {
     pathname.startsWith("/MolarMassCalculator") ||
     pathname.startsWith("/StandardCalculator")
   ) return "Calculators";
-  return "Mol Wise";
+  return "Mol Class";
 }

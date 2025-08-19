@@ -158,7 +158,7 @@ export const useOrganicCatalogStore = create<OrganicCatalogState>()(
       }),
     }),
     {
-      name: "molwise_organic_catalog",
+      name: "molclass_organic_catalog",
       partialize: (state) => ({
         // Persiste apenas configurações do usuário, não os dados
         rowsPerPage: state.rowsPerPage,
@@ -173,4 +173,4 @@ export const useOrganicCatalogStore = create<OrganicCatalogState>()(
       }),
     }
   )
-); 
+);

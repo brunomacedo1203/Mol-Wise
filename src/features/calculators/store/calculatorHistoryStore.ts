@@ -39,7 +39,7 @@ export const useCalculatorHistoryStore = create<CalculatorHistoryState>()(
         }),
     }),
     {
-      name: "molwise_calculator_history", // chave do localStorage
+      name: "molclass_calculator_history", // chave do localStorage
     }
   )
 );

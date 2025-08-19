@@ -1,8 +1,8 @@
-# Guia de Contribuição - Mol Wise
+# Guia de Contribuição - Mol Class
 
 ## Como Implementar uma Nova Seção no Menu
 
-Este guia detalha o processo de adição de uma nova seção ao menu principal do Mol Wise. Siga estes passos para garantir uma implementação consistente e bem integrada.
+Este guia detalha o processo de adição de uma nova seção ao menu principal do Mol Class. Siga estes passos para garantir uma implementação consistente e bem integrada.
 
 ### 1. Estrutura de Arquivos
 

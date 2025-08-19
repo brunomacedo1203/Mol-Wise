@@ -189,7 +189,7 @@ export const useCatalogStore = create<CatalogState>()(
       }),
     }),
     {
-      name: "molwise_catalog",
+      name: "molclass_catalog",
       partialize: (state) => ({
         // Persiste apenas configurações do usuário, não os dados
         rowsPerPage: state.rowsPerPage,
@@ -202,4 +202,4 @@ export const useCatalogStore = create<CatalogState>()(
       }),
     }
   )
-); 
+);
