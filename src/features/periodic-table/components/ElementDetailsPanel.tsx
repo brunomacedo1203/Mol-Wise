@@ -25,12 +25,13 @@ export default function ElementDetailsPanel({
   const { setHighlight, setSearchValue } = usePeriodicTableStore();
 
   // Atualiza busca global e envia evento de tracking
+  // Atualiza busca global e envia evento de tracking
   const handleSearch = (value: string) => {
     setSearch(value);
     setSearchValue(value);
 
     if (value.trim() !== "") {
-      trackElementSearch(value);
+      trackElementSearch({ search_term: value });
     }
   };
 

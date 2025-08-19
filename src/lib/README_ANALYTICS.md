@@ -1,96 +1,167 @@
-# Google Analytics - Guia de Uso
+# 📊 Google Analytics (GA4) – Guia de Uso no MolClass
 
-## Configuração
+Este projeto já possui integração com o **Google Analytics 4 (GA4)** usando `gtag.js`, com configuração centralizada, envio de pageviews e eventos personalizados.
 
-O Google Analytics já está configurado no projeto com o ID de rastreamento `G-P4NHF7L5NV`.
+---
 
-## Funções Disponíveis
+## ✅ Configuração Atual
 
-### 1. Pageview
+- ID de rastreamento: `G-P4NHF7L5NV`
+- Script do GA4 injetado no `layout.tsx` automaticamente
+- Pageviews e eventos enviados via funções utilitárias
+- Privacidade ativada (`anonymize_ip: true`)
 
-```typescript
-import { pageview } from "@/lib/gtag";
+---
 
-// Enviar pageview
-pageview("/catalog");
+## 🧠 Como o GA4 funciona aqui
+
+| Item                        | Função                                                           |
+| --------------------------- | ---------------------------------------------------------------- |
+| `gtag.ts`                   | Contém funções de rastreamento: `pageview`, `event`, `exception` |
+| `useGoogleAnalytics.ts`     | Hook que envia `pageview` ao mudar de rota                       |
+| **Script no `layout.tsx`**  | Inicia o GA4 e injeta o `gtag()` no `window`                     |
+| **Evento `search_element`** | Exemplo de evento custom já implementado                         |
+
+---
+
+## 📂 Estrutura de Arquivos
+
+```
+src/
+├── lib/
+│   └── gtag.ts                 # Funções utilitárias do GA4
+├── hooks/
+│   ├── useGoogleAnalytics.ts   # Hook para pageviews automáticos
+│   └── useEventTrackers.ts     # (opcional) Hooks para eventos nomeados
+├── app/[locale]/layout.tsx     # Injeta os scripts do GA4 globalmente
 ```
 
-### 2. Eventos Personalizados
+---
 
-```typescript
+## 🧩 Funções Disponíveis
+
+### 1. `pageview(url: string)`
+
+Envia um pageview manual (normalmente já feito automaticamente via `useGoogleAnalytics`).
+
+```ts
+import { pageview } from "@/lib/gtag";
+
+pageview("/catalog?filter=metal");
+```
+
+---
+
+### 2. `event(name: string, params?: object)`
+
+Envia um evento GA4 com parâmetros personalizados.
+
+```ts
 import { event } from "@/lib/gtag";
 
-// Enviar evento
-event({
-  action: "button_click",
-  category: "engagement",
-  label: "calculate_button",
-  value: 1,
+event("search_element", {
+  search_term: "H2O",
+  result_count: 5,
+  section: "catalog",
 });
 ```
 
-### 3. Conversões
+---
 
-```typescript
-import { conversion } from "@/lib/gtag";
+### 3. `exception(description: string, fatal?: boolean)`
 
-// Enviar conversão
-conversion("AW-CONVERSION_ID", "CONVERSION_LABEL");
-```
+Registra um erro (exemplo útil em try/catch).
 
-### 4. Exceções
-
-```typescript
+```ts
 import { exception } from "@/lib/gtag";
 
-// Enviar exceção
 exception("Erro no cálculo", false);
 ```
 
-## Exemplos de Uso
+---
 
-### Em Componentes React
+## 🚀 Como criar um novo evento (passo a passo)
 
-```typescript
+### ✅ 1. No código
+
+Use a função `event()` diretamente ou crie um hook específico em `useEventTrackers.ts`.
+
+**Exemplo direto:**
+
+```ts
 import { event } from "@/lib/gtag";
 
-function CalculateButton() {
-  const handleClick = () => {
-    // Lógica do botão
-    event({
-      action: "calculate",
-      category: "calculator",
-      label: "molar_mass",
-      value: 1,
-    });
-  };
-
-  return <button onClick={handleClick}>Calcular</button>;
-}
+event("calculation_performed", {
+  calculator_type: "molar_mass",
+  input_formula: "H2O",
+  result_value: 18.015,
+});
 ```
 
-### Tracking de Erros
+**Exemplo com hook nomeado (recomendado):**
 
-```typescript
-import { exception } from "@/lib/gtag";
+```ts
+import { useEventTrackers } from "@/hooks/useEventTrackers";
 
-try {
-  // Código que pode gerar erro
-} catch (error) {
-  exception(error.message, false);
-}
+const { trackCalculation } = useEventTrackers();
+
+trackCalculation({
+  calculator_type: "molar_mass",
+  input_formula: "H2O",
+  result_value: 18.015,
+});
 ```
 
-## Configurações de Privacidade
+---
 
-O Google Analytics está configurado com:
+### ✅ 2. No painel do GA4
 
-- `anonymize_ip: true` - Anonimiza IPs
-- `cookie_flags: 'SameSite=None;Secure'` - Configuração segura de cookies
+Após o evento ser disparado pelo código:
 
-## Estrutura de Arquivos
+1. Acesse o **Google Analytics → Admin → Eventos**
+2. Clique em “Criar evento” se quiser derivar ou renomear algo
+3. Acesse **Eventos recentes** para verificar se foi recebido
+4. (Opcional) Marque como **conversão** se quiser acompanhar metas
 
-- `src/lib/gtag.ts` - Funções principais do Google Analytics
-- `src/types/gtag.d.ts` - Tipos TypeScript
-- `src/shared/components/GoogleAnalytics.tsx` - Componente de inicialização
-- `src/shared/hooks/useGoogleAnalytics.ts` - Hook para tracking de páginas
+---
+
+## 🔎 Como testar
+
+1. Abra o site com `?debug_mode=true` na URL
+2. Vá ao GA4 → Admin → DebugView
+3. Interaja com a aplicação
+4. Verifique se eventos aparecem corretamente
+5. No DevTools → aba Network → filtre por `collect` e veja status `204`
+
+---
+
+## 🔐 Privacidade e Cookies
+
+O GA4 está configurado com:
+
+- `anonymize_ip: true` → os IPs dos usuários são anonimizados
+- `cookie_flags: 'SameSite=None;Secure'` → cookies seguros, compatíveis com múltiplos navegadores
+
+---
+
+## 📌 Observações
+
+- Evite usar os padrões antigos (`category`, `action`, `label`, `value`) do Universal Analytics.
+- No GA4, os eventos são **livres** e organizados via **parâmetros nomeados**.
+- Eventos como `search`, `view_item`, `generate_lead` têm tratamento especial e são recomendados.
+
+---
+
+## 📋 Exemplo de Evento Nomeado (recomendado)
+
+```ts
+event("view_item", {
+  item_id: "Na",
+  item_name: "Sódio",
+  item_type: "element",
+});
+```
+
+---
+
+Pronto! Agora sua base de Analytics está preparada para escalar com segurança, organização e clareza. ✨

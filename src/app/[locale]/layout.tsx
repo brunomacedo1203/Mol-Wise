@@ -1,4 +1,3 @@
-import GoogleAnalytics from "@/shared/components/GoogleAnalytics";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -89,22 +88,26 @@ export default async function LocaleLayout({
           strategy="afterInteractive"
         />
 
-        {/* Google Analytics */}
-        <Script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: googleAnalyticsScript }}
-        />
+        {/* Google Analytics: inicialização única e limpa */}
+        {GA_TRACKING_ID && (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{ __html: googleAnalyticsScript }}
+            />
+          </>
+        )}
       </head>
       <body className={inter.className}>
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
-            <GoogleAnalytics />
+            {/* 🔥 Removido: <GoogleAnalytics /> */}
             {children}
           </NextIntlClientProvider>
         </ThemeEffectProvider>

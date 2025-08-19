@@ -8,7 +8,8 @@ export default function useGoogleAnalytics() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const url = pathname + searchParams.toString();
+    const qs = searchParams.toString();
+    const url = qs ? `${pathname}?${qs}` : pathname;
     pageview(url);
   }, [pathname, searchParams]);
 }

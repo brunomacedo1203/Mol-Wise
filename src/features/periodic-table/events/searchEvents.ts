@@ -1,14 +1,15 @@
 // features/periodic-table/events/searchEvents.ts
-export const trackElementSearch = (elementName: string): void => {
-    if (typeof window !== "undefined" && "gtag" in window) {
-      (window as Window & typeof globalThis & { gtag?: (...args: unknown[]) => void }).gtag?.(
-        "event",
-        "search_element",
-        {
-          event_category: "Periodic Table",
-          event_label: elementName,
-        }
-      );
-    }
-  };
-  
+import { event } from "@/lib/gtag";
+
+export const trackElementSearch = ({
+  search_term,
+  section = "periodic_table",
+}: {
+  search_term: string;
+  section?: string;
+}): void => {
+  event("search_element", {
+    search_term,
+    section,
+  });
+};
