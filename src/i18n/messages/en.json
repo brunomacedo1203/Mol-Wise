@@ -99,12 +99,15 @@
   "home": {
     "title": "Mol Class",
     "welcome": "Welcome to Mol Class!",
-    "subtitle": "Choose a tool in the sidebar to get started."
+    "subtitle": "Choose a tool in the sidebar to get started.",
+    "description": "This is the starting point of Mol Class, where you can access various interactive chemistry tools."
+
   },
   "calculators": {
     "title": "Calculators",
     "subtitle": "Open one or more calculators from the menu.",
     "closeAll": "Close All",
+    "description": "Access chemistry calculators for molar mass, scientific calculations, and more.",
     "errors": {
       "generic": "An error occurred while calculating",
       "unsupportedType": "Unsupported calculator type: {type}"
@@ -112,6 +115,7 @@
     "molarMass": {
       "title": "Molar Mass",
       "subtitle": "Enter a chemical formula or element symbol",
+      "description": "Quickly calculate the molar mass of chemical compounds.",
       "input": {
         "placeholder": "Enter formula (e.g., H2O)",
         "label": "Chemical Formula"
@@ -193,6 +197,7 @@
   "periodicTable": {
     "title": "Periodic Table",
     "subtitle": "Type a name or symbol to see details",
+    "description": "Explore all chemical elements with complete data and interactive filters.",
     "filterPlaceholder": "Select classification(s)",
     "filterLabel": "Classification",
     "filterOptions": {
@@ -380,6 +385,7 @@
   "catalog": {
     "title": "Inorganic Compounds",
     "subtitle": "Explore detailed information about inorganic compounds",
+    "description": "Discover properties, composition, and uses of inorganic elements.",
     "elements": {
       "title": "Elements"
     },
