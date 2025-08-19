@@ -100,12 +100,15 @@
   "home": {
     "title": "Mol Class",
     "welcome": "Bem-vindo ao Mol Class!",
-    "subtitle": "Escolha uma ferramenta na barra lateral para começar."
+    "subtitle": "Escolha uma ferramenta na barra lateral para começar.",
+    "description": "Este é o início do Mol Class, onde você pode acessar diversas ferramentas químicas interativas."
+
   },
   "calculators": {
     "title": "Calculadoras",
     "subtitle": "Abra uma ou mais calculadoras pelo menu.",
     "closeAll": "Fechar Todas",
+    "description": "Acesse calculadoras químicas para massa molar, cálculos científicos e muito mais.",
     "errors": {
       "generic": "Ocorreu um erro ao calcular",
       "unsupportedType": "Tipo de calculadora não suportado: {type}"
@@ -113,6 +116,7 @@
     "molarMass": {
       "title": "Massa Molar",
       "subtitle": "Digite uma fórmula química ou símbolo do elemento",
+      "description": "Calcule rapidamente a massa molar de compostos químicos.",
       "input": {
         "placeholder": "Digite a fórmula (ex: H2O)",
         "label": "Fórmula Química"
@@ -195,6 +199,7 @@
   "periodicTable": {
     "title": "Tabela Periódica",
     "subtitle": "Digite o nome ou símbolo do elemento",
+    "description": "Explore todos os elementos químicos com dados completos e filtros interativos.",
     "filterPlaceholder": "Selecione a(s) classificação(ões)",
     "filterLabel": "Classificação",
     "filterOptions": {
@@ -385,6 +390,7 @@
   "elements": {
     "title": "Elementos"
   },
+  "description": "Descubra propriedades químicas, composição e uso de elementos químicos.",
   "compounds": {
     "title": "Compostos"
   },
