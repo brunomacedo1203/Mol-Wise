@@ -1,23 +1,29 @@
 declare global {
   interface Window {
-    gtag: (
-      command: 'config' | 'event' | 'js',
-      targetId: string,
-      config?: {
-        page_path?: string;
-        event_category?: string;
-        event_label?: string;
-        value?: number;
-        anonymize_ip?: boolean;
-        cookie_flags?: string;
-        description?: string;
-        fatal?: boolean;
-        send_to?: string;
-        [key: string]: string | number | boolean | undefined;
-      }
-    ) => void;
     dataLayer: unknown[];
+    gtag(command: 'js', date: Date): void;
+    gtag(command: 'config', targetId: string, params?: Gtag.ConfigParams): void;
+    gtag(command: 'event', name: string, params?: Gtag.EventParams): void;
   }
 }
 
-export {}; 
+export namespace Gtag {
+  export interface ConfigParams {
+    page_path?: string;
+    anonymize_ip?: boolean;
+    cookie_flags?: string;
+    send_page_view?: boolean;
+    [key: string]: string | number | boolean | undefined;
+  }
+
+  export interface EventParams {
+    event_category?: string;
+    event_label?: string;
+    value?: number;
+    description?: string;
+    fatal?: boolean;
+    send_to?: string;
+    // Campos customizados (ex.: search_term, section, etc.)
+    [key: string]: string | number | boolean | undefined;
+  }
+}
