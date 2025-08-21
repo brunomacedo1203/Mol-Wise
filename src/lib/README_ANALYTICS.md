@@ -24,17 +24,38 @@ Este projeto já possui integração com o **Google Analytics 4 (GA4)** usando `
 
 ---
 
-## 📂 Estrutura de Arquivos
+## 📂 Arquivos Principais da Arquitetura
+
+### 🎯 **4 Arquivos Essenciais para Google Analytics**
+
+Estes são os **arquivos principais** que formam a arquitetura completa do GA4:
 
 ```
 src/
+├── app/[locale]/
+│   └── layout.tsx              # 🔧 Configuração global e inicialização do GA4
 ├── lib/
-│   └── gtag.ts                 # Funções utilitárias do GA4
-├── hooks/
-│   ├── useGoogleAnalytics.ts   # Hook para pageviews automáticos
-│   └── useEventTrackers.ts     # (opcional) Hooks para eventos nomeados
-├── app/[locale]/layout.tsx     # Injeta os scripts do GA4 globalmente
+│   └── gtag.ts                 # 📚 Biblioteca principal com funções de tracking
+└── shared/hooks/
+    ├── useGoogleAnalytics.ts   # 🔄 Hook para pageviews automáticos
+    └── useEventTrackers.ts     # 🎯 Hooks padronizados para eventos específicos
 ```
+
+### 📋 **Função de Cada Arquivo**
+
+| Arquivo | Responsabilidade | Status |
+|---------|------------------|--------|
+| `layout.tsx` | Injeta scripts do GA4, configura ID e privacidade | ✅ **Essencial** |
+| `gtag.ts` | Funções `pageview()`, `event()`, `exception()` | ✅ **Essencial** |
+| `useGoogleAnalytics.ts` | Pageviews automáticos em mudanças de rota | ✅ **Essencial** |
+| `useEventTrackers.ts` | Hooks para eventos padronizados | ✅ **Essencial** |
+
+### 🚀 **Para Adicionar Novos Eventos**
+
+Com esta arquitetura, você pode:
+1. **Usar diretamente**: `import { event } from "@/lib/gtag"`
+2. **Criar hook específico**: Adicionar em `useEventTrackers.ts`
+3. **Criar arquivo específico**: Como `searchEvents.ts` para features
 
 ---
 
