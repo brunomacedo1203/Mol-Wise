@@ -8,6 +8,7 @@ export const trackElementSearch = ({
   search_term: string;
   section?: string;
 }): void => {
+  console.log("[SEARCH_EVENTS] Disparando trackElementSearch:", { search_term, section });
   event("search_element", {
     search_term,
     section,

@@ -9,39 +9,40 @@ export function useEventTrackers() {
     search_term: string;
     section?: string;
     result_count?: number;
-  }) =>
-    event("search_element", {
-      search_term,
-      section,
-      result_count,
-    });
+  }) => {
+    event("search_element", { search_term, section, result_count });
+    // Alternativa recomendada do GA4:
+    // event("search", { search_term });
+  };
 
   const trackElementSearch = ({
-    search_term,
+    symbol,
+    name,
+    atomic_number,
     section = "periodic_table",
   }: {
-    search_term: string;
+    symbol?: string;
+    name?: string;
+    atomic_number?: number;
     section?: string;
-  }) =>
-    event("search_element", {
-      search_term,
-      section,
-    });
+  }) => {
+    // Evento custom:
+    event("search_element", { symbol, name, atomic_number, section });
+    // Opcionalmente alinhar com "select_item":
+    // event("select_item", { item_id: symbol ?? String(atomic_number), item_name: name, item_category: section });
+  };
 
   const trackCalculation = ({
-    calculator_type,
-    input_formula,
-    result_value,
+    calculator,
+    expression,
+    result,
   }: {
-    calculator_type: "molar_mass" | "scientific";
-    input_formula?: string;
-    result_value?: number;
-  }) =>
-    event("calculation_performed", {
-      calculator_type,
-      input_formula,
-      result_value,
-    });
+    calculator: string;
+    expression: string;
+    result: string | number;
+  }) => {
+    event("calculation_performed", { calculator, expression, result });
+  };
 
   const trackModeSwitch = ({
     from_mode,
@@ -49,16 +50,15 @@ export function useEventTrackers() {
   }: {
     from_mode: "2D" | "3D";
     to_mode: "2D" | "3D";
-  }) =>
-    event("mode_switch", {
-      from_mode,
-      to_mode,
-    });
+  }) => {
+    event("mode_switch", { from_mode, to_mode });
+  };
 
   return {
     trackSearch,
-    trackElementSearch, // ✅ novo
+    trackElementSearch,
     trackCalculation,
     trackModeSwitch,
   };
 }
+

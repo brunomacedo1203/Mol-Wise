@@ -1,5 +1,17 @@
 # 📊 Google Analytics (GA4) – Guia de Uso no MolClass
 
+## 🔧 Arquivos de Configuração do Google Analytics
+
+**Os arquivos relacionados à configuração do GA são exatamente:**
+
+- `e:\Projetos\molwise\src\shared\hooks\useEventTrackers.ts`
+- `e:\Projetos\molwise\src\types\gtag.d.ts`
+- `e:\Projetos\molwise\src\lib\gtag.ts`
+- `e:\Projetos\molwise\src\shared\hooks\useGoogleAnalytics.ts`
+- `e:\Projetos\molwise\.env.local`
+
+---
+
 Este projeto já possui integração com o **Google Analytics 4 (GA4)** usando `gtag.js`, com configuração centralizada, envio de pageviews e eventos personalizados.
 
 ---
@@ -101,48 +113,150 @@ exception("Erro no cálculo", false);
 
 ---
 
-## 🚀 Como criar um novo evento (passo a passo)
+## 🚀 Passos para Implementar um Novo Evento de Google Analytics
 
-### ✅ 1. No código
+### **Passo 1: Definir o Evento (Opcional)**
 
-Use a função `event()` diretamente ou crie um hook específico em `useEventTrackers.ts`.
-
-**Exemplo direto:**
+Se você quiser tipagem TypeScript para seu evento, adicione-o em `gtag.d.ts`:
 
 ```ts
-import { event } from "@/lib/gtag";
-
-event("calculation_performed", {
-  calculator_type: "molar_mass",
-  input_formula: "H2O",
-  result_value: 18.015,
-});
+// src/types/gtag.d.ts
+export namespace Gtag {
+  interface EventParams {
+    // Eventos padrão do GA4
+    search_term?: string;
+    content_type?: string;
+    item_id?: string;
+    
+    // Seus eventos customizados
+    calculator_type?: string;
+    formula_input?: string;
+    result_value?: number;
+  }
+}
 ```
 
-**Exemplo com hook nomeado (recomendado):**
+---
+
+### **Passo 2: Criar Hook de Tracking (Recomendado)**
+
+Adicione seu hook em `useEventTrackers.ts`:
 
 ```ts
-import { useEventTrackers } from "@/hooks/useEventTrackers";
+// src/shared/hooks/useEventTrackers.ts
+import { event } from '@/lib/gtag';
 
-const { trackCalculation } = useEventTrackers();
+export const useEventTrackers = () => {
+  const trackCalculation = (params: {
+    calculator_type: string;
+    formula_input: string;
+    result_value: number;
+  }) => {
+    event('calculation_performed', {
+      calculator_type: params.calculator_type,
+      formula_input: params.formula_input,
+      result_value: params.result_value,
+      section: 'calculators'
+    });
+  };
 
-trackCalculation({
-  calculator_type: "molar_mass",
-  input_formula: "H2O",
-  result_value: 18.015,
+  return {
+    trackCalculation,
+    // outros hooks...
+  };
+};
+```
+
+---
+
+### **Passo 3: Usar o Hook no Componente**
+
+Importe e use o hook em seu componente:
+
+```ts
+// Em qualquer componente
+import { useEventTrackers } from '@/shared/hooks/useEventTrackers';
+
+const MolarMassCalculator = () => {
+  const { trackCalculation } = useEventTrackers();
+
+  const handleCalculate = (formula: string, result: number) => {
+    // Sua lógica de cálculo...
+    
+    // Disparar evento GA
+    trackCalculation({
+      calculator_type: 'molar_mass',
+      formula_input: formula,
+      result_value: result
+    });
+  };
+
+  return (
+    <button onClick={() => handleCalculate('H2O', 18.015)}>
+      Calcular
+    </button>
+  );
+};
+```
+
+---
+
+### **Alternativa: Uso Direto (Para Casos Simples)**
+
+Para eventos simples, use diretamente a função `event`:
+
+```ts
+import { event } from '@/lib/gtag';
+
+// Disparar evento diretamente
+event('button_click', {
+  button_name: 'download_pdf',
+  section: 'element_details'
 });
 ```
 
 ---
 
-### ✅ 2. No painel do GA4
+### **Passo 4: Verificar se Funciona**
 
-Após o evento ser disparado pelo código:
+#### **4.1 Usando GADebugger (Desenvolvimento)**
 
-1. Acesse o **Google Analytics → Admin → Eventos**
-2. Clique em “Criar evento” se quiser derivar ou renomear algo
-3. Acesse **Eventos recentes** para verificar se foi recebido
-4. (Opcional) Marque como **conversão** se quiser acompanhar metas
+1. Adicione o componente `GADebugger` em qualquer página:
+
+```tsx
+import { GADebugger } from '@/components/debug/GADebugger';
+
+// No seu componente
+<GADebugger />
+```
+
+2. Interaja com sua funcionalidade
+3. Veja os eventos em tempo real no debugger
+
+#### **4.2 Console do Navegador**
+
+Abra DevTools → Console e veja logs como:
+```
+[GA] Event sent: calculation_performed
+[GA] Params: {calculator_type: "molar_mass", ...}
+```
+
+#### **4.3 Painel do GA4**
+
+1. Acesse **Google Analytics → Relatórios → Eventos**
+2. Procure por seu evento (pode demorar alguns minutos)
+3. Verifique os parâmetros enviados
+
+---
+
+### **Passo 5: Configurar no GA4 (Opcional)**
+
+Após o evento aparecer no GA4:
+
+1. Vá em **Admin → Eventos**
+2. Encontre seu evento na lista
+3. (Opcional) Marque como **Conversão** se for uma meta importante
+4. (Opcional) Crie **Audiências** baseadas neste evento
 
 ---
 

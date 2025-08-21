@@ -1,25 +1,33 @@
+
+import type { Gtag } from '../types/gtag';
+
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
-const canSend = () =>
+const enabled = typeof window !== "undefined" && !!GA_TRACKING_ID;
+
+const hasGtag = () =>
   typeof window !== "undefined" && typeof window.gtag === "function";
 
-// Pageview
+const canSend = () => enabled && hasGtag();
+
 export const pageview = (url: string) => {
-  if (canSend()) {
-    window.gtag("config", GA_TRACKING_ID, { page_path: url });
-  }
+  if (!canSend()) return;
+  window.gtag("config", GA_TRACKING_ID, {
+    page_path: url,
+  });
 };
 
-// Evento personalizado (GA4-style)
-export type GAParams = Record<string, string | number | boolean | undefined>;
-
-export const event = (name: string, params?: GAParams) => {
-  if (canSend()) {
-    window.gtag("event", name, params ?? {});
-  }
+export const event = (name: string, params?: Gtag.EventParams) => {
+  if (!canSend()) return;
+  window.gtag("event", name, params);
 };
 
-// (Opcional) log de erro
-export const exception = (description: string, fatal = false) => {
+export const exception = ({
+  description,
+  fatal,
+}: {
+  description?: string;
+  fatal?: boolean;
+}) => {
   event("exception", { description, fatal });
 };
