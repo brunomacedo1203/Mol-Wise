@@ -50,7 +50,8 @@ src/
 │   └── gtag.ts                 # 📚 Biblioteca principal com funções de tracking
 └── shared/hooks/
     ├── useGoogleAnalytics.ts   # 🔄 Hook para pageviews automáticos
-    └── useEventTrackers.ts     # 🎯 Hooks padronizados para eventos específicos
+    ├── useEventTrackers.ts     # 🎯 Hooks padronizados para eventos específicos
+    └── useDebouncedValue.ts    # ⏱️ Hook para debounce de valores (digitação)
 ```
 
 ### 📋 **Função de Cada Arquivo**
@@ -61,6 +62,38 @@ src/
 | `gtag.ts` | Funções `pageview()`, `event()`, `exception()` | ✅ **Essencial** |
 | `useGoogleAnalytics.ts` | Pageviews automáticos em mudanças de rota | ✅ **Essencial** |
 | `useEventTrackers.ts` | Hooks para eventos padronizados | ✅ **Essencial** |
+| `useDebouncedValue.ts` | Controle de debounce para inputs e eventos | 🔧 **Utilitário** |
+
+### 🛠️ **Hooks Utilitários**
+
+#### `useDebouncedValue.ts` - Controle de Digitação
+
+Hook criado para aplicar debounce em valores de entrada, especialmente útil para:
+- **Campos de busca** que disparam eventos GA4
+- **Filtros em tempo real** que precisam de otimização
+- **Qualquer input** que requer controle de frequência
+
+```ts
+import { useDebouncedValue } from "@/shared/hooks/useDebouncedValue";
+
+const [searchTerm, setSearchTerm] = useState("");
+const debouncedSearchTerm = useDebouncedValue(searchTerm, 500);
+
+// Dispara evento GA4 apenas após 500ms de inatividade
+useEffect(() => {
+  if (debouncedSearchTerm) {
+    trackElementSearch({ search_term: debouncedSearchTerm });
+  }
+}, [debouncedSearchTerm]);
+```
+
+**Benefícios:**
+- ✅ Evita spam de eventos GA4 durante digitação
+- ✅ Melhora performance da aplicação
+- ✅ Reduz custos de API calls
+- ✅ Experiência de usuário mais fluida
+
+---
 
 ### 🚀 **Para Adicionar Novos Eventos**
 
@@ -68,6 +101,7 @@ Com esta arquitetura, você pode:
 1. **Usar diretamente**: `import { event } from "@/lib/gtag"`
 2. **Criar hook específico**: Adicionar em `useEventTrackers.ts`
 3. **Criar arquivo específico**: Como `searchEvents.ts` para features
+4. **Usar debounce**: Combinar com `useDebouncedValue` para inputs
 
 ---
 
@@ -110,6 +144,66 @@ import { exception } from "@/lib/gtag";
 
 exception("Erro no cálculo", false);
 ```
+
+---
+
+## 📋 Resumo: Padrão Baseado no `search_element`
+
+### **🔄 Sequência de Arquivos (Ordem de Implementação):**
+
+1. **`e:\Projetos\molwise\src\types\gtag.d.ts`** - Adicionar tipos específicos (opcional)
+2. **`e:\Projetos\molwise\src\features\[feature]\events\[eventName]Events.ts`** - Criar função de tracking específica
+3. **`e:\Projetos\molwise\src\shared\hooks\useEventTrackers.ts`** - Adicionar hook centralizado (alternativa)
+4. **`e:\Projetos\molwise\src\features\[feature]\components\[Component].tsx`** - Implementar no componente
+5. **`e:\Projetos\molwise\src\components\debug\GADebugger.tsx`** - Testar o evento
+
+### **📁 Exemplo Real do `search_element`:**
+
+**Arquivo 1:** `src/features/periodic-table/events/searchEvents.ts`
+```ts
+import { event } from "@/lib/gtag";
+
+export const trackElementSearch = ({
+  search_term,
+  section = "periodic_table",
+}: {
+  search_term: string;
+  section?: string;
+}): void => {
+  console.log("[SEARCH_EVENTS] Disparando trackElementSearch:", { search_term, section });
+  event("search_element", {
+    search_term,
+    section,
+  });
+};
+```
+
+**Arquivo 2:** `src/features/periodic-table/components/ElementDetailsPanel.tsx`
+```ts
+import { trackElementSearch } from "../events/searchEvents";
+
+const handleSearch = (value: string) => {
+  setSearch(value);
+  setSearchValue(value);
+  
+  if (value.trim() !== "") {
+    trackElementSearch({ search_term: value });
+  }
+};
+```
+
+**Arquivo 3:** `src/shared/hooks/useEventTrackers.ts` (Alternativa)
+```ts
+const trackElementSearch = ({ symbol, name, atomic_number, section = "periodic_table" }) => {
+  event("search_element", { symbol, name, atomic_number, section });
+};
+```
+
+### **🎯 Estrutura Recomendada:**
+- **Eventos específicos**: `src/features/[feature]/events/`
+- **Hooks centralizados**: `src/shared/hooks/useEventTrackers.ts`
+- **Tipagem**: `src/types/gtag.d.ts`
+- **Implementação**: Componentes da feature
 
 ---
 
