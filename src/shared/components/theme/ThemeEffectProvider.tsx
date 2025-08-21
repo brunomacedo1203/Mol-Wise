@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useThemeStore } from "@/shared/store/themeStore";
 
 export function ThemeEffectProvider({
@@ -7,18 +7,28 @@ export function ThemeEffectProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const isInitialized = useThemeStore((s) => s.isInitialized);
-  const initializeTheme = useThemeStore((s) => s.initializeTheme);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const { theme, initializeTheme, isInitialized } = useThemeStore();
 
-  // Inicializa o tema apenas uma vez no lado do cliente
+  // Garante hidratação completa no cliente
   useEffect(() => {
-    if (!isInitialized) {
+    setIsHydrated(true);
+  }, []);
+
+  // Inicializa tema assim que o componente hidrata
+  useEffect(() => {
+    if (isHydrated && !isInitialized) {
       initializeTheme();
     }
-  }, [isInitialized, initializeTheme]);
+  }, [isHydrated, isInitialized, initializeTheme]);
 
-  // Evita renderizar até o tema ser inicializado
-  if (!isInitialized) return null;
+  // Aplica o tema no DOM sempre que mudar
+  useEffect(() => {
+    if (isHydrated && theme) {
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }
+  }, [isHydrated, theme]);
 
+  // Renderiza as crianças mesmo durante a inicialização para evitar flash
   return <>{children}</>;
 }

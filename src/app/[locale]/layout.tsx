@@ -13,6 +13,39 @@ import { GA_TRACKING_ID } from "@/lib/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Script para aplicar tema antes da hidratação
+const themeScript = `
+  (function () {
+    try {
+      // Tenta ler do localStorage do zustand
+      const themeStorage = localStorage.getItem("theme-storage");
+      let theme = null;
+      
+      if (themeStorage) {
+        const parsed = JSON.parse(themeStorage);
+        theme = parsed.state?.theme;
+      }
+      
+      // Se não encontrar, usa preferência do sistema
+      if (!theme) {
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        theme = systemPrefersDark ? "dark" : "light";
+      }
+      
+      // Aplica o tema imediatamente
+      const root = document.documentElement;
+      root.classList.remove("light", "dark");
+      root.classList.add(theme);
+      root.setAttribute("data-theme", theme);
+      
+    } catch (error) {
+      console.warn("Erro ao aplicar tema inicial:", error);
+      // Fallback para tema claro
+      document.documentElement.classList.add("light");
+    }
+  })();
+`;
+
 const googleAnalyticsScript = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -82,13 +115,20 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        {/* 3Dmol.js (mantém o 3D) */}
+        {/* Script para aplicar tema ANTES de qualquer coisa */}
+        <Script
+          id="theme-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
+
+        {/* 3Dmol.js */}
         <Script
           src="https://3Dmol.org/build/3Dmol-min.js"
           strategy="afterInteractive"
         />
 
-        {/* Google Analytics: inicialização única e limpa */}
+        {/* Google Analytics */}
         {GA_TRACKING_ID && (
           <>
             <Script
@@ -107,7 +147,6 @@ export default async function LocaleLayout({
       <body className={inter.className}>
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
-            {/* 🔥 Removido: <GoogleAnalytics /> */}
             {children}
           </NextIntlClientProvider>
         </ThemeEffectProvider>
