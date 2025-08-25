@@ -9,12 +9,12 @@ export default function MolarMassCalculatorPage() {
   const t = useTranslations("molarMass");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
   useEffect(() => {
-    setSubtitle(t("molarMass.subtitle"));
+    setSubtitle(t("subtitle"));
     return () => setSubtitle("");
   }, [setSubtitle, t]);
 
   return (
-    <Page title={t("molarMass.title")}>
+    <Page title={t("title")}>
       <CalculatorPageContent />
     </Page>
   );

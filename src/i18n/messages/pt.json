@@ -1,5 +1,8 @@
 {
-  
+  "molarMass": {
+    "title": "Calculadora de Massa Molar",
+    "subtitle": "Calcule a massa molar de compostos químicos"
+  },
   "common": {
     "errors": {
       "emptyFormula": "Por favor, insira uma fórmula química"
@@ -82,6 +85,7 @@
     "subtitle": "Explore moléculas de forma interativa",
     "description": "Digite fórmulas químicas, visualize estruturas 2D e 3D e explore diferentes representações moleculares.",
     "placeholder": "Busque por nome, fórmula, SMILES ou CID...",
+    "search": "Pesquisar",
     "tip": "Dica",
     "example": "Experimente buscar por",
     "notFound": "Molécula não encontrada",
