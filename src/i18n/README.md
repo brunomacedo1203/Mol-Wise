@@ -29,6 +29,8 @@ src/i18n/
 
 - **Português (pt)** - Idioma padrão
 - **Inglês (en)** - Idioma secundário
+- **Francês (fr)** - Idioma adicional
+- **Espanhol (es)** - Idioma adicional
 
 ## 📝 Estrutura das Traduções
 
@@ -146,6 +148,146 @@ export default function Navigation() {
 1. Adicione a chave em `messages/pt.json`
 2. Adicione a tradução correspondente em `messages/en.json`
 3. Use a nova chave no componente com `useTranslations()`
+
+## 🌐 Implementando Novos Idiomas
+
+### Passo a Passo Completo
+
+#### 1. Atualizar Configuração de Roteamento
+
+Edite `src/i18n/routing.ts` e adicione o novo código do idioma:
+
+```typescript
+export const routing = defineRouting({
+  // Adicione o novo idioma aqui
+  locales: ['pt', 'en', 'fr', 'es'], // Exemplo: francês e espanhol
+  defaultLocale: 'pt'
+});
+```
+
+#### 2. Criar Arquivo de Traduções
+
+Crie um novo arquivo JSON na pasta `src/i18n/messages/`:
+
+- Para francês: `fr.json`
+- Para espanhol: `es.json`
+- Para alemão: `de.json`
+- etc.
+
+**Estrutura do arquivo** (copie de `en.json` ou `pt.json` como base):
+
+```json
+{
+  "molarMass": {
+    "title": "Calculadora de Masa Molar",
+    "subtitle": "Calcula la masa molar de compuestos químicos"
+  },
+  "common": {
+    "welcome": "Bienvenido",
+    "loading": "Cargando...",
+    "language": {
+      "es": "Español",
+      "pt": "Portugués",
+      "en": "Inglés",
+      "fr": "Francés",
+      "toggle": "Cambiar idioma"
+    }
+    // ... resto das traduções
+  }
+}
+```
+
+#### 3. Atualizar Seletor de Idiomas (Opcional)
+
+Modifique `src/shared/components/settings/LanguageSwitcher.tsx` para suportar múltiplos idiomas:
+
+```typescript
+const availableLocales = ['pt', 'en', 'fr', 'es'];
+const localeNames = {
+  pt: 'PT',
+  en: 'EN', 
+  fr: 'FR',
+  es: 'ES'
+};
+```
+
+#### 4. Configurar Geração Estática (Opcional)
+
+Se usar geração estática, atualize `src/app/[locale]/layout.tsx`:
+
+```typescript
+export function generateStaticParams() {
+  return [
+    { locale: 'pt' },
+    { locale: 'en' },
+    { locale: 'fr' },
+    { locale: 'es' }
+  ];
+}
+```
+
+#### 5. Atualizar Metadados SEO
+
+No mesmo layout, configure os metadados:
+
+```typescript
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  const { locale } = await Promise.resolve(params);
+  const t = await getTranslations({ locale, namespace: "common" });
+
+  return {
+    alternates: {
+      languages: {
+        "pt-BR": "/pt",
+        "en-US": "/en",
+        "fr-FR": "/fr", // Novo idioma
+        "es-ES": "/es", // Novo idioma
+      },
+    },
+  };
+}
+```
+
+### 🧪 Testando o Novo Idioma
+
+1. **Inicie o servidor**: `npm run dev`
+2. **Acesse a URL**: `http://localhost:3000/[novo-idioma]`
+3. **Teste o seletor de idiomas**
+4. **Verifique todas as seções** do aplicativo
+5. **Teste a tabela periódica** (nomes dos elementos)
+
+### 📝 Checklist de Implementação
+
+- [ ] Atualizar `routing.ts` com novo locale
+- [ ] Criar arquivo `[idioma].json` com todas as traduções
+- [ ] Atualizar `LanguageSwitcher.tsx` (se necessário)
+- [ ] Configurar `generateStaticParams()` (se necessário)
+- [ ] Atualizar metadados SEO
+- [ ] Testar navegação entre idiomas
+- [ ] Verificar elementos químicos traduzidos
+- [ ] Testar calculadoras em novo idioma
+- [ ] Validar responsividade do seletor de idiomas
+
+### 🌍 Idiomas Sugeridos para Expansão
+
+**Prioridade Alta:**
+- Espanhol (es) - Grande comunidade científica
+- Francês (fr) - Tradição em química
+
+**Prioridade Média:**
+- Alemão (de) - Berço da química moderna
+- Italiano (it) - Comunidade científica ativa
+
+**Considerações Especiais:**
+- Para idiomas RTL (árabe, hebraico): configurar `dir="rtl"`
+- Para idiomas com caracteres especiais: verificar encoding UTF-8
+
+### ⚠️ Problemas Comuns
+
+1. **Erro de JSON inválido**: Verifique se o arquivo JSON está bem formatado
+2. **Locale não reconhecido**: Certifique-se de que foi adicionado ao `routing.ts`
+3. **Traduções faltando**: Use as mesmas chaves em todos os arquivos de idioma
+4. **Cache do navegador**: Limpe o cache após adicionar novos idiomas
 
 ## 🌐 URLs Internacionalizadas
 

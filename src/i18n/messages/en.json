@@ -1,4 +1,15 @@
 {
+  "languages": {
+    "pt": "Portuguese",
+    "en": "English",
+    "fr": "French",
+    "de": "German",
+    "es": "Spanish",
+    "ar": "Arabic",
+    "hi": "Hindi",
+    "ru": "Russian",
+    "zh": "Chinese"
+  },
   "molarMass": {
     "title": "Molar Mass Calculator",
     "subtitle": "Calculate the molar mass of chemical compounds"
