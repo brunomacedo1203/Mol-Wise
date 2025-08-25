@@ -18,14 +18,46 @@ export function writeViewBox(svg: SVGSVGElement, vb: ViewBox) {
   );
 }
 
-/** Nova função de limitação baseada no conteúdo real */
+/**
+ * Centraliza a molécula no SVG baseado nos limites calculados.
+ * @param svg SVG onde a molécula será renderizada.
+ * @param contentBounds Bounding box da molécula.
+ * @param containerWidth Largura visível do container.
+ * @param containerHeight Altura visível do container.
+ * @param toolbarOffset Offset no topo para não sobrepor a toolbar.
+ */
+export function centerViewBox(
+  svg: SVGSVGElement,
+  contentBounds: ViewBox,
+  containerWidth: number,
+  containerHeight: number,
+  toolbarOffset = 50
+): ViewBox {
+  const vbWidth = contentBounds.width;
+  const vbHeight = contentBounds.height;
+
+  const minX = contentBounds.minX - (containerWidth - vbWidth) / 2;
+  const minY =
+    contentBounds.minY - (containerHeight - vbHeight) / 2 + toolbarOffset;
+
+  const vb: ViewBox = {
+    minX,
+    minY,
+    width: containerWidth,
+    height: containerHeight - toolbarOffset,
+  };
+
+  svg.setAttribute("viewBox", `${vb.minX} ${vb.minY} ${vb.width} ${vb.height}`);
+  return vb;
+}
+
+/** Limita o viewBox para evitar que a molécula suma da tela */
 export function clampViewBox(
   vb: ViewBox,
   init: ViewBox,
   contentBounds: ViewBox | null
 ): ViewBox {
   if (!contentBounds) {
-    // Fallback para o comportamento anterior se não conseguirmos calcular os bounds
     const maxOffsetX = init.width * 0.37;
     const maxOffsetY = init.height * 0.25;
 
@@ -49,30 +81,23 @@ export function clampViewBox(
     };
   }
 
-  // Limites de zoom baseados no tamanho inicial
   const minWidth = init.width * 0.1;
   const maxWidth = init.width * 4.0;
   const aspect = init.height / init.width;
 
-  // Clamp do zoom
   const clampedWidth = Math.min(Math.max(vb.width, minWidth), maxWidth);
   const clampedHeight = clampedWidth * aspect;
 
-  // Calcula os limites para que a molécula não saia da vista
-  // A molécula deve estar sempre pelo menos parcialmente visível
   const moleculeLeft = contentBounds.minX;
   const moleculeRight = contentBounds.minX + contentBounds.width;
   const moleculeTop = contentBounds.minY;
   const moleculeBottom = contentBounds.minY + contentBounds.height;
 
-  // Limites do viewBox: deve mostrar pelo menos uma parte da molécula
-  // Permite que a molécula chegue até as bordas, mas não desapareça completamente
-  const maxMinX = moleculeRight - clampedWidth * 0.1; // Mostra pelo menos 10% da molécula
-  const minMinX = moleculeLeft - clampedWidth * 0.9; // Mostra pelo menos 10% da molécula
+  const maxMinX = moleculeRight - clampedWidth * 0.1;
+  const minMinX = moleculeLeft - clampedWidth * 0.9;
   const maxMinY = moleculeBottom - clampedHeight * 0.1;
   const minMinY = moleculeTop - clampedHeight * 0.9;
 
-  // Aplica os limites
   const clampedMinX = Math.max(minMinX, Math.min(maxMinX, vb.minX));
   const clampedMinY = Math.max(minMinY, Math.min(maxMinY, vb.minY));
 

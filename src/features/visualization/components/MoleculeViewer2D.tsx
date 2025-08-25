@@ -1,4 +1,3 @@
-// src/features/visualization/components/MoleculeViewer2D.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -7,10 +6,9 @@ import { useTranslations } from "next-intl";
 import { ViewBox } from "../types/viewer2d.types";
 import { useViewer2DRenderer } from "../hooks/useViewer2DRenderer";
 import { useViewer2DInteractions } from "../hooks/useViewer2DInteractions";
-import { writeViewBox } from "../utils/viewBoxUtils";
+import { writeViewBox, centerViewBox } from "../utils/viewBoxUtils";
 import { getMoleculeKey } from "../utils/moleculeKey";
 
-/** ======= Componente ======= */
 export function MoleculeViewer2D() {
   const svgHostRef = useRef<HTMLDivElement | null>(null);
   const svgElRef = useRef<SVGSVGElement | null>(null);
@@ -24,7 +22,6 @@ export function MoleculeViewer2D() {
   const setCurrentMolKey = useVisualizationStore((s) => s.setCurrentMolKey);
   const getZoom2D = useVisualizationStore((s) => s.getZoom2D);
 
-  // Hook de renderização
   const { ready } = useViewer2DRenderer({
     svgHostRef,
     svgElRef,
@@ -35,7 +32,6 @@ export function MoleculeViewer2D() {
     smiles,
   });
 
-  // Hook de interações
   const {
     handleMouseDown,
     handleMouseMove,
@@ -53,19 +49,30 @@ export function MoleculeViewer2D() {
     contentBoundsRef,
   });
 
-  // Define a chave da molécula e restaura o viewBox salvo quando pronto
   useEffect(() => {
     const key = getMoleculeKey(smiles, sdf);
     setCurrentMolKey(key);
 
     if (ready && svgElRef.current) {
       const saved = getZoom2D(key);
+
       if (saved) {
         writeViewBox(svgElRef.current, saved);
         vbRef.current = saved;
+      } else if (contentBoundsRef.current && svgHostRef.current) {
+        const containerRect = svgHostRef.current.getBoundingClientRect();
+        const newViewBox = centerViewBox(
+          svgElRef.current,
+          contentBoundsRef.current,
+          containerRect.width,
+          containerRect.height
+        );
+
+        vbRef.current = newViewBox;
+        vbInitialRef.current = newViewBox;
       }
     }
-  }, [ready, smiles, sdf, setCurrentMolKey, getZoom2D]);
+  }, [ready, smiles, sdf, getZoom2D, setCurrentMolKey]);
 
   const t = useTranslations("visualization.controls");
 
