@@ -38,14 +38,16 @@ export function useViewer2DRenderer({
     let disposed = false;
     (async () => {
       try {
+        console.log("🔄 Iniciando carregamento do OpenChemLib...");
         const mod: OpenChemLibModule = await import("openchemlib");
         const OCL: OpenChemLibModule =
           (mod as unknown as { default?: OpenChemLibModule }).default ?? mod;
         if (disposed) return;
         oclRef.current = OCL;
+        console.log("✅ OpenChemLib carregado com sucesso:", { hasOCL: !!OCL });
         setReady(true);
       } catch (error) {
-        console.error("Erro ao carregar OpenChemLib:", error);
+        console.error("❌ Erro ao carregar OpenChemLib:", { error, userAgent: navigator.userAgent, isProduction: process.env.NODE_ENV === 'production' });
       }
     })();
     return () => {
@@ -67,8 +69,9 @@ export function useViewer2DRenderer({
         if (sdf) {
           try {
             mol = OCL.Molecule.fromMolfile(sdf);
+            console.log("✅ SDF processado com sucesso para:", { sdf: sdf.substring(0, 50) + '...' });
           } catch (error) {
-            console.warn("Erro ao processar SDF:", error);
+            console.error("❌ Erro ao processar SDF:", { error, sdf: sdf.substring(0, 100) });
           }
         }
         
@@ -76,13 +79,15 @@ export function useViewer2DRenderer({
         if (!mol && smiles) {
           try {
             mol = OCL.Molecule.fromSmiles(smiles);
+            console.log("✅ SMILES processado com sucesso:", { smiles });
           } catch (error) {
-            console.warn("Erro ao processar SMILES:", error);
+            console.error("❌ Erro ao processar SMILES:", { error, smiles });
           }
         }
 
         // Se não conseguiu carregar nenhuma molécula, limpa o host
         if (!mol) {
+          console.error("❌ Falha ao carregar molécula:", { sdf: sdf?.substring(0, 50), smiles });
           host.innerHTML = "";
           svgElRef.current = null;
           vbRef.current = null;
@@ -110,11 +115,18 @@ export function useViewer2DRenderer({
         const h = Math.max(MIN_CANVAS_HEIGHT, Math.floor(rect.height || DEFAULT_CANVAS_HEIGHT));
 
         // Gera SVG
-        const rawSvg = (
-          mol as unknown as {
-            toSVG: (w: number, h: number, opts?: unknown) => string;
-          }
-        ).toSVG(w, h, { autoCrop: true, margin: SVG_MARGIN });
+        let rawSvg: string;
+        try {
+          rawSvg = (
+            mol as unknown as {
+              toSVG: (w: number, h: number, opts?: unknown) => string;
+            }
+          ).toSVG(w, h, { autoCrop: true, margin: SVG_MARGIN });
+          console.log("✅ SVG gerado com sucesso:", { width: w, height: h, svgLength: rawSvg.length });
+        } catch (error) {
+          console.error("❌ Erro ao gerar SVG:", { error, width: w, height: h, smiles, sdf: sdf?.substring(0, 50) });
+          throw error;
+        }
 
         // Remove os rótulos CIP (R/S) e nomes de compostos do SVG
         const svgWithoutCIP = removeCIPLabelsAndNames(rawSvg);
