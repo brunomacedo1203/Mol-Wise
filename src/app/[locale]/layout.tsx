@@ -81,6 +81,12 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
 
+        {/* 3Dmol.js Library */}
+        <Script
+          src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.4/3Dmol-min.js"
+          strategy="beforeInteractive"
+        />
+
         {/* Google Analytics */}
         {GA_TRACKING_ID && (
           <>
