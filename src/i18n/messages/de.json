@@ -1,4 +1,15 @@
 {
+  "languages": {
+    "pt": "Portugiesisch",
+    "en": "Englisch",
+    "fr": "Französisch",
+    "de": "Deutsch",
+    "es": "Spanisch",
+    "ar": "Arabisch",
+    "hi": "Hindi",
+    "ru": "Russisch",
+    "zh": "Chinesisch"
+  },
   "molarMass": {
     "title": "Molmassenrechner",
     "subtitle": "Berechne die Molmasse chemischer Verbindungen"

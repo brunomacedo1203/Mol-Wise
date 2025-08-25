@@ -1,4 +1,15 @@
 {
+  "languages": {
+    "pt": "Portugués",
+    "en": "Inglés",
+    "fr": "Francés",
+    "de": "Alemán",
+    "es": "Español",
+    "ar": "Árabe",
+    "hi": "Hindi",
+    "ru": "Ruso",
+    "zh": "Chino"
+  },
   "molarMass": {
     "title": "Calculadora de masa molar",
     "subtitle": "Calcula la masa molar de compuestos químicos"

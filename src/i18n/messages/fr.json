@@ -1,4 +1,15 @@
 {
+  "languages": {
+    "pt": "Portugais",
+    "en": "Anglais",
+    "fr": "Français",
+    "de": "Allemand",
+    "es": "Espagnol",
+    "ar": "Arabe",
+    "hi": "Hindi",
+    "ru": "Russe",
+    "zh": "Chinois"
+  },
   "molarMass": {
     "title": "Calculatrice de masse molaire",
     "subtitle": "Calculez la masse molaire des composés chimiques"

@@ -8,19 +8,19 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-
+import { useTranslations } from "next-intl"; //
 import { cn } from "@/lib/utils";
 
 const LOCALES = [
-  { code: "pt", label: "Português", flag: "/flags/br.png" },
-  { code: "en", label: "English", flag: "/flags/us.png" },
-  { code: "fr", label: "Français", flag: "/flags/fr.png" },
-  { code: "de", label: "Deutsch", flag: "/flags/de.png" },
-  { code: "es", label: "Español", flag: "/flags/es.png" },
-  { code: "ar", label: "العربية", flag: "/flags/sa.png" },
-  { code: "hi", label: "हिन्दी", flag: "/flags/in.png" },
-  { code: "ru", label: "Русский", flag: "/flags/ru.png" },
-  { code: "zh", label: "中文", flag: "/flags/cn.png" },
+  { code: "pt", flag: "/flags/br.png" },
+  { code: "en", flag: "/flags/us.png" },
+  { code: "fr", flag: "/flags/fr.png" },
+  { code: "de", flag: "/flags/de.png" },
+  { code: "es", flag: "/flags/es.png" },
+  { code: "ar", flag: "/flags/sa.png" },
+  { code: "hi", flag: "/flags/in.png" },
+  { code: "ru", flag: "/flags/ru.png" },
+  { code: "zh", flag: "/flags/cn.png" },
 ] as const;
 
 interface LanguageSwitcherProps {
@@ -28,6 +28,7 @@ interface LanguageSwitcherProps {
 }
 
 export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
+  const t = useTranslations("languages"); // 👈 Usando namespace "languages"
   const params = useParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -49,29 +50,29 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
             <div className="relative w-5 h-[15px]">
               <Image
                 src={current.flag}
-                alt={`Bandeira de ${current.label}`}
+                alt={`Bandeira de ${t(current.code)}`}
                 fill
                 className="rounded-sm object-contain shadow-sm"
                 sizes="20px"
                 priority
               />
             </div>
-            <span className="leading-none">{current.label}</span>
+            <span className="leading-none">{t(current.code)}</span>
           </div>
         </SelectTrigger>
 
         <SelectContent align="end">
-          {LOCALES.map(({ code, label, flag }) => (
+          {LOCALES.map(({ code, flag }) => (
             <SelectItem key={code} value={code}>
               <span className="flex items-center gap-2">
                 <Image
                   src={flag}
-                  alt={`Bandeira de ${label}`}
+                  alt={`Bandeira de ${t(code)}`}
                   width={20}
                   height={15}
                   className="rounded-sm shadow-sm"
                 />
-                <span>{label}</span>
+                <span>{t(code)}</span>
               </span>
             </SelectItem>
           ))}
