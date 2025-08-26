@@ -2,7 +2,6 @@
 
 import Page from "@/shared/components/layout/Page";
 import { VisualizationPageContent } from "@/features/visualization/components/VisualizationPageContent";
-
 import { useEffect } from "react";
 import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import { useTranslations } from "next-intl";

@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 export default function PeriodicTablePage() {
   const t = useTranslations("periodicTable");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+
   useEffect(() => {
     setSubtitle(t("subtitle"));
     return () => setSubtitle("");

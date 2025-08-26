@@ -9,6 +9,7 @@ export default function Home() {
   const t = useTranslations("home");
   const commonT = useTranslations("common");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+
   useEffect(() => {
     setSubtitle(commonT("chooseTool"));
     return () => setSubtitle("");

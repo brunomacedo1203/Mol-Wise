@@ -1,4 +1,5 @@
 "use client";
+
 import { CalculatorPageContent } from "@/features/calculators/components/common/CalculatorPageContent";
 import { useEffect } from "react";
 import { useSubtitleStore } from "@/shared/store/subtitleStore";
@@ -8,6 +9,7 @@ import { useTranslations } from "next-intl";
 export default function MolarMassCalculatorPage() {
   const t = useTranslations("molarMass");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+
   useEffect(() => {
     setSubtitle(t("subtitle"));
     return () => setSubtitle("");

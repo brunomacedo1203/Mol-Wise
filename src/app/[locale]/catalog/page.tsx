@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 export default function CatalogPage() {
   const t = useTranslations("catalog");
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+
   useEffect(() => {
     setSubtitle(t("subtitle"));
     return () => setSubtitle("");
