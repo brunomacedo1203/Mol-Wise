@@ -1,16 +1,21 @@
-// src/lib/seo.ts
-
 type MetadataParams = {
   locale: string;
   path?: string;
-  title?: string;
-  description?: string;
+  title?: string; 
+  description?: string; 
 };
 
-const BASE_URL = "https://molclass.com";
-const DEFAULT_TITLE = "Mol Class";
+export const BASE_URL = "https://molclass.com";
+export const SITE_NAME = "Mol Class";
+
+const DEFAULT_TITLE = SITE_NAME;
 const DEFAULT_DESCRIPTION =
   "Este aplicativo foi projetado para ajudar estudantes e professores com cálculos químicos, visualização de dados e organização de conteúdo.";
+
+function normalizePath(p?: string): string {
+  if (!p) return "";
+  return p.startsWith("/") ? p : `/${p}`;
+}
 
 export function buildPageMetadata({
   locale,
@@ -18,30 +23,36 @@ export function buildPageMetadata({
   title = DEFAULT_TITLE,
   description = DEFAULT_DESCRIPTION,
 }: MetadataParams) {
-  const url = `${BASE_URL}/${locale}${path}`;
+  const normPath = normalizePath(path);
+  const url = `${BASE_URL}/${locale}${normPath}`;
+
+  // Força padrão "<page> | Mol Class" (home fica só "Mol Class")
+  const pageTitle =
+    title && title !== DEFAULT_TITLE ? `${title} | ${SITE_NAME}` : SITE_NAME;
 
   return {
-    title,
+    metadataBase: new URL(BASE_URL),
+    title: pageTitle,
     description,
     alternates: {
       canonical: url,
       languages: {
-        "pt-BR": `${BASE_URL}/pt${path}`,
-        "en-US": `${BASE_URL}/en${path}`,
-        "fr-FR": `${BASE_URL}/fr${path}`,
-        "es-ES": `${BASE_URL}/es${path}`,
-        "de-DE": `${BASE_URL}/de${path}`,
-        "zh-CN": `${BASE_URL}/zh${path}`,
-        "hi-IN": `${BASE_URL}/hi${path}`,
-        "ar-SA": `${BASE_URL}/ar${path}`,
-        "ru-RU": `${BASE_URL}/ru${path}`,
+        "pt-BR": `${BASE_URL}/pt${normPath}`,
+        "en-US": `${BASE_URL}/en${normPath}`,
+        "fr-FR": `${BASE_URL}/fr${normPath}`,
+        "es-ES": `${BASE_URL}/es${normPath}`,
+        "de-DE": `${BASE_URL}/de${normPath}`,
+        "zh-CN": `${BASE_URL}/zh${normPath}`,
+        "hi-IN": `${BASE_URL}/hi${normPath}`,
+        "ar-SA": `${BASE_URL}/ar${normPath}`,
+        "ru-RU": `${BASE_URL}/ru${normPath}`,
       },
     },
     openGraph: {
-      title,
+      title: pageTitle,
       description,
       url,
-      siteName: "Mol Class",
+      siteName: SITE_NAME,
       locale,
       type: "website",
       images: [
@@ -49,13 +60,13 @@ export function buildPageMetadata({
           url: `${BASE_URL}/og-image.png`,
           width: 1200,
           height: 630,
-          alt: "Mol Class",
+          alt: SITE_NAME,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: pageTitle,
       description,
       images: [`${BASE_URL}/og-image.png`],
     },
@@ -63,5 +74,5 @@ export function buildPageMetadata({
       index: true,
       follow: true,
     },
-  };
+  } as const;
 }

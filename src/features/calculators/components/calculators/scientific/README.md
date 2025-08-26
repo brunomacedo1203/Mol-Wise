@@ -1,4 +1,4 @@
-# Calculadora Científica - MolClass
+# Calculadora Científica - Mol Class
 
 ## 📋 Visão Geral
 

@@ -1,4 +1,4 @@
-# Internacionalização (i18n) - MolClass
+# Internacionalização (i18n) - Mol Class
 
 Este diretório contém toda a implementação de internacionalização do projeto Mol class, permitindo suporte a múltiplos idiomas.
 

@@ -1,5 +1,4 @@
-// ✅ Arquivo: src/app/[locale]/layout.tsx
-
+// src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -10,8 +9,20 @@ import "@/app/globals.css";
 import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
 import { GA_TRACKING_ID } from "@/lib/gtag";
+import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// ======================
+// ✅ Metadata default (herdado por todas as páginas do locale)
+// ======================
+export const metadata: Metadata = {
+  metadataBase: new URL("https://molclass.com"),
+  title: { default: "Mol Class", template: "%s | Mol Class" },
+  description:
+    "Aplicativo para cálculos químicos, visualização de dados e aprendizado interativo.",
+  openGraph: { siteName: "Mol Class" },
+};
 
 // Script para aplicar tema antes da hidratação
 const themeScript = `
@@ -63,7 +74,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();

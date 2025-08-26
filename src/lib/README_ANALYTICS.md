@@ -1,14 +1,14 @@
-# 📊 Google Analytics (GA4) – Guia de Uso no MolClass
+# 📊 Google Analytics (GA4) – Guia de Uso no Mol Class
 
 ## 🔧 Arquivos de Configuração do Google Analytics
 
 **Os arquivos relacionados à configuração do GA são exatamente:**
 
-- `e:\Projetos\molwise\src\shared\hooks\useEventTrackers.ts`
-- `e:\Projetos\molwise\src\types\gtag.d.ts`
-- `e:\Projetos\molwise\src\lib\gtag.ts`
-- `e:\Projetos\molwise\src\shared\hooks\useGoogleAnalytics.ts`
-- `e:\Projetos\molwise\.env.local`
+- `e:\Projetos\Mol Class\src\shared\hooks\useEventTrackers.ts`
+- `e:\Projetos\Mol Class\src\types\gtag.d.ts`
+- `e:\Projetos\Mol Class\src\lib\gtag.ts`
+- `e:\Projetos\Mol Class\src\shared\hooks\useGoogleAnalytics.ts`
+- `e:\Projetos\Mol Class\.env.local`
 
 ---
 
@@ -151,11 +151,11 @@ exception("Erro no cálculo", false);
 
 ### **🔄 Sequência de Arquivos (Ordem de Implementação):**
 
-1. **`e:\Projetos\molwise\src\types\gtag.d.ts`** - Adicionar tipos específicos (opcional)
-2. **`e:\Projetos\molwise\src\features\[feature]\events\[eventName]Events.ts`** - Criar função de tracking específica
-3. **`e:\Projetos\molwise\src\shared\hooks\useEventTrackers.ts`** - Adicionar hook centralizado (alternativa)
-4. **`e:\Projetos\molwise\src\features\[feature]\components\[Component].tsx`** - Implementar no componente
-5. **`e:\Projetos\molwise\src\components\debug\GADebugger.tsx`** - Testar o evento
+1. **`e:\Projetos\Mol Class\src\types\gtag.d.ts`** - Adicionar tipos específicos (opcional)
+2. **`e:\Projetos\Mol Class\src\features\[feature]\events\[eventName]Events.ts`** - Criar função de tracking específica
+3. **`e:\Projetos\Mol Class\src\shared\hooks\useEventTrackers.ts`** - Adicionar hook centralizado (alternativa)
+4. **`e:\Projetos\Mol Class\src\features\[feature]\components\[Component].tsx`** - Implementar no componente
+5. **`e:\Projetos\Mol Class\src\components\debug\GADebugger.tsx`** - Testar o evento
 
 ### **📁 Exemplo Real do `search_element`:**
 
