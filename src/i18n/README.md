@@ -315,7 +315,9 @@ alternateRefs: [
 - [ ] Criar arquivo `[idioma].json` com todas as traduções
 - [ ] Atualizar `LanguageSwitcher.tsx` (se necessário)
 - [ ] Configurar `generateStaticParams()` (se necessário)
-- [ ] Atualizar metadados SEO
+- [ ] **⚠️ OBRIGATÓRIO: Atualizar `src/lib/seo.ts` com novo idioma**
+- [ ] **⚠️ OBRIGATÓRIO: Atualizar `next-sitemap.config.js` com novo idioma**
+- [ ] Atualizar metadados SEO no layout
 - [ ] Testar navegação entre idiomas
 - [ ] Verificar elementos químicos traduzidos
 - [ ] Testar calculadoras em novo idioma
