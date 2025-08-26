@@ -24,8 +24,9 @@ export const containerStyles = {
   header: {
     container: "mb-3 flex items-start justify-between w-full",
     titleContainer: "flex-1 pl-6",
-    title: "py-2 text-4xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full",
-    subtitle: "text-base text-zinc-600 dark:text-white/60 text-center block w-full",
+    title: "py-2 text-3xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full",
+    subtitle: "text-[15px] text-zinc-600 dark:text-white/60 text-center block w-full",
+
     closeButton: `
       ml-2 mt-1 p-2 rounded-full text-red-600
       hover:bg-red-500 hover:text-white dark:hover:bg-red-600
@@ -58,7 +59,7 @@ export const containerStyles = {
   rnd: {
     minWidth: 500,
     maxWidth: 800,
-    defaultWidth: 500,
+    defaultWidth: 525,
     defaultHeight: 400,
     enable: {
       top: true,
