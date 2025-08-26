@@ -27,7 +27,14 @@ export function buildPageMetadata({
       canonical: url,
       languages: {
         "pt-BR": `${BASE_URL}/pt${path}`,
-        en: `${BASE_URL}/en${path}`,
+        "en-US": `${BASE_URL}/en${path}`,
+        "fr-FR": `${BASE_URL}/fr${path}`,
+        "es-ES": `${BASE_URL}/es${path}`,
+        "de-DE": `${BASE_URL}/de${path}`,
+        "zh-CN": `${BASE_URL}/zh${path}`,
+        "hi-IN": `${BASE_URL}/hi${path}`,
+        "ar-SA": `${BASE_URL}/ar${path}`,
+        "ru-RU": `${BASE_URL}/ru${path}`,
       },
     },
     openGraph: {

@@ -248,6 +248,59 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 ```
 
+#### 6. ⚠️ OBRIGATÓRIO: Atualizar Configurações de Metadados
+
+**IMPORTANTE**: Sempre que um novo idioma for implementado, você DEVE atualizar os seguintes arquivos:
+
+##### 6.1. Arquivo `src/lib/seo.ts`
+
+Adicione o novo idioma na seção `alternates.languages`:
+
+```typescript
+alternates: {
+  canonical: url,
+  languages: {
+    "pt-BR": `${BASE_URL}/pt${path}`,
+    "en-US": `${BASE_URL}/en${path}`,
+    "fr-FR": `${BASE_URL}/fr${path}`, // Adicionar novo idioma
+    "es-ES": `${BASE_URL}/es${path}`, // Adicionar novo idioma
+    // ... outros idiomas
+  },
+},
+```
+
+##### 6.2. Arquivo `next-sitemap.config.js`
+
+Adicione o novo idioma na seção `alternateRefs`:
+
+```javascript
+alternateRefs: [
+  {
+    href: "https://molclass.com/pt",
+    hreflang: "pt-BR",
+  },
+  {
+    href: "https://molclass.com/en",
+    hreflang: "en-US",
+  },
+  {
+    href: "https://molclass.com/fr", // Adicionar novo idioma
+    hreflang: "fr-FR",
+  },
+  {
+    href: "https://molclass.com/es", // Adicionar novo idioma
+    hreflang: "es-ES",
+  },
+  // ... outros idiomas
+],
+```
+
+**Por que isso é importante?**
+- Garante SEO adequado para todos os idiomas
+- Permite que motores de busca identifiquem versões alternativas
+- Melhora a indexação internacional do site
+- Evita problemas de conteúdo duplicado
+
 ### 🧪 Testando o Novo Idioma
 
 1. **Inicie o servidor**: `npm run dev`
