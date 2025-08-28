@@ -74,7 +74,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const { locale } = params;
+  const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();

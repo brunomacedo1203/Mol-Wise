@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation"; // Removido useRouter
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useTranslations } from "next-intl"; //
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 const LOCALES = [
@@ -28,16 +28,35 @@ interface LanguageSwitcherProps {
 }
 
 export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
-  const t = useTranslations("languages"); // 👈 Usando namespace "languages"
+  const t = useTranslations("languages");
   const params = useParams();
-  const router = useRouter();
   const pathname = usePathname();
   const currentLocale = params.locale as string;
 
   const handleChange = (nextLocale: string) => {
     if (!nextLocale || nextLocale === currentLocale) return;
+
+    // Limpa o cookie atual do next-intl
+    document.cookie =
+      "NEXT_LOCALE=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+
+    // Define o novo cookie
+    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`; // 1 ano
+
+    // Se não for português, salva também um cookie personalizado para controle extra
+    if (nextLocale !== "pt") {
+      document.cookie = `user-locale=${nextLocale}; path=/; max-age=31536000`;
+    } else {
+      // Remove o cookie personalizado se voltar para português
+      document.cookie =
+        "user-locale=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    }
+
+    // Constrói o novo caminho
     const newPath = pathname.replace(`/${currentLocale}`, `/${nextLocale}`);
-    router.replace(newPath);
+
+    // Usa window.location.href ao invés de router.replace para garantir que os cookies sejam enviados
+    window.location.href = newPath;
   };
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];
