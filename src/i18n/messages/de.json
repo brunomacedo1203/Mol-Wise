@@ -408,7 +408,7 @@
     },
     "compoundProperties": {
       "name": "Name",
-      "synonym": "Trivialname",
+      "commonName": "Trivialname",
       "formula": "Formel",
       "casNumber": "CAS-Nummer",
       "molarMass": "Molmasse",
@@ -570,9 +570,10 @@
       "solubility": "Löslichkeit"
     },
     "tableHeaderDescriptions": {
-      "no": "",
+    "no": "",
+    "id": "Eindeutige Identifikationsnummer der Verbindung",
       "name": "Name der chemischen Verbindung",
-      "synonym": "Trivial- oder Alternativname der Verbindung",
+      "commonName": "Trivial- oder Alternativname der Verbindung",
       "formula": "Chemische Formel der Verbindung",
       "casNumber": "CAS-Nummer (Chemical Abstracts Service)",
       "molarMass": "Molmasse in Gramm pro Mol (g/mol)",

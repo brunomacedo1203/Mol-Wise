@@ -1,23 +1,24 @@
-"use client";
-
-import { CalculatorPageContent } from "@/features/calculators/components/common/CalculatorPageContent";
-import { useEffect } from "react";
-import { useSubtitleStore } from "@/shared/store/subtitleStore";
-import Page from "@/shared/components/layout/Page";
-import { useTranslations } from "next-intl";
+import { buildPageMetadata } from "@/lib/seo";
+import { getTranslations } from "next-intl/server";
+import MolarMassCalculatorClient from "./MolarMassCalculatorClient";
 
 export default function MolarMassCalculatorPage() {
-  const t = useTranslations("molarMass");
-  const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+  return <MolarMassCalculatorClient />;
+}
 
-  useEffect(() => {
-    setSubtitle(t("subtitle"));
-    return () => setSubtitle("");
-  }, [setSubtitle, t]);
+// ✅ Geração de metadados dinâmicos
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "molarMass" });
 
-  return (
-    <Page title={t("title")}>
-      <CalculatorPageContent />
-    </Page>
-  );
+  return buildPageMetadata({
+    locale,
+    path: "molarMassCalculator",
+    title: t("title"),
+    description: t("description"),
+  });
 }

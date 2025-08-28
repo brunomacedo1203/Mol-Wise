@@ -1,23 +1,24 @@
-"use client";
-
-import PeriodicTableCards from "@/features/periodic-table/components/PeriodicTableCards";
-import { useEffect } from "react";
-import { useSubtitleStore } from "@/shared/store/subtitleStore";
-import Page from "@/shared/components/layout/Page";
-import { useTranslations } from "next-intl";
+import { buildPageMetadata } from "@/lib/seo";
+import { getTranslations } from "next-intl/server";
+import PeriodicTableClient from "./PeriodicTableClient";
 
 export default function PeriodicTablePage() {
-  const t = useTranslations("periodicTable");
-  const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+  return <PeriodicTableClient />;
+}
 
-  useEffect(() => {
-    setSubtitle(t("subtitle"));
-    return () => setSubtitle("");
-  }, [setSubtitle, t]);
+// ✅ Geração de metadados dinâmicos
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "periodicTable" });
 
-  return (
-    <Page title={t("title")}>
-      <PeriodicTableCards />
-    </Page>
-  );
+  return buildPageMetadata({
+    locale,
+    path: "periodicTable",
+    title: t("title"),
+    description: t("description"),
+  });
 }

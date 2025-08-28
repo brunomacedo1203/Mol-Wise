@@ -1,25 +1,24 @@
-"use client";
-
-import { CompoundTable } from "@/features/catalog/components/common/CompoundTable";
-import { useEffect } from "react";
-import { useSubtitleStore } from "@/shared/store/subtitleStore";
-import Page from "@/shared/components/layout/Page";
-import { useTranslations } from "next-intl";
+import { buildPageMetadata } from "@/lib/seo";
+import { getTranslations } from "next-intl/server";
+import CatalogClient from "./CatalogClient";
 
 export default function CatalogPage() {
-  const t = useTranslations("catalog");
-  const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
+  return <CatalogClient />;
+}
 
-  useEffect(() => {
-    setSubtitle(t("subtitle"));
-    return () => setSubtitle("");
-  }, [setSubtitle, t]);
+// ✅ Geração de metadados dinâmicos
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "catalog" });
 
-  return (
-    <Page title={t("title")}>
-      <div className="w-full overflow-x-auto flex-1">
-        <CompoundTable data={[]} />
-      </div>
-    </Page>
-  );
+  return buildPageMetadata({
+    locale,
+    path: "catalog",
+    title: t("title"),
+    description: t("description"),
+  });
 }

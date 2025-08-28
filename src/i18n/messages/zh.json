@@ -408,7 +408,7 @@
     },
     "compoundProperties": {
       "name": "名称",
-      "synonym": "常用名",
+      "commonName": "常用名",
       "formula": "化学式",
       "casNumber": "CAS 号",
       "molarMass": "摩尔质量",
@@ -570,9 +570,10 @@
       "solubility": "溶解度"
     },
     "tableHeaderDescriptions": {
-      "no": "",
+    "no": "",
+    "id": "化合物的唯一标识号",
       "name": "化合物名称",
-      "synonym": "化合物的常用名或别名",
+      "commonName": "化合物的常用名或别名",
       "formula": "化合物的化学式",
       "casNumber": "CAS 注册号 (化学文摘社)",
       "molarMass": "以克每摩尔表示的摩尔质量 (g/mol)",

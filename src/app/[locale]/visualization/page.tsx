@@ -1,23 +1,24 @@
-"use client";
-
-import Page from "@/shared/components/layout/Page";
-import { VisualizationPageContent } from "@/features/visualization/components/VisualizationPageContent";
-import { useEffect } from "react";
-import { useSubtitleStore } from "@/shared/store/subtitleStore";
-import { useTranslations } from "next-intl";
+import { buildPageMetadata } from "@/lib/seo";
+import { getTranslations } from "next-intl/server";
+import VisualizationClient from "./VisualizationClient";
 
 export default function VisualizationPage() {
-  const t = useTranslations("visualization");
-  const setSubtitle = useSubtitleStore((s) => s.setSubtitle);
+  return <VisualizationClient />;
+}
 
-  useEffect(() => {
-    setSubtitle(t("subtitle"));
-    return () => setSubtitle("");
-  }, [setSubtitle, t]);
+// ✅ Geração de metadados dinâmicos
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "visualization" });
 
-  return (
-    <Page title={t("title")}>
-      <VisualizationPageContent />
-    </Page>
-  );
+  return buildPageMetadata({
+    locale,
+    path: "visualization",
+    title: t("title"),
+    description: t("description"),
+  });
 }

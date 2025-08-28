@@ -408,7 +408,7 @@
     },
     "compoundProperties": {
       "name": "Nombre",
-      "synonym": "Nombre común",
+      "commonName": "Nombre común",
       "formula": "Fórmula",
       "casNumber": "Número CAS",
       "molarMass": "Masa molar",
@@ -570,9 +570,10 @@
       "solubility": "Solubilidad"
     },
     "tableHeaderDescriptions": {
-      "no": "",
+    "no": "",
+    "id": "Número identificador único del compuesto",
       "name": "Nombre del compuesto químico",
-      "synonym": "Nombre común o alternativo del compuesto",
+      "commonName": "Nombre común o alternativo del compuesto",
       "formula": "Fórmula química del compuesto",
       "casNumber": "Número CAS (Chemical Abstracts Service)",
       "molarMass": "Masa molar en gramos por mol (g/mol)",
