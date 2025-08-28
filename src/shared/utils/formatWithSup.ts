@@ -18,12 +18,7 @@ export function formatWithSup(config: string): string {
     const subnivelRegex = /\d+[spdf]\d{1,2}(?=\d+[spdf]|$)/g;
     const subniveis = rest.match(subnivelRegex) || [];
   
-    // LOGS PARA DEBUG
-    console.log('CONFIG ENTRADA:', config);
-    console.log('RESTANTE:', rest);
-    console.log('SUBNÍVEIS ENCONTRADOS:', subniveis);
-  
-    const formattedSubniveis = subniveis.map((sub) => {
+        const formattedSubniveis = subniveis.map((sub) => {
       const match = sub.match(/(\d+)([spdf])(\d{1,2})/);
       if (match) {
         const [, camada, subnivel, eletrons] = match;

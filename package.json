@@ -2,15 +2,15 @@
   "name": "molclass",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "postbuild": "next-sitemap",
-    "start": "next start",
-    "lint": "next lint --fix",
-    "prebuild": "npm run lint",
-    "sitemap": "next-sitemap"
-  },
+ "scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "postbuild": "node generate-sitemap.cjs",
+  "start": "next start",
+  "lint": "next lint --fix",
+  "prebuild": "npm run lint",
+  "sitemap": "next-sitemap"
+},
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.2",

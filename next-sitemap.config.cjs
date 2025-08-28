@@ -6,6 +6,12 @@ module.exports = {
   priority: 0.7,
   autoLastmod: true,
   exclude: ["/api/*", "/admin*"],
+
+  i18n: {
+    locales: ["pt", "en", "fr", "es", "de", "zh", "hi", "ar", "ru"],
+    defaultLocale: "pt",
+  },
+
   alternateRefs: [
     {
       href: "https://molclass.com/pt",
@@ -44,6 +50,7 @@ module.exports = {
       hreflang: "ru-RU",
     },
   ],
+
   robotsTxtOptions: {
     policies: [{ userAgent: "*", allow: "/" }],
   },

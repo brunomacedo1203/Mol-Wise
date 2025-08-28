@@ -12,7 +12,8 @@
   },
   "molarMass": {
     "title": "Calculadora de Massa Molar",
-    "subtitle": "Calcule a massa molar de compostos químicos"
+    "subtitle": "Calcule a massa molar de compostos químicos",
+    "description": "Ferramenta para calcular a massa molar de compostos químicos inserindo sua fórmula molecular"
   },
   "common": {
     "errors": {

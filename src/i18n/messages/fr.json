@@ -12,7 +12,8 @@
   },
   "molarMass": {
     "title": "Calculatrice de masse molaire",
-    "subtitle": "Calculez la masse molaire des composés chimiques"
+    "subtitle": "Calculez la masse molaire des composés chimiques",
+    "description": "Outil pour calculer la masse molaire des composés chimiques en saisissant leur formule moléculaire"
   },
   "common": {
     "errors": {

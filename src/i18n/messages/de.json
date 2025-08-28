@@ -12,7 +12,8 @@
   },
   "molarMass": {
     "title": "Molmassenrechner",
-    "subtitle": "Berechne die Molmasse chemischer Verbindungen"
+    "subtitle": "Berechne die Molmasse chemischer Verbindungen",
+    "description": "Werkzeug zur Berechnung der Molmasse chemischer Verbindungen durch Eingabe ihrer Molekülformel"
   },
   "common": {
     "errors": {
