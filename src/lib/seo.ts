@@ -1,78 +1,50 @@
-type MetadataParams = {
+// ✅ src/lib/seo.ts
+import type { Metadata } from "next";
+
+interface BuildPageMetadataProps {
   locale: string;
-  path?: string;
-  title?: string; 
-  description?: string; 
-};
-
-export const BASE_URL = "https://molclass.com";
-export const SITE_NAME = "Mol Class";
-
-const DEFAULT_TITLE = SITE_NAME;
-const DEFAULT_DESCRIPTION =
-  "Este aplicativo foi projetado para ajudar estudantes e professores com cálculos químicos, visualização de dados e organização de conteúdo.";
-
-function normalizePath(p?: string): string {
-  if (!p) return "";
-  return p.startsWith("/") ? p : `/${p}`;
+  path: string;
+  title: string;
+  description: string;
 }
 
 export function buildPageMetadata({
   locale,
-  path = "",
-  title = DEFAULT_TITLE,
-  description = DEFAULT_DESCRIPTION,
-}: MetadataParams) {
-  const normPath = normalizePath(path);
-  const url = `${BASE_URL}/${locale}${normPath}`;
-
-  // Força padrão "<page> | Mol Class" (home fica só "Mol Class")
-  const pageTitle =
-    title && title !== DEFAULT_TITLE ? `${title} | ${SITE_NAME}` : SITE_NAME;
+  path,
+  title,
+  description,
+}: BuildPageMetadataProps): Metadata {
+  const baseUrl = "https://molclass.com";
 
   return {
-    metadataBase: new URL(BASE_URL),
-    title: pageTitle,
+    title,
     description,
-    alternates: {
-      canonical: url,
-      languages: {
-        "pt-BR": `${BASE_URL}/pt${normPath}`,
-        "en-US": `${BASE_URL}/en${normPath}`,
-        "fr-FR": `${BASE_URL}/fr${normPath}`,
-        "es-ES": `${BASE_URL}/es${normPath}`,
-        "de-DE": `${BASE_URL}/de${normPath}`,
-        "zh-CN": `${BASE_URL}/zh${normPath}`,
-        "hi-IN": `${BASE_URL}/hi${normPath}`,
-        "ar-SA": `${BASE_URL}/ar${normPath}`,
-        "ru-RU": `${BASE_URL}/ru${normPath}`,
-      },
-    },
     openGraph: {
-      title: pageTitle,
+      title,
       description,
-      url,
-      siteName: SITE_NAME,
+      url: `${baseUrl}/${locale}${path ? `/${path}` : ""}`,
+      siteName: "Mol Class",
       locale,
       type: "website",
-      images: [
-        {
-          url: `${BASE_URL}/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: SITE_NAME,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: pageTitle,
+      title,
       description,
-      images: [`${BASE_URL}/og-image.png`],
     },
-    robots: {
-      index: true,
-      follow: true,
+    alternates: {
+      canonical: `${baseUrl}/${locale}${path ? `/${path}` : ""}`,
+      languages: {
+        "pt-BR": `${baseUrl}/pt`,
+        "en-US": `${baseUrl}/en`,
+        "fr-FR": `${baseUrl}/fr`,
+        "es-ES": `${baseUrl}/es`,
+        "de-DE": `${baseUrl}/de`,
+        "zh-CN": `${baseUrl}/zh`,
+        "hi-IN": `${baseUrl}/hi`,
+        "ar-SA": `${baseUrl}/ar`,
+        "ru-RU": `${baseUrl}/ru`,
+      },
     },
-  } as const;
+  };
 }

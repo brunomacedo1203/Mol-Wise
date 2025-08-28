@@ -1,4 +1,4 @@
-// src/app/[locale]/layout.tsx
+// ✅ src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -9,22 +9,10 @@ import "@/app/globals.css";
 import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
 import { GA_TRACKING_ID } from "@/lib/gtag";
-import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// ======================
-// ✅ Metadata default (herdado por todas as páginas do locale)
-// ======================
-export const metadata: Metadata = {
-  metadataBase: new URL("https://molclass.com"),
-  title: { default: "Mol Class", template: "%s | Mol Class" },
-  description:
-    "Aplicativo para cálculos químicos, visualização de dados e aprendizado interativo.",
-  openGraph: { siteName: "Mol Class" },
-};
-
-// Script para aplicar tema antes da hidratação
+// ✅ Script para aplicar tema antes da hidratação
 const themeScript = `
   (function () {
     try {
@@ -52,6 +40,7 @@ const themeScript = `
   })();
 `;
 
+// ✅ Script Google Analytics
 const googleAnalyticsScript = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -72,7 +61,7 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
@@ -83,22 +72,20 @@ export default async function LocaleLayout({
   await setRequestLocale(locale);
 
   return (
-    <html lang={locale}>
-      <head>
-        {/* Script do tema antes da renderização */}
+    <html lang={locale} suppressHydrationWarning>
+      <body className={inter.className}>
+        {/* ✅ Scripts globais */}
         <Script
           id="theme-script"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
 
-        {/* 3Dmol.js Library */}
         <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.4/3Dmol-min.js"
           strategy="beforeInteractive"
         />
 
-        {/* Google Analytics */}
         {GA_TRACKING_ID && (
           <>
             <Script
@@ -113,8 +100,7 @@ export default async function LocaleLayout({
             />
           </>
         )}
-      </head>
-      <body className={inter.className}>
+
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
             {children}
