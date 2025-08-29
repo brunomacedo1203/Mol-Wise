@@ -19,19 +19,32 @@ const locales = [
   { code: "ru", hreflang: "ru-RU" },
 ];
 
-// 🧭 Rotas principais
-const pages = [
-  "", // homepage
-  "periodic-table",
-  "catalog",
-  "calculators",
-  "visualization",
-  "theory",
-  "exercises",
-  "games",
-];
-
+// 🕓 Data da última modificação
 const today = new Date().toISOString();
+
+// 📁 Caminho das rotas reais (App Router)
+const pagesDir = path.join(__dirname, "src", "app", "[locale]");
+
+// 🧭 Coleta automática de páginas reais com page.tsx
+function getPagesFromAppRouter() {
+  const entries = fs.readdirSync(pagesDir, { withFileTypes: true });
+  const validPages = [];
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      const pagePath = path.join(pagesDir, entry.name, "page.tsx");
+      if (fs.existsSync(pagePath)) {
+        validPages.push(entry.name);
+      }
+    }
+  }
+
+  return ["", ...validPages]; // Inclui a homepage ("")
+}
+
+const pages = getPagesFromAppRouter();
+
+// 📝 Início do arquivo sitemap
 let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -39,6 +52,7 @@ let xml = `<?xml version="1.0" encoding="UTF-8"?>
 >
 `;
 
+// 🔁 Geração das URLs com hreflang alternates
 pages.forEach((page) => {
   locales.forEach((primaryLocale) => {
     const url = `${siteUrl}/${primaryLocale.code}${page ? `/${page}` : ""}`;
@@ -60,8 +74,8 @@ pages.forEach((page) => {
 
 xml += `</urlset>`;
 
-// Caminho do arquivo final
+// 💾 Salva o sitemap na pasta /public
 const sitemapPath = path.join(__dirname, "public", "sitemap.xml");
 fs.writeFileSync(sitemapPath, xml, "utf8");
 
-console.log("✅ sitemap.xml gerado com sucesso em /public/sitemap.xml");
+console.log("✅ sitemap.xml gerado automaticamente a partir de rotas reais.");
