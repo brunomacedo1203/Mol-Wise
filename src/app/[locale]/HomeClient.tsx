@@ -9,7 +9,11 @@ interface HomeClientProps {
   chooseTool: string;
 }
 
-export default function HomeClient({ welcome, subtitle, chooseTool }: HomeClientProps) {
+export default function HomeClient({
+  welcome,
+  subtitle,
+  chooseTool,
+}: HomeClientProps) {
   const setSubtitle = useSubtitleStore((state) => state.setSubtitle);
 
   useEffect(() => {
@@ -20,9 +24,7 @@ export default function HomeClient({ welcome, subtitle, chooseTool }: HomeClient
   return (
     <div className="flex-1 flex justify-center items-center w-full h-full">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-6xl font-bold mb-4 text-blue-700">
-          {welcome}
-        </h1>
+        <h1 className="text-6xl font-bold mb-4 text-blue-700">{welcome}</h1>
         <p className="text-lg text-zinc-700 mb-8 dark:text-zinc-100">
           {subtitle}
         </p>
@@ -30,3 +32,4 @@ export default function HomeClient({ welcome, subtitle, chooseTool }: HomeClient
     </div>
   );
 }
+export const dynamic = "force-static";

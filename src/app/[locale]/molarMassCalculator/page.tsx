@@ -22,3 +22,4 @@ export async function generateMetadata({
     description: t("description"),
   });
 }
+export const dynamic = "force-static";

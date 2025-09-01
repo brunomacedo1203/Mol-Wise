@@ -14,7 +14,7 @@ export default async function Home({
 
   return (
     <Page title={t("title")}>
-      <HomeClient 
+      <HomeClient
         welcome={t("welcome")}
         subtitle={t("subtitle")}
         chooseTool={commonT("chooseTool")}
@@ -39,3 +39,4 @@ export async function generateMetadata({
     description: t("description"),
   });
 }
+export const dynamic = "force-static";

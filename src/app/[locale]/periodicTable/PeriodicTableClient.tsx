@@ -21,3 +21,4 @@ export default function PeriodicTableClient() {
     </Page>
   );
 }
+export const dynamic = "force-static";
