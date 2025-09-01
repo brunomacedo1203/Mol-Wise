@@ -32,4 +32,3 @@ export default function HomeClient({
     </div>
   );
 }
-export const dynamic = "force-static";

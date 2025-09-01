@@ -195,5 +195,28 @@ export function useViewer2DRenderer({
     vbRef,
   ]);
 
+  // Observa mudanças de tema e reaplica estilos
+  useEffect(() => {
+    if (!ready) return;
+
+    const html = document.documentElement;
+    const updateTheme = () => {
+      const svgEl = svgElRef.current;
+      if (!svgEl) return;
+      
+      const mode: "dark" | "light" = html.classList.contains("dark") ? "dark" : "light";
+      applyThemeToSVG(svgEl, mode);
+    };
+
+    // Aplica tema inicial
+    updateTheme();
+
+    // Observa mudanças na classe 'dark' do elemento html
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(html, { attributes: true, attributeFilter: ["class"] });
+    
+    return () => observer.disconnect();
+  }, [ready, svgElRef]);
+
   return { ready };
 }
