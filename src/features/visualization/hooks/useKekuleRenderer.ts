@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import type { KekuleViewerConfig, KekuleViewerState } from '../types/kekuleViewer.types';
+import type { 
+  KekuleViewerConfig, 
+  KekuleViewerState, 
+  KekuleMolecule, 
+  KekuleChemSpaceWidget,
+  EditTool 
+} from '../types/kekuleViewer.types';
 import { KEKULE_LOAD_TIMEOUT } from '../constants/kekuleViewer.constants';
+import type { KekuleLibrary, KekuleWidget, KekuleMolecule as KekuleLibMolecule } from 'kekule';
 
 interface UseKekuleRendererProps {
   containerRef: React.RefObject<HTMLDivElement>;
   smiles: string | null;
   sdf: string | null;
   config: KekuleViewerConfig;
-  onMoleculeChange?: (molecule: any) => void;
+  onMoleculeChange?: (molecule: KekuleMolecule) => void;
   onError?: (error: Error) => void;
 }
 
@@ -29,15 +36,15 @@ export function useKekuleRenderer({
     widget: null,
   });
 
-  const kekuleRef = useRef<any>(null);
-  const widgetRef = useRef<any>(null);
+  const kekuleRef = useRef<KekuleLibrary | null>(null);
+  const widgetRef = useRef<KekuleWidget | null>(null);
   const _retryCountRef = useRef(0);
 
   // Carrega Kekule.js dinamicamente
   const loadKekule = useCallback(async (): Promise<boolean> => {
     try {
       const Kekule = await import('kekule');
-      kekuleRef.current = Kekule.default || Kekule;
+      kekuleRef.current = (Kekule.default || Kekule) as unknown as KekuleLibrary;
       return true;
     } catch (error) {
       console.error('❌ Erro ao carregar Kekule.js:', error);
@@ -45,42 +52,33 @@ export function useKekuleRenderer({
     }
   }, []);
 
-  // Inicializa o widget Kekule
-  const initializeWidget = useCallback(async (): Promise<boolean> => {
+  // Aplica cores dos elementos via CSS
+  const applyElementColors = useCallback((elementColors: Record<string, string>) => {
     const container = containerRef.current;
-    const Kekule = kekuleRef.current;
-    
-    if (!container || !Kekule) return false;
+    if (!container) return;
 
-    try {
-      // Cria o widget
-      const widget = new Kekule.Widget.ChemSpaceWidget(container);
-      widgetRef.current = widget;
-
-      // Configura o widget
-      widget.setRenderMode(Kekule.Style.RenderMode.COMPLETE);
-      widget.setEditMode(Kekule.EditMode.SELECT);
-
-      // Aplica configurações
-      applyConfigToWidget(widget, config);
-
-      setState(prev => ({
-        ...prev,
-        isReady: true,
-        widget,
-        hasError: false,
-        errorMessage: null,
-      }));
-
-      return true;
-    } catch (error) {
-      console.error('❌ Erro ao inicializar widget Kekule:', error);
-      return false;
+    // Remove estilos anteriores
+    const existingStyle = container.querySelector('#kekule-element-colors');
+    if (existingStyle) {
+      existingStyle.remove();
     }
-  }, [containerRef, config]);
+
+    // Cria novo estilo
+    const style = document.createElement('style');
+    style.id = 'kekule-element-colors';
+    
+    const cssRules = Object.entries(elementColors)
+      .map(([element, color]) => 
+        `.kekule-atom[data-element="${element}"] { fill: ${color} !important; }`
+      )
+      .join('\n');
+    
+    style.textContent = cssRules;
+    container.appendChild(style);
+  }, [containerRef]);
 
   // Aplica configurações ao widget
-  const applyConfigToWidget = useCallback((widget: any, config: KekuleViewerConfig) => {
+  const applyConfigToWidget = useCallback((widget: KekuleWidget, config: KekuleViewerConfig) => {
     if (!widget) return;
 
     const Kekule = kekuleRef.current;
@@ -116,7 +114,7 @@ export function useKekuleRenderer({
 
       // Desabilita ferramentas não habilitadas
       ['select', 'draw', 'erase', 'rotate', 'move'].forEach(tool => {
-        if (!config.enabledTools.includes(tool as any)) {
+        if (!config.enabledTools.includes(tool as EditTool)) {
           widget.enableTool(tool, false);
         }
       });
@@ -124,32 +122,41 @@ export function useKekuleRenderer({
     } catch (error) {
       console.warn('⚠️ Erro ao aplicar configurações:', error);
     }
-  }, []);
+  }, [applyElementColors]);
 
-  // Aplica cores dos elementos via CSS
-  const applyElementColors = useCallback((elementColors: Record<string, string>) => {
+  // Inicializa o widget Kekule
+  const initializeWidget = useCallback(async (): Promise<boolean> => {
     const container = containerRef.current;
-    if (!container) return;
+    const Kekule = kekuleRef.current;
+    
+    if (!container || !Kekule) return false;
 
-    // Remove estilos anteriores
-    const existingStyle = container.querySelector('#kekule-element-colors');
-    if (existingStyle) {
-      existingStyle.remove();
+    try {
+      // Cria o widget
+      const widget = new Kekule.Widget.ChemSpaceWidget(container);
+      widgetRef.current = widget;
+
+      // Configura o widget
+      widget.setRenderMode(Kekule.Style.RenderMode.COMPLETE);
+      widget.setEditMode(Kekule.EditMode.SELECT);
+
+      // Aplica configurações
+      applyConfigToWidget(widget, config);
+
+      setState(prev => ({
+        ...prev,
+        isReady: true,
+        widget: widget as unknown as KekuleChemSpaceWidget,
+        hasError: false,
+        errorMessage: null,
+      }));
+
+      return true;
+    } catch (error) {
+      console.error('❌ Erro ao inicializar widget Kekule:', error);
+      return false;
     }
-
-    // Cria novo estilo
-    const style = document.createElement('style');
-    style.id = 'kekule-element-colors';
-    
-    const cssRules = Object.entries(elementColors)
-      .map(([element, color]) => 
-        `.kekule-atom[data-element="${element}"] { fill: ${color} !important; }`
-      )
-      .join('\n');
-    
-    style.textContent = cssRules;
-    container.appendChild(style);
-  }, [containerRef]);
+  }, [containerRef, config, applyConfigToWidget]);
 
   // Carrega molécula no widget
   const loadMolecule = useCallback(async (): Promise<boolean> => {
@@ -159,7 +166,7 @@ export function useKekuleRenderer({
     if (!widget || !Kekule) return false;
 
     try {
-      let molecule = null;
+      let molecule: KekuleLibMolecule | null = null;
 
       // Tenta carregar a partir do SDF
       if (sdf) {
@@ -195,13 +202,13 @@ export function useKekuleRenderer({
 
       setState(prev => ({
         ...prev,
-        molecule,
+        molecule: molecule as unknown as KekuleMolecule,
         hasError: false,
         errorMessage: null,
       }));
 
       // Notifica mudança
-      onMoleculeChange?.(molecule);
+      onMoleculeChange?.(molecule as unknown as KekuleMolecule);
 
       return true;
     } catch (error) {
@@ -216,7 +223,7 @@ export function useKekuleRenderer({
     }
   }, [smiles, sdf, onMoleculeChange, onError]);
 
-  // Inicialização principal
+  // Inicialização principal do Kekule (executa apenas uma vez)
   useEffect(() => {
     let disposed = false;
 
@@ -251,7 +258,7 @@ export function useKekuleRenderer({
         return;
       }
 
-      // Carrega molécula se disponível
+      // Carrega molécula inicial se disponível
       if ((smiles || sdf) && !disposed) {
         await loadMolecule();
       }
@@ -274,6 +281,7 @@ export function useKekuleRenderer({
       disposed = true;
       clearTimeout(timeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Executa apenas uma vez na montagem
 
   // Recarrega molécula quando dados mudam
@@ -286,7 +294,7 @@ export function useKekuleRenderer({
   // Aplica configurações quando mudam
   useEffect(() => {
     if (state.isReady && state.widget) {
-      applyConfigToWidget(state.widget, config);
+      applyConfigToWidget(state.widget as unknown as KekuleWidget, config);
     }
   }, [config, state.isReady, state.widget, applyConfigToWidget]);
 
