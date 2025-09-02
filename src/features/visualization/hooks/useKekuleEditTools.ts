@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import type { EditTool } from '../types/kekuleViewer.types';
+import type { EditTool, KekuleChemSpaceWidget } from '../types/kekuleViewer.types';
 
 interface UseKekuleEditToolsResult {
   currentTool: EditTool | null;
@@ -20,7 +20,7 @@ export function useKekuleEditTools(
   const [currentTool, setCurrentTool] = useState<EditTool | null>(null);
   const [enabledTools, setEnabledTools] = useState<EditTool[]>(initialEnabledTools);
   const [isEditing, setIsEditing] = useState(false);
-  const _widgetRef = useRef<any>(null);
+  const _widgetRef = useRef<KekuleChemSpaceWidget | null>(null);
 
   const toggleTool = useCallback((tool: EditTool) => {
     setEnabledTools(prev => {
