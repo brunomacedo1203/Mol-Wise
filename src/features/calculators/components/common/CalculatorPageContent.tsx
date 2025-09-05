@@ -4,7 +4,7 @@ import { useCalculatorInstancesStore } from "@/features/calculators/store/calcul
 import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import { CloseAllButton } from "@/shared/components/buttons/CloseAllButton";
 import { PositionWithWidth } from "@/features/calculators/domain/types";
-import React from "react";
+import React, { useEffect } from "react";
 
 // interface CalculatorPageContentProps { // Removido
 //   // calculatorType: CalculatorType; // Removido
@@ -13,6 +13,7 @@ import React from "react";
 export function CalculatorPageContent() {
   // Ajustado para remover a prop e interface, mantendo compatibilidade
   const calculators = useCalculatorInstancesStore((state) => state.calculators);
+  const addCalculator = useCalculatorInstancesStore((state) => state.addCalculator);
   const removeCalculator = useCalculatorInstancesStore(
     (state) => state.removeCalculator
   );
@@ -27,6 +28,18 @@ export function CalculatorPageContent() {
   const resetHistoryVisibility = useCalculatorHistoryStore(
     (state) => state.resetHistoryVisibility
   );
+
+  // Adicionar automaticamente uma calculadora científica se não houver nenhuma
+  useEffect(() => {
+    if (calculators.length === 0) {
+      const defaultPosition = {
+        x: 100 + Math.random() * 100,
+        y: 100 + Math.random() * 100,
+        width: 750,
+      };
+      addCalculator("scientific", defaultPosition);
+    }
+  }, [calculators.length, addCalculator]);
 
   // Se não houver calculadoras, não renderiza nada
   if (calculators.length === 0) {
