@@ -1,10 +1,11 @@
 // src/features/visualization/components/MoleculeToolbar.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getSmiles, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
+import { trackMoleculeSearch } from "../events/moleculeSearchEvents";
 import { useTranslations } from "next-intl";
 
 export function MoleculeToolbar() {
@@ -12,11 +13,43 @@ export function MoleculeToolbar() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   const setSmiles = useVisualizationStore((s) => s.setSmilesData);
   const setSdf = useVisualizationStore((s) => s.setSdfData);
   const setViewMode = useVisualizationStore((s) => s.setViewMode);
   const viewMode = useVisualizationStore((s) => s.viewMode);
+
+  // Função para detectar o tipo de busca
+  const detectSearchType = (
+    query: string
+  ): "name" | "formula" | "smiles" | "cid" | "unknown" => {
+    const trimmed = query.trim();
+
+    // Se é apenas números, provavelmente é um CID
+    if (/^\d+$/.test(trimmed)) {
+      return "cid";
+    }
+
+    // Se contém caracteres típicos de SMILES (brackets, parênteses, etc.)
+    if (/[\[\]()=#@\\\/]/.test(trimmed)) {
+      return "smiles";
+    }
+
+    // Se contém apenas letras e números (possível fórmula química)
+    if (/^[A-Za-z0-9]+$/.test(trimmed)) {
+      return "formula";
+    }
+
+    // Se contém espaços ou caracteres especiais, provavelmente é nome
+    if (/\s/.test(trimmed) || /[^A-Za-z0-9]/.test(trimmed)) {
+      return "name";
+    }
+
+    return "unknown";
+  };
 
   async function handleSearch(e?: React.FormEvent) {
     e?.preventDefault();
@@ -25,6 +58,9 @@ export function MoleculeToolbar() {
 
     setErr(null);
     setLoading(true);
+
+    // Detecta o tipo de busca para analytics
+    const searchType = detectSearchType(q);
 
     try {
       const [smilesRes, sdfRes] = await Promise.allSettled([
@@ -41,11 +77,25 @@ export function MoleculeToolbar() {
       if (!smiles && !sdf) {
         throw new Error(t("notFound"));
       }
+
+      // Tracking de busca bem-sucedida
+      trackMoleculeSearch({
+        search_term: q,
+        search_type: searchType,
+        success: true,
+      });
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : t("error");
       setErr(message);
       setSmiles(null);
       setSdf(null);
+
+      // Tracking de busca falhada
+      trackMoleculeSearch({
+        search_term: q,
+        search_type: searchType,
+        success: false,
+      });
     } finally {
       setLoading(false);
     }
@@ -57,6 +107,31 @@ export function MoleculeToolbar() {
       setErr(null);
     }
   };
+
+  // Debounce para tracking de digitação (opcional - apenas para analytics de interação)
+  useEffect(() => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
+    if (input.trim() !== "") {
+      const timer = setTimeout(() => {
+        // Tracking de interação com o campo (sem envio da busca)
+        trackMoleculeSearch({
+          search_term: input.trim(),
+          search_type: detectSearchType(input),
+          success: false, // Apenas interação, não busca efetiva
+        });
+      }, 1000); // 1 segundo de debounce para interação
+      setDebounceTimer(timer);
+    }
+
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [input, debounceTimer]);
 
   return (
     <div

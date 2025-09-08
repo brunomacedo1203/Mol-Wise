@@ -3,6 +3,13 @@ import { evaluate } from "mathjs";
 import { parseFormulaForEvaluation } from "@/features/calculators/domain/services/formulaParser";
 import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
+import { 
+  trackScientificCalculation, 
+  trackScientificReset, 
+  trackScientificFunction,
+  trackScientificMemory,
+  trackScientificHistory
+} from "../../../events/scientificEvents";
 
 interface UseScientificCalculatorProps {
   initialFormula?: string;
@@ -139,6 +146,13 @@ export function useScientificCalculator({
         setErrorMessage(
           getErrorMessage ? getErrorMessage("empty") : "A expressão não pode estar vazia"
         );
+        
+        // Tracking de erro - expressão vazia
+        trackScientificCalculation({
+          expression: formula,
+          success: false,
+          error_type: "empty",
+        });
         return;
       }
 
@@ -149,6 +163,13 @@ export function useScientificCalculator({
             ? getErrorMessage("divisionByZero")
             : "Divisão por zero não é permitida"
         );
+        
+        // Tracking de erro - divisão por zero
+        trackScientificCalculation({
+          expression: formula,
+          success: false,
+          error_type: "divisionByZero",
+        });
         return;
       }
 
@@ -168,6 +189,13 @@ export function useScientificCalculator({
       setJustCalculated(true);
       onResultChange?.(formattedResult);
       setErrorMessage(null);
+
+      // Tracking de cálculo bem-sucedido
+      trackScientificCalculation({
+        expression: formula,
+        result_value: formattedResult,
+        success: true,
+      });
 
       // ✅ Atualiza histórico sem depender de 'calculationHistory' no array de deps
       setCalculationHistory((prev) => {
@@ -193,6 +221,13 @@ export function useScientificCalculator({
         getErrorMessage ? getErrorMessage("invalidExpression") : "Expressão inválida"
       );
       setResult(null);
+      
+      // Tracking de erro - expressão inválida
+      trackScientificCalculation({
+        expression: formula,
+        success: false,
+        error_type: "invalidExpression",
+      });
     }
   }, [formula, onResultChange, getErrorMessage, locale, calculatorId]);
 
@@ -204,6 +239,9 @@ export function useScientificCalculator({
     onResultChange?.(null);
     // Limpa o estado no store persistido
     resetCalculatorState(calculatorId);
+    
+    // Tracking de reset
+    trackScientificReset({});
   }, [onResultChange, resetCalculatorState, calculatorId]);
 
   const backspace = useCallback(() => {
@@ -261,6 +299,11 @@ export function useScientificCalculator({
         return;
       }
       insertAtCursor(func);
+      
+      // Tracking de uso de função
+      trackScientificFunction({
+        function_name: func,
+      });
     },
     [handleFormulaChange, result, locale, justCalculated, insertAtCursor]
   );
@@ -282,6 +325,11 @@ export function useScientificCalculator({
           setMemory(null);
           break;
       }
+      
+      // Tracking de ação de memória
+      trackScientificMemory({
+        memory_action: action,
+      });
     },
     [formula, result, memory, handleFormulaChange]
   );
@@ -303,6 +351,11 @@ export function useScientificCalculator({
     if (typeof window !== "undefined") {
       localStorage.removeItem(`molclass_scientific_history_${calculatorId}`);
     }
+    
+    // Tracking de limpeza de histórico
+    trackScientificHistory({
+      history_action: "clear",
+    });
   }, [calculatorId]);
 
   return {

@@ -1,4 +1,3 @@
-
 import type { Gtag } from '../types/gtag';
 
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || "";
@@ -17,9 +16,21 @@ export const pageview = (url: string) => {
   });
 };
 
-export const event = (name: string, params?: Gtag.EventParams) => {
+export const event = (name: string, params: Gtag.EventParams = {}) => {
   if (!canSend()) return;
-  window.gtag("event", name, params);
+
+  const payload = {
+    ...params,
+    send_to: GA_TRACKING_ID,
+    debug_mode: process.env.NODE_ENV !== "production",
+  };
+
+  // 🔍 Log útil apenas em desenvolvimento
+  if (process.env.NODE_ENV !== "production") {
+    console.log("[GA EVENT]", name, payload);
+  }
+
+  window.gtag("event", name, payload);
 };
 
 export const exception = ({

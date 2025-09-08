@@ -3,6 +3,7 @@ import { TableColumnKey } from "@/features/catalog/domain/types/TableColumnKey";
 import type { ExtendedCompound } from "@/features/catalog/hooks/common/useCompoundData";
 import React from "react";
 import { formatWithSub } from "@/shared/utils/formatWithSub";
+import { trackCompoundView } from "../../events/catalogEvents";
 
 interface CompoundTableRowsProps {
   paginatedData: ExtendedCompound[];
@@ -29,7 +30,17 @@ export function CompoundTableRows({
         paginatedData.map((compound) => (
           <TableRow
             key={compound.id}
-            className="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            onClick={() => {
+              // Tracking de visualização de composto
+              trackCompoundView({
+                compound_id: compound.id.toString(),
+                compound_name:
+                  compound.name || compound.commonName || "Unknown",
+                compound_formula: compound.formula,
+                compound_category: compound.category,
+              });
+            }}
           >
             {allColumns.map(({ key }) =>
               visibleColumns[key] ? (
