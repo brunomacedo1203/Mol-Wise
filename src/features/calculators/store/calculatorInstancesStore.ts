@@ -14,7 +14,7 @@ interface CalculatorInstancesState {
 
 export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       calculators: [],
       addCalculator: (type, position) => {
         const defaultPosition: PositionWithWidth = {
@@ -22,15 +22,18 @@ export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
           y: 100,
           width: 500,
         };
-        const calculators = get().calculators;
-        const nextId = calculators.length > 0 ? Math.max(...calculators.map(c => c.id)) + 1 : 1;
-        const newCalculator: CalculatorInstance = {
-          id: nextId,
-          type,
-          position: { ...defaultPosition, ...position },
-          state: { formula: "", result: null, isKeyboardVisible: true },
-        };
-        set({ calculators: [...calculators, newCalculator] });
+        set((state) => {
+          const nextId = state.calculators.length > 0
+            ? Math.max(...state.calculators.map((c) => c.id)) + 1
+            : 1;
+          const newCalculator: CalculatorInstance = {
+            id: nextId,
+            type,
+            position: { ...defaultPosition, ...position },
+            state: { formula: "", result: null, isKeyboardVisible: true },
+          };
+          return { calculators: [...state.calculators, newCalculator] };
+        });
       },
       removeCalculator: (id) => {
         set((state) => ({ calculators: state.calculators.filter((calc) => calc.id !== id) }));

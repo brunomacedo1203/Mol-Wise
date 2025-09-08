@@ -22,15 +22,20 @@ export function useMenuItems() {
         icon: item.icon,
         label,
         onClick: () => {
-          if (pathname === `/${locale}/calculators`) {
+          if (pathname.endsWith(`/calculators`)) {
             const position = {
               x: 100 + Math.random() * 100,
               y: 100 + Math.random() * 100,
               width: 750,
             };
-            addCalculator(item.calculatorId, position);
+            // Agendar em próximo tick para evitar colisões de updates sincronizados
+            setTimeout(() => {
+              addCalculator(item.calculatorId, position);
+            }, 0);
           } else {
-            router.push(`/${locale}/calculators?open=${item.calculatorId}`);
+            // Inclui timestamp para evitar que a mesma URL seja tratada como idêntica e ignorada
+            const ts = Date.now();
+            router.push(`/${locale}/calculators?open=${item.calculatorId}&ts=${ts}`);
           }
         },
       };
@@ -52,7 +57,7 @@ export function useMenuItems() {
     items: config.items.map(processMenuItem),
   });
 
-  const menuSections = menuSectionsConfig.map(processMenuSection);
+  const menuSections = (menuSectionsConfig as unknown as MenuSectionConfig[]).map(processMenuSection);
 
   return {
     menuSections,
