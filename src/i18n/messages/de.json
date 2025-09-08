@@ -130,7 +130,7 @@
     },
     "molarMass": {
       "title": "Molmasse",
-      "subtitle": "Geben Sie eine chemische Formel oder ein Elementsymbol ein",
+      "subtitle": "Geben Sie eine Formel oder ein Elementsymbol ein",
       "description": "Berechnen Sie schnell die Molmasse chemischer Verbindungen.",
       "input": {
         "placeholder": "Formel eingeben (z. B.: H2O)",

@@ -65,7 +65,8 @@ export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
     }),
     {
       name: "molclass_calculator_instances",
-      skipHydration: true,
+      // Hidratar automaticamente ao montar, garantindo que navegações (ex.: troca de idioma)
+      // restaurem as instâncias existentes do localStorage
       partialize: (state) => ({ calculators: state.calculators }),
     }
   )

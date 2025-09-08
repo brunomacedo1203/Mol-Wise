@@ -1,9 +1,14 @@
 import { buildPageMetadata } from "@/lib/seo";
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import CalculatorsClient from "./CalculatorsClient";
 
 export default function CalculatorsPage() {
-  return <CalculatorsClient />;
+  return (
+    <Suspense fallback={null}>
+      <CalculatorsClient />
+    </Suspense>
+  );
 }
 
 // ✅ Geração de metadados dinâmicos

@@ -1,3 +1,5 @@
+"use client";
+
 import { MolarMassCalculator } from "@/features/calculators/components/calculators/molar-mass";
 import { ScientificCalculator } from "@/features/calculators/components/calculators/scientific";
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
