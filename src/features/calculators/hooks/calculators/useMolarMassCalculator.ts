@@ -1,6 +1,11 @@
 "use client";
 import { useCallback } from "react";
 import { useMolarMassCalculatorAdapter } from "@/core/application/hooks/useMolarMassCalculatorAdapter";
+import { 
+  trackMolarMassCalculation, 
+  trackMolarMassReset, 
+  trackMolarMassFormulaChange 
+} from "../../events/molarMassEvents";
 
 // Props para o hook de calculadora de massa molar
 interface UseMolarMassCalculatorProps {
@@ -44,20 +49,51 @@ export function useMolarMassCalculator({
     (newFormula: string) => {
       _handleFormulaChange(newFormula);
       onFormulaChange?.(newFormula);
+      
+      // Tracking de mudança de fórmula
+      if (newFormula.trim() !== "") {
+        trackMolarMassFormulaChange({
+          formula_input: newFormula,
+        });
+      }
     },
     [_handleFormulaChange, onFormulaChange]
   );
 
-  const calculate = useCallback(async () => {
-    const result = await _calculate();
-    onResultChange?.(result || molarMass);
-    onFormulaChange?.(formula);
-    return result || molarMass;
+  const calculate = useCallback(async (): Promise<string | null> => {
+    try {
+      const result = await _calculate();
+      const resultValue = result || molarMass;
+      const stringValue = typeof resultValue === 'string' ? resultValue : resultValue?.value || resultValue?.displayText || null;
+      
+      onResultChange?.(stringValue);
+      onFormulaChange?.(formula);
+      
+      // Tracking de cálculo bem-sucedido
+      trackMolarMassCalculation({
+        formula_input: formula,
+        result_value: stringValue || '',
+        success: true,
+      });
+      
+      return stringValue;
+    } catch (error) {
+      // Tracking de cálculo com erro
+      trackMolarMassCalculation({
+        formula_input: formula,
+        success: false,
+        error_type: error instanceof Error ? error.message : "unknown_error",
+      });
+      throw error;
+    }
   }, [_calculate, molarMass, formula, onResultChange, onFormulaChange]);
 
   const reset = useCallback(() => {
     _reset();
     onResultChange?.(null);
+    
+    // Tracking de reset
+    trackMolarMassReset({});
   }, [_reset, onResultChange]);
 
   const backspace = useCallback(
