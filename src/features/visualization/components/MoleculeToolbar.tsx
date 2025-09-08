@@ -131,7 +131,7 @@ export function MoleculeToolbar() {
         clearTimeout(debounceTimer);
       }
     };
-  }, [input]);
+  }, [input, debounceTimer]);
 
   return (
     <div

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChemicalCompound } from "@/features/catalog/domain/types/ChemicalCompound";
+import { ChemicalCompound, CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
 import rawExtendedMetadata from "../../../../../public/data/inorganicCompoundExtended.json";
 
 const extendedMetadata: Record<string, { commonName: string; category: string }> = rawExtendedMetadata;
@@ -57,6 +57,7 @@ export function useCompoundData() {
             refractiveIndex: item["Refractive Index"],
             solubility: item["Qualitative Solubility"],
             solubilityNumeric: item["Solubility g/100 g H2O"],
+            category: "desconhecida" as CompoundCategory,
           };
           return base;
         });

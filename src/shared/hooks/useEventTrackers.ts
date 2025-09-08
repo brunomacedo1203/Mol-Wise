@@ -1,4 +1,11 @@
 import { event } from "@/lib/gtag";
+import {
+  trackThemeChange,
+  trackLanguageChange,
+  trackMenuInteraction,
+  trackInterfaceToggle,
+  trackSettingsChange,
+} from "@/shared/events/interfaceEvents";
 
 export function useEventTrackers() {
   const trackSearch = ({
@@ -59,6 +66,12 @@ export function useEventTrackers() {
     trackElementSearch,
     trackCalculation,
     trackModeSwitch,
+    // Interface events
+    trackThemeChange,
+    trackLanguageChange,
+    trackMenuInteraction,
+    trackInterfaceToggle,
+    trackSettingsChange,
   };
 }
 

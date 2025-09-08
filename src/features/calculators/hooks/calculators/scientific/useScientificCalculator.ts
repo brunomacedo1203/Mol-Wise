@@ -9,7 +9,7 @@ import {
   trackScientificFunction,
   trackScientificMemory,
   trackScientificHistory
-} from "../../events/scientificEvents";
+} from "../../../events/scientificEvents";
 
 interface UseScientificCalculatorProps {
   initialFormula?: string;
@@ -241,7 +241,7 @@ export function useScientificCalculator({
     resetCalculatorState(calculatorId);
     
     // Tracking de reset
-    trackScientificReset();
+    trackScientificReset({});
   }, [onResultChange, resetCalculatorState, calculatorId]);
 
   const backspace = useCallback(() => {

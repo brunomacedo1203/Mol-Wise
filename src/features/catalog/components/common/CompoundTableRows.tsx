@@ -34,7 +34,7 @@ export function CompoundTableRows({
             onClick={() => {
               // Tracking de visualização de composto
               trackCompoundView({
-                compound_id: compound.id,
+                compound_id: compound.id.toString(),
                 compound_name:
                   compound.name || compound.commonName || "Unknown",
                 compound_formula: compound.formula,

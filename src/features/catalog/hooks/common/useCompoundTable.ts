@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { ExtendedCompound } from '@/features/catalog/domain/types/ChemicalCompound';
 import { useTranslations } from 'next-intl';
 import type { CompoundCategory as BaseCompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
@@ -151,7 +151,7 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
         clearTimeout(debounceTimer);
       }
     };
-  }, [searchTerm, filteredData.length]);
+  }, [searchTerm, filteredData.length, debounceTimer]);
 
   // 🔀 Ordenação (mantida)
   const sortedData = useMemo(() => {
