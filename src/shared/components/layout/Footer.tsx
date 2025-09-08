@@ -1,13 +1,9 @@
 import React from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
-export interface FooterProps {
-  year: number;
-}
-
-export default function Footer(props: FooterProps) {
+export default function Footer() {
   const t = useTranslations("common");
-  const { year } = props;
   return (
     <footer
       className={`
@@ -18,7 +14,21 @@ export default function Footer(props: FooterProps) {
 `}
     >
       <span>{t("footer.contact")}</span>
-      <span>{t("footer.developed", { year })}</span>
+      <div className="flex items-center gap-4">
+        <Link 
+          href="/privacy-policy" 
+          className="hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors underline"
+        >
+          {t("footer.privacyPolicy")}
+        </Link>
+        <span className="text-zinc-400">•</span>
+        <Link 
+          href="/terms-of-use" 
+          className="hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors underline"
+        >
+          {t("footer.termsOfUse")}
+        </Link>
+      </div>
     </footer>
   );
 }

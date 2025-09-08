@@ -76,6 +76,30 @@
     "footer": {
       "contact": "联系我们",
       "developed": "开发于 {year}"
+    },
+    "privacy": {
+      "title": "隐私政策",
+      "lastUpdated": "最后更新：{date}",
+      "sections": {
+        "introduction": "介绍",
+        "dataCollection": "数据收集",
+        "dataUsage": "数据使用",
+        "cookies": "Cookie",
+        "thirdParty": "第三方服务",
+        "rights": "您的权利",
+        "contact": "联系我们"
+      }
+    },
+    "terms": {
+      "title": "使用条款",
+      "lastUpdated": "最后更新：{date}",
+      "sections": {
+        "acceptance": "条款接受",
+        "usage": "服务使用",
+        "restrictions": "限制",
+        "liability": "责任",
+        "changes": "变更"
+      }
     }
   },
   "navigation": {
@@ -693,3 +717,4 @@
     "more": "+ 另外 {count}"
   }
 }
+

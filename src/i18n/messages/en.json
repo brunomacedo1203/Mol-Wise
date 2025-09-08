@@ -75,7 +75,51 @@
     },
     "footer": {
       "contact": "Contact Us",
-      "developed": "Developed in {year}"
+      "developed": "Developed in {year}",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfUse": "Terms of Use",
+      "policies": "Policies"
+    },
+    "cookies": {
+      "banner": {
+        "title": "Cookie Consent",
+        "message": "This site uses cookies to improve your experience. We use Google Analytics and Microsoft Clarity for usage analysis. You can accept or decline non-essential cookies.",
+        "accept": "Accept",
+        "decline": "Decline",
+        "learnMore": "Learn more"
+      },
+      "preferences": {
+        "title": "Cookie Preferences",
+        "essential": "Essential Cookies",
+        "essentialDescription": "Required for basic site functionality",
+        "analytics": "Analytics Cookies",
+        "analyticsDescription": "Help us understand how you use the site (Google Analytics, Microsoft Clarity)",
+        "save": "Save Preferences"
+      }
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: {date}",
+      "sections": {
+        "introduction": "Introduction",
+        "dataCollection": "Data Collection",
+        "dataUsage": "Data Usage",
+        "cookies": "Cookies",
+        "thirdParty": "Third-Party Services",
+        "rights": "Your Rights",
+        "contact": "Contact"
+      }
+    },
+    "terms": {
+      "title": "Terms of Use",
+      "lastUpdated": "Last updated: {date}",
+      "sections": {
+        "acceptance": "Acceptance of Terms",
+        "usage": "Service Usage",
+        "restrictions": "Restrictions",
+        "liability": "Liability",
+        "changes": "Changes"
+      }
     }
   },
   "navigation": {

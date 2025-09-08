@@ -9,6 +9,7 @@ import "@/app/globals.css";
 import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
 import { GA_TRACKING_ID } from "@/lib/gtag";
+import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,6 +51,15 @@ const googleAnalyticsScript = `
     anonymize_ip: true,
     cookie_flags: 'SameSite=None;Secure'
   });
+`;
+
+// ✅ Script Microsoft Clarity
+const clarityScript = `
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "t7rb92sjh6");
 `;
 
 export function generateStaticParams() {
@@ -101,9 +111,17 @@ export default async function LocaleLayout({
           </>
         )}
 
+        {/* ✅ Microsoft Clarity */}
+        <Script
+          id="microsoft-clarity"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: clarityScript }}
+        />
+
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
             {children}
+            <CookieConsentBanner />
           </NextIntlClientProvider>
         </ThemeEffectProvider>
       </body>

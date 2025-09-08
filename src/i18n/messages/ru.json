@@ -76,6 +76,30 @@
     "footer": {
       "contact": "Связаться с нами",
       "developed": "Разработано в {year}"
+    },
+    "privacy": {
+      "title": "Политика Конфиденциальности",
+      "lastUpdated": "Последнее обновление: {date}",
+      "sections": {
+        "introduction": "Введение",
+        "dataCollection": "Сбор Данных",
+        "dataUsage": "Использование Данных",
+        "cookies": "Файлы Cookie",
+        "thirdParty": "Сторонние Сервисы",
+        "rights": "Ваши Права",
+        "contact": "Контакты"
+      }
+    },
+    "terms": {
+      "title": "Условия Использования",
+      "lastUpdated": "Последнее обновление: {date}",
+      "sections": {
+        "acceptance": "Принятие Условий",
+        "usage": "Использование Сервиса",
+        "restrictions": "Ограничения",
+        "liability": "Ответственность",
+        "changes": "Изменения"
+      }
     }
   },
   "navigation": {

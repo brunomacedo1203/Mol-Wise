@@ -76,6 +76,30 @@
     "footer": {
       "contact": "Contáctanos",
       "developed": "Desarrollado en {year}"
+    },
+    "privacy": {
+      "title": "Política de Privacidad",
+      "lastUpdated": "Última actualización: {date}",
+      "sections": {
+        "introduction": "Introducción",
+        "dataCollection": "Recopilación de Datos",
+        "dataUsage": "Uso de Datos",
+        "cookies": "Cookies",
+        "thirdParty": "Servicios de Terceros",
+        "rights": "Sus Derechos",
+        "contact": "Contacto"
+      }
+    },
+    "terms": {
+      "title": "Términos de Uso",
+      "lastUpdated": "Última actualización: {date}",
+      "sections": {
+        "acceptance": "Aceptación de Términos",
+        "usage": "Uso del Servicio",
+        "restrictions": "Restricciones",
+        "liability": "Responsabilidad",
+        "changes": "Cambios"
+      }
     }
   },
   "navigation": {
@@ -693,4 +717,5 @@
     "more": "+ {count} más"
   }
 }
+
 

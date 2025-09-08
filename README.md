@@ -30,6 +30,16 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 - Estrutura pronta para adição de novas calculadoras químicas, como concentração, diluição, estequiometria, etc.
 - Layout responsivo, consistente em todos os temas (claro e escuro)
 
+### 🍪 Sistema de Consentimento de Cookies
+
+- **Banner de consentimento** moderno e responsivo com opções de aceitar/recusar cookies não essenciais
+- **Gerenciamento de preferências** com controles granulares para diferentes tipos de cookies
+- **Persistência dupla**: salva preferências em cookies (principal) e localStorage (fallback)
+- **Integração com Google Analytics**: ativa/desativa tracking baseado no consentimento do usuário
+- **Páginas legais**: Política de Privacidade e Termos de Uso totalmente traduzidas
+- **Conformidade LGPD/GDPR**: implementação seguindo melhores práticas de privacidade
+- **Interface multilíngue**: suporte completo para português e inglês
+
 ## 🛠️ Tecnologias
 
 - React.js
@@ -138,6 +148,52 @@ calculators/
 - `hooks/calculators/`: Hooks específicos para cada tipo de calculadora.
 - `domain/types/`: Tipos TypeScript para calculadoras, teclado, posições, etc.
 - `utils/`: Funções utilitárias para cálculos e manipulação de dados.
+
+---
+
+### Feature: Cookie Consent System
+
+```
+shared/
+├── components/
+│   ├── cookies/
+│   │   └── CookieConsentBanner.tsx         # Banner principal de consentimento
+│   └── layout/
+│       ├── Footer.tsx                      # Footer com links para páginas legais
+│       └── Page.tsx                        # Layout principal com integração do banner
+├── hooks/
+│   └── useCookieConsent.ts                 # Hook principal para gerenciar consentimento
+└── types/
+    └── cookies.ts                          # Tipos para estado de consentimento
+
+app/
+└── [locale]/
+    ├── privacy-policy/
+    │   └── page.tsx                        # Página de Política de Privacidade
+    └── terms-of-use/
+        └── page.tsx                        # Página de Termos de Uso
+
+i18n/
+└── messages/
+    ├── pt.json                             # Traduções em português
+    └── en.json                             # Traduções em inglês
+```
+
+**Responsabilidades:**
+
+- `components/cookies/`: Banner de consentimento com interface moderna e responsiva.
+- `hooks/`: Hook personalizado para gerenciar estado de consentimento com persistência dupla.
+- `types/`: Tipos TypeScript para estado de consentimento e preferências.
+- `app/[locale]/`: Páginas legais totalmente traduzidas e responsivas.
+- `i18n/messages/`: Traduções completas para todos os textos do sistema de cookies.
+
+**Funcionalidades principais:**
+
+- **Persistência dupla**: Salva preferências em cookies HTTP e localStorage como fallback
+- **Integração com Analytics**: Controla ativação/desativação do Google Analytics baseado no consentimento
+- **Interface granular**: Permite controle específico de cookies analíticos vs essenciais
+- **Conformidade legal**: Implementa melhores práticas LGPD/GDPR
+- **Multilíngue**: Suporte completo para português e inglês
 
 ---
 
@@ -444,6 +500,78 @@ setSubtitle("Novo subtítulo");
 - Use o middleware `persist` apenas quando necessário.
 - Prefira actions nomeadas (ex: `toggleTheme`, `setCollapsed`) ao invés de setters diretos.
 - Documente o propósito do store e suas actions com comentários JSDoc.
+
+## 🍪 Sistema de Consentimento de Cookies
+
+O projeto implementa um sistema completo de consentimento de cookies em conformidade com LGPD/GDPR, oferecendo controle granular sobre diferentes tipos de cookies e persistência robusta das preferências do usuário.
+
+### Como usar o hook de consentimento:
+
+```tsx
+import { useCookieConsent } from "@/shared/hooks/useCookieConsent";
+
+function MyComponent() {
+  const {
+    consentState,
+    showBanner,
+    acceptAll,
+    rejectAll,
+    updateConsent
+  } = useCookieConsent();
+
+  // Verificar se analytics está habilitado
+  if (consentState.analyticsEnabled) {
+    // Inicializar Google Analytics
+  }
+
+  return (
+    <div>
+      {showBanner && <CookieConsentBanner />}
+      <p>Analytics: {consentState.analyticsEnabled ? 'Ativo' : 'Inativo'}</p>
+    </div>
+  );
+}
+```
+
+### Estados de consentimento:
+
+```tsx
+interface CookieConsentState {
+  hasConsented: boolean | null; // null = não decidiu, true = aceitou, false = recusou
+  analyticsEnabled: boolean;    // controla cookies de analytics/tracking
+}
+```
+
+### Integração com Google Analytics:
+
+```tsx
+// O sistema automaticamente controla o GA baseado no consentimento
+import { gtag } from "@/lib/gtag";
+
+// Analytics só é ativado se analyticsEnabled === true
+if (consentState.analyticsEnabled) {
+  gtag('config', 'GA_MEASUREMENT_ID');
+}
+```
+
+### Persistência de dados:
+
+- **Cookies HTTP**: Método principal, expira em 365 dias
+- **localStorage**: Fallback para casos onde cookies estão desabilitados
+- **Sincronização**: Sistema verifica ambos na inicialização
+
+### Páginas legais:
+
+- `/privacy-policy`: Política de Privacidade completa
+- `/terms-of-use`: Termos de Uso detalhados
+- Ambas totalmente traduzidas e responsivas
+
+### Boas práticas:
+
+- Sempre verifique `consentState.analyticsEnabled` antes de ativar tracking
+- Use o banner apenas quando necessário (`showBanner === true`)
+- Respeite a escolha do usuário e não force consentimento
+- Mantenha as páginas legais atualizadas com as práticas reais do site
 
 ### Busca Internacionalizada de Elementos na Tabela Periódica
 

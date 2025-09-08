@@ -76,8 +76,33 @@
     "footer": {
       "contact": "اتصل بنا",
       "developed": "تم التطوير في {year}"
+    },
+    "privacy": {
+      "title": "سياسة الخصوصية",
+      "lastUpdated": "آخر تحديث: {date}",
+      "sections": {
+        "introduction": "مقدمة",
+        "dataCollection": "جمع البيانات",
+        "dataUsage": "استخدام البيانات",
+        "cookies": "ملفات تعريف الارتباط",
+        "thirdParty": "خدمات الطرف الثالث",
+        "rights": "حقوقك",
+        "contact": "اتصل بنا"
+      }
+    },
+    "terms": {
+      "title": "شروط الاستخدام",
+      "lastUpdated": "آخر تحديث: {date}",
+      "sections": {
+        "acceptance": "قبول الشروط",
+        "usage": "استخدام الخدمة",
+        "restrictions": "القيود",
+        "liability": "المسؤولية",
+        "changes": "التغييرات"
+      }
     }
   },
+  
   "navigation": {
     "home": "الرئيسية",
     "about": "حول",
@@ -693,3 +718,4 @@
     "more": "+ {count} المزيد"
   }
 }
+

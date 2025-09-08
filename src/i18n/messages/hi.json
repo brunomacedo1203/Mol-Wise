@@ -76,6 +76,30 @@
     "footer": {
       "contact": "संपर्क करें",
       "developed": "{year} में विकसित"
+    },
+    "privacy": {
+      "title": "गोपनीयता नीति",
+      "lastUpdated": "अंतिम अपडेट: {date}",
+      "sections": {
+        "introduction": "परिचय",
+        "dataCollection": "डेटा संग्रह",
+        "dataUsage": "डेटा उपयोग",
+        "cookies": "कुकीज़",
+        "thirdParty": "तृतीय-पक्ष सेवाएं",
+        "rights": "आपके अधिकार",
+        "contact": "संपर्क"
+      }
+    },
+    "terms": {
+      "title": "उपयोग की शर्तें",
+      "lastUpdated": "अंतिम अपडेट: {date}",
+      "sections": {
+        "acceptance": "शर्तों की स्वीकृति",
+        "usage": "सेवा का उपयोग",
+        "restrictions": "प्रतिबंध",
+        "liability": "दायित्व",
+        "changes": "परिवर्तन"
+      }
     }
   },
   "navigation": {
@@ -693,3 +717,4 @@
     "more": "+ {count} और"
   }
 }
+
