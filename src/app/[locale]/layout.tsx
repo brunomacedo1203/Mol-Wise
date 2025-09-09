@@ -8,8 +8,8 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
-import { GA_TRACKING_ID } from "@/lib/gtag";
 import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
+import AnalyticsManager from "@/shared/components/analytics/AnalyticsManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,26 +41,7 @@ const themeScript = `
   })();
 `;
 
-// ✅ Script Google Analytics
-const googleAnalyticsScript = `
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '${GA_TRACKING_ID}', {
-    page_path: window.location.pathname,
-    anonymize_ip: true,
-    cookie_flags: 'SameSite=None;Secure'
-  });
-`;
-
-// ✅ Script Microsoft Clarity
-const clarityScript = `
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "t7rb92sjh6");
-`;
+// (Removido) Injeção direta de GA/Clarity. Passará a ser controlada por consentimento via AnalyticsManager.
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -96,27 +77,8 @@ export default async function LocaleLayout({
           strategy="beforeInteractive"
         />
 
-        {GA_TRACKING_ID && (
-          <>
-            <Script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script
-              id="google-analytics"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{ __html: googleAnalyticsScript }}
-            />
-          </>
-        )}
-
-        {/* ✅ Microsoft Clarity */}
-        <Script
-          id="microsoft-clarity"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: clarityScript }}
-        />
+        {/* Scripts de analytics e Clarity condicionados ao consentimento */}
+        <AnalyticsManager />
 
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>

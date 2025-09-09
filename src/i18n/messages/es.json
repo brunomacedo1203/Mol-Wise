@@ -75,7 +75,27 @@
     },
     "footer": {
       "contact": "Contáctanos",
-      "developed": "Desarrollado en {year}"
+      "developed": "Desarrollado en {year}",
+      "privacyPolicy": "Política de Privacidad",
+      "termsOfUse": "Términos de Uso",
+      "policies": "Políticas"
+    },
+    "cookies": {
+      "banner": {
+        "title": "Consentimiento de Cookies",
+        "message": "Este sitio utiliza cookies para mejorar su experiencia. Usamos Google Analytics y Microsoft Clarity para análisis de uso. Puede aceptar o rechazar cookies no esenciales.",
+        "accept": "Acepto",
+        "decline": "Rechazar",
+        "learnMore": "Saber más"
+      },
+      "preferences": {
+        "title": "Preferencias de Cookies",
+        "essential": "Cookies Esenciales",
+        "essentialDescription": "Necesarias para el funcionamiento básico del sitio",
+        "analytics": "Cookies de Análisis",
+        "analyticsDescription": "Ayudan a entender cómo usa el sitio (Google Analytics, Microsoft Clarity)",
+        "save": "Guardar Preferencias"
+      }
     },
     "privacy": {
       "title": "Política de Privacidad",
@@ -87,7 +107,78 @@
         "cookies": "Cookies",
         "thirdParty": "Servicios de Terceros",
         "rights": "Sus Derechos",
-        "contact": "Contacto"
+        "contact": "Contacto",
+        "changes": "Cambios"
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "Mol Class está comprometido en proteger su privacidad y datos personales. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos su información cuando utiliza nuestro sitio web y servicios educativos de química.",
+          "paragraph2": "Esta política cumple con el Reglamento General de Protección de Datos (GDPR) y otras regulaciones aplicables de protección de datos."
+        },
+        "dataCollection": {
+          "automaticData": "Datos Recopilados Automáticamente:",
+          "automaticDataList": [
+            "Dirección IP e información del dispositivo",
+            "Tipo de navegador y sistema operativo",
+            "Páginas visitadas y tiempo de permanencia",
+            "Referencias de sitios externos"
+          ],
+          "usageData": "Datos de Uso:",
+          "usageDataList": [
+            "Interacciones con calculadoras químicas",
+            "Preferencias de idioma y tema",
+            "Historial de cálculos (almacenado localmente)"
+          ],
+          "notCollected": "Datos que NO Recopilamos:",
+          "notCollectedText": "Mol Class no recopila datos sensibles (como información de salud, orientación religiosa, política o sexual), ni datos personales directamente identificables, como nombre, correo electrónico o número de identificación."
+        },
+        "dataUsage": {
+          "intro": "Utilizamos sus datos para:",
+          "list": [
+            "Proporcionar y mejorar nuestros servicios educativos",
+            "Personalizar su experiencia de aprendizaje",
+            "Analizar el uso del sitio para mejoras",
+            "Garantizar la seguridad y funcionamiento adecuado",
+            "Cumplir con obligaciones legales"
+          ]
+        },
+        "cookies": {
+          "types": "[ES] Types of Cookies We Use:",
+          "management": "Puede gestionar las cookies a través de la configuración de su navegador. Tenga en cuenta que deshabilitar ciertas cookies puede afectar la funcionalidad del sitio.",
+          "essential": "[ES] Essential Cookies:",
+          "essentialList": "[ES] Language and theme preferences,Cookie consent preferences,Session management and security,Basic site functionality and navigation",
+          "analytics": "[ES] Analytics Cookies (Optional):",
+          "analyticsList": "[ES] Google Analytics: Traffic analysis and user behavior tracking,Microsoft Clarity: User experience analysis and session recordings,Performance monitoring and error tracking"
+        },
+        "thirdParty": {
+          "intro": "Utilizamos los siguientes servicios de terceros:",
+          "googleAnalytics": "[ES] Google Analytics:",
+          "googleAnalyticsList": "[ES] Website traffic and user behavior analysis,Anonymized and aggregated usage statistics,Data retention: 26 months maximum,Privacy Policy: https://policies.google.com/privacy",
+          "microsoftClarity": "[ES] Microsoft Clarity:",
+          "microsoftClarityList": "[ES] User experience analysis and interaction tracking,Anonymized session recordings and heatmaps,Performance optimization insights,Privacy Policy: https://privacy.microsoft.com/privacystatement"
+        },
+        "rights": {
+          "intro": "Según las regulaciones de protección de datos, usted tiene derecho a:",
+          "list": [
+            "Acceder a sus datos personales",
+            "Rectificar datos inexactos",
+            "Solicitar la eliminación de sus datos",
+            "Oponerse al procesamiento",
+            "Portabilidad de datos",
+            "Presentar una queja ante las autoridades de protección de datos"
+          ]
+        },
+        "contact": {
+          "intro": "Para ejercer sus derechos o hacer preguntas sobre esta política, contáctenos:",
+          "email": "Correo electrónico: privacy@molclass.com",
+          "response": "Responderemos a su solicitud dentro de 30 días.",
+          "subject": "[ES] Subject: \"Privacy Rights Request\" or \"Privacy Policy Inquiry\"",
+          "dataProtectionOfficer": "[ES] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "[ES] Changes to This Policy: This Privacy Policy may be updated periodically to reflect changes in our practices or legal requirements. We will notify users of significant changes through our website. The date of the last update is indicated at the top of this page. We encourage you to review this policy regularly."
+      },
+      "metadata": {
+        "description": "[ES] Comprehensive information on how we collect, use, and protect your data, cookies, and third-party services in compliance with international privacy regulations."
       }
     },
     "terms": {
@@ -98,7 +189,14 @@
         "usage": "Uso del Servicio",
         "restrictions": "Restricciones",
         "liability": "Responsabilidad",
-        "changes": "Cambios"
+        "changes": "Cambios",
+        "service": "Servicio",
+        "acceptableUse": "Uso Aceptable",
+        "intellectualProperty": "Propiedad Intelectual",
+        "accuracy": "Precisión",
+        "modifications": "Modificaciones",
+        "governingLaw": "Ley Aplicable",
+        "contact": "Contacto"
       }
     }
   },
@@ -177,7 +275,9 @@
         "empty": "La fórmula no puede estar vacía",
         "invalidElement": "El símbolo \"{symbol}\" no fue encontrado",
         "invalidFormula": "Fórmula química inválida",
-        "mismatchedParentheses": "Paréntesis desajustados en la fórmula"
+        "mismatchedParentheses": "Paréntesis desajustados en la fórmula",
+        "calculationFailed": "[ES] Failed to calculate molar mass",
+        "generic": "[ES] An error occurred while calculating molar mass"
       },
       "history": {
         "title": "Historial de cálculos",
@@ -274,8 +374,6 @@
       "meltingPoint": "Punto de fusión",
       "boilingPoint": "Punto de ebullición",
       "density": "Densidad",
-      "yearDiscovered": "Año de descubrimiento",
-      "discoveredBy": "Descubierto por",
       "group": "Grupo",
       "period": "Período",
       "categories": {
@@ -295,10 +393,8 @@
         "liquid": "Líquido",
         "gas": "Gas"
       },
-      "groups": {
-        "lanthanoid": "Lantanoide",
-        "actinoid": "Actinoide"
-      }
+      "solubilityNumeric": "[ES] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[ES] Qualitative\nSolubility"
     },
     "elements": {
       "H": "Hidrógeno",
@@ -419,6 +515,70 @@
       "Lv": "Livermorio",
       "Ts": "Tenesino",
       "Og": "Oganesón"
+    },
+    "tableHeadersFull": {
+      "no": "[ES] Number",
+      "name": "[ES] Compound Name",
+      "synonym": "[ES] Common Name",
+      "formula": "[ES] Molecular Formula",
+      "casNumber": "[ES] CAS Registry Number",
+      "molarMass": "[ES] Molecular Weight",
+      "physicalForm": "[ES] Physical Form",
+      "meltingPoint": "[ES] Melting Point (°C)",
+      "boilingPoint": "[ES] Boiling Point (°C)",
+      "density": "[ES] Density (g/cm³)",
+      "refractiveIndex": "[ES] Refractive Index (nD)",
+      "solubility": "[ES] Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "[ES] ",
+      "id": "[ES] Unique identifier number of the compound",
+      "name": "[ES] Name of the chemical compound",
+      "commonName": "[ES] Common or alternative name of the compound",
+      "formula": "[ES] Chemical formula of the compound",
+      "casNumber": "[ES] CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "[ES] Molar mass in grams per mole (g/mol)",
+      "physicalForm": "[ES] Physical state at room temperature",
+      "meltingPoint": "[ES] Melting point in degrees Celsius (°C)",
+      "boilingPoint": "[ES] Boiling point in degrees Celsius (°C)",
+      "density": "[ES] Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "[ES] Refractive index (nD)",
+      "solubility": "[ES] Qualitative description of water solubility",
+      "solubilityNumeric": "[ES] Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "[ES] Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "[ES] Filter inorganic categories",
+      "clearAll": "[ES] Clear all",
+      "ácido": "[ES] Acid",
+      "base": "[ES] Base",
+      "sal": "[ES] Salt",
+      "óxido": "[ES] Oxide"
+    },
+    "yearDiscovered": "[ES] Year Discovered",
+    "discoveredBy": "[ES] Discovered By",
+    "group": "[ES] Group",
+    "period": "[ES] Period",
+    "categories": {
+      "alkaliMetal": "[ES] Alkali Metal",
+      "alkalineEarthMetal": "[ES] Alkaline Earth Metal",
+      "transitionMetal": "[ES] Transition Metal",
+      "postTransitionMetal": "[ES] Post-transition Metal",
+      "metalloid": "[ES] Metalloid",
+      "nonmetal": "[ES] Nonmetal",
+      "halogen": "[ES] Halogen",
+      "nobleGas": "[ES] Noble Gas",
+      "lanthanide": "[ES] Lanthanide",
+      "actinide": "[ES] Actinide"
+    },
+    "standardStates": {
+      "solid": "[ES] Solid",
+      "liquid": "[ES] Liquid",
+      "gas": "[ES] Gas"
+    },
+    "groups": {
+      "lanthanoid": "[ES] Lanthanoid",
+      "actinoid": "[ES] Actinoid"
     }
   },
   "catalog": {
@@ -442,7 +602,9 @@
       "boilingPoint": "Punto de ebullición",
       "density": "Densidad",
       "refractiveIndex": "Índice de refracción",
-      "solubility": "Solubilidad"
+      "solubility": "Solubilidad",
+      "solubilityNumeric": "[ES] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[ES] Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "Filtros avanzados",
@@ -579,45 +741,6 @@
       "density": "Densidad\ng/cm³",
       "solubilityNumeric": "Solubilidad\ng/100g H₂O",
       "solubilityQualitative": "Solubilidad\ncualitativa"
-    },
-    "tableHeadersFull": {
-      "no": "Número",
-      "name": "Nombre del compuesto",
-      "synonym": "Nombre común",
-      "formula": "Fórmula molecular",
-      "casNumber": "Número de registro CAS",
-      "molarMass": "Masa molecular",
-      "physicalForm": "Forma física",
-      "meltingPoint": "Punto de fusión (°C)",
-      "boilingPoint": "Punto de ebullición (°C)",
-      "density": "Densidad (g/cm³)",
-      "refractiveIndex": "Índice de refracción (nD)",
-      "solubility": "Solubilidad"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "Número identificador único del compuesto",
-      "name": "Nombre del compuesto químico",
-      "commonName": "Nombre común o alternativo del compuesto",
-      "formula": "Fórmula química del compuesto",
-      "casNumber": "Número CAS (Chemical Abstracts Service)",
-      "molarMass": "Masa molar en gramos por mol (g/mol)",
-      "physicalForm": "Estado físico a temperatura ambiente",
-      "meltingPoint": "Punto de fusión en grados Celsius (°C)",
-      "boilingPoint": "Punto de ebullición en grados Celsius (°C)",
-      "density": "Densidad en gramos por centímetro cúbico (g/cm³)",
-      "refractiveIndex": "Índice de refracción (nD)",
-      "solubility": "Descripción cualitativa de la solubilidad en agua",
-      "solubilityNumeric": "Cantidad máxima disuelta en 100 g de agua (g/100g H₂O)",
-      "solubilityQualitative": "Descripción cualitativa de la solubilidad"
-    },
-    "categoryTags": {
-      "placeholder": "Filtrar categorías inorgánicas",
-      "clearAll": "Borrar todo",
-      "ácido": "Ácido",
-      "base": "Base",
-      "sal": "Sal",
-      "óxido": "Óxido"
     }
   },
   "games": {
@@ -717,5 +840,3 @@
     "more": "+ {count} más"
   }
 }
-
-

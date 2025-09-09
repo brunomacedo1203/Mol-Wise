@@ -75,7 +75,10 @@
     },
     "footer": {
       "contact": "اتصل بنا",
-      "developed": "تم التطوير في {year}"
+      "developed": "تم التطوير في {year}",
+      "privacyPolicy": "سياسة الخصوصية",
+      "termsOfUse": "شروط الاستخدام",
+      "policies": "[AR] Policies"
     },
     "privacy": {
       "title": "سياسة الخصوصية",
@@ -87,7 +90,80 @@
         "cookies": "ملفات تعريف الارتباط",
         "thirdParty": "خدمات الطرف الثالث",
         "rights": "حقوقك",
-        "contact": "اتصل بنا"
+        "contact": "اتصل بنا",
+        "changes": "[AR] Changes"
+      },
+      "metadata": {
+        "description": "معلومات حول كيفية جمع/استخدام البيانات، ملفات تعريف الارتباط وخدمات الطرف الثالث."
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "نحن نقدر خصوصيتك والشفافية.",
+          "paragraph2": "توضح هذه الوثيقة البيانات التي نجمعها وكيف نستخدمها."
+        },
+        "dataCollection": {
+          "automaticData": "البيانات التي يتم جمعها تلقائياً",
+          "automaticDataList": [
+            "الصفحات التي تمت زيارتها",
+            "أحداث الاستخدام الأساسية"
+          ],
+          "usageData": "بيانات الاستخدام",
+          "usageDataList": [
+            "اللغة",
+            "نوع الجهاز"
+          ],
+          "notCollected": "البيانات التي لا نجمعها",
+          "notCollectedText": "لا نجمع معلومات شخصية حساسة."
+        },
+        "dataUsage": {
+          "intro": "نستخدم البيانات لتحسين المنتج ولإحصاءات مجمّعة.",
+          "list": [
+            "قياس استخدام الموقع",
+            "تحسين تجربة المستخدم"
+          ]
+        },
+        "cookies": {
+          "types": "أنواع ملفات تعريف الارتباط",
+          "essential": "أساسية",
+          "essentialList": [
+            "تفضيلات اللغة",
+            "حالة الجلسة"
+          ],
+          "analytics": "تحليلية",
+          "analyticsList": [
+            "Google Analytics: قياس الاستخدام",
+            "Microsoft Clarity: الجلسات وخرائط الحرارة"
+          ],
+          "management": "يمكنك إدارة تفضيلاتك من خلال لافتة ملفات تعريف الارتباط."
+        },
+        "thirdParty": {
+          "intro": "قد نستخدم خدمات طرف ثالث للتحليلات.",
+          "googleAnalytics": "Google Analytics",
+          "googleAnalyticsList": [
+            "يقيس مشاهدات الصفحات والأحداث",
+            "Google Privacy Policy"
+          ],
+          "microsoftClarity": "Microsoft Clarity",
+          "microsoftClarityList": [
+            "الجلسات وخرائط الحرارة",
+            "Microsoft Privacy Statement"
+          ]
+        },
+        "rights": {
+          "intro": "يمكنك طلب الوصول إلى البيانات وحذفها.",
+          "list": [
+            "الوصول: يمكنك طلب بياناتك",
+            "الحذف: يمكنك طلب الحذف"
+          ]
+        },
+        "contact": {
+          "intro": "للاستفسارات أو الطلبات، تواصل معنا:",
+          "email": "Email: contato@molclass.com",
+          "subject": "الموضوع: \"Privacy - Request\"",
+          "response": "سنرد ضمن فترة زمنية معقولة.",
+          "dataProtectionOfficer": "[AR] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "التغييرات: قد نقوم بتحديث هذه السياسة دورياً."
       }
     },
     "terms": {
@@ -96,13 +172,36 @@
       "sections": {
         "acceptance": "قبول الشروط",
         "usage": "استخدام الخدمة",
+        "service": "الخدمة",
+        "acceptableUse": "الاستخدام المقبول",
+        "intellectualProperty": "الملكية الفكرية",
+        "accuracy": "الدقة",
         "restrictions": "القيود",
         "liability": "المسؤولية",
+        "modifications": "التعديلات",
+        "governingLaw": "القانون الحاكم",
+        "contact": "اتصل",
         "changes": "التغييرات"
+      }
+    },
+    "cookies": {
+      "banner": {
+        "title": "الموافقة على ملفات تعريف الارتباط",
+        "message": "نستخدم ملفات تعريف الارتباط لتحسين تجربتك. نستخدم Google Analytics وMicrosoft Clarity للتحليلات.",
+        "accept": "موافقة",
+        "decline": "رفض",
+        "learnMore": "اعرف المزيد"
+      },
+      "preferences": {
+        "title": "تفضيلات ملفات تعريف الارتباط",
+        "essential": "ملفات تعريف الارتباط الأساسية",
+        "essentialDescription": "ضرورية لوظائف الموقع الأساسية",
+        "analytics": "ملفات تعريف الارتباط التحليلية",
+        "analyticsDescription": "تساعدنا على فهم استخدام الموقع (GA، Clarity)",
+        "save": "حفظ التفضيلات"
       }
     }
   },
-  
   "navigation": {
     "home": "الرئيسية",
     "about": "حول",
@@ -178,7 +277,9 @@
         "empty": "لا يمكن أن تكون الصيغة فارغة",
         "invalidElement": "الرمز \"{symbol}\" غير موجود",
         "invalidFormula": "صيغة كيميائية غير صالحة",
-        "mismatchedParentheses": "الأقواس غير متطابقة في الصيغة"
+        "mismatchedParentheses": "الأقواس غير متطابقة في الصيغة",
+        "calculationFailed": "[AR] Failed to calculate molar mass",
+        "generic": "[AR] An error occurred while calculating molar mass"
       },
       "history": {
         "title": "سجل الحسابات",
@@ -275,8 +376,6 @@
       "meltingPoint": "درجة الانصهار",
       "boilingPoint": "درجة الغليان",
       "density": "الكثافة",
-      "yearDiscovered": "سنة الاكتشاف",
-      "discoveredBy": "تم اكتشافه بواسطة",
       "group": "المجموعة",
       "period": "الدورة",
       "categories": {
@@ -296,10 +395,8 @@
         "liquid": "سائل",
         "gas": "غاز"
       },
-      "groups": {
-        "lanthanoid": "لانثانوي",
-        "actinoid": "أكتينوي"
-      }
+      "solubilityNumeric": "[AR] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[AR] Qualitative\nSolubility"
     },
     "elements": {
       "H": "هيدروجين",
@@ -420,6 +517,70 @@
       "Lv": "ليفيرموريوم",
       "Ts": "تينيسين",
       "Og": "أوجانيسون"
+    },
+    "tableHeadersFull": {
+      "no": "[AR] Number",
+      "name": "[AR] Compound Name",
+      "synonym": "[AR] Common Name",
+      "formula": "[AR] Molecular Formula",
+      "casNumber": "[AR] CAS Registry Number",
+      "molarMass": "[AR] Molecular Weight",
+      "physicalForm": "[AR] Physical Form",
+      "meltingPoint": "[AR] Melting Point (°C)",
+      "boilingPoint": "[AR] Boiling Point (°C)",
+      "density": "[AR] Density (g/cm³)",
+      "refractiveIndex": "[AR] Refractive Index (nD)",
+      "solubility": "[AR] Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "[AR] ",
+      "id": "[AR] Unique identifier number of the compound",
+      "name": "[AR] Name of the chemical compound",
+      "commonName": "[AR] Common or alternative name of the compound",
+      "formula": "[AR] Chemical formula of the compound",
+      "casNumber": "[AR] CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "[AR] Molar mass in grams per mole (g/mol)",
+      "physicalForm": "[AR] Physical state at room temperature",
+      "meltingPoint": "[AR] Melting point in degrees Celsius (°C)",
+      "boilingPoint": "[AR] Boiling point in degrees Celsius (°C)",
+      "density": "[AR] Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "[AR] Refractive index (nD)",
+      "solubility": "[AR] Qualitative description of water solubility",
+      "solubilityNumeric": "[AR] Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "[AR] Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "[AR] Filter inorganic categories",
+      "clearAll": "[AR] Clear all",
+      "ácido": "[AR] Acid",
+      "base": "[AR] Base",
+      "sal": "[AR] Salt",
+      "óxido": "[AR] Oxide"
+    },
+    "yearDiscovered": "[AR] Year Discovered",
+    "discoveredBy": "[AR] Discovered By",
+    "group": "[AR] Group",
+    "period": "[AR] Period",
+    "categories": {
+      "alkaliMetal": "[AR] Alkali Metal",
+      "alkalineEarthMetal": "[AR] Alkaline Earth Metal",
+      "transitionMetal": "[AR] Transition Metal",
+      "postTransitionMetal": "[AR] Post-transition Metal",
+      "metalloid": "[AR] Metalloid",
+      "nonmetal": "[AR] Nonmetal",
+      "halogen": "[AR] Halogen",
+      "nobleGas": "[AR] Noble Gas",
+      "lanthanide": "[AR] Lanthanide",
+      "actinide": "[AR] Actinide"
+    },
+    "standardStates": {
+      "solid": "[AR] Solid",
+      "liquid": "[AR] Liquid",
+      "gas": "[AR] Gas"
+    },
+    "groups": {
+      "lanthanoid": "[AR] Lanthanoid",
+      "actinoid": "[AR] Actinoid"
     }
   },
   "catalog": {
@@ -443,7 +604,9 @@
       "boilingPoint": "درجة الغليان",
       "density": "الكثافة",
       "refractiveIndex": "معامل الانكسار",
-      "solubility": "الذوبانية"
+      "solubility": "الذوبانية",
+      "solubilityNumeric": "[AR] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[AR] Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "الفلاتر المتقدمة",
@@ -580,45 +743,6 @@
       "density": "الكثافة\ng/cm³",
       "solubilityNumeric": "الذوبانية\ng/100g H₂O",
       "solubilityQualitative": "الذوبانية\nالنوعية"
-    },
-    "tableHeadersFull": {
-      "no": "العدد",
-      "name": "اسم المركب",
-      "synonym": "الاسم الشائع",
-      "formula": "الصيغة الجزيئية",
-      "casNumber": "رقم سجل CAS",
-      "molarMass": "الوزن الجزيئي",
-      "physicalForm": "الشكل الفيزيائي",
-      "meltingPoint": "درجة الانصهار (°C)",
-      "boilingPoint": "درجة الغليان (°C)",
-      "density": "الكثافة (g/cm³)",
-      "refractiveIndex": "معامل الانكسار (nD)",
-      "solubility": "الذوبانية"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "رقم التعريف الفريد للمركب",
-      "name": "اسم المركب الكيميائي",
-      "commonName": "الاسم الشائع أو البديل للمركب",
-      "formula": "الصيغة الكيميائية للمركب",
-      "casNumber": "رقم سجل CAS (خدمة الملخصات الكيميائية)",
-      "molarMass": "الكتلة المولية بالجرام لكل مول (g/mol)",
-      "physicalForm": "الحالة الفيزيائية عند درجة حرارة الغرفة",
-      "meltingPoint": "درجة الانصهار بالدرجة المئوية (°C)",
-      "boilingPoint": "درجة الغليان بالدرجة المئوية (°C)",
-      "density": "الكثافة بالجرام لكل سنتيمتر مكعب (g/cm³)",
-      "refractiveIndex": "معامل الانكسار (nD)",
-      "solubility": "وصف نوعي لذوبانية الماء",
-      "solubilityNumeric": "الكمية القصوى الذائبة في 100 جرام ماء (g/100g H₂O)",
-      "solubilityQualitative": "وصف نوعي للذوبانية"
-    },
-    "categoryTags": {
-      "placeholder": "تصفية الفئات غير العضوية",
-      "clearAll": "مسح الكل",
-      "ácido": "حمض",
-      "base": "قاعدة",
-      "sal": "ملح",
-      "óxido": "أكسيد"
     }
   },
   "games": {
@@ -718,4 +842,3 @@
     "more": "+ {count} المزيد"
   }
 }
-

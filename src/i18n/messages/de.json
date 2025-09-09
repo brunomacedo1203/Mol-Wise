@@ -75,7 +75,10 @@
     },
     "footer": {
       "contact": "Kontaktieren Sie uns",
-      "developed": "Entwickelt im Jahr {year}"
+      "developed": "Entwickelt im Jahr {year}",
+      "privacyPolicy": "Datenschutzrichtlinie",
+      "termsOfUse": "Nutzungsbedingungen",
+      "policies": "[DE] Policies"
     },
     "privacy": {
       "title": "Datenschutzrichtlinie",
@@ -87,7 +90,80 @@
         "cookies": "Cookies",
         "thirdParty": "Drittanbieter-Services",
         "rights": "Ihre Rechte",
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "changes": "[DE] Changes"
+      },
+      "metadata": {
+        "description": "Informationen zur Datenerhebung und -nutzung, Cookies und Drittanbieter."
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "Wir schätzen Ihre Privatsphäre und Transparenz.",
+          "paragraph2": "Dieses Dokument erklärt, welche Daten wir erheben und wie wir sie verwenden."
+        },
+        "dataCollection": {
+          "automaticData": "Automatisch erfasste Daten",
+          "automaticDataList": [
+            "Besuchte Seiten",
+            "Grundlegende Nutzungsereignisse"
+          ],
+          "usageData": "Nutzungsdaten",
+          "usageDataList": [
+            "Sprache",
+            "Gerätetyp"
+          ],
+          "notCollected": "Nicht erhobene Daten",
+          "notCollectedText": "Wir erheben keine sensiblen personenbezogenen Daten."
+        },
+        "dataUsage": {
+          "intro": "Wir verwenden Daten zur Produktverbesserung und für aggregierte Statistiken.",
+          "list": [
+            "Seitennutzung messen",
+            "Benutzererlebnis verbessern"
+          ]
+        },
+        "cookies": {
+          "types": "Cookie-Typen",
+          "essential": "Essentiell",
+          "essentialList": [
+            "Spracheinstellungen",
+            "Sitzungsstatus"
+          ],
+          "analytics": "Analyse",
+          "analyticsList": [
+            "Google Analytics: Nutzungs­messung",
+            "Microsoft Clarity: Heatmaps & Sessions"
+          ],
+          "management": "Sie können Ihre Präferenzen im Cookie-Banner verwalten."
+        },
+        "thirdParty": {
+          "intro": "Wir können Drittanbieter für Analysen verwenden.",
+          "googleAnalytics": "Google Analytics",
+          "googleAnalyticsList": [
+            "Erfasst Seitenaufrufe und Ereignisse",
+            "Google Privacy Policy"
+          ],
+          "microsoftClarity": "Microsoft Clarity",
+          "microsoftClarityList": [
+            "Sitzungen und Heatmaps",
+            "Microsoft Privacy Statement"
+          ]
+        },
+        "rights": {
+          "intro": "Sie können Zugriff und Löschung Ihrer Daten anfordern.",
+          "list": [
+            "Zugriff: Sie können Ihre Daten anfordern",
+            "Löschung: Sie können die Löschung anfordern"
+          ]
+        },
+        "contact": {
+          "intro": "Bei Fragen oder Anliegen kontaktieren Sie uns:",
+          "email": "Email: contato@molclass.com",
+          "subject": "Betreff: \"Datenschutz - Anfrage\"",
+          "response": "Wir antworten innerhalb einer angemessenen Frist.",
+          "dataProtectionOfficer": "[DE] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "Änderungen: Wir können diese Richtlinie regelmäßig aktualisieren."
       }
     },
     "terms": {
@@ -96,9 +172,33 @@
       "sections": {
         "acceptance": "Annahme der Bedingungen",
         "usage": "Service-Nutzung",
+        "service": "Service",
+        "acceptableUse": "Akzeptable Nutzung",
+        "intellectualProperty": "Geistiges Eigentum",
+        "accuracy": "Genauigkeit",
         "restrictions": "Einschränkungen",
         "liability": "Haftung",
+        "modifications": "Änderungen",
+        "governingLaw": "Geltendes Recht",
+        "contact": "Kontakt",
         "changes": "Änderungen"
+      }
+    },
+    "cookies": {
+      "banner": {
+        "title": "Cookie-Einwilligung",
+        "message": "Wir verwenden Cookies zur Verbesserung Ihrer Erfahrung. Google Analytics und Microsoft Clarity für Analysen.",
+        "accept": "Akzeptieren",
+        "decline": "Ablehnen",
+        "learnMore": "Mehr erfahren"
+      },
+      "preferences": {
+        "title": "Cookie-Einstellungen",
+        "essential": "Essentielle Cookies",
+        "essentialDescription": "Erforderlich für die Grundfunktionalität",
+        "analytics": "Analyse-Cookies",
+        "analyticsDescription": "Helfen uns, die Seitennutzung zu verstehen (GA, Clarity)",
+        "save": "Einstellungen speichern"
       }
     }
   },
@@ -177,7 +277,9 @@
         "empty": "Die Formel darf nicht leer sein",
         "invalidElement": "Das Symbol \"{symbol}\" wurde nicht gefunden",
         "invalidFormula": "Ungültige chemische Formel",
-        "mismatchedParentheses": "Nicht übereinstimmende Klammern in der Formel"
+        "mismatchedParentheses": "Nicht übereinstimmende Klammern in der Formel",
+        "calculationFailed": "[DE] Failed to calculate molar mass",
+        "generic": "[DE] An error occurred while calculating molar mass"
       },
       "history": {
         "title": "Berechnungshistorie",
@@ -274,8 +376,6 @@
       "meltingPoint": "Schmelzpunkt",
       "boilingPoint": "Siedepunkt",
       "density": "Dichte",
-      "yearDiscovered": "Entdeckungsjahr",
-      "discoveredBy": "Entdeckt von",
       "group": "Gruppe",
       "period": "Periode",
       "categories": {
@@ -295,10 +395,8 @@
         "liquid": "Flüssig",
         "gas": "Gas"
       },
-      "groups": {
-        "lanthanoid": "Lanthanoid",
-        "actinoid": "Actinoid"
-      }
+      "solubilityNumeric": "[DE] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[DE] Qualitative\nSolubility"
     },
     "elements": {
       "H": "Wasserstoff",
@@ -419,6 +517,70 @@
       "Lv": "Livermorium",
       "Ts": "Tenness",
       "Og": "Oganesson"
+    },
+    "tableHeadersFull": {
+      "no": "[DE] Number",
+      "name": "[DE] Compound Name",
+      "synonym": "[DE] Common Name",
+      "formula": "[DE] Molecular Formula",
+      "casNumber": "[DE] CAS Registry Number",
+      "molarMass": "[DE] Molecular Weight",
+      "physicalForm": "[DE] Physical Form",
+      "meltingPoint": "[DE] Melting Point (°C)",
+      "boilingPoint": "[DE] Boiling Point (°C)",
+      "density": "[DE] Density (g/cm³)",
+      "refractiveIndex": "[DE] Refractive Index (nD)",
+      "solubility": "[DE] Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "[DE] ",
+      "id": "[DE] Unique identifier number of the compound",
+      "name": "[DE] Name of the chemical compound",
+      "commonName": "[DE] Common or alternative name of the compound",
+      "formula": "[DE] Chemical formula of the compound",
+      "casNumber": "[DE] CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "[DE] Molar mass in grams per mole (g/mol)",
+      "physicalForm": "[DE] Physical state at room temperature",
+      "meltingPoint": "[DE] Melting point in degrees Celsius (°C)",
+      "boilingPoint": "[DE] Boiling point in degrees Celsius (°C)",
+      "density": "[DE] Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "[DE] Refractive index (nD)",
+      "solubility": "[DE] Qualitative description of water solubility",
+      "solubilityNumeric": "[DE] Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "[DE] Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "[DE] Filter inorganic categories",
+      "clearAll": "[DE] Clear all",
+      "ácido": "[DE] Acid",
+      "base": "[DE] Base",
+      "sal": "[DE] Salt",
+      "óxido": "[DE] Oxide"
+    },
+    "yearDiscovered": "[DE] Year Discovered",
+    "discoveredBy": "[DE] Discovered By",
+    "group": "[DE] Group",
+    "period": "[DE] Period",
+    "categories": {
+      "alkaliMetal": "[DE] Alkali Metal",
+      "alkalineEarthMetal": "[DE] Alkaline Earth Metal",
+      "transitionMetal": "[DE] Transition Metal",
+      "postTransitionMetal": "[DE] Post-transition Metal",
+      "metalloid": "[DE] Metalloid",
+      "nonmetal": "[DE] Nonmetal",
+      "halogen": "[DE] Halogen",
+      "nobleGas": "[DE] Noble Gas",
+      "lanthanide": "[DE] Lanthanide",
+      "actinide": "[DE] Actinide"
+    },
+    "standardStates": {
+      "solid": "[DE] Solid",
+      "liquid": "[DE] Liquid",
+      "gas": "[DE] Gas"
+    },
+    "groups": {
+      "lanthanoid": "[DE] Lanthanoid",
+      "actinoid": "[DE] Actinoid"
     }
   },
   "catalog": {
@@ -442,7 +604,9 @@
       "boilingPoint": "Siedepunkt",
       "density": "Dichte",
       "refractiveIndex": "Brechungsindex",
-      "solubility": "Löslichkeit"
+      "solubility": "Löslichkeit",
+      "solubilityNumeric": "[DE] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[DE] Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "Erweiterte Filter",
@@ -579,45 +743,6 @@
       "density": "Dichte\ng/cm³",
       "solubilityNumeric": "Löslichkeit\ng/100g H₂O",
       "solubilityQualitative": "Qualitative\nLöslichkeit"
-    },
-    "tableHeadersFull": {
-      "no": "Nummer",
-      "name": "Verbindungsname",
-      "synonym": "Trivialname",
-      "formula": "Molekülformel",
-      "casNumber": "CAS-Registrierungsnummer",
-      "molarMass": "Molekulargewicht",
-      "physicalForm": "Physische Form",
-      "meltingPoint": "Schmelzpunkt (°C)",
-      "boilingPoint": "Siedepunkt (°C)",
-      "density": "Dichte (g/cm³)",
-      "refractiveIndex": "Brechungsindex (nD)",
-      "solubility": "Löslichkeit"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "Eindeutige Identifikationsnummer der Verbindung",
-      "name": "Name der chemischen Verbindung",
-      "commonName": "Trivial- oder Alternativname der Verbindung",
-      "formula": "Chemische Formel der Verbindung",
-      "casNumber": "CAS-Nummer (Chemical Abstracts Service)",
-      "molarMass": "Molmasse in Gramm pro Mol (g/mol)",
-      "physicalForm": "Physikalischer Zustand bei Raumtemperatur",
-      "meltingPoint": "Schmelzpunkt in Grad Celsius (°C)",
-      "boilingPoint": "Siedepunkt in Grad Celsius (°C)",
-      "density": "Dichte in Gramm pro Kubikzentimeter (g/cm³)",
-      "refractiveIndex": "Brechungsindex (nD)",
-      "solubility": "Qualitative Beschreibung der Wasserlöslichkeit",
-      "solubilityNumeric": "Maximal gelöste Menge in 100 g Wasser (g/100g H₂O)",
-      "solubilityQualitative": "Qualitative Beschreibung der Löslichkeit"
-    },
-    "categoryTags": {
-      "placeholder": "Anorganische Kategorien filtern",
-      "clearAll": "Alles löschen",
-      "ácido": "Säure",
-      "base": "Base",
-      "sal": "Salz",
-      "óxido": "Oxid"
     }
   },
   "games": {
@@ -717,4 +842,3 @@
     "more": "+ {count} mehr"
   }
 }
-

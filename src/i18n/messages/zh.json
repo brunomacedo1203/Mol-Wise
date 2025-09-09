@@ -75,7 +75,10 @@
     },
     "footer": {
       "contact": "联系我们",
-      "developed": "开发于 {year}"
+      "developed": "开发于 {year}",
+      "privacyPolicy": "隐私政策",
+      "termsOfUse": "使用条款",
+      "policies": "[ZH] Policies"
     },
     "privacy": {
       "title": "隐私政策",
@@ -87,7 +90,80 @@
         "cookies": "Cookie",
         "thirdParty": "第三方服务",
         "rights": "您的权利",
-        "contact": "联系我们"
+        "contact": "联系我们",
+        "changes": "[ZH] Changes"
+      },
+      "metadata": {
+        "description": "关于我们如何收集和使用数据、Cookie 和第三方服务的信息。"
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "我们重视您的隐私与透明度。",
+          "paragraph2": "本文档解释我们收集哪些数据以及如何使用。"
+        },
+        "dataCollection": {
+          "automaticData": "自动收集的数据",
+          "automaticDataList": [
+            "访问的页面",
+            "基本使用事件"
+          ],
+          "usageData": "使用数据",
+          "usageDataList": [
+            "语言",
+            "设备类型"
+          ],
+          "notCollected": "我们不收集的数据",
+          "notCollectedText": "我们不收集敏感的个人信息。"
+        },
+        "dataUsage": {
+          "intro": "我们将数据用于改进产品和汇总统计。",
+          "list": [
+            "衡量站点使用情况",
+            "改善用户体验"
+          ]
+        },
+        "cookies": {
+          "types": "Cookie 类型",
+          "essential": "必要",
+          "essentialList": [
+            "语言偏好",
+            "会话状态"
+          ],
+          "analytics": "分析",
+          "analyticsList": [
+            "Google Analytics：使用度量",
+            "Microsoft Clarity：会话与热图"
+          ],
+          "management": "您可在 Cookie 横幅中管理偏好。"
+        },
+        "thirdParty": {
+          "intro": "我们可能使用第三方服务进行分析。",
+          "googleAnalytics": "Google Analytics",
+          "googleAnalyticsList": [
+            "衡量页面浏览与事件",
+            "Google 隐私政策"
+          ],
+          "microsoftClarity": "Microsoft Clarity",
+          "microsoftClarityList": [
+            "会话与热图",
+            "Microsoft 隐私声明"
+          ]
+        },
+        "rights": {
+          "intro": "您可以请求访问与删除数据。",
+          "list": [
+            "访问：您可请求您的数据",
+            "删除：您可请求删除"
+          ]
+        },
+        "contact": {
+          "intro": "如有问题或请求，请联系我们：",
+          "email": "电子邮件：contato@molclass.com",
+          "subject": "主题：\"隐私 - 请求\"",
+          "response": "我们将在合理时间内回复。",
+          "dataProtectionOfficer": "[ZH] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "变更：我们可能会定期更新此政策。"
       }
     },
     "terms": {
@@ -96,9 +172,33 @@
       "sections": {
         "acceptance": "条款接受",
         "usage": "服务使用",
+        "service": "服务",
+        "acceptableUse": "可接受使用",
+        "intellectualProperty": "知识产权",
+        "accuracy": "准确性",
         "restrictions": "限制",
         "liability": "责任",
+        "modifications": "修改",
+        "governingLaw": "适用法律",
+        "contact": "联系",
         "changes": "变更"
+      }
+    },
+    "cookies": {
+      "banner": {
+        "title": "Cookie 同意",
+        "message": "我们使用 Cookie 改善体验，并使用 Google Analytics 与 Microsoft Clarity 进行分析。",
+        "accept": "接受",
+        "decline": "拒绝",
+        "learnMore": "了解更多"
+      },
+      "preferences": {
+        "title": "Cookie 偏好",
+        "essential": "必要 Cookie",
+        "essentialDescription": "用于站点基本功能",
+        "analytics": "分析 Cookie",
+        "analyticsDescription": "帮助我们了解站点使用情况（GA、Clarity）",
+        "save": "保存偏好"
       }
     }
   },
@@ -177,7 +277,9 @@
         "empty": "化学式不能为空",
         "invalidElement": "未找到符号“{symbol}”",
         "invalidFormula": "无效的化学式",
-        "mismatchedParentheses": "公式中的括号不匹配"
+        "mismatchedParentheses": "公式中的括号不匹配",
+        "calculationFailed": "[ZH] Failed to calculate molar mass",
+        "generic": "[ZH] An error occurred while calculating molar mass"
       },
       "history": {
         "title": "计算历史",
@@ -274,8 +376,6 @@
       "meltingPoint": "熔点",
       "boilingPoint": "沸点",
       "density": "密度",
-      "yearDiscovered": "发现年份",
-      "discoveredBy": "发现者",
       "group": "族",
       "period": "周期",
       "categories": {
@@ -295,10 +395,8 @@
         "liquid": "液体",
         "gas": "气体"
       },
-      "groups": {
-        "lanthanoid": "镧系",
-        "actinoid": "锕系"
-      }
+      "solubilityNumeric": "[ZH] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[ZH] Qualitative\nSolubility"
     },
     "elements": {
       "H": "氢",
@@ -419,6 +517,70 @@
       "Lv": "𫟺",
       "Ts": "𫓵",
       "Og": "𫓶"
+    },
+    "tableHeadersFull": {
+      "no": "[ZH] Number",
+      "name": "[ZH] Compound Name",
+      "synonym": "[ZH] Common Name",
+      "formula": "[ZH] Molecular Formula",
+      "casNumber": "[ZH] CAS Registry Number",
+      "molarMass": "[ZH] Molecular Weight",
+      "physicalForm": "[ZH] Physical Form",
+      "meltingPoint": "[ZH] Melting Point (°C)",
+      "boilingPoint": "[ZH] Boiling Point (°C)",
+      "density": "[ZH] Density (g/cm³)",
+      "refractiveIndex": "[ZH] Refractive Index (nD)",
+      "solubility": "[ZH] Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "[ZH] ",
+      "id": "[ZH] Unique identifier number of the compound",
+      "name": "[ZH] Name of the chemical compound",
+      "commonName": "[ZH] Common or alternative name of the compound",
+      "formula": "[ZH] Chemical formula of the compound",
+      "casNumber": "[ZH] CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "[ZH] Molar mass in grams per mole (g/mol)",
+      "physicalForm": "[ZH] Physical state at room temperature",
+      "meltingPoint": "[ZH] Melting point in degrees Celsius (°C)",
+      "boilingPoint": "[ZH] Boiling point in degrees Celsius (°C)",
+      "density": "[ZH] Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "[ZH] Refractive index (nD)",
+      "solubility": "[ZH] Qualitative description of water solubility",
+      "solubilityNumeric": "[ZH] Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "[ZH] Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "[ZH] Filter inorganic categories",
+      "clearAll": "[ZH] Clear all",
+      "ácido": "[ZH] Acid",
+      "base": "[ZH] Base",
+      "sal": "[ZH] Salt",
+      "óxido": "[ZH] Oxide"
+    },
+    "yearDiscovered": "[ZH] Year Discovered",
+    "discoveredBy": "[ZH] Discovered By",
+    "group": "[ZH] Group",
+    "period": "[ZH] Period",
+    "categories": {
+      "alkaliMetal": "[ZH] Alkali Metal",
+      "alkalineEarthMetal": "[ZH] Alkaline Earth Metal",
+      "transitionMetal": "[ZH] Transition Metal",
+      "postTransitionMetal": "[ZH] Post-transition Metal",
+      "metalloid": "[ZH] Metalloid",
+      "nonmetal": "[ZH] Nonmetal",
+      "halogen": "[ZH] Halogen",
+      "nobleGas": "[ZH] Noble Gas",
+      "lanthanide": "[ZH] Lanthanide",
+      "actinide": "[ZH] Actinide"
+    },
+    "standardStates": {
+      "solid": "[ZH] Solid",
+      "liquid": "[ZH] Liquid",
+      "gas": "[ZH] Gas"
+    },
+    "groups": {
+      "lanthanoid": "[ZH] Lanthanoid",
+      "actinoid": "[ZH] Actinoid"
     }
   },
   "catalog": {
@@ -442,7 +604,9 @@
       "boilingPoint": "沸点",
       "density": "密度",
       "refractiveIndex": "折射率",
-      "solubility": "溶解度"
+      "solubility": "溶解度",
+      "solubilityNumeric": "[ZH] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[ZH] Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "高级筛选",
@@ -579,45 +743,6 @@
       "density": "密度\ng/cm³",
       "solubilityNumeric": "溶解度\ng/100g H₂O",
       "solubilityQualitative": "定性\n溶解度"
-    },
-    "tableHeadersFull": {
-      "no": "编号",
-      "name": "化合物名称",
-      "synonym": "常用名",
-      "formula": "分子式",
-      "casNumber": "CAS 注册号",
-      "molarMass": "分子量",
-      "physicalForm": "物理形态",
-      "meltingPoint": "熔点 (°C)",
-      "boilingPoint": "沸点 (°C)",
-      "density": "密度 (g/cm³)",
-      "refractiveIndex": "折射率 (nD)",
-      "solubility": "溶解度"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "化合物的唯一标识号",
-      "name": "化合物名称",
-      "commonName": "化合物的常用名或别名",
-      "formula": "化合物的化学式",
-      "casNumber": "CAS 注册号 (化学文摘社)",
-      "molarMass": "以克每摩尔表示的摩尔质量 (g/mol)",
-      "physicalForm": "室温下的物理状态",
-      "meltingPoint": "以摄氏度表示的熔点 (°C)",
-      "boilingPoint": "以摄氏度表示的沸点 (°C)",
-      "density": "以克/立方厘米表示的密度 (g/cm³)",
-      "refractiveIndex": "折射率 (nD)",
-      "solubility": "水中溶解性的定性描述",
-      "solubilityNumeric": "溶解于 100g 水中的最大量 (g/100g H₂O)",
-      "solubilityQualitative": "溶解性的定性描述"
-    },
-    "categoryTags": {
-      "placeholder": "筛选无机类别",
-      "clearAll": "清除全部",
-      "ácido": "酸",
-      "base": "碱",
-      "sal": "盐",
-      "óxido": "氧化物"
     }
   },
   "games": {
@@ -717,4 +842,3 @@
     "more": "+ 另外 {count}"
   }
 }
-

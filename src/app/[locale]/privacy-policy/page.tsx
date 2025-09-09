@@ -12,10 +12,13 @@ export default async function PrivacyPolicyPage({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "common.privacy" });
 
-  const currentDate = new Date().toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
-    month: "long",
-    day: "numeric",
-  });
+  const currentDate = new Date().toLocaleDateString(
+    locale === "pt" ? "pt-BR" : "en-US",
+    {
+      month: "long",
+      day: "numeric",
+    }
+  );
 
   return (
     <Page title={t("title")}>
@@ -42,12 +45,8 @@ export default async function PrivacyPolicyPage({
             </CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              {t("content.introduction.paragraph1")}
-            </p>
-            <p>
-              {t("content.introduction.paragraph2")}
-            </p>
+            <p>{t("content.introduction.paragraph1")}</p>
+            <p>{t("content.introduction.paragraph2")}</p>
           </CardContent>
         </Card>
 
@@ -62,22 +61,26 @@ export default async function PrivacyPolicyPage({
           <CardContent className="prose dark:prose-invert max-w-none">
             <h4>{t("content.dataCollection.automaticData")}</h4>
             <ul>
-              {t.raw("content.dataCollection.automaticDataList").map((item: string, index: number) => (
+              {(Array.isArray(t.raw("content.dataCollection.automaticDataList"))
+                ? t.raw("content.dataCollection.automaticDataList")
+                : []
+              ).map((item: string, index: number) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
-            
+
             <h4>{t("content.dataCollection.usageData")}</h4>
             <ul>
-              {t.raw("content.dataCollection.usageDataList").map((item: string, index: number) => (
+              {(Array.isArray(t.raw("content.dataCollection.usageDataList"))
+                ? t.raw("content.dataCollection.usageDataList")
+                : []
+              ).map((item: string, index: number) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
-            
+
             <h4>{t("content.dataCollection.notCollected")}</h4>
-            <p>
-              {t("content.dataCollection.notCollectedText")}
-            </p>
+            <p>{t("content.dataCollection.notCollectedText")}</p>
           </CardContent>
         </Card>
 
@@ -92,7 +95,10 @@ export default async function PrivacyPolicyPage({
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>{t("content.dataUsage.intro")}</p>
             <ul>
-              {t.raw("content.dataUsage.list").map((item: string, index: number) => (
+              {(Array.isArray(t.raw("content.dataUsage.list"))
+                ? t.raw("content.dataUsage.list")
+                : []
+              ).map((item: string, index: number) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
@@ -109,24 +115,33 @@ export default async function PrivacyPolicyPage({
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
             <h4>{t("content.cookies.types")}</h4>
-            
+
             <h5>{t("content.cookies.essential")}</h5>
             <ul>
-              {t.raw("content.cookies.essentialList").map((item: string, index: number) => (
+              {(Array.isArray(t.raw("content.cookies.essentialList"))
+                ? t.raw("content.cookies.essentialList")
+                : []
+              ).map((item: string, index: number) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
-            
+
             <h5>{t("content.cookies.analytics")}</h5>
             <ul>
-              {t.raw("content.cookies.analyticsList").map((item: string, index: number) => (
-                <li key={index} dangerouslySetInnerHTML={{ __html: item.replace(/^([^:]+):/, '<strong>$1:</strong>') }} />
+              {(Array.isArray(t.raw("content.cookies.analyticsList"))
+                ? t.raw("content.cookies.analyticsList")
+                : []
+              ).map((item: string, index: number) => (
+                <li
+                  key={index}
+                  dangerouslySetInnerHTML={{
+                    __html: item.replace(/^([^:]+):/, "<strong>$1:</strong>"),
+                  }}
+                />
               ))}
             </ul>
-            
-            <p>
-              {t("content.cookies.management")}
-            </p>
+
+            <p>{t("content.cookies.management")}</p>
           </CardContent>
         </Card>
 
@@ -140,28 +155,48 @@ export default async function PrivacyPolicyPage({
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>{t("content.thirdParty.intro")}</p>
-            
+
             <h4>{t("content.thirdParty.googleAnalytics")}</h4>
             <ul>
-              {t.raw("content.thirdParty.googleAnalyticsList").map((item: string, index: number) => {
+              {(Array.isArray(t.raw("content.thirdParty.googleAnalyticsList"))
+                ? t.raw("content.thirdParty.googleAnalyticsList")
+                : []
+              ).map((item: string, index: number) => {
                 if (item.includes("Google Privacy Policy")) {
                   return (
                     <li key={index}>
-                      Política: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
+                      Política:{" "}
+                      <a
+                        href="https://policies.google.com/privacy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Google Privacy Policy
+                      </a>
                     </li>
                   );
                 }
                 return <li key={index}>{item}</li>;
               })}
             </ul>
-            
+
             <h4>{t("content.thirdParty.microsoftClarity")}</h4>
             <ul>
-              {t.raw("content.thirdParty.microsoftClarityList").map((item: string, index: number) => {
+              {(Array.isArray(t.raw("content.thirdParty.microsoftClarityList"))
+                ? t.raw("content.thirdParty.microsoftClarityList")
+                : []
+              ).map((item: string, index: number) => {
                 if (item.includes("Microsoft Privacy Statement")) {
                   return (
                     <li key={index}>
-                      Política: <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>
+                      Política:{" "}
+                      <a
+                        href="https://privacy.microsoft.com/privacystatement"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Microsoft Privacy Statement
+                      </a>
                     </li>
                   );
                 }
@@ -182,8 +217,16 @@ export default async function PrivacyPolicyPage({
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>{t("content.rights.intro")}</p>
             <ul>
-              {t.raw("content.rights.list").map((item: string, index: number) => (
-                <li key={index} dangerouslySetInnerHTML={{ __html: item.replace(/^([^:]+):/, '<strong>$1:</strong>') }} />
+              {(Array.isArray(t.raw("content.rights.list"))
+                ? t.raw("content.rights.list")
+                : []
+              ).map((item: string, index: number) => (
+                <li
+                  key={index}
+                  dangerouslySetInnerHTML={{
+                    __html: item.replace(/^([^:]+):/, "<strong>$1:</strong>"),
+                  }}
+                />
               ))}
             </ul>
           </CardContent>
@@ -198,16 +241,18 @@ export default async function PrivacyPolicyPage({
             </CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              {t("content.contact.intro")}
-            </p>
+            <p>{t("content.contact.intro")}</p>
             <ul>
-              <li><strong>{t("content.contact.email").split(': ')[0]}:</strong> {t("content.contact.email").split(': ')[1]}</li>
-              <li><strong>{t("content.contact.subject").split(': ')[0]}:</strong> &ldquo;{t("content.contact.subject").split('"')[1]}&rdquo;</li>
+              <li>
+                <strong>{t("content.contact.email").split(": ")[0]}:</strong>{" "}
+                {t("content.contact.email").split(": ")[1]}
+              </li>
+              <li>
+                <strong>{t("content.contact.subject").split(": ")[0]}:</strong>{" "}
+                &ldquo;{t("content.contact.subject").split('"')[1]}&rdquo;
+              </li>
             </ul>
-            <p>
-              {t("content.contact.response")}
-            </p>
+            <p>{t("content.contact.response")}</p>
           </CardContent>
         </Card>
 
@@ -215,7 +260,8 @@ export default async function PrivacyPolicyPage({
         <Card className="bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
           <CardContent className="pt-6">
             <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>{t("content.changes").split(': ')[0]}:</strong> {t("content.changes").split(': ')[1]}
+              <strong>{t("content.changes").split(": ")[0]}:</strong>{" "}
+              {t("content.changes").split(": ")[1]}
             </p>
           </CardContent>
         </Card>

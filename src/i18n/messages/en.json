@@ -107,7 +107,102 @@
         "cookies": "Cookies",
         "thirdParty": "Third-Party Services",
         "rights": "Your Rights",
-        "contact": "Contact"
+        "contact": "Contact",
+        "changes": "Changes"
+      },
+      "metadata": {
+        "description": "Comprehensive information on how we collect, use, and protect your data, cookies, and third-party services in compliance with international privacy regulations."
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "Mol Class is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, and protect your information when you use our website and educational chemistry services.",
+          "paragraph2": "This policy complies with the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and other applicable data protection regulations. We are transparent about our data practices and respect your privacy rights."
+        },
+        "dataCollection": {
+          "automaticData": "Automatically Collected Data:",
+          "automaticDataList": [
+            "IP address and device information",
+            "Browser type and operating system",
+            "Pages visited and time spent",
+            "Referral sources from external sites",
+            "Device identifiers and session information"
+          ],
+          "usageData": "Usage Data:",
+          "usageDataList": [
+            "Interactions with chemistry calculators and tools",
+            "Language and theme preferences",
+            "Calculation history (stored locally in your browser)",
+            "Feature usage patterns and performance metrics"
+          ],
+          "notCollected": "Data We Do NOT Collect:",
+          "notCollectedText": "Mol Class does not collect sensitive personal information such as health data, religious or political beliefs, sexual orientation, financial information, or personally identifiable information like names, emails, or government-issued ID numbers unless explicitly provided by you."
+        },
+        "dataUsage": {
+          "intro": "We use your data for the following purposes:",
+          "list": [
+            "Provide and improve our educational chemistry services",
+            "Personalize your learning experience and remember preferences",
+            "Analyze site usage for improvements and optimization",
+            "Ensure security and proper functioning of our services",
+            "Comply with legal obligations and respond to legitimate requests",
+            "Develop new features and educational content"
+          ]
+        },
+        "cookies": {
+          "types": "Types of Cookies We Use:",
+          "essential": "Essential Cookies:",
+          "essentialList": [
+            "Language and theme preferences",
+            "Cookie consent preferences",
+            "Session management and security",
+            "Basic site functionality and navigation"
+          ],
+          "analytics": "Analytics Cookies (Optional):",
+          "analyticsList": [
+            "Google Analytics: Traffic analysis and user behavior tracking",
+            "Microsoft Clarity: User experience analysis and session recordings",
+            "Performance monitoring and error tracking"
+          ],
+          "management": "You can manage your cookie preferences through our consent banner or your browser settings. Disabling analytics cookies will not affect the core functionality of our educational tools."
+        },
+        "thirdParty": {
+          "intro": "We use the following trusted third-party services:",
+          "googleAnalytics": "Google Analytics:",
+          "googleAnalyticsList": [
+            "Website traffic and user behavior analysis",
+            "Anonymized and aggregated usage statistics",
+            "Data retention: 26 months maximum",
+            "Privacy Policy: https://policies.google.com/privacy"
+          ],
+          "microsoftClarity": "Microsoft Clarity:",
+          "microsoftClarityList": [
+            "User experience analysis and interaction tracking",
+            "Anonymized session recordings and heatmaps",
+            "Performance optimization insights",
+            "Privacy Policy: https://privacy.microsoft.com/privacystatement"
+          ]
+        },
+        "rights": {
+          "intro": "Under applicable privacy laws (GDPR, CCPA, etc.), you have the following rights:",
+          "list": [
+            "Access: Know what personal data we hold about you",
+            "Rectification: Request correction of inaccurate data",
+            "Erasure: Request deletion of your personal data",
+            "Portability: Receive your data in a structured format",
+            "Object: Oppose certain types of data processing",
+            "Restrict: Limit how we process your data",
+            "Withdraw Consent: Revoke consent at any time",
+            "Non-Discrimination: Not be discriminated against for exercising privacy rights"
+          ]
+        },
+        "contact": {
+          "intro": "To exercise your privacy rights, ask questions about this policy, or report concerns, contact us:",
+          "email": "Email: molclassapp@gmail.com",
+          "subject": "Subject: \"Privacy Rights Request\" or \"Privacy Policy Inquiry\"",
+          "response": "We will respond to your requests within the timeframe required by applicable law (typically 30 days for GDPR, 45 days for CCPA).",
+          "dataProtectionOfficer": "For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "Changes to This Policy: This Privacy Policy may be updated periodically to reflect changes in our practices or legal requirements. We will notify users of significant changes through our website. The date of the last update is indicated at the top of this page. We encourage you to review this policy regularly."
       }
     },
     "terms": {
@@ -116,8 +211,15 @@
       "sections": {
         "acceptance": "Acceptance of Terms",
         "usage": "Service Usage",
+        "service": "Service",
+        "acceptableUse": "Acceptable Use",
+        "intellectualProperty": "Intellectual Property",
+        "accuracy": "Accuracy",
         "restrictions": "Restrictions",
         "liability": "Liability",
+        "modifications": "Modifications",
+        "governingLaw": "Governing Law",
+        "contact": "Contact",
         "changes": "Changes"
       }
     }
@@ -162,7 +264,6 @@
     "welcome": "Welcome to Mol Class!",
     "subtitle": "Choose a tool in the sidebar to get started.",
     "description": "This is the starting point of Mol Class, where you can access various interactive chemistry tools."
-
   },
   "calculators": {
     "title": "Calculators",
@@ -198,7 +299,9 @@
         "empty": "The formula cannot be empty",
         "invalidElement": "The symbol \"{symbol}\" was not found",
         "invalidFormula": "Invalid chemical formula",
-        "mismatchedParentheses": "Mismatched parentheses in the formula"
+        "mismatchedParentheses": "Mismatched parentheses in the formula",
+        "calculationFailed": "Failed to calculate molar mass",
+        "generic": "An error occurred while calculating molar mass"
       },
       "history": {
         "title": "Calculation History",
@@ -244,16 +347,15 @@
         "divisionByZero": "Division by zero is not allowed",
         "generic": "An error occurred while calculating"
       },
-        "history": {
-          "title": "Calculation History",
-          "show": "Show History",
-          "hide": "Hide History",
-          "clear": "Clear History",
-          "empty": "No calculations performed yet",
-          "clickToUse": "Click to use this result"
-        }
+      "history": {
+        "title": "Calculation History",
+        "show": "Show History",
+        "hide": "Hide History",
+        "clear": "Clear History",
+        "empty": "No calculations performed yet",
+        "clickToUse": "Click to use this result"
       }
-    
+    }
   },
   "periodicTable": {
     "title": "Periodic Table",
@@ -295,9 +397,9 @@
       "standardState": "Standard State",
       "meltingPoint": "Melting Point",
       "boilingPoint": "Boiling Point",
-      "density": "Density",
-      "yearDiscovered": "Year Discovered",
-      "discoveredBy": "Discovered By",
+      "density": "Density\ng/cm³",
+      "solubilityNumeric": "Solubility\ng/100g H₂O",
+      "solubilityQualitative": "Qualitative\nSolubility",
       "group": "Group",
       "period": "Period",
       "categories": {
@@ -316,11 +418,71 @@
         "solid": "Solid",
         "liquid": "Liquid",
         "gas": "Gas"
-      },
-      "groups": {
-        "lanthanoid": "Lanthanoid",
-        "actinoid": "Actinoid"
       }
+    },
+    "tableHeadersFull": {
+      "no": "Number",
+      "name": "Compound Name",
+      "synonym": "Common Name",
+      "formula": "Molecular Formula",
+      "casNumber": "CAS Registry Number",
+      "molarMass": "Molecular Weight",
+      "physicalForm": "Physical Form",
+      "meltingPoint": "Melting Point (°C)",
+      "boilingPoint": "Boiling Point (°C)",
+      "density": "Density (g/cm³)",
+      "refractiveIndex": "Refractive Index (nD)",
+      "solubility": "Solubility"
+    },
+    "tableHeaderDescriptions": {
+    "no": "",
+    "id": "Unique identifier number of the compound",
+      "name": "Name of the chemical compound",
+      "commonName": "Common or alternative name of the compound",
+      "formula": "Chemical formula of the compound",
+      "casNumber": "CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "Molar mass in grams per mole (g/mol)",
+      "physicalForm": "Physical state at room temperature",
+      "meltingPoint": "Melting point in degrees Celsius (°C)",
+      "boilingPoint": "Boiling point in degrees Celsius (°C)",
+      "density": "Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "Refractive index (nD)",
+      "solubility": "Qualitative description of water solubility",
+      "solubilityNumeric": "Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "Filter inorganic categories",
+      "clearAll": "Clear all",
+      "ácido": "Acid",
+      "base": "Base",
+      "sal": "Salt",
+      "óxido": "Oxide"
+    },
+    "yearDiscovered": "Year Discovered",
+    "discoveredBy": "Discovered By",
+    "group": "Group",
+    "period": "Period",
+    "categories": {
+      "alkaliMetal": "Alkali Metal",
+      "alkalineEarthMetal": "Alkaline Earth Metal",
+      "transitionMetal": "Transition Metal",
+      "postTransitionMetal": "Post-transition Metal",
+      "metalloid": "Metalloid",
+      "nonmetal": "Nonmetal",
+      "halogen": "Halogen",
+      "nobleGas": "Noble Gas",
+      "lanthanide": "Lanthanide",
+      "actinide": "Actinide"
+    },
+    "standardStates": {
+      "solid": "Solid",
+      "liquid": "Liquid",
+      "gas": "Gas"
+    },
+    "groups": {
+      "lanthanoid": "Lanthanoid",
+      "actinoid": "Actinoid"
     },
     "elements": {
       "H": "Hydrogen",
@@ -443,6 +605,102 @@
       "Og": "Oganesson"
     }
   },
+  "games": {
+    "elementQuiz": {
+      "title": "Element Quiz"
+    },
+    "compoundBuilder": {
+      "title": "Compound Builder"
+    }
+  },
+  "physicalFormTerms": {
+    "Solid": "Solid",
+    "Liquid": "Liquid",
+    "Gas": "Gas",
+    "Crystals": "Crystals",
+    "Powder": "Powder",
+    "Solution": "Solution",
+    "Blue crystals": "Blue crystals",
+    "Colorless crystals": "Colorless crystals",
+    "White solid (flakes/pellets)": "White solid (flakes/pellets)",
+    "White powder": "White powder",
+    "White solid (lumps)": "White solid (lumps)",
+    "White crystalline powder": "White crystalline powder",
+    "White crystalline solid": "White crystalline solid",
+    "Purple crystals": "Purple crystals",
+    "Orange crystals": "Orange crystals",
+    "Reddish-brown solid": "Reddish-brown solid",
+    "Hard solid (crystalline)": "Hard solid (crystalline)",
+    "White solid (flakes)": "White solid (flakes)",
+    "White solid": "White solid",
+    "Colorless liquid": "Colorless liquid",
+    "Syrupy liquid or solid (crystals)": "Syrupy liquid or solid (crystals)",
+    "Blue-green crystals": "Blue-green crystals",
+    "Black powder": "Black powder",
+    "White deliquescent solid": "White deliquescent solid",
+    "White heavy powder": "White heavy powder",
+    "White solid (crystalline)": "White solid (crystalline)",
+    "Usually in aqueous solution": "Usually in aqueous solution",
+    "Black or brown solid": "Black or brown solid",
+    "Transparent crystals": "Transparent crystals",
+    "Reddish-brown gas": "Reddish-brown gas",
+    "Colorless gas": "Colorless gas",
+    "White/gray powder": "White/gray powder",
+    "Gas (aqueous solution is liquid)": "Gas (aqueous solution is liquid)",
+    "Liquid (viscous)": "Liquid (viscous)"
+  },
+  "solubilityTerms": {
+    "Soluble": "Soluble in water",
+    "Insoluble": "Insoluble in water",
+    "Sparingly": "Sparingly soluble in water",
+    "Highly": "Highly soluble in water",
+    "Miscible": "Miscible with water",
+    "Reacts": "Reacts with water",
+    "Soluble in water": "Soluble in water",
+    "Practically insoluble in water": "Practically insoluble in water",
+    "Miscible with many liquids": "Miscible with many liquids",
+    "Sparingly soluble in water": "Sparingly soluble in water",
+    "Highly soluble in water": "Highly soluble in water",
+    "Fully miscible with water": "Fully miscible with water",
+    "Miscible with water (exothermic)": "Miscible with water (exothermic)",
+    "Miscible with water": "Miscible with water",
+    "Very soluble in water": "Very soluble in water",
+    "Reacts with water (forms Ca(OH)2)": "Reacts with water (forms Ca(OH)2)",
+    "Moderately soluble in water": "Moderately soluble in water",
+    "Insoluble in water": "Insoluble in water",
+    "Slightly soluble in water": "Slightly soluble in water",
+    "Virtually insoluble in water": "Virtually insoluble in water",
+    "Fully soluble in water": "Fully soluble in water",
+    "Sparingly soluble (reacts with water)": "Sparingly soluble (reacts with water)",
+    "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
+    "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
+    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)",
+    "Soluble_in_water_5_6_g_100mL_at_20C": "Soluble in water (5.6 g/100mL at 20°C)",
+    "In_water_12_g_100_mL_25_C": "In water: 12 g/100 mL (25 °C)",
+    "Highly soluble in water (forms H2SO3)": "Highly soluble in water (forms H2SO3)"
+  },
+  "compoundTable": {
+    "loading": "Loading...",
+    "errorLoading": "Error loading data.",
+    "search": "Search",
+    "searchPlaceholder": "Search compounds...",
+    "columns": "Columns",
+    "rowsPerPage": "Rows per page:",
+    "noResults": "No results found.",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "pageOf": "Page {current} of {total}"
+  },
+  "multiSelect": {
+    "placeholder": "Select options",
+    "searchPlaceholder": "Search...",
+    "selectAll": "(Select All)",
+    "clear": "Clear",
+    "close": "Close",
+    "noResults": "No results found.",
+    "more": "+ {count} more"
+  },
   "catalog": {
     "title": "Inorganic Compounds",
     "subtitle": "Explore detailed information about inorganic compounds",
@@ -464,7 +722,9 @@
       "boilingPoint": "Boiling Point",
       "density": "Density",
       "refractiveIndex": "Refractive Index",
-      "solubility": "Solubility"
+      "solubility": "Solubility",
+      "solubilityNumeric": "Solubility\ng/100g H₂O",
+      "solubilityQualitative": "Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "Advanced Filters",
@@ -598,144 +858,9 @@
       "boilingPoint": "bp/°C",
       "refractiveIndex": "nD",
       "solubility": "Solubility",
-      "density": "Density\ng/cm³",
-      "solubilityNumeric": "Solubility\ng/100g H₂O",
-      "solubilityQualitative": "Qualitative\nSolubility"
-    },
-    "tableHeadersFull": {
-      "no": "Number",
-      "name": "Compound Name",
-      "synonym": "Common Name",
-      "formula": "Molecular Formula",
-      "casNumber": "CAS Registry Number",
-      "molarMass": "Molecular Weight",
-      "physicalForm": "Physical Form",
-      "meltingPoint": "Melting Point (°C)",
-      "boilingPoint": "Boiling Point (°C)",
-      "density": "Density (g/cm³)",
-      "refractiveIndex": "Refractive Index (nD)",
-      "solubility": "Solubility"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "Unique identifier number of the compound",
-      "name": "Name of the chemical compound",
-      "commonName": "Common or alternative name of the compound",
-      "formula": "Chemical formula of the compound",
-      "casNumber": "CAS Registry Number (Chemical Abstracts Service)",
-      "molarMass": "Molar mass in grams per mole (g/mol)",
-      "physicalForm": "Physical state at room temperature",
-      "meltingPoint": "Melting point in degrees Celsius (°C)",
-      "boilingPoint": "Boiling point in degrees Celsius (°C)",
-      "density": "Density in grams per cubic centimeter (g/cm³)",
-      "refractiveIndex": "Refractive index (nD)",
-      "solubility": "Qualitative description of water solubility",
-      "solubilityNumeric": "Maximum amount dissolved in 100g of water (g/100g H₂O)",
-      "solubilityQualitative": "Qualitative description of solubility"
-    },
-    "categoryTags": {
-      "placeholder": "Filter inorganic categories",
-      "clearAll": "Clear all",
-      "ácido": "Acid",
-      "base": "Base",
-      "sal": "Salt",
-      "óxido": "Oxide"
+      "solubilityNumeric": "Solubility (g/100g H₂O)",
+      "solubilityQualitative": "Qualitative Solubility",
+      "density": "Density"
     }
-  },
-  "games": {
-    "elementQuiz": {
-      "title": "Element Quiz"
-    },
-    "compoundBuilder": {
-      "title": "Compound Builder"
-    }
-  },
-  "physicalFormTerms": {
-    "Solid": "Solid",
-    "Liquid": "Liquid",
-    "Gas": "Gas",
-    "Crystals": "Crystals",
-    "Powder": "Powder",
-    "Solution": "Solution",
-    "Blue crystals": "Blue crystals",
-    "Colorless crystals": "Colorless crystals",
-    "White solid (flakes/pellets)": "White solid (flakes/pellets)",
-    "White powder": "White powder",
-    "White solid (lumps)": "White solid (lumps)",
-    "White crystalline powder": "White crystalline powder",
-    "White crystalline solid": "White crystalline solid",
-    "Purple crystals": "Purple crystals",
-    "Orange crystals": "Orange crystals",
-    "Reddish-brown solid": "Reddish-brown solid",
-    "Hard solid (crystalline)": "Hard solid (crystalline)",
-    "White solid (flakes)": "White solid (flakes)",
-    "White solid": "White solid",
-    "Colorless liquid": "Colorless liquid",
-    "Syrupy liquid or solid (crystals)": "Syrupy liquid or solid (crystals)",
-    "Blue-green crystals": "Blue-green crystals",
-    "Black powder": "Black powder",
-    "White deliquescent solid": "White deliquescent solid",
-    "White heavy powder": "White heavy powder",
-    "White solid (crystalline)": "White solid (crystalline)",
-    "Usually in aqueous solution": "Usually in aqueous solution",
-    "Black or brown solid": "Black or brown solid",
-    "Transparent crystals": "Transparent crystals",
-    "Reddish-brown gas": "Reddish-brown gas",
-    "Colorless gas": "Colorless gas",
-    "White/gray powder": "White/gray powder",
-    "Gas (aqueous solution is liquid)": "Gas (aqueous solution is liquid)",
-    "Liquid (viscous)": "Liquid (viscous)"
-  },
-  "solubilityTerms": {
-    "Soluble": "Soluble in water",
-    "Insoluble": "Insoluble in water",
-    "Sparingly": "Sparingly soluble in water",
-    "Highly": "Highly soluble in water",
-    "Miscible": "Miscible with water",
-    "Reacts": "Reacts with water",
-    "Soluble in water": "Soluble in water",
-    "Practically insoluble in water": "Practically insoluble in water",
-    "Miscible with many liquids": "Miscible with many liquids",
-    "Sparingly soluble in water": "Sparingly soluble in water",
-    "Highly soluble in water": "Highly soluble in water",
-    "Fully miscible with water": "Fully miscible with water",
-    "Miscible with water (exothermic)": "Miscible with water (exothermic)",
-    "Miscible with water": "Miscible with water",
-    "Very soluble in water": "Very soluble in water",
-    "Reacts with water (forms Ca(OH)2)": "Reacts with water (forms Ca(OH)2)",
-    "Moderately soluble in water": "Moderately soluble in water",
-    "Insoluble in water": "Insoluble in water",
-    "Slightly soluble in water": "Slightly soluble in water",
-    "Virtually insoluble in water": "Virtually insoluble in water",
-    "Fully soluble in water": "Fully soluble in water",
-    "Sparingly soluble (reacts with water)": "Sparingly soluble (reacts with water)",
-    "Reacts with water (forms H2SO3)": "Reacts with water (forms H2SO3)",
-    "Reacts with water (forms HNO2/HNO3)": "Reacts with water (forms HNO2/HNO3)",
-    "Very soluble in water (deliquescent)": "Very soluble in water (deliquescent)",
-    "Soluble_in_water_5_6_g_100mL_at_20C": "Soluble in water (5.6 g/100mL at 20°C)",
-    "In_water_12_g_100_mL_25_C": "In water: 12 g/100 mL (25 °C)",
-    "Highly soluble in water (forms H2SO3)": "Highly soluble in water (forms H2SO3)"
-  },
-  "compoundTable": {
-    "loading": "Loading...",
-    "errorLoading": "Error loading data.",
-    "search": "Search",
-    "searchPlaceholder": "Search compounds...",
-    "columns": "Columns",
-    "rowsPerPage": "Rows per page:",
-    "noResults": "No results found.",
-    "previous": "Previous",
-    "next": "Next",
-    "page": "Page",
-    "pageOf": "Page {current} of {total}"
-  },
-  "multiSelect": {
-    "placeholder": "Select options",
-    "searchPlaceholder": "Search...",
-    "selectAll": "(Select All)",
-    "clear": "Clear",
-    "close": "Close",
-    "noResults": "No results found.",
-    "more": "+ {count} more"
   }
 }

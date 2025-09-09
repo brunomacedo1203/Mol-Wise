@@ -75,7 +75,10 @@
     },
     "footer": {
       "contact": "संपर्क करें",
-      "developed": "{year} में विकसित"
+      "developed": "{year} में विकसित",
+      "privacyPolicy": "गोपनीयता नीति",
+      "termsOfUse": "उपयोग की शर्तें",
+      "policies": "[HI] Policies"
     },
     "privacy": {
       "title": "गोपनीयता नीति",
@@ -87,7 +90,80 @@
         "cookies": "कुकीज़",
         "thirdParty": "तृतीय-पक्ष सेवाएं",
         "rights": "आपके अधिकार",
-        "contact": "संपर्क"
+        "contact": "संपर्क",
+        "changes": "[HI] Changes"
+      },
+      "metadata": {
+        "description": "हम डेटा कैसे एकत्र/उपयोग करते हैं, कुकीज़ और तृतीय-पक्ष सेवाओं के बारे में जानकारी।"
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "हम आपकी गोपनीयता और पारदर्शिता को महत्व देते हैं।",
+          "paragraph2": "यह दस्तावेज़ बताता है कि हम कौन सा डेटा एकत्र करते हैं और उसका उपयोग कैसे करते हैं।"
+        },
+        "dataCollection": {
+          "automaticData": "स्वचालित रूप से एकत्रित डेटा",
+          "automaticDataList": [
+            "देखे गए पृष्ठ",
+            "मूल उपयोग घटनाएँ"
+          ],
+          "usageData": "उपयोग डेटा",
+          "usageDataList": [
+            "भाषा",
+            "डिवाइस प्रकार"
+          ],
+          "notCollected": "जो डेटा हम एकत्र नहीं करते",
+          "notCollectedText": "हम संवेदनशील व्यक्तिगत जानकारी एकत्र नहीं करते।"
+        },
+        "dataUsage": {
+          "intro": "हम उत्पाद सुधार और समेकित आँकड़ों के लिए डेटा का उपयोग करते हैं।",
+          "list": [
+            "साइट उपयोग मापना",
+            "उपयोगकर्ता अनुभव बेहतर करना"
+          ]
+        },
+        "cookies": {
+          "types": "कुकी प्रकार",
+          "essential": "आवश्यक",
+          "essentialList": [
+            "भाषा प्राथमिकताएँ",
+            "सत्र स्थिति"
+          ],
+          "analytics": "विश्लेषण",
+          "analyticsList": [
+            "Google Analytics: उपयोग माप",
+            "Microsoft Clarity: सत्र और हीटमैप"
+          ],
+          "management": "आप कुकी बैनर में अपनी प्राथमिकताएँ प्रबंधित कर सकते हैं।"
+        },
+        "thirdParty": {
+          "intro": "हम विश्लेषण हेतु तृतीय-पक्ष सेवाओं का उपयोग कर सकते हैं।",
+          "googleAnalytics": "Google Analytics",
+          "googleAnalyticsList": [
+            "पेज व्यू और इवेंट मापता है",
+            "Google Privacy Policy"
+          ],
+          "microsoftClarity": "Microsoft Clarity",
+          "microsoftClarityList": [
+            "सत्र और हीटमैप",
+            "Microsoft Privacy Statement"
+          ]
+        },
+        "rights": {
+          "intro": "आप डेटा तक पहुंच और हटाने का अनुरोध कर सकते हैं।",
+          "list": [
+            "पहुंच: आप अपने डेटा का अनुरोध कर सकते हैं",
+            "हटाना: आप हटाने का अनुरोध कर सकते हैं"
+          ]
+        },
+        "contact": {
+          "intro": "प्रश्न या अनुरोध के लिए हमसे संपर्क करें:",
+          "email": "Email: contato@molclass.com",
+          "subject": "विषय: \"Privacy - Request\"",
+          "response": "हम उचित समय में उत्तर देंगे।",
+          "dataProtectionOfficer": "[HI] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "परिवर्तन: हम समय-समय पर इस नीति को अपडेट कर सकते हैं।"
       }
     },
     "terms": {
@@ -96,9 +172,33 @@
       "sections": {
         "acceptance": "शर्तों की स्वीकृति",
         "usage": "सेवा का उपयोग",
+        "service": "सेवा",
+        "acceptableUse": "स्वीकार्य उपयोग",
+        "intellectualProperty": "बौद्धिक संपदा",
+        "accuracy": "शुद्धता",
         "restrictions": "प्रतिबंध",
         "liability": "दायित्व",
+        "modifications": "संशोधन",
+        "governingLaw": "शासकीय क़ानून",
+        "contact": "संपर्क",
         "changes": "परिवर्तन"
+      }
+    },
+    "cookies": {
+      "banner": {
+        "title": "कुकी सहमति",
+        "message": "हम अनुभव सुधारने हेतु कुकीज़ का उपयोग करते हैं। विश्लेषण के लिए Google Analytics और Microsoft Clarity का उपयोग होता है।",
+        "accept": "स्वीकार करें",
+        "decline": "अस्वीकार करें",
+        "learnMore": "अधिक जानें"
+      },
+      "preferences": {
+        "title": "कुकी प्राथमिकताएँ",
+        "essential": "आवश्यक कुकीज़",
+        "essentialDescription": "बुनियादी साइट कार्यों के लिए आवश्यक",
+        "analytics": "विश्लेषण कुकीज़",
+        "analyticsDescription": "साइट उपयोग समझने में सहायता (GA, Clarity)",
+        "save": "प्राथमिकताएँ सहेजें"
       }
     }
   },
@@ -177,7 +277,9 @@
         "empty": "सूत्र खाली नहीं हो सकता",
         "invalidElement": "प्रतीक \"{symbol}\" नहीं मिला",
         "invalidFormula": "अमान्य रासायनिक सूत्र",
-        "mismatchedParentheses": "सूत्र में कोष्ठक मेल नहीं खाते"
+        "mismatchedParentheses": "सूत्र में कोष्ठक मेल नहीं खाते",
+        "calculationFailed": "[HI] Failed to calculate molar mass",
+        "generic": "[HI] An error occurred while calculating molar mass"
       },
       "history": {
         "title": "गणना इतिहास",
@@ -274,8 +376,6 @@
       "meltingPoint": "गलनांक",
       "boilingPoint": "स्फुटनांक",
       "density": "घनत्व",
-      "yearDiscovered": "खोज का वर्ष",
-      "discoveredBy": "खोजकर्ता",
       "group": "समूह",
       "period": "अवधि",
       "categories": {
@@ -295,10 +395,8 @@
         "liquid": "द्रव",
         "gas": "गैस"
       },
-      "groups": {
-        "lanthanoid": "लैंथेनॉइड",
-        "actinoid": "ऐक्टिनॉइड"
-      }
+      "solubilityNumeric": "[HI] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[HI] Qualitative\nSolubility"
     },
     "elements": {
       "H": "हाइड्रोजन",
@@ -419,6 +517,70 @@
       "Lv": "लिवर्मोरियम",
       "Ts": "टेनेसिन",
       "Og": "ओगानेसन"
+    },
+    "tableHeadersFull": {
+      "no": "[HI] Number",
+      "name": "[HI] Compound Name",
+      "synonym": "[HI] Common Name",
+      "formula": "[HI] Molecular Formula",
+      "casNumber": "[HI] CAS Registry Number",
+      "molarMass": "[HI] Molecular Weight",
+      "physicalForm": "[HI] Physical Form",
+      "meltingPoint": "[HI] Melting Point (°C)",
+      "boilingPoint": "[HI] Boiling Point (°C)",
+      "density": "[HI] Density (g/cm³)",
+      "refractiveIndex": "[HI] Refractive Index (nD)",
+      "solubility": "[HI] Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "[HI] ",
+      "id": "[HI] Unique identifier number of the compound",
+      "name": "[HI] Name of the chemical compound",
+      "commonName": "[HI] Common or alternative name of the compound",
+      "formula": "[HI] Chemical formula of the compound",
+      "casNumber": "[HI] CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "[HI] Molar mass in grams per mole (g/mol)",
+      "physicalForm": "[HI] Physical state at room temperature",
+      "meltingPoint": "[HI] Melting point in degrees Celsius (°C)",
+      "boilingPoint": "[HI] Boiling point in degrees Celsius (°C)",
+      "density": "[HI] Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "[HI] Refractive index (nD)",
+      "solubility": "[HI] Qualitative description of water solubility",
+      "solubilityNumeric": "[HI] Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "[HI] Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "[HI] Filter inorganic categories",
+      "clearAll": "[HI] Clear all",
+      "ácido": "[HI] Acid",
+      "base": "[HI] Base",
+      "sal": "[HI] Salt",
+      "óxido": "[HI] Oxide"
+    },
+    "yearDiscovered": "[HI] Year Discovered",
+    "discoveredBy": "[HI] Discovered By",
+    "group": "[HI] Group",
+    "period": "[HI] Period",
+    "categories": {
+      "alkaliMetal": "[HI] Alkali Metal",
+      "alkalineEarthMetal": "[HI] Alkaline Earth Metal",
+      "transitionMetal": "[HI] Transition Metal",
+      "postTransitionMetal": "[HI] Post-transition Metal",
+      "metalloid": "[HI] Metalloid",
+      "nonmetal": "[HI] Nonmetal",
+      "halogen": "[HI] Halogen",
+      "nobleGas": "[HI] Noble Gas",
+      "lanthanide": "[HI] Lanthanide",
+      "actinide": "[HI] Actinide"
+    },
+    "standardStates": {
+      "solid": "[HI] Solid",
+      "liquid": "[HI] Liquid",
+      "gas": "[HI] Gas"
+    },
+    "groups": {
+      "lanthanoid": "[HI] Lanthanoid",
+      "actinoid": "[HI] Actinoid"
     }
   },
   "catalog": {
@@ -442,7 +604,9 @@
       "boilingPoint": "स्फुटनांक",
       "density": "घनत्व",
       "refractiveIndex": "अपवर्तकांक",
-      "solubility": "विलेयता"
+      "solubility": "विलेयता",
+      "solubilityNumeric": "[HI] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[HI] Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "उन्नत फ़िल्टर",
@@ -579,45 +743,6 @@
       "density": "घनत्व\ng/cm³",
       "solubilityNumeric": "विलेयता\ng/100g H₂O",
       "solubilityQualitative": "गुणात्मक\nविलेयता"
-    },
-    "tableHeadersFull": {
-      "no": "संख्या",
-      "name": "यौगिक का नाम",
-      "synonym": "सामान्य नाम",
-      "formula": "आणविक सूत्र",
-      "casNumber": "CAS पंजीकरण संख्या",
-      "molarMass": "आणविक भार",
-      "physicalForm": "भौतिक रूप",
-      "meltingPoint": "गलनांक (°C)",
-      "boilingPoint": "स्फुटनांक (°C)",
-      "density": "घनत्व (g/cm³)",
-      "refractiveIndex": "अपवर्तकांक (nD)",
-      "solubility": "विलेयता"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "यौगिक की अनूठी पहचान संख्या",
-      "name": "रासायनिक यौगिक का नाम",
-      "commonName": "यौगिक का सामान्य या वैकल्पिक नाम",
-      "formula": "यौगिक का रासायनिक सूत्र",
-      "casNumber": "CAS पंजीकरण संख्या (केमिकल एब्स्ट्रैक्ट्स सर्विस)",
-      "molarMass": "ग्राम प्रति मोल (g/mol) में मोलर द्रव्यमान",
-      "physicalForm": "कमरे के तापमान पर भौतिक अवस्था",
-      "meltingPoint": "सेल्सियस में गलनांक (°C)",
-      "boilingPoint": "सेल्सियस में स्फुटनांक (°C)",
-      "density": "ग्राम प्रति घन सेंटीमीटर (g/cm³) में घनत्व",
-      "refractiveIndex": "अपवर्तकांक (nD)",
-      "solubility": "जल में विलेयता का गुणात्मक विवरण",
-      "solubilityNumeric": "100 ग्राम पानी में घुलने की अधिकतम मात्रा (g/100g H₂O)",
-      "solubilityQualitative": "विलेयता का गुणात्मक विवरण"
-    },
-    "categoryTags": {
-      "placeholder": "अकार्बनिक श्रेणियाँ फ़िल्टर करें",
-      "clearAll": "सभी साफ़ करें",
-      "ácido": "अम्ल",
-      "base": "क्षार",
-      "sal": "नमक",
-      "óxido": "ऑक्साइड"
     }
   },
   "games": {
@@ -717,4 +842,3 @@
     "more": "+ {count} और"
   }
 }
-

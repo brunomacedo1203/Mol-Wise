@@ -7,8 +7,8 @@ export interface CookieConsentState {
   analyticsEnabled: boolean;
 }
 
-const COOKIE_NAME = "molwise-cookie-consent";
-const STORAGE_KEY = "molwise-cookie-consent";
+const COOKIE_NAME = "molclass-cookie-consent";
+const STORAGE_KEY = "molclass-cookie-consent";
 const COOKIE_EXPIRY_DAYS = 365;
 
 // Utilitários para cookies
@@ -72,12 +72,27 @@ export const useCookieConsent = () => {
         }
       }
 
-      // Fallback para localStorage
-      const storageValue = getLocalStorage<CookieConsentState>(STORAGE_KEY);
+      // Fallback para localStorage com verificação de expiração
+      const storageValue = getLocalStorage<CookieConsentState & { timestamp?: string }>(STORAGE_KEY);
       if (storageValue) {
-        setConsentState(storageValue);
-        setShowBanner(false);
-        return;
+        try {
+          const timestamp = storageValue.timestamp ? new Date(storageValue.timestamp).getTime() : 0;
+          const now = Date.now();
+          const maxAgeMs = COOKIE_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+          const isExpired = !timestamp || now - timestamp > maxAgeMs;
+
+          if (isExpired) {
+            // Expirado: limpar storage e exibir banner novamente
+            try { localStorage.removeItem(STORAGE_KEY); } catch {}
+            setShowBanner(true);
+          } else {
+            setConsentState({ hasConsented: storageValue.hasConsented, analyticsEnabled: storageValue.analyticsEnabled });
+            setShowBanner(false);
+            return;
+          }
+        } catch (error) {
+          console.warn("Erro ao validar expiração do consentimento no localStorage:", error);
+        }
       }
 
       // Se não há consentimento salvo, mostra o banner

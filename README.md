@@ -40,6 +40,8 @@ Uma aplicação web moderna para cálculos e consultas em química, incluindo um
 - **Conformidade LGPD/GDPR**: implementação seguindo melhores práticas de privacidade
 - **Interface multilíngue**: suporte completo para português e inglês
 
+> Documentação detalhada: veja `docs/privacy-consent.md`.
+
 ## 🛠️ Tecnologias
 
 - React.js
@@ -511,13 +513,8 @@ O projeto implementa um sistema completo de consentimento de cookies em conformi
 import { useCookieConsent } from "@/shared/hooks/useCookieConsent";
 
 function MyComponent() {
-  const {
-    consentState,
-    showBanner,
-    acceptAll,
-    rejectAll,
-    updateConsent
-  } = useCookieConsent();
+  const { consentState, showBanner, acceptAll, rejectAll, updateConsent } =
+    useCookieConsent();
 
   // Verificar se analytics está habilitado
   if (consentState.analyticsEnabled) {
@@ -527,7 +524,7 @@ function MyComponent() {
   return (
     <div>
       {showBanner && <CookieConsentBanner />}
-      <p>Analytics: {consentState.analyticsEnabled ? 'Ativo' : 'Inativo'}</p>
+      <p>Analytics: {consentState.analyticsEnabled ? "Ativo" : "Inativo"}</p>
     </div>
   );
 }
@@ -538,7 +535,7 @@ function MyComponent() {
 ```tsx
 interface CookieConsentState {
   hasConsented: boolean | null; // null = não decidiu, true = aceitou, false = recusou
-  analyticsEnabled: boolean;    // controla cookies de analytics/tracking
+  analyticsEnabled: boolean; // controla cookies de analytics/tracking
 }
 ```
 
@@ -550,7 +547,7 @@ import { gtag } from "@/lib/gtag";
 
 // Analytics só é ativado se analyticsEnabled === true
 if (consentState.analyticsEnabled) {
-  gtag('config', 'GA_MEASUREMENT_ID');
+  gtag("config", "GA_MEASUREMENT_ID");
 }
 ```
 

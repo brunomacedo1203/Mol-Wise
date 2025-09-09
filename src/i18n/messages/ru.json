@@ -75,7 +75,10 @@
     },
     "footer": {
       "contact": "Связаться с нами",
-      "developed": "Разработано в {year}"
+      "developed": "Разработано в {year}",
+      "privacyPolicy": "Политика конфиденциальности",
+      "termsOfUse": "Условия использования",
+      "policies": "[RU] Policies"
     },
     "privacy": {
       "title": "Политика Конфиденциальности",
@@ -87,7 +90,80 @@
         "cookies": "Файлы Cookie",
         "thirdParty": "Сторонние Сервисы",
         "rights": "Ваши Права",
-        "contact": "Контакты"
+        "contact": "Контакты",
+        "changes": "[RU] Changes"
+      },
+      "metadata": {
+        "description": "Информация о том, как мы собираем и используем данные, файлы cookie и сторонние сервисы."
+      },
+      "content": {
+        "introduction": {
+          "paragraph1": "Мы ценим вашу конфиденциальность и прозрачность.",
+          "paragraph2": "Этот документ объясняет, какие данные мы собираем и как их используем."
+        },
+        "dataCollection": {
+          "automaticData": "Данные, собираемые автоматически",
+          "automaticDataList": [
+            "Посещенные страницы",
+            "Базовые события использования"
+          ],
+          "usageData": "Данные использования",
+          "usageDataList": [
+            "Язык",
+            "Тип устройства"
+          ],
+          "notCollected": "Данные, которые мы не собираем",
+          "notCollectedText": "Мы не собираем чувствительные персональные данные."
+        },
+        "dataUsage": {
+          "intro": "Мы используем данные для улучшения продукта и агрегированной статистики.",
+          "list": [
+            "Измерение использования сайта",
+            "Улучшение пользовательского опыта"
+          ]
+        },
+        "cookies": {
+          "types": "Типы файлов cookie",
+          "essential": "Необходимые",
+          "essentialList": [
+            "Языковые настройки",
+            "Состояние сессии"
+          ],
+          "analytics": "Аналитические",
+          "analyticsList": [
+            "Google Analytics: измерение использования",
+            "Microsoft Clarity: тепловые карты и сессии"
+          ],
+          "management": "Вы можете управлять предпочтениями в баннере cookie."
+        },
+        "thirdParty": {
+          "intro": "Мы можем использовать сторонние сервисы для аналитики.",
+          "googleAnalytics": "Google Analytics",
+          "googleAnalyticsList": [
+            "Измеряет просмотры страниц и события",
+            "Google Privacy Policy"
+          ],
+          "microsoftClarity": "Microsoft Clarity",
+          "microsoftClarityList": [
+            "Сессии и тепловые карты",
+            "Microsoft Privacy Statement"
+          ]
+        },
+        "rights": {
+          "intro": "Вы можете запросить доступ и удаление данных.",
+          "list": [
+            "Доступ: вы можете запросить ваши данные",
+            "Удаление: вы можете запросить удаление"
+          ]
+        },
+        "contact": {
+          "intro": "По вопросам и запросам свяжитесь с нами:",
+          "email": "Email: contato@molclass.com",
+          "subject": "Тема: \"Конфиденциальность — Запрос\"",
+          "response": "Мы ответим в разумные сроки.",
+          "dataProtectionOfficer": "[RU] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
+        },
+        "changes": "Изменения: мы можем периодически обновлять эту политику."
       }
     },
     "terms": {
@@ -96,9 +172,33 @@
       "sections": {
         "acceptance": "Принятие Условий",
         "usage": "Использование Сервиса",
+        "service": "Сервис",
+        "acceptableUse": "Допустимое Использование",
+        "intellectualProperty": "Интеллектуальная Собственность",
+        "accuracy": "Точность",
         "restrictions": "Ограничения",
         "liability": "Ответственность",
+        "modifications": "Модификации",
+        "governingLaw": "Применимое Право",
+        "contact": "Контакт",
         "changes": "Изменения"
+      }
+    },
+    "cookies": {
+      "banner": {
+        "title": "Согласие на cookie",
+        "message": "Мы используем cookie для улучшения работы сайта. Google Analytics и Microsoft Clarity — для аналитики.",
+        "accept": "Принять",
+        "decline": "Отклонить",
+        "learnMore": "Узнать больше"
+      },
+      "preferences": {
+        "title": "Настройки cookie",
+        "essential": "Необходимые cookie",
+        "essentialDescription": "Требуются для базовой работы сайта",
+        "analytics": "Аналитические cookie",
+        "analyticsDescription": "Помогают понять использование сайта (GA, Clarity)",
+        "save": "Сохранить настройки"
       }
     }
   },
@@ -177,7 +277,9 @@
         "empty": "Формула не может быть пустой",
         "invalidElement": "Символ \"{symbol}\" не найден",
         "invalidFormula": "Недопустимая химическая формула",
-        "mismatchedParentheses": "Несоответствующие скобки в формуле"
+        "mismatchedParentheses": "Несоответствующие скобки в формуле",
+        "calculationFailed": "[RU] Failed to calculate molar mass",
+        "generic": "[RU] An error occurred while calculating molar mass"
       },
       "history": {
         "title": "История вычислений",
@@ -274,8 +376,6 @@
       "meltingPoint": "Температура плавления",
       "boilingPoint": "Температура кипения",
       "density": "Плотность",
-      "yearDiscovered": "Год открытия",
-      "discoveredBy": "Открыватель",
       "group": "Группа",
       "period": "Период",
       "categories": {
@@ -295,10 +395,8 @@
         "liquid": "Жидкое",
         "gas": "Газообразное"
       },
-      "groups": {
-        "lanthanoid": "Лантаноид",
-        "actinoid": "Актиноид"
-      }
+      "solubilityNumeric": "[RU] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[RU] Qualitative\nSolubility"
     },
     "elements": {
       "H": "Водород",
@@ -419,6 +517,70 @@
       "Lv": "Ливерморий",
       "Ts": "Теннессин",
       "Og": "Оганессон"
+    },
+    "tableHeadersFull": {
+      "no": "[RU] Number",
+      "name": "[RU] Compound Name",
+      "synonym": "[RU] Common Name",
+      "formula": "[RU] Molecular Formula",
+      "casNumber": "[RU] CAS Registry Number",
+      "molarMass": "[RU] Molecular Weight",
+      "physicalForm": "[RU] Physical Form",
+      "meltingPoint": "[RU] Melting Point (°C)",
+      "boilingPoint": "[RU] Boiling Point (°C)",
+      "density": "[RU] Density (g/cm³)",
+      "refractiveIndex": "[RU] Refractive Index (nD)",
+      "solubility": "[RU] Solubility"
+    },
+    "tableHeaderDescriptions": {
+      "no": "[RU] ",
+      "id": "[RU] Unique identifier number of the compound",
+      "name": "[RU] Name of the chemical compound",
+      "commonName": "[RU] Common or alternative name of the compound",
+      "formula": "[RU] Chemical formula of the compound",
+      "casNumber": "[RU] CAS Registry Number (Chemical Abstracts Service)",
+      "molarMass": "[RU] Molar mass in grams per mole (g/mol)",
+      "physicalForm": "[RU] Physical state at room temperature",
+      "meltingPoint": "[RU] Melting point in degrees Celsius (°C)",
+      "boilingPoint": "[RU] Boiling point in degrees Celsius (°C)",
+      "density": "[RU] Density in grams per cubic centimeter (g/cm³)",
+      "refractiveIndex": "[RU] Refractive index (nD)",
+      "solubility": "[RU] Qualitative description of water solubility",
+      "solubilityNumeric": "[RU] Maximum amount dissolved in 100g of water (g/100g H₂O)",
+      "solubilityQualitative": "[RU] Qualitative description of solubility"
+    },
+    "categoryTags": {
+      "placeholder": "[RU] Filter inorganic categories",
+      "clearAll": "[RU] Clear all",
+      "ácido": "[RU] Acid",
+      "base": "[RU] Base",
+      "sal": "[RU] Salt",
+      "óxido": "[RU] Oxide"
+    },
+    "yearDiscovered": "[RU] Year Discovered",
+    "discoveredBy": "[RU] Discovered By",
+    "group": "[RU] Group",
+    "period": "[RU] Period",
+    "categories": {
+      "alkaliMetal": "[RU] Alkali Metal",
+      "alkalineEarthMetal": "[RU] Alkaline Earth Metal",
+      "transitionMetal": "[RU] Transition Metal",
+      "postTransitionMetal": "[RU] Post-transition Metal",
+      "metalloid": "[RU] Metalloid",
+      "nonmetal": "[RU] Nonmetal",
+      "halogen": "[RU] Halogen",
+      "nobleGas": "[RU] Noble Gas",
+      "lanthanide": "[RU] Lanthanide",
+      "actinide": "[RU] Actinide"
+    },
+    "standardStates": {
+      "solid": "[RU] Solid",
+      "liquid": "[RU] Liquid",
+      "gas": "[RU] Gas"
+    },
+    "groups": {
+      "lanthanoid": "[RU] Lanthanoid",
+      "actinoid": "[RU] Actinoid"
     }
   },
   "catalog": {
@@ -442,7 +604,9 @@
       "boilingPoint": "Температура кипения",
       "density": "Плотность",
       "refractiveIndex": "Показатель преломления",
-      "solubility": "Растворимость"
+      "solubility": "Растворимость",
+      "solubilityNumeric": "[RU] Solubility\ng/100g H₂O",
+      "solubilityQualitative": "[RU] Qualitative\nsolubility"
     },
     "advancedFilters": {
       "title": "Расширенные фильтры",
@@ -579,45 +743,6 @@
       "density": "Плотность\ng/см³",
       "solubilityNumeric": "Растворимость\ng/100г H₂O",
       "solubilityQualitative": "Качественная\nрастворимость"
-    },
-    "tableHeadersFull": {
-      "no": "Номер",
-      "name": "Название соединения",
-      "synonym": "Общее название",
-      "formula": "Молекулярная формула",
-      "casNumber": "Регистрационный номер CAS",
-      "molarMass": "Молекулярная масса",
-      "physicalForm": "Физическая форма",
-      "meltingPoint": "Температура плавления (°C)",
-      "boilingPoint": "Температура кипения (°C)",
-      "density": "Плотность (г/см³)",
-      "refractiveIndex": "Показатель преломления (nD)",
-      "solubility": "Растворимость"
-    },
-    "tableHeaderDescriptions": {
-    "no": "",
-    "id": "Уникальный идентификационный номер соединения",
-      "name": "Название химического соединения",
-      "commonName": "Общее или альтернативное название соединения",
-      "formula": "Химическая формула соединения",
-      "casNumber": "Регистрационный номер CAS (Chemical Abstracts Service)",
-      "molarMass": "Молярная масса в граммах на моль (г/моль)",
-      "physicalForm": "Физическое состояние при комнатной температуре",
-      "meltingPoint": "Температура плавления в градусах Цельсия (°C)",
-      "boilingPoint": "Температура кипения в градусах Цельсия (°C)",
-      "density": "Плотность в граммах на кубический сантиметр (г/см³)",
-      "refractiveIndex": "Показатель преломления (nD)",
-      "solubility": "Качественное описание растворимости в воде",
-      "solubilityNumeric": "Максимальное количество, растворимое в 100 г воды (г/100г H₂O)",
-      "solubilityQualitative": "Качественное описание растворимости"
-    },
-    "categoryTags": {
-      "placeholder": "Фильтр неорганических категорий",
-      "clearAll": "Очистить всё",
-      "ácido": "Кислота",
-      "base": "Основание",
-      "sal": "Соль",
-      "óxido": "Оксид"
     }
   },
   "games": {
