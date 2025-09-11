@@ -190,7 +190,9 @@
         "message": "نستخدم ملفات تعريف الارتباط لتحسين تجربتك. نستخدم Google Analytics وMicrosoft Clarity للتحليلات.",
         "accept": "موافقة",
         "decline": "رفض",
-        "learnMore": "اعرف المزيد"
+        "learnMore": "اعرف المزيد",
+        "privacyPolicy": "[AR] Privacy Policy",
+        "termsOfUse": "[AR] Terms of Use"
       },
       "preferences": {
         "title": "تفضيلات ملفات تعريف الارتباط",
@@ -198,7 +200,10 @@
         "essentialDescription": "ضرورية لوظائف الموقع الأساسية",
         "analytics": "ملفات تعريف الارتباط التحليلية",
         "analyticsDescription": "تساعدنا على فهم استخدام الموقع (GA، Clarity)",
-        "save": "حفظ التفضيلات"
+        "save": "حفظ التفضيلات",
+        "legalLinks": "[AR] For more information:",
+        "privacyPolicy": "[AR] Privacy Policy",
+        "termsOfUse": "[AR] Terms of Use"
       }
     }
   },

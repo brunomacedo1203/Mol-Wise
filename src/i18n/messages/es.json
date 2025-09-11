@@ -86,7 +86,9 @@
         "message": "Este sitio utiliza cookies para mejorar su experiencia. Usamos Google Analytics y Microsoft Clarity para análisis de uso. Puede aceptar o rechazar cookies no esenciales.",
         "accept": "Acepto",
         "decline": "Rechazar",
-        "learnMore": "Saber más"
+        "learnMore": "Saber más",
+        "privacyPolicy": "[ES] Privacy Policy",
+        "termsOfUse": "[ES] Terms of Use"
       },
       "preferences": {
         "title": "Preferencias de Cookies",
@@ -94,7 +96,10 @@
         "essentialDescription": "Necesarias para el funcionamiento básico del sitio",
         "analytics": "Cookies de Análisis",
         "analyticsDescription": "Ayudan a entender cómo usa el sitio (Google Analytics, Microsoft Clarity)",
-        "save": "Guardar Preferencias"
+        "save": "Guardar Preferencias",
+        "legalLinks": "[ES] For more information:",
+        "privacyPolicy": "[ES] Privacy Policy",
+        "termsOfUse": "[ES] Terms of Use"
       }
     },
     "privacy": {

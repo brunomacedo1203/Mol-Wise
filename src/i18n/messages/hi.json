@@ -190,7 +190,9 @@
         "message": "हम अनुभव सुधारने हेतु कुकीज़ का उपयोग करते हैं। विश्लेषण के लिए Google Analytics और Microsoft Clarity का उपयोग होता है।",
         "accept": "स्वीकार करें",
         "decline": "अस्वीकार करें",
-        "learnMore": "अधिक जानें"
+        "learnMore": "अधिक जानें",
+        "privacyPolicy": "[HI] Privacy Policy",
+        "termsOfUse": "[HI] Terms of Use"
       },
       "preferences": {
         "title": "कुकी प्राथमिकताएँ",
@@ -198,7 +200,10 @@
         "essentialDescription": "बुनियादी साइट कार्यों के लिए आवश्यक",
         "analytics": "विश्लेषण कुकीज़",
         "analyticsDescription": "साइट उपयोग समझने में सहायता (GA, Clarity)",
-        "save": "प्राथमिकताएँ सहेजें"
+        "save": "प्राथमिकताएँ सहेजें",
+        "legalLinks": "[HI] For more information:",
+        "privacyPolicy": "[HI] Privacy Policy",
+        "termsOfUse": "[HI] Terms of Use"
       }
     }
   },

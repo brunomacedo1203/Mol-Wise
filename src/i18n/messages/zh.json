@@ -190,7 +190,9 @@
         "message": "我们使用 Cookie 改善体验，并使用 Google Analytics 与 Microsoft Clarity 进行分析。",
         "accept": "接受",
         "decline": "拒绝",
-        "learnMore": "了解更多"
+        "learnMore": "了解更多",
+        "privacyPolicy": "[ZH] Privacy Policy",
+        "termsOfUse": "[ZH] Terms of Use"
       },
       "preferences": {
         "title": "Cookie 偏好",
@@ -198,7 +200,10 @@
         "essentialDescription": "用于站点基本功能",
         "analytics": "分析 Cookie",
         "analyticsDescription": "帮助我们了解站点使用情况（GA、Clarity）",
-        "save": "保存偏好"
+        "save": "保存偏好",
+        "legalLinks": "[ZH] For more information:",
+        "privacyPolicy": "[ZH] Privacy Policy",
+        "termsOfUse": "[ZH] Terms of Use"
       }
     }
   },

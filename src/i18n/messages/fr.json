@@ -187,18 +187,23 @@
     "cookies": {
       "banner": {
         "title": "Consentement aux cookies",
-        "message": "Nous utilisons des cookies pour améliorer votre expérience. Google Analytics et Microsoft Clarity pour l'analyse.",
+        "message": "Nous utilisons des cookies pour améliorer votre expérience. Vous pouvez accepter ou refuser les cookies non essentiels.",
         "accept": "Accepter",
         "decline": "Refuser",
-        "learnMore": "En savoir plus"
+        "learnMore": "En savoir plus",
+        "privacyPolicy": "Politique de Confidentialité",
+        "termsOfUse": "Conditions d'Utilisation"
       },
       "preferences": {
         "title": "Préférences des cookies",
         "essential": "Cookies essentiels",
         "essentialDescription": "Nécessaires au fonctionnement de base",
         "analytics": "Cookies d'analyse",
-        "analyticsDescription": "Aident à comprendre l'utilisation du site (GA, Clarity)",
-        "save": "Enregistrer les préférences"
+        "analyticsDescription": "Aident à comprendre l'utilisation du site (Google Analytics, Microsoft Clarity)",
+        "save": "Enregistrer les préférences",
+        "legalLinks": "Pour plus d'informations :",
+        "privacyPolicy": "Politique de Confidentialité",
+        "termsOfUse": "Conditions d'Utilisation"
       }
     }
   },

@@ -83,10 +83,12 @@
     "cookies": {
       "banner": {
         "title": "Cookie Consent",
-        "message": "This site uses cookies to improve your experience. We use Google Analytics and Microsoft Clarity for usage analysis. You can accept or decline non-essential cookies.",
+        "message": "This site uses cookies to improve your experience. You can accept or decline non-essential cookies.",
         "accept": "Accept",
         "decline": "Decline",
-        "learnMore": "Learn more"
+        "learnMore": "Learn more",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfUse": "Terms of Use"
       },
       "preferences": {
         "title": "Cookie Preferences",
@@ -94,7 +96,10 @@
         "essentialDescription": "Required for basic site functionality",
         "analytics": "Analytics Cookies",
         "analyticsDescription": "Help us understand how you use the site (Google Analytics, Microsoft Clarity)",
-        "save": "Save Preferences"
+        "save": "Save Preferences",
+        "legalLinks": "For more information:",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfUse": "Terms of Use"
       }
     },
     "privacy": {

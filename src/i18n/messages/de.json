@@ -190,7 +190,9 @@
         "message": "Wir verwenden Cookies zur Verbesserung Ihrer Erfahrung. Google Analytics und Microsoft Clarity für Analysen.",
         "accept": "Akzeptieren",
         "decline": "Ablehnen",
-        "learnMore": "Mehr erfahren"
+        "learnMore": "Mehr erfahren",
+        "privacyPolicy": "[DE] Privacy Policy",
+        "termsOfUse": "[DE] Terms of Use"
       },
       "preferences": {
         "title": "Cookie-Einstellungen",
@@ -198,7 +200,10 @@
         "essentialDescription": "Erforderlich für die Grundfunktionalität",
         "analytics": "Analyse-Cookies",
         "analyticsDescription": "Helfen uns, die Seitennutzung zu verstehen (GA, Clarity)",
-        "save": "Einstellungen speichern"
+        "save": "Einstellungen speichern",
+        "legalLinks": "[DE] For more information:",
+        "privacyPolicy": "[DE] Privacy Policy",
+        "termsOfUse": "[DE] Terms of Use"
       }
     }
   },

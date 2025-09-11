@@ -4,14 +4,22 @@ import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCookieConsent } from "@/shared/hooks/useCookieConsent";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { X, Settings, Cookie } from "lucide-react";
+import { X, Settings, Cookie, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 export default function CookieConsentBanner() {
   const t = useTranslations("common.cookies");
-  const { showBanner, acceptAll, declineAll, savePreferences } = useCookieConsent();
+  const { showBanner, acceptAll, declineAll, savePreferences } =
+    useCookieConsent();
   const [showPreferences, setShowPreferences] = useState(false);
   const [analyticsEnabled, setAnalyticsEnabled] = useState(true);
 
@@ -35,12 +43,14 @@ export default function CookieConsentBanner() {
   if (showPreferences) {
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <Card className="w-full max-w-md bg-white dark:bg-neutral-900 shadow-xl">
+        <Card className="w-full max-w-lg bg-white dark:bg-neutral-900 shadow-xl">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Settings className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <CardTitle className="text-lg">{t("preferences.title")}</CardTitle>
+                <CardTitle className="text-lg">
+                  {t("preferences.title")}
+                </CardTitle>
               </div>
               <Button
                 variant="ghost"
@@ -82,6 +92,29 @@ export default function CookieConsentBanner() {
               />
             </div>
 
+            {/* Links para páginas legais */}
+            <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
+              <p className="text-xs text-muted-foreground mb-2">
+                {t("preferences.legalLinks")}
+              </p>
+              <div className="flex gap-4">
+                <Link
+                  href="/privacy-policy"
+                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+                >
+                  {t("preferences.privacyPolicy")}
+                  <ExternalLink className="h-3 w-3" />
+                </Link>
+                <Link
+                  href="/terms-of-use"
+                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+                >
+                  {t("preferences.termsOfUse")}
+                  <ExternalLink className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+
             <div className="flex gap-2 pt-2">
               <Button
                 onClick={handleSavePreferences}
@@ -97,14 +130,14 @@ export default function CookieConsentBanner() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4">
+    <div className="fixed bottom-0 left-0 right-0 z-40 p-4">
       <Card className="mx-auto max-w-4xl bg-white dark:bg-neutral-900 shadow-xl border-t-4 border-t-blue-600">
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
             <div className="flex-shrink-0">
               <Cookie className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             </div>
-            
+
             <div className="flex-1 min-w-0">
               <CardTitle className="text-lg mb-2 text-gray-900 dark:text-gray-100">
                 {t("banner.title")}
@@ -112,7 +145,27 @@ export default function CookieConsentBanner() {
               <CardDescription className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t("banner.message")}
               </CardDescription>
-              
+
+              {/* Links para páginas legais */}
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-4 text-xs">
+                  <Link
+                    href="/privacy-policy"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+                  >
+                    {t("banner.privacyPolicy")}
+                    <ExternalLink className="h-3 w-3" />
+                  </Link>
+                  <Link
+                    href="/terms-of-use"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+                  >
+                    {t("banner.termsOfUse")}
+                    <ExternalLink className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button
                   onClick={handleAccept}
@@ -120,7 +173,7 @@ export default function CookieConsentBanner() {
                 >
                   {t("banner.accept")}
                 </Button>
-                
+
                 <Button
                   onClick={handleDecline}
                   variant="outline"
@@ -128,7 +181,7 @@ export default function CookieConsentBanner() {
                 >
                   {t("banner.decline")}
                 </Button>
-                
+
                 <Button
                   onClick={() => setShowPreferences(true)}
                   variant="ghost"

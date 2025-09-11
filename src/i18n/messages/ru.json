@@ -190,7 +190,9 @@
         "message": "Мы используем cookie для улучшения работы сайта. Google Analytics и Microsoft Clarity — для аналитики.",
         "accept": "Принять",
         "decline": "Отклонить",
-        "learnMore": "Узнать больше"
+        "learnMore": "Узнать больше",
+        "privacyPolicy": "[RU] Privacy Policy",
+        "termsOfUse": "[RU] Terms of Use"
       },
       "preferences": {
         "title": "Настройки cookie",
@@ -198,7 +200,10 @@
         "essentialDescription": "Требуются для базовой работы сайта",
         "analytics": "Аналитические cookie",
         "analyticsDescription": "Помогают понять использование сайта (GA, Clarity)",
-        "save": "Сохранить настройки"
+        "save": "Сохранить настройки",
+        "legalLinks": "[RU] For more information:",
+        "privacyPolicy": "[RU] Privacy Policy",
+        "termsOfUse": "[RU] Terms of Use"
       }
     }
   },
