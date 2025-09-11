@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { X, Settings, Cookie, ExternalLink } from "lucide-react";
+import { X, Settings, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function CookieConsentBanner() {
@@ -130,66 +130,41 @@ export default function CookieConsentBanner() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 p-4">
-      <Card className="mx-auto max-w-4xl bg-white dark:bg-neutral-900 shadow-xl border-t-4 border-t-blue-600">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0">
-              <Cookie className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-            </div>
-
+    <div className="fixed bottom-0 left-0 right-0 z-40 p-4  pl-4">
+      <Card className="mx-auto max-w-8xl bg-white dark:bg-neutral-900 shadow-xl border-2 border-gray-300 dark:border-gray-600">
+        <CardContent className="p-2">
+          <div className="flex items-start gap-2">
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg mb-2 text-gray-900 dark:text-gray-100">
-                {t("banner.title")}
-              </CardTitle>
-              <CardDescription className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t("banner.message")}
-              </CardDescription>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                <CardDescription className="text-sm text-gray-600 pl-10 dark:text-gray-300 flex-1">
+                  {t("banner.message")}
+                </CardDescription>
 
-              {/* Links para páginas legais */}
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-4 text-xs">
-                  <Link
-                    href="/privacy-policy"
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+                <div className="flex flex-col sm:flex-row gap-3 sm:flex-shrink-0">
+                  <Button
+                    onClick={handleAccept}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6"
                   >
-                    {t("banner.privacyPolicy")}
-                    <ExternalLink className="h-3 w-3" />
-                  </Link>
-                  <Link
-                    href="/terms-of-use"
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+                    {t("banner.accept")}
+                  </Button>
+
+                  <Button
+                    onClick={handleDecline}
+                    variant="outline"
+                    className="border-gray-300 dark:border-gray-600 px-6"
                   >
-                    {t("banner.termsOfUse")}
-                    <ExternalLink className="h-3 w-3" />
-                  </Link>
+                    {t("banner.decline")}
+                  </Button>
+
+                  <Button
+                    onClick={() => setShowPreferences(true)}
+                    variant="ghost"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 px-6"
+                  >
+                    <Settings className="h-4 w-4 mr-2" />
+                    {t("banner.learnMore")}
+                  </Button>
                 </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button
-                  onClick={handleAccept}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6"
-                >
-                  {t("banner.accept")}
-                </Button>
-
-                <Button
-                  onClick={handleDecline}
-                  variant="outline"
-                  className="border-gray-300 dark:border-gray-600 px-6"
-                >
-                  {t("banner.decline")}
-                </Button>
-
-                <Button
-                  onClick={() => setShowPreferences(true)}
-                  variant="ghost"
-                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 px-6"
-                >
-                  <Settings className="h-4 w-4 mr-2" />
-                  {t("banner.learnMore")}
-                </Button>
               </div>
             </div>
           </div>

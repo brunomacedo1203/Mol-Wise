@@ -82,13 +82,11 @@
     },
     "cookies": {
       "banner": {
-        "title": "Consentimento de Cookies",
-        "message": "Este site utiliza cookies para melhorar sua experiência. Você pode aceitar ou recusar cookies não essenciais.",
+
+        "message": "Usamos cookies para melhorar sua experiência de navegação e analisar nosso tráfego. Ao continuar, você concorda com nossa Política de Cookies.",
         "accept": "Aceito",
         "decline": "Recusar",
-        "learnMore": "Saiba mais",
-        "privacyPolicy": "Política de Privacidade",
-        "termsOfUse": "Termos de Uso"
+        "learnMore": "Saiba mais"
       },
       "preferences": {
         "title": "Preferências de Cookies",
@@ -102,109 +100,11 @@
         "termsOfUse": "Termos de Uso"
       }
     },
-    "privacy": {
-      "title": "Política de Privacidade",
-      "lastUpdated": "Última atualização: {date}",
-      "sections": {
-        "introduction": "Introdução",
-        "dataCollection": "Coleta de Dados",
-        "dataUsage": "Uso dos Dados",
-        "cookies": "Cookies",
-        "thirdParty": "Serviços de Terceiros",
-        "rights": "Seus Direitos",
-        "contact": "Contato",
-        "changes": "[PT] Changes"
-      },
-      "content": {
-        "introduction": {
-          "paragraph1": "O Mol Class está comprometido em proteger sua privacidade e dados pessoais. Esta Política de Privacidade explica como coletamos, usamos e protegemos suas informações quando você utiliza nosso site e serviços educacionais de química.",
-          "paragraph2": "Esta política está em conformidade com a Lei Geral de Proteção de Dados (LGPD) e outras regulamentações aplicáveis de proteção de dados."
-        },
-        "dataCollection": {
-          "automaticData": "Dados Coletados Automaticamente:",
-          "automaticDataList": [
-            "Endereço IP e informações do dispositivo",
-            "Tipo de navegador e sistema operacional",
-            "Páginas visitadas e tempo de permanência",
-            "Referências de sites externos"
-          ],
-          "usageData": "Dados de Uso:",
-          "usageDataList": [
-            "Interações com calculadoras químicas",
-            "Preferências de idioma e tema",
-            "Histórico de cálculos (armazenado localmente)"
-          ],
-          "notCollected": "Dados que NÃO Coletamos:",
-          "notCollectedText": "O Mol Class não coleta dados sensíveis (como informações de saúde, orientação religiosa, política ou sexual), nem dados pessoais diretamente identificáveis, como nome, e-mail ou CPF."
-        },
-        "dataUsage": {
-          "intro": "Utilizamos seus dados para:",
-          "list": [
-            "Fornecer e melhorar nossos serviços educacionais",
-            "Personalizar sua experiência de aprendizado",
-            "Analisar o uso do site para melhorias",
-            "Garantir a segurança e funcionamento adequado",
-            "Cumprir obrigações legais"
-          ]
-        },
-        "cookies": {
-          "types": "Tipos de Cookies Utilizados:",
-          "essential": "Cookies Essenciais:",
-          "essentialList": [
-            "Preferências de idioma e tema",
-            "Consentimento de cookies",
-            "Funcionalidades básicas do site"
-          ],
-          "analytics": "Cookies de Análise (Opcionais):",
-          "analyticsList": [
-            "Google Analytics: Análise de tráfego e comportamento",
-            "Microsoft Clarity: Análise de experiência do usuário"
-          ],
-          "management": "Você pode gerenciar suas preferências de cookies através do banner de consentimento ou nas configurações do seu navegador."
-        },
-        "thirdParty": {
-          "intro": "Utilizamos os seguintes serviços de terceiros:",
-          "googleAnalytics": "Google Analytics:",
-          "googleAnalyticsList": [
-            "Análise de tráfego e comportamento dos usuários",
-            "Dados anonimizados e agregados",
-            "Política: Google Privacy Policy"
-          ],
-          "microsoftClarity": "Microsoft Clarity:",
-          "microsoftClarityList": [
-            "Análise de experiência do usuário",
-            "Gravações de sessão anonimizadas",
-            "Política: Microsoft Privacy Statement"
-          ]
-        },
-        "rights": {
-          "intro": "De acordo com a LGPD, você tem os seguintes direitos:",
-          "list": [
-            "Acesso: Saber quais dados pessoais possuímos sobre você",
-            "Correção: Solicitar correção de dados incorretos",
-            "Exclusão: Solicitar a exclusão de seus dados",
-            "Portabilidade: Receber seus dados em formato estruturado",
-            "Oposição: Opor-se ao processamento de seus dados",
-            "Revogação: Revogar consentimento a qualquer momento"
-          ]
-        },
-        "contact": {
-          "intro": "Para exercer seus direitos ou esclarecer dúvidas sobre esta Política de Privacidade, entre em contato conosco:",
-          "email": "Email: privacy@molclass.com",
-          "subject": "Assunto: \"Privacidade e Proteção de Dados\"",
-          "response": "Responderemos às suas solicitações dentro do prazo legal estabelecido pela LGPD.",
-          "dataProtectionOfficer": "[PT] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
-        },
-        "changes": "Alterações nesta Política: Esta Política de Privacidade pode ser atualizada periodicamente. Recomendamos que você a revise regularmente. A data da última atualização está indicada no topo desta página."
-      },
-      "metadata": {
-        "description": "Política de Privacidade do Mol Class - Como coletamos, usamos e protegemos seus dados pessoais em conformidade com a LGPD."
-      }
-    },
     "terms": {
       "title": "Termos de Uso",
       "lastUpdated": "Última atualização: {date}",
       "sections": {
+        "definitions": "Definições e Identificação do Controlador",
         "acceptance": "Aceitação dos Termos",
         "usage": "Uso do Serviço",
         "service": "Serviço",
@@ -858,5 +758,169 @@
     "close": "Fechar",
     "noResults": "Nenhum resultado encontrado.",
     "more": "+ {count} mais"
+  },
+  "privacy": {
+  "title": "Política de Privacidade – Mol Class",
+  "lastUpdated": "Última atualização: {date}",
+  "sections": {
+    "introduction": "1. Introdução",
+    "definitions": "2. Definições e Identificação do Controlador",
+    "dataCollection": "3. Dados Coletados e Base Legal",
+    "retention": "4. Período de Retenção",
+    "rights": "5. Direitos dos Usuários",
+    "cookies": "6. Gestão de Cookies",
+    "thirdParty": "7. Compartilhamento com Terceiros",
+    "transfers": "8. Transferências Internacionais",
+    "compliance": "9. Conformidade Internacional",
+    "changes": "10. Alterações nesta Política",
+    "contact": "11. Contato e Ouvidoria"
+  },
+  "content": {
+    "introduction": {
+      "paragraph1": "O Mol Class está comprometido em proteger a privacidade e os dados pessoais de seus usuários. Esta Política de Privacidade explica como coletamos, utilizamos, armazenamos e protegemos suas informações ao acessar nosso site e serviços educacionais de química.",
+      "paragraph2": "Esta política está em conformidade com a Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/18) e o Regulamento Geral de Proteção de Dados da União Europeia (GDPR)."
+    },
+    "definitions": {
+      "controller": "Controlador dos Dados: Mol Class",
+      "contact": "Contato do Responsável: molclassapp@gmail.com"
+    },
+    "dataCollection": {
+      "technicalData": {
+        "title": "3.1 Dados Técnicos e de Navegação",
+        "types": "Tipos de dados:",
+        "typesList": [
+          "Endereço IP",
+          "Tipo e versão do navegador",
+          "Sistema operacional",
+          "Páginas acessadas e tempo de permanência",
+          "Origem de acesso (referências externas)",
+          "Data e hora de acesso"
+        ],
+        "legalBasis": "Base legal: Cumprimento de obrigação legal (guarda de registros de acesso, Marco Civil da Internet, art. 15) e interesse legítimo (segurança da plataforma e prevenção de fraudes)",
+        "purpose": "Finalidade: Garantir funcionamento seguro, detectar problemas técnicos e prevenir acessos não autorizados"
+      },
+      "educationalData": {
+        "title": "3.2 Dados de Uso Educacional",
+        "types": "Tipos de dados:",
+        "typesList": [
+          "Interações com calculadoras químicas",
+          "Interações em chats para aprendizado e dúvidas",
+          "Interações com as ferramentas gamer do site",
+          "Respostas a pesquisas para melhoria das ferramentas",
+          "Uso de visualizadores moleculares",
+          "Preferências de idioma e tema",
+          "Ferramentas educacionais utilizadas",
+          "Dados de desempenho em atividades"
+        ],
+        "legalBasis": "Base legal: Interesse legítimo (melhoria dos serviços educacionais)",
+        "purpose": "Finalidade: Personalizar a experiência de aprendizado e aprimorar funcionalidades educacionais"
+      },
+      "cookies": {
+        "title": "3.3 Cookies e Tecnologias de Rastreamento",
+        "essential": "Cookies Essenciais:",
+        "essentialList": [
+          "Configurações de idioma e tema",
+          "Estado do consentimento de cookies",
+          "Funcionalidades básicas do site"
+        ],
+        "essentialBasis": "Base legal: Interesse legítimo (funcionamento essencial da plataforma)",
+        "analytics": "Cookies de análise (opcionais):",
+        "analyticsList": [
+          "Google Analytics (estatísticas de tráfego)",
+          "Microsoft Clarity (análise de usabilidade)"
+        ],
+        "analyticsBasis": "Base legal: Consentimento do usuário",
+        "purpose": "Finalidade: Análise de uso, melhoria da experiência e otimização do conteúdo educacional",
+        "consent": "Os cookies só são ativados após seu consentimento, e você pode alterá-lo a qualquer momento."
+      },
+      "registrationData": {
+        "title": "3.4 Dados Cadastrais",
+        "types": "Tipos de dados:",
+        "typesList": [
+          "Nome completo",
+          "Endereço de e-mail",
+          "Dados de perfil educacional",
+          "Outros dados necessários à prestação de serviços, como endereço físico, quando aplicável"
+        ],
+        "legalBasis": "Base legal: Consentimento do usuário e/ou execução de contrato (quando necessário para criação, manutenção ou personalização da conta)",
+        "purpose": "Finalidade: Criação e gestão de conta, personalização da experiência, envio de informações relevantes e prestação de serviços educacionais contratados"
+      },
+      "minorsData": {
+        "title": "3.5 Dados de Menores de Idade",
+        "policy": "O Mol Class não coleta intencionalmente dados pessoais de crianças ou adolescentes.",
+        "recommendation": "Recomendamos que menores de 18 anos utilizem o site com supervisão de um responsável."
+      }
+    },
+    "retention": {
+      "cookies": "Cookies e dados de sessão: cookies essenciais até 1 ano; cookies analíticos até 14 meses (ou conforme configuração do usuário)",
+      "technical": "Dados técnicos e logs: registros de acesso por 6 meses; dados de segurança até 12 meses",
+      "educational": "Dados de uso educacional: dados agregados e pseudonimizados até 2 anos para fins de pesquisa educacional; dados identificáveis até 12 meses após a última interação",
+      "registration": "Dados cadastrais: contas ativas durante a vigência da conta; contas inativas até 24 meses após a última atividade; dados de comunicação até 3 anos para fins regulatórios"
+    },
+    "rights": {
+      "lgpdGdpr": "5.1 Direitos LGPD e GDPR",
+      "list": [
+        "Acesso: confirmação sobre tratamento e acesso aos dados",
+        "Correção: retificação de dados incompletos, inexatos ou desatualizados",
+        "Exclusão: eliminação de dados pessoais, observadas as hipóteses legais",
+        "Portabilidade: recebimento de dados em formato estruturado",
+        "Oposição: contestação do tratamento em situações específicas",
+        "Revogação: retirada de consentimento a qualquer momento",
+        "Limitação: restrição do tratamento em casos específicos",
+        "Não submissão a decisões automatizadas"
+      ],
+      "howToExercise": "5.2 Como Exercer seus Direitos",
+      "contact": "Você pode entrar em contato para exercer seus direitos relacionados aos dados pessoais:",
+      "response": "Responderemos às solicitações dentro do prazo legal aplicável."
+    },
+    "cookieManagement": {
+      "banner": {
+        "title": "6.1 Banner de Consentimento",
+        "intro": "Utilizamos banner de consentimento que permite:",
+        "list": [
+          "Aceitar ou recusar cookies",
+          "Acessar informações detalhadas as políticas de privacidade e termos de uso."
+        ]
+      }
+    },
+    "thirdParty": {
+      "intro": "Para funcionamento dos serviços, compartilhamos dados limitados com:",
+      "google": "Google LLC: Google Analytics (dados de uso pseudonimizados)",
+      "microsoft": "Microsoft Corporation: Microsoft Clarity (dados de interação pseudonimizados)",
+      "note": "Estes prestadores processam dados conforme suas próprias políticas de privacidade e medidas de proteção adequadas."
+    },
+    "transfers": {
+      "intro": "Dados podem ser processados fora do Brasil por prestadores de serviços (Google e Microsoft).",
+      "safeguards": "",
+      "anpd": "Até o momento, a ANPD não publicou lista de países com decisão de adequação."
+    },
+    "compliance": {
+      "intro": "Esta política atende aos requisitos de múltiplas jurisdições:",
+      "list": [
+        "Brasil: LGPD (Lei 13.709/18)",
+        "União Europeia: GDPR",
+        "Reino Unido: UK GDPR",
+        "Califórnia: CCPA (quando aplicável)"
+      ]
+    },
+    "changes": {
+      "info": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou nos serviços.",
+      "date": "A data da última atualização será sempre indicada no topo."
+    },
+    "contact": {
+      "email": "molclassapp@gmail.com",
+      "subject": "Assunto: \"Privacidade e Proteção de Dados\""
+    }
+  },
+  "contactSection": {
+    "email": "molclassapp@gmail.com",
+    "emailLabel": "E-mail:",
+    "subjectLabel": "Assunto:",
+    "subjectText": "Privacidade e Proteção de Dados"
+  },
+  "metadata": {
+    "description": "Política de Privacidade do Mol Class - Como coletamos, usamos e protegemos seus dados pessoais em conformidade com a LGPD."
   }
+}
+
 }
