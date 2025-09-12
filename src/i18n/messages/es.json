@@ -145,7 +145,9 @@
             "Analizar el uso del sitio para mejoras",
             "Garantizar la seguridad y funcionamiento adecuado",
             "Cumplir con obligaciones legales"
-          ]
+          ],
+          "explanation": "[ES] Data is used exclusively for educational and service improvement purposes.",
+          "explanationItems": "[ES] Educational experience personalization,Service improvement and optimization,Communication about relevant updates,Legal obligation compliance"
         },
         "cookies": {
           "types": "[ES] Types of Cookies We Use:",
@@ -153,7 +155,9 @@
           "essential": "[ES] Essential Cookies:",
           "essentialList": "[ES] Language and theme preferences,Cookie consent preferences,Session management and security,Basic site functionality and navigation",
           "analytics": "[ES] Analytics Cookies (Optional):",
-          "analyticsList": "[ES] Google Analytics: Traffic analysis and user behavior tracking,Microsoft Clarity: User experience analysis and session recordings,Performance monitoring and error tracking"
+          "analyticsList": "[ES] Google Analytics: Traffic analysis and user behavior tracking,Microsoft Clarity: User experience analysis and session recordings,Performance monitoring and error tracking",
+          "intro": "[ES] We use cookies to improve your browsing experience and analyze our traffic.",
+          "items": "[ES] Essential cookies for basic functionality,Analytics cookies for usage analysis (optional),Preference cookies for personalization"
         },
         "thirdParty": {
           "intro": "Utilizamos los siguientes servicios de terceros:",
@@ -171,7 +175,13 @@
             "Oponerse al procesamiento",
             "Portabilidad de datos",
             "Presentar una queja ante las autoridades de protección de datos"
-          ]
+          ],
+          "introItems": "[ES] Access and rectification of your data,Deletion and portability rights,Objection and restriction options,Consent withdrawal at any time",
+          "access": "[ES] Access: Know what personal data we hold about you",
+          "correction": "[ES] Rectification: Request correction of inaccurate data",
+          "deletion": "[ES] Erasure: Request deletion of your personal data",
+          "objection": "[ES] Object: Oppose certain types of data processing",
+          "restriction": "[ES] Restrict: Limit how we process your data"
         },
         "contact": {
           "intro": "Para ejercer sus derechos o hacer preguntas sobre esta política, contáctenos:",
@@ -180,28 +190,263 @@
           "subject": "[ES] Subject: \"Privacy Rights Request\" or \"Privacy Policy Inquiry\"",
           "dataProtectionOfficer": "[ES] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
         },
-        "changes": "[ES] Changes to This Policy: This Privacy Policy may be updated periodically to reflect changes in our practices or legal requirements. We will notify users of significant changes through our website. The date of the last update is indicated at the top of this page. We encourage you to review this policy regularly."
+        "intro": "[ES] This Privacy Policy explains how we collect, use, store, and protect your information when accessing our website and educational chemistry services.",
+        "introItems": "[ES] Data collection and legal basis,Usage and retention policies,Your rights and how to exercise them,Cookie management and third-party services",
+        "cookieManagement": {
+          "intro": "[ES] We provide comprehensive cookie management options.",
+          "banner": {
+            "intro": "[ES] Our consent banner allows you to:",
+            "list": "[ES] Accept or decline cookies,Access detailed privacy policy and terms of use information"
+          },
+          "howTo": {
+            "label": "[ES] How to manage cookies:",
+            "steps": "[ES] Use our consent banner,Adjust browser settings,Contact us for assistance"
+          }
+        },
+        "externalLinks": {
+          "intro": "[ES] Our website may contain links to external sites not operated by us.",
+          "details": "[ES] We are not responsible for the privacy practices of external websites. We encourage you to review their privacy policies."
+        },
+        "externalServices": {
+          "intro": "[ES] We use trusted third-party services to enhance our educational platform.",
+          "details": "[ES] These services follow their own privacy policies and adequate protection measures. Data may be processed outside your country."
+        },
+        "security": {
+          "intro": "[ES] We implement appropriate technical and organizational measures to protect your personal data:",
+          "items": "[ES] Encryption of data in transit and at rest,Access controls and authentication systems,Regular security assessments and updates,Staff training on data protection practices,Incident response procedures"
+        },
+        "changes": {
+          "intro": "[ES] We may update this Policy to reflect legal, technological, or service changes.",
+          "items": "[ES] The last update date will always be indicated at the top,Important changes will be communicated through the website or email (when available),Continued use after changes constitutes acceptance of the changes,We recommend reviewing this policy periodically"
+        }
       },
       "metadata": {
         "description": "[ES] Comprehensive information on how we collect, use, and protect your data, cookies, and third-party services in compliance with international privacy regulations."
+      },
+      "contactSection": {
+        "email": "[ES] molclassapp@gmail.com",
+        "emailLabel": "[ES] Email:",
+        "subjectLabel": "[ES] Subject:",
+        "subjectText": "[ES] Privacy and Data Protection"
       }
     },
     "terms": {
       "title": "Términos de Uso",
       "lastUpdated": "Última actualización: {date}",
       "sections": {
-        "acceptance": "Aceptación de Términos",
-        "usage": "Uso del Servicio",
-        "restrictions": "Restricciones",
-        "liability": "Responsabilidad",
-        "changes": "Cambios",
-        "service": "Servicio",
-        "acceptableUse": "Uso Aceptable",
-        "intellectualProperty": "Propiedad Intelectual",
-        "accuracy": "Precisión",
-        "modifications": "Modificaciones",
-        "governingLaw": "Ley Aplicable",
-        "contact": "Contacto"
+        "intro": {
+          "title": "[ES] Introduction",
+          "content": "[ES] Welcome to Mol Class. These Terms of Use govern your access to and use of our educational platform."
+        },
+        "definitions": {
+          "title": "[ES] Definitions and Controller Identification",
+          "content": {
+            "controller": "[ES] Data Controller: Mol Class",
+            "contact": "[ES] Responsible Contact: molclassapp@gmail.com"
+          }
+        },
+        "serviceDescription": {
+          "title": "[ES] Service Description",
+          "content": {
+            "description": "[ES] Mol Class is a digital educational platform that offers advanced technological tools for chemistry teaching and learning, including interactive, computational, artificial intelligence, and other educational technology resources.",
+            "featuresTitle": "[ES] Available Features (including but not limited to):",
+            "features": "[ES] Chemical and physical calculators, simulators, and computational tools,Molecular visualizers and interactive modeling systems,Interactive periodic table and chemical databases,Catalog of compounds, substances, and reference materials,Games, activities, and gamified learning resources,Artificial intelligence tools and educational support systems,Chemical data analysis, processing, and interpretation tools,Communication and interaction features for learning,Other educational tools and resources related to chemistry",
+            "evolutionTitle": "[ES] 3.1 Service Evolution",
+            "evolutionText": "[ES] The platform's features, functionalities, and technologies may be updated, expanded, modified, or discontinued at any time, always aiming to improve the quality and effectiveness of the educational experience offered to users."
+          }
+        },
+        "chemicalInformation": {
+          "title": "[ES] Chemical Information Accuracy",
+          "content": {
+            "disclaimer": "[ES] While we strive to provide accurate and up-to-date information, we do not guarantee the accuracy, completeness, or timeliness of any information in the service.",
+            "importantTitle": "[ES] Important:",
+            "important": "[ES] Always verify critical calculations with additional sources,Use results as educational reference,Consult scientific literature for professional applications,We are not responsible for decisions based on our calculations"
+          }
+        },
+        "privacy": {
+          "title": "[ES] Privacy Policy and Data Protection",
+          "content": {
+            "lgpd": "[ES] We comply with the General Data Protection Law (GDPR) and other applicable privacy regulations.",
+            "collection": "[ES] We collect only data necessary for educational service operation.",
+            "usage": "[ES] Data is used exclusively for:",
+            "purposes": "[ES] Educational experience personalization,Service improvement,Communication about relevant updates,Legal obligation compliance",
+            "sharing": "[ES] We do not share personal data with third parties for commercial purposes.",
+            "rights": "[ES] You have the right to access, correct, delete, or port your data according to GDPR."
+          }
+        },
+        "moderation": {
+          "title": "[ES] Moderation and Reports",
+          "content": {
+            "inappropriate": {
+              "title": "[ES] Inappropriate Content",
+              "text": "[ES] We reserve the right to remove, without prior notice, any content that violates these Terms or is considered inappropriate."
+            },
+            "reporting": {
+              "title": "[ES] Reporting Procedure",
+              "text": "[ES] To report inappropriate content or violations:",
+              "steps": "[ES] Send email to molclassapp@gmail.com,Subject: \"Report - [Brief description]\",Include content link/location and reason for report,Response time: up to 5 business days"
+            },
+            "suspension": {
+              "title": "[ES] Account Suspension",
+              "text": "[ES] Users who repeatedly violate these Terms may have their accounts suspended temporarily or permanently."
+            }
+          }
+        },
+        "general": {
+          "title": "[ES] General Provisions",
+          "content": {
+            "entirety": {
+              "title": "[ES] Entirety",
+              "text": "[ES] These Terms, together with the Privacy Policy, constitute the entire agreement between the parties."
+            },
+            "independence": {
+              "title": "[ES] Clause Independence",
+              "text": "[ES] The invalidity of any clause will not affect the validity of other provisions."
+            },
+            "assignment": {
+              "title": "[ES] Assignment",
+              "text": "[ES] These Terms cannot be assigned by the user without express consent. Mol Class may assign its rights with prior notification."
+            },
+            "validity": {
+              "title": "[ES] Validity",
+              "text": "[ES] These Terms remain valid while you use our services."
+            }
+          }
+        },
+        "cookies": {
+          "title": "[ES] Cookies and Tracking",
+          "content": {
+            "usage": "[ES] We may use cookies and similar technologies to improve user experience and analyze platform usage.",
+            "control": "[ES] You can control cookie preferences through your browser settings."
+          }
+        },
+        "thirdParty": {
+          "title": "[ES] Third-Party Services",
+          "content": {
+            "integration": "[ES] Our platform may integrate with third-party educational tools and services.",
+            "responsibility": "[ES] We are not responsible for the privacy practices or content of third-party services."
+          }
+        },
+        "externalLinks": {
+          "title": "[ES] External Links",
+          "content": {
+            "disclaimer": "[ES] Our platform may contain links to external websites for educational reference.",
+            "liability": "[ES] We are not responsible for the content or practices of external websites."
+          }
+        },
+        "limitation": {
+          "title": "[ES] Service Limitations",
+          "content": {
+            "availability": "[ES] We strive to maintain service availability but cannot guarantee uninterrupted access.",
+            "accuracy": "[ES] While we aim for accuracy, users should verify critical information independently."
+          }
+        },
+        "jurisdiction": {
+          "title": "[ES] Jurisdiction and Applicable Law",
+          "content": {
+            "law": "[ES] These terms are governed by applicable consumer protection and privacy laws.",
+            "disputes": "[ES] Disputes will be resolved according to the user's jurisdiction as provided by consumer protection legislation."
+          }
+        },
+        "finalNotice": {
+          "title": "[ES] Final Notice",
+          "content": {
+            "lastUpdate": "[ES] Last Update: {date}. By continuing to use Mol Class after this date, you agree to these updated terms."
+          }
+        },
+        "acceptance": {
+          "title": "[ES] Acceptance of Terms",
+          "content": {
+            "agreement": "[ES] By accessing and using Mol Class, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, you should not use our service.",
+            "scope": "[ES] These terms apply to all visitors, users, and other people who access or use the service."
+          }
+        },
+        "acceptableUse": {
+          "title": "[ES] Acceptable Use",
+          "content": {
+            "agreement": "[ES] You agree to use Mol Class only for educational and legal purposes.",
+            "permittedTitle": "[ES] Permitted:",
+            "permitted": "[ES] Use tools for educational studies and research,Share links to specific resources,Use calculation results for academic purposes",
+            "prohibitedTitle": "[ES] Prohibited:",
+            "prohibited": "[ES] Use the service for illegal or harmful activities,Attempt to hack, overload, or damage the system,Reproduce, duplicate, or copy the service without authorization,Use bots or automated scripts without permission"
+          }
+        },
+        "intellectualProperty": {
+          "title": "[ES] Intellectual Property",
+          "content": {
+            "rightsTitle": "[ES] 5.1 Mol Class Rights",
+            "rightsText": "[ES] Mol Class holds rights over:",
+            "rights": "[ES] The platform as a whole (collective work),Compilation, selection, and organization of content,Specific functionalities and features developed,Mol Class brand, name, and visual identity",
+            "sourcesTitle": "[ES] 5.2 Sources and Attributions",
+            "sourcesText": "[ES] Platform content may include:",
+            "sources": "[ES] Public domain scientific information,Data from scientific and educational literature,Content created with the aid of artificial intelligence tools,Adaptations and inspirations from various educational sources,Third-party resources properly used",
+            "commitmentTitle": "[ES] 5.3 Intellectual Property Commitment",
+            "commitment": "[ES] We respect third-party copyrights,We use only permitted or public domain content,When possible, we credit the sources used,We do not claim ownership over fundamental scientific information",
+            "userContentTitle": "[ES] 5.4 User-Generated Content",
+            "userContentText": "[ES] Calculation results, projects, and work created by users using our platform remain their property.",
+            "fairUseTitle": "[ES] 5.5 Educational Fair Use",
+            "fairUseText": "[ES] We recognize that educational use may involve citations, adaptations, and references to existing materials, always respecting fair use and educational principles."
+          }
+        },
+        "liability": {
+          "title": "[ES] Limitation of Liability",
+          "content": {
+            "disclaimer": "[ES] Mol Class is offered \"as is\" and \"as available\", without express or implied warranties of continuous operation, content accuracy, or fitness for specific purposes.",
+            "exclusionsTitle": "[ES] 7.1 Liability Exclusions",
+            "exclusionsText": "[ES] To the maximum extent permitted by law, we are not responsible for:",
+            "exclusions": "[ES] Interruptions, technical failures, temporary or permanent platform unavailability,Direct, indirect, incidental, or consequential losses arising from tool use,Academic, professional, or personal decisions made based on presented content,Accuracy, completeness, or timeliness of provided information,Use of results in critical or commercial applications without independent validation,Violation of third-party intellectual property rights",
+            "userResponsibilityTitle": "[ES] 7.2 User Responsibility",
+            "userResponsibilityText": "[ES] The user is responsible for:",
+            "userResponsibilities": "[ES] Verifying information accuracy before use,Complying with their institution's academic standards,Not using the platform for illicit purposes",
+            "paidServicesTitle": "[ES] 7.3 Future Paid Services",
+            "paidServicesText": "[ES] Any future paid services will have their own specific terms, prevailing over these general terms in case of conflict in paid functionalities.",
+            "exceptionsTitle": "[ES] 7.4 Legal Exceptions",
+            "exceptionsText": "[ES] This limitation does not exclude responsibilities in cases of fraud, bad faith, gross negligence, or when prohibited by mandatory law, including Consumer Protection Code."
+          }
+        },
+        "modifications": {
+          "title": "[ES] Terms Modifications",
+          "content": {
+            "right": "[ES] We reserve the right to modify these terms at any time.",
+            "notification": "[ES] Changes will be indicated by updating the 'last updated' date.",
+            "acceptance": "[ES] Continued use after modifications constitutes acceptance of new terms."
+          }
+        },
+        "governingLaw": {
+          "title": "[ES] Governing Law and Dispute Resolution",
+          "content": {
+            "law": "[ES] This service follows applicable laws",
+            "disputesTitle": "[ES] Dispute Resolution:",
+            "disputes": "[ES] We try to resolve issues amicably,Legal matters are resolved according to applicable jurisdiction,We respect consumer protection and privacy legislation,Competent forum: user's jurisdiction (according to consumer protection laws)"
+          }
+        },
+        "usage": {
+          "title": "[ES] Platform Usage",
+          "content": {
+            "educational": "[ES] This platform is designed exclusively for educational purposes in chemistry and related sciences.",
+            "responsibility": "[ES] Users are responsible for using the tools appropriately and verifying results when necessary."
+          }
+        },
+        "changes": {
+          "title": "[ES] Service Changes",
+          "content": {
+            "evolution": "[ES] Our platform continuously evolves to better serve educational needs.",
+            "notification": "[ES] Significant changes to core functionality will be communicated to users when possible."
+          }
+        },
+        "contact": {
+          "title": "[ES] Contact and Ombudsman",
+          "content": {
+            "emailLabel": "[ES] Email:",
+            "email": "[ES] molclassapp@gmail.com",
+            "subjectLabel": "[ES] Subject:",
+            "subject": "[ES] Terms of Use"
+          }
+        }
+      },
+      "updated": "[ES] 2024-01-15",
+      "footer": {
+        "agreement": "[ES] By continuing to browse, you agree to our Terms of Use and Privacy Policy."
       }
     }
   },

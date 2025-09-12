@@ -120,7 +120,9 @@
           "list": [
             "Mesurer l'utilisation du site",
             "Améliorer l'expérience utilisateur"
-          ]
+          ],
+          "explanation": "[FR] Data is used exclusively for educational and service improvement purposes.",
+          "explanationItems": "[FR] Educational experience personalization,Service improvement and optimization,Communication about relevant updates,Legal obligation compliance"
         },
         "cookies": {
           "types": "Types de cookies",
@@ -134,7 +136,9 @@
             "Google Analytics : mesure d'usage",
             "Microsoft Clarity : cartes de chaleur et sessions"
           ],
-          "management": "Vous pouvez gérer vos préférences dans la bannière de cookies."
+          "management": "Vous pouvez gérer vos préférences dans la bannière de cookies.",
+          "intro": "[FR] We use cookies to improve your browsing experience and analyze our traffic.",
+          "items": "[FR] Essential cookies for basic functionality,Analytics cookies for usage analysis (optional),Preference cookies for personalization"
         },
         "thirdParty": {
           "intro": "Nous pouvons utiliser des services tiers pour l'analyse.",
@@ -154,7 +158,13 @@
           "list": [
             "Accès : vous pouvez demander vos données",
             "Suppression : vous pouvez demander leur suppression"
-          ]
+          ],
+          "introItems": "[FR] Access and rectification of your data,Deletion and portability rights,Objection and restriction options,Consent withdrawal at any time",
+          "access": "[FR] Access: Know what personal data we hold about you",
+          "correction": "[FR] Rectification: Request correction of inaccurate data",
+          "deletion": "[FR] Erasure: Request deletion of your personal data",
+          "objection": "[FR] Object: Oppose certain types of data processing",
+          "restriction": "[FR] Restrict: Limit how we process your data"
         },
         "contact": {
           "intro": "Pour toute question ou demande, contactez-nous :",
@@ -163,25 +173,260 @@
           "response": "Nous répondrons dans un délai raisonnable.",
           "dataProtectionOfficer": "[FR] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
         },
-        "changes": "Modifications : nous pouvons mettre à jour cette politique périodiquement."
+        "intro": "[FR] This Privacy Policy explains how we collect, use, store, and protect your information when accessing our website and educational chemistry services.",
+        "introItems": "[FR] Data collection and legal basis,Usage and retention policies,Your rights and how to exercise them,Cookie management and third-party services",
+        "cookieManagement": {
+          "intro": "[FR] We provide comprehensive cookie management options.",
+          "banner": {
+            "intro": "[FR] Our consent banner allows you to:",
+            "list": "[FR] Accept or decline cookies,Access detailed privacy policy and terms of use information"
+          },
+          "howTo": {
+            "label": "[FR] How to manage cookies:",
+            "steps": "[FR] Use our consent banner,Adjust browser settings,Contact us for assistance"
+          }
+        },
+        "externalLinks": {
+          "intro": "[FR] Our website may contain links to external sites not operated by us.",
+          "details": "[FR] We are not responsible for the privacy practices of external websites. We encourage you to review their privacy policies."
+        },
+        "externalServices": {
+          "intro": "[FR] We use trusted third-party services to enhance our educational platform.",
+          "details": "[FR] These services follow their own privacy policies and adequate protection measures. Data may be processed outside your country."
+        },
+        "security": {
+          "intro": "[FR] We implement appropriate technical and organizational measures to protect your personal data:",
+          "items": "[FR] Encryption of data in transit and at rest,Access controls and authentication systems,Regular security assessments and updates,Staff training on data protection practices,Incident response procedures"
+        },
+        "changes": {
+          "intro": "[FR] We may update this Policy to reflect legal, technological, or service changes.",
+          "items": "[FR] The last update date will always be indicated at the top,Important changes will be communicated through the website or email (when available),Continued use after changes constitutes acceptance of the changes,We recommend reviewing this policy periodically"
+        }
+      },
+      "contactSection": {
+        "email": "[FR] molclassapp@gmail.com",
+        "emailLabel": "[FR] Email:",
+        "subjectLabel": "[FR] Subject:",
+        "subjectText": "[FR] Privacy and Data Protection"
       }
     },
     "terms": {
       "title": "Conditions d'Utilisation",
       "lastUpdated": "Dernière mise à jour : {date}",
       "sections": {
-        "acceptance": "Acceptation des Conditions",
-        "usage": "Utilisation du Service",
-        "service": "Service",
-        "acceptableUse": "Utilisation Acceptable",
-        "intellectualProperty": "Propriété Intellectuelle",
-        "accuracy": "Précision",
-        "restrictions": "Restrictions",
-        "liability": "Responsabilité",
-        "modifications": "Modifications",
-        "governingLaw": "Loi Applicable",
-        "contact": "Contact",
-        "changes": "Modifications"
+        "intro": {
+          "title": "[FR] Introduction",
+          "content": "[FR] Welcome to Mol Class. These Terms of Use govern your access to and use of our educational platform."
+        },
+        "definitions": {
+          "title": "[FR] Definitions and Controller Identification",
+          "content": {
+            "controller": "[FR] Data Controller: Mol Class",
+            "contact": "[FR] Responsible Contact: molclassapp@gmail.com"
+          }
+        },
+        "serviceDescription": {
+          "title": "[FR] Service Description",
+          "content": {
+            "description": "[FR] Mol Class is a digital educational platform that offers advanced technological tools for chemistry teaching and learning, including interactive, computational, artificial intelligence, and other educational technology resources.",
+            "featuresTitle": "[FR] Available Features (including but not limited to):",
+            "features": "[FR] Chemical and physical calculators, simulators, and computational tools,Molecular visualizers and interactive modeling systems,Interactive periodic table and chemical databases,Catalog of compounds, substances, and reference materials,Games, activities, and gamified learning resources,Artificial intelligence tools and educational support systems,Chemical data analysis, processing, and interpretation tools,Communication and interaction features for learning,Other educational tools and resources related to chemistry",
+            "evolutionTitle": "[FR] 3.1 Service Evolution",
+            "evolutionText": "[FR] The platform's features, functionalities, and technologies may be updated, expanded, modified, or discontinued at any time, always aiming to improve the quality and effectiveness of the educational experience offered to users."
+          }
+        },
+        "chemicalInformation": {
+          "title": "[FR] Chemical Information Accuracy",
+          "content": {
+            "disclaimer": "[FR] While we strive to provide accurate and up-to-date information, we do not guarantee the accuracy, completeness, or timeliness of any information in the service.",
+            "importantTitle": "[FR] Important:",
+            "important": "[FR] Always verify critical calculations with additional sources,Use results as educational reference,Consult scientific literature for professional applications,We are not responsible for decisions based on our calculations"
+          }
+        },
+        "privacy": {
+          "title": "[FR] Privacy Policy and Data Protection",
+          "content": {
+            "lgpd": "[FR] We comply with the General Data Protection Law (GDPR) and other applicable privacy regulations.",
+            "collection": "[FR] We collect only data necessary for educational service operation.",
+            "usage": "[FR] Data is used exclusively for:",
+            "purposes": "[FR] Educational experience personalization,Service improvement,Communication about relevant updates,Legal obligation compliance",
+            "sharing": "[FR] We do not share personal data with third parties for commercial purposes.",
+            "rights": "[FR] You have the right to access, correct, delete, or port your data according to GDPR."
+          }
+        },
+        "moderation": {
+          "title": "[FR] Moderation and Reports",
+          "content": {
+            "inappropriate": {
+              "title": "[FR] Inappropriate Content",
+              "text": "[FR] We reserve the right to remove, without prior notice, any content that violates these Terms or is considered inappropriate."
+            },
+            "reporting": {
+              "title": "[FR] Reporting Procedure",
+              "text": "[FR] To report inappropriate content or violations:",
+              "steps": "[FR] Send email to molclassapp@gmail.com,Subject: \"Report - [Brief description]\",Include content link/location and reason for report,Response time: up to 5 business days"
+            },
+            "suspension": {
+              "title": "[FR] Account Suspension",
+              "text": "[FR] Users who repeatedly violate these Terms may have their accounts suspended temporarily or permanently."
+            }
+          }
+        },
+        "general": {
+          "title": "[FR] General Provisions",
+          "content": {
+            "entirety": {
+              "title": "[FR] Entirety",
+              "text": "[FR] These Terms, together with the Privacy Policy, constitute the entire agreement between the parties."
+            },
+            "independence": {
+              "title": "[FR] Clause Independence",
+              "text": "[FR] The invalidity of any clause will not affect the validity of other provisions."
+            },
+            "assignment": {
+              "title": "[FR] Assignment",
+              "text": "[FR] These Terms cannot be assigned by the user without express consent. Mol Class may assign its rights with prior notification."
+            },
+            "validity": {
+              "title": "[FR] Validity",
+              "text": "[FR] These Terms remain valid while you use our services."
+            }
+          }
+        },
+        "cookies": {
+          "title": "[FR] Cookies and Tracking",
+          "content": {
+            "usage": "[FR] We may use cookies and similar technologies to improve user experience and analyze platform usage.",
+            "control": "[FR] You can control cookie preferences through your browser settings."
+          }
+        },
+        "thirdParty": {
+          "title": "[FR] Third-Party Services",
+          "content": {
+            "integration": "[FR] Our platform may integrate with third-party educational tools and services.",
+            "responsibility": "[FR] We are not responsible for the privacy practices or content of third-party services."
+          }
+        },
+        "externalLinks": {
+          "title": "[FR] External Links",
+          "content": {
+            "disclaimer": "[FR] Our platform may contain links to external websites for educational reference.",
+            "liability": "[FR] We are not responsible for the content or practices of external websites."
+          }
+        },
+        "limitation": {
+          "title": "[FR] Service Limitations",
+          "content": {
+            "availability": "[FR] We strive to maintain service availability but cannot guarantee uninterrupted access.",
+            "accuracy": "[FR] While we aim for accuracy, users should verify critical information independently."
+          }
+        },
+        "jurisdiction": {
+          "title": "[FR] Jurisdiction and Applicable Law",
+          "content": {
+            "law": "[FR] These terms are governed by applicable consumer protection and privacy laws.",
+            "disputes": "[FR] Disputes will be resolved according to the user's jurisdiction as provided by consumer protection legislation."
+          }
+        },
+        "finalNotice": {
+          "title": "[FR] Final Notice",
+          "content": {
+            "lastUpdate": "[FR] Last Update: {date}. By continuing to use Mol Class after this date, you agree to these updated terms."
+          }
+        },
+        "acceptance": {
+          "title": "[FR] Acceptance of Terms",
+          "content": {
+            "agreement": "[FR] By accessing and using Mol Class, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, you should not use our service.",
+            "scope": "[FR] These terms apply to all visitors, users, and other people who access or use the service."
+          }
+        },
+        "acceptableUse": {
+          "title": "[FR] Acceptable Use",
+          "content": {
+            "agreement": "[FR] You agree to use Mol Class only for educational and legal purposes.",
+            "permittedTitle": "[FR] Permitted:",
+            "permitted": "[FR] Use tools for educational studies and research,Share links to specific resources,Use calculation results for academic purposes",
+            "prohibitedTitle": "[FR] Prohibited:",
+            "prohibited": "[FR] Use the service for illegal or harmful activities,Attempt to hack, overload, or damage the system,Reproduce, duplicate, or copy the service without authorization,Use bots or automated scripts without permission"
+          }
+        },
+        "intellectualProperty": {
+          "title": "[FR] Intellectual Property",
+          "content": {
+            "rightsTitle": "[FR] 5.1 Mol Class Rights",
+            "rightsText": "[FR] Mol Class holds rights over:",
+            "rights": "[FR] The platform as a whole (collective work),Compilation, selection, and organization of content,Specific functionalities and features developed,Mol Class brand, name, and visual identity",
+            "sourcesTitle": "[FR] 5.2 Sources and Attributions",
+            "sourcesText": "[FR] Platform content may include:",
+            "sources": "[FR] Public domain scientific information,Data from scientific and educational literature,Content created with the aid of artificial intelligence tools,Adaptations and inspirations from various educational sources,Third-party resources properly used",
+            "commitmentTitle": "[FR] 5.3 Intellectual Property Commitment",
+            "commitment": "[FR] We respect third-party copyrights,We use only permitted or public domain content,When possible, we credit the sources used,We do not claim ownership over fundamental scientific information",
+            "userContentTitle": "[FR] 5.4 User-Generated Content",
+            "userContentText": "[FR] Calculation results, projects, and work created by users using our platform remain their property.",
+            "fairUseTitle": "[FR] 5.5 Educational Fair Use",
+            "fairUseText": "[FR] We recognize that educational use may involve citations, adaptations, and references to existing materials, always respecting fair use and educational principles."
+          }
+        },
+        "liability": {
+          "title": "[FR] Limitation of Liability",
+          "content": {
+            "disclaimer": "[FR] Mol Class is offered \"as is\" and \"as available\", without express or implied warranties of continuous operation, content accuracy, or fitness for specific purposes.",
+            "exclusionsTitle": "[FR] 7.1 Liability Exclusions",
+            "exclusionsText": "[FR] To the maximum extent permitted by law, we are not responsible for:",
+            "exclusions": "[FR] Interruptions, technical failures, temporary or permanent platform unavailability,Direct, indirect, incidental, or consequential losses arising from tool use,Academic, professional, or personal decisions made based on presented content,Accuracy, completeness, or timeliness of provided information,Use of results in critical or commercial applications without independent validation,Violation of third-party intellectual property rights",
+            "userResponsibilityTitle": "[FR] 7.2 User Responsibility",
+            "userResponsibilityText": "[FR] The user is responsible for:",
+            "userResponsibilities": "[FR] Verifying information accuracy before use,Complying with their institution's academic standards,Not using the platform for illicit purposes",
+            "paidServicesTitle": "[FR] 7.3 Future Paid Services",
+            "paidServicesText": "[FR] Any future paid services will have their own specific terms, prevailing over these general terms in case of conflict in paid functionalities.",
+            "exceptionsTitle": "[FR] 7.4 Legal Exceptions",
+            "exceptionsText": "[FR] This limitation does not exclude responsibilities in cases of fraud, bad faith, gross negligence, or when prohibited by mandatory law, including Consumer Protection Code."
+          }
+        },
+        "modifications": {
+          "title": "[FR] Terms Modifications",
+          "content": {
+            "right": "[FR] We reserve the right to modify these terms at any time.",
+            "notification": "[FR] Changes will be indicated by updating the 'last updated' date.",
+            "acceptance": "[FR] Continued use after modifications constitutes acceptance of new terms."
+          }
+        },
+        "governingLaw": {
+          "title": "[FR] Governing Law and Dispute Resolution",
+          "content": {
+            "law": "[FR] This service follows applicable laws",
+            "disputesTitle": "[FR] Dispute Resolution:",
+            "disputes": "[FR] We try to resolve issues amicably,Legal matters are resolved according to applicable jurisdiction,We respect consumer protection and privacy legislation,Competent forum: user's jurisdiction (according to consumer protection laws)"
+          }
+        },
+        "usage": {
+          "title": "[FR] Platform Usage",
+          "content": {
+            "educational": "[FR] This platform is designed exclusively for educational purposes in chemistry and related sciences.",
+            "responsibility": "[FR] Users are responsible for using the tools appropriately and verifying results when necessary."
+          }
+        },
+        "changes": {
+          "title": "[FR] Service Changes",
+          "content": {
+            "evolution": "[FR] Our platform continuously evolves to better serve educational needs.",
+            "notification": "[FR] Significant changes to core functionality will be communicated to users when possible."
+          }
+        },
+        "contact": {
+          "title": "[FR] Contact and Ombudsman",
+          "content": {
+            "emailLabel": "[FR] Email:",
+            "email": "[FR] molclassapp@gmail.com",
+            "subjectLabel": "[FR] Subject:",
+            "subject": "[FR] Terms of Use"
+          }
+        }
+      },
+      "updated": "[FR] 2024-01-15",
+      "footer": {
+        "agreement": "[FR] By continuing to browse, you agree to our Terms of Use and Privacy Policy."
       }
     },
     "cookies": {

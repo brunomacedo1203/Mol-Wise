@@ -107,11 +107,13 @@
       "lastUpdated": "Last updated: {date}",
       "sections": {
         "introduction": "Introduction",
+        "definitions": "Definitions",
         "dataCollection": "Data Collection",
         "dataUsage": "Data Usage",
         "cookies": "Cookies",
         "thirdParty": "Third-Party Services",
         "rights": "Your Rights",
+        "retention": "Data Retention",
         "contact": "Contact",
         "changes": "Changes"
       },
@@ -119,31 +121,108 @@
         "description": "Comprehensive information on how we collect, use, and protect your data, cookies, and third-party services in compliance with international privacy regulations."
       },
       "content": {
+        "intro": "This Privacy Policy explains how we collect, use, store, and protect your information when accessing our website and educational chemistry services.",
+        "introItems": [
+          "Data collection and legal basis",
+          "Usage and retention policies",
+          "Your rights and how to exercise them",
+          "Cookie management and third-party services"
+        ],
         "introduction": {
           "paragraph1": "Mol Class is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, and protect your information when you use our website and educational chemistry services.",
           "paragraph2": "This policy complies with the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and other applicable data protection regulations. We are transparent about our data practices and respect your privacy rights."
         },
+        "definitions": {
+          "controller": "Data Controller: Mol Class",
+          "contact": "Responsible Contact: molclassapp@gmail.com"
+        },
         "dataCollection": {
-          "automaticData": "Automatically Collected Data:",
-          "automaticDataList": [
-            "IP address and device information",
-            "Browser type and operating system",
-            "Pages visited and time spent",
-            "Referral sources from external sites",
-            "Device identifiers and session information"
-          ],
-          "usageData": "Usage Data:",
-          "usageDataList": [
-            "Interactions with chemistry calculators and tools",
-            "Language and theme preferences",
-            "Calculation history (stored locally in your browser)",
-            "Feature usage patterns and performance metrics"
-          ],
-          "notCollected": "Data We Do NOT Collect:",
-          "notCollectedText": "Mol Class does not collect sensitive personal information such as health data, religious or political beliefs, sexual orientation, financial information, or personally identifiable information like names, emails, or government-issued ID numbers unless explicitly provided by you."
+          "technicalData": {
+            "title": "Technical Data",
+            "types": "Types of technical data collected:",
+            "typesList": [
+              "IP address and device information",
+              "Browser type and operating system",
+              "Pages visited and time spent",
+              "Referral sources from external sites",
+              "Device identifiers and session information"
+            ],
+            "legalBasis": "Legal basis: Legitimate interest for service operation and security",
+            "purpose": "Purpose: Ensure proper functioning and security of our educational platform"
+          },
+          "educationalData": {
+            "title": "Educational Data",
+            "types": "Types of educational data collected:",
+            "typesList": [
+              "Interactions with chemistry calculators and tools",
+              "Language and theme preferences",
+              "Calculation history (stored locally in your browser)",
+              "Feature usage patterns and performance metrics"
+            ],
+            "legalBasis": "Legal basis: Consent and legitimate interest for service improvement",
+            "purpose": "Purpose: Personalize learning experience and improve educational tools"
+          },
+          "cookies": {
+            "title": "Cookies and Similar Technologies",
+            "essential": "Essential Cookies:",
+            "essentialList": [
+              "Language and theme preferences",
+              "Cookie consent preferences",
+              "Session management and security",
+              "Basic site functionality and navigation"
+            ],
+            "essentialBasis": "Legal basis: Necessary for service operation (no consent required)",
+            "analytics": "Analytics Cookies (Optional):",
+            "analyticsList": [
+              "Google Analytics: Traffic analysis and user behavior tracking",
+              "Microsoft Clarity: User experience analysis and session recordings",
+              "Performance monitoring and error tracking"
+            ],
+            "analyticsBasis": "Legal basis: Consent (can be withdrawn at any time)",
+            "purpose": "Purpose: Improve user experience and platform performance",
+            "consent": "Consent: You can manage cookie preferences through our consent banner"
+          },
+          "registrationData": {
+            "title": "Registration Data",
+            "types": "Types of registration data collected:",
+            "typesList": [
+              "Email address (if provided)",
+              "Username (if created)",
+              "Account preferences and settings",
+              "Communication preferences"
+            ],
+            "legalBasis": "Legal basis: Consent and contract performance",
+            "purpose": "Purpose: Provide personalized services and account management"
+          },
+          "minorsData": {
+            "title": "Data from Minors",
+            "generalPolicy": {
+              "title": "General Policy",
+              "items": [
+                "We do not knowingly collect personal data from children under 13",
+                "If we discover collection of such data, we will delete it immediately",
+                "Parents/guardians should supervise their children's online activities"
+              ]
+            },
+            "parentalRights": {
+              "title": "Parental Rights",
+              "text": "Parents or guardians have the right to review, delete, or refuse further collection of their child's personal information."
+            },
+            "protectionMeasures": {
+              "title": "Protection Measures",
+              "text": "We implement additional safeguards when processing data that may relate to minors, including enhanced data protection measures and restricted data processing."
+            }
+          }
         },
         "dataUsage": {
           "intro": "We use your data for the following purposes:",
+          "explanation": "Data is used exclusively for educational and service improvement purposes.",
+          "explanationItems": [
+            "Educational experience personalization",
+            "Service improvement and optimization",
+            "Communication about relevant updates",
+            "Legal obligation compliance"
+          ],
           "list": [
             "Provide and improve our educational chemistry services",
             "Personalize your learning experience and remember preferences",
@@ -154,6 +233,12 @@
           ]
         },
         "cookies": {
+          "intro": "We use cookies to improve your browsing experience and analyze our traffic.",
+          "items": [
+            "Essential cookies for basic functionality",
+            "Analytics cookies for usage analysis (optional)",
+            "Preference cookies for personalization"
+          ],
           "types": "Types of Cookies We Use:",
           "essential": "Essential Cookies:",
           "essentialList": [
@@ -170,25 +255,50 @@
           ],
           "management": "You can manage your cookie preferences through our consent banner or your browser settings. Disabling analytics cookies will not affect the core functionality of our educational tools."
         },
+        "cookieManagement": {
+          "banner": {
+            "title": "Cookie Management",
+            "intro": "Our consent banner allows you to:",
+            "list": [
+              "Accept or decline cookies",
+              "Access detailed privacy policy and terms of use information"
+            ]
+          }
+        },
         "thirdParty": {
           "intro": "We use the following trusted third-party services:",
-          "googleAnalytics": "Google Analytics:",
-          "googleAnalyticsList": [
-            "Website traffic and user behavior analysis",
-            "Anonymized and aggregated usage statistics",
-            "Data retention: 26 months maximum",
-            "Privacy Policy: https://policies.google.com/privacy"
+          "services": [
+            "Google Analytics: Website traffic and user behavior analysis",
+            "Microsoft Clarity: User experience analysis and session recordings",
+            "Vercel: Hosting and performance optimization"
           ],
-          "microsoftClarity": "Microsoft Clarity:",
-          "microsoftClarityList": [
-            "User experience analysis and interaction tracking",
-            "Anonymized session recordings and heatmaps",
-            "Performance optimization insights",
-            "Privacy Policy: https://privacy.microsoft.com/privacystatement"
-          ]
+          "legalBasis": "Legal basis: Legitimate interest for service improvement and consent for analytics",
+          "control": "You can control data sharing with third parties through our cookie consent banner",
+          "policies": "Each third-party service has its own privacy policy that governs their data processing practices"
+        },
+        "externalLinks": {
+          "intro": "Our website may contain links to external sites not operated by us.",
+          "details": "We are not responsible for the privacy practices of external websites. We encourage you to review their privacy policies."
+        },
+        "externalServices": {
+          "intro": "We use trusted third-party services to enhance our educational platform.",
+          "details": "These services follow their own privacy policies and adequate protection measures. Data may be processed outside your country."
+        },
+        "retention": {
+          "intro": "We retain your personal data only for as long as necessary to fulfill the purposes outlined in this policy:",
+          "items": [
+            "Technical data: Up to 2 years for security and analytics purposes",
+            "Educational data: Until you delete your account or request deletion",
+            "Cookie data: As specified in our cookie policy (up to 26 months for analytics)",
+            "Communication data: Up to 3 years for customer service purposes"
+          ],
+          "note": "Note: Some data may be retained longer if required by law or for legitimate business purposes such as security incident investigation."
         },
         "rights": {
-          "intro": "Under applicable privacy laws (GDPR, CCPA, etc.), you have the following rights:",
+          "lgpdGdpr": "Under applicable privacy laws (GDPR, CCPA, LGPD, etc.), you have the following rights:",
+          "howToExercise": "How to exercise your rights:",
+          "contact": "Contact us at molclassapp@gmail.com with your request",
+          "response": "We will respond to your requests within the timeframe required by applicable law (typically 30 days for GDPR, 45 days for CCPA).",
           "list": [
             "Access: Know what personal data we hold about you",
             "Rectification: Request correction of inaccurate data",
@@ -200,32 +310,311 @@
             "Non-Discrimination: Not be discriminated against for exercising privacy rights"
           ]
         },
+        "security": {
+          "intro": "We implement appropriate technical and organizational measures to protect your personal data:",
+          "items": [
+            "Encryption of data in transit and at rest",
+            "Access controls and authentication systems",
+            "Regular security assessments and updates",
+            "Staff training on data protection practices",
+            "Incident response procedures"
+          ]
+        },
         "contact": {
           "intro": "To exercise your privacy rights, ask questions about this policy, or report concerns, contact us:",
-          "email": "Email: molclassapp@gmail.com",
-          "subject": "Subject: \"Privacy Rights Request\" or \"Privacy Policy Inquiry\"",
+          "email": "molclassapp@gmail.com",
+          "subject": "Privacy and Data Protection",
           "response": "We will respond to your requests within the timeframe required by applicable law (typically 30 days for GDPR, 45 days for CCPA).",
           "dataProtectionOfficer": "For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
         },
-        "changes": "Changes to This Policy: This Privacy Policy may be updated periodically to reflect changes in our practices or legal requirements. We will notify users of significant changes through our website. The date of the last update is indicated at the top of this page. We encourage you to review this policy regularly."
+        "changes": {
+          "intro": "We may update this Policy to reflect legal, technological, or service changes.",
+          "items": [
+            "The last update date will always be indicated at the top",
+            "Important changes will be communicated through the website or email (when available)",
+            "Continued use after changes constitutes acceptance of the changes",
+            "We recommend reviewing this policy periodically"
+          ]
+        }
+      },
+      "contactSection": {
+        "email": "molclassapp@gmail.com",
+        "emailLabel": "Email:",
+        "subjectLabel": "Subject:",
+        "subjectText": "Privacy and Data Protection"
       }
     },
     "terms": {
       "title": "Terms of Use",
       "lastUpdated": "Last updated: {date}",
+      "updated": "2024-01-15",
       "sections": {
-        "acceptance": "Acceptance of Terms",
-        "usage": "Service Usage",
-        "service": "Service",
-        "acceptableUse": "Acceptable Use",
-        "intellectualProperty": "Intellectual Property",
-        "accuracy": "Accuracy",
-        "restrictions": "Restrictions",
-        "liability": "Liability",
-        "modifications": "Modifications",
-        "governingLaw": "Governing Law",
-        "contact": "Contact",
-        "changes": "Changes"
+        "intro": {
+          "title": "Introduction",
+          "content": "Welcome to Mol Class. These Terms of Use govern your access to and use of our educational platform."
+        },
+        "definitions": {
+          "title": "Definitions and Controller Identification",
+          "content": {
+            "controller": "Data Controller: Mol Class",
+            "contact": "Responsible Contact: molclassapp@gmail.com"
+          }
+        },
+        "acceptance": {
+          "title": "Acceptance of Terms",
+          "content": {
+            "agreement": "By accessing and using Mol Class, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, you should not use our service.",
+            "scope": "These terms apply to all visitors, users, and other people who access or use the service."
+          }
+        },
+        "serviceDescription": {
+          "title": "Service Description",
+          "content": {
+            "description": "Mol Class is a digital educational platform that offers advanced technological tools for chemistry teaching and learning, including interactive, computational, artificial intelligence, and other educational technology resources.",
+            "featuresTitle": "Available Features (including but not limited to):",
+            "features": [
+              "Chemical and physical calculators, simulators, and computational tools",
+              "Molecular visualizers and interactive modeling systems",
+              "Interactive periodic table and chemical databases",
+              "Catalog of compounds, substances, and reference materials",
+              "Games, activities, and gamified learning resources",
+              "Artificial intelligence tools and educational support systems",
+              "Chemical data analysis, processing, and interpretation tools",
+              "Communication and interaction features for learning",
+              "Other educational tools and resources related to chemistry"
+            ],
+            "evolutionTitle": "3.1 Service Evolution",
+            "evolutionText": "The platform's features, functionalities, and technologies may be updated, expanded, modified, or discontinued at any time, always aiming to improve the quality and effectiveness of the educational experience offered to users."
+          }
+        },
+        "acceptableUse": {
+          "title": "Acceptable Use",
+          "content": {
+            "agreement": "You agree to use Mol Class only for educational and legal purposes.",
+            "permittedTitle": "Permitted:",
+            "permitted": [
+              "Use tools for educational studies and research",
+              "Share links to specific resources",
+              "Use calculation results for academic purposes"
+            ],
+            "prohibitedTitle": "Prohibited:",
+            "prohibited": [
+              "Use the service for illegal or harmful activities",
+              "Attempt to hack, overload, or damage the system",
+              "Reproduce, duplicate, or copy the service without authorization",
+              "Use bots or automated scripts without permission"
+            ]
+          }
+        },
+        "intellectualProperty": {
+          "title": "Intellectual Property",
+          "content": {
+            "rightsTitle": "5.1 Mol Class Rights",
+            "rightsText": "Mol Class holds rights over:",
+            "rights": [
+              "The platform as a whole (collective work)",
+              "Compilation, selection, and organization of content",
+              "Specific functionalities and features developed",
+              "Mol Class brand, name, and visual identity"
+            ],
+            "sourcesTitle": "5.2 Sources and Attributions",
+            "sourcesText": "Platform content may include:",
+            "sources": [
+              "Public domain scientific information",
+              "Data from scientific and educational literature",
+              "Content created with the aid of artificial intelligence tools",
+              "Adaptations and inspirations from various educational sources",
+              "Third-party resources properly used"
+            ],
+            "commitmentTitle": "5.3 Intellectual Property Commitment",
+            "commitment": [
+              "We respect third-party copyrights",
+              "We use only permitted or public domain content",
+              "When possible, we credit the sources used",
+              "We do not claim ownership over fundamental scientific information"
+            ],
+            "userContentTitle": "5.4 User-Generated Content",
+            "userContentText": "Calculation results, projects, and work created by users using our platform remain their property.",
+            "fairUseTitle": "5.5 Educational Fair Use",
+            "fairUseText": "We recognize that educational use may involve citations, adaptations, and references to existing materials, always respecting fair use and educational principles."
+          }
+        },
+        "chemicalInformation": {
+          "title": "Chemical Information Accuracy",
+          "content": {
+            "disclaimer": "While we strive to provide accurate and up-to-date information, we do not guarantee the accuracy, completeness, or timeliness of any information in the service.",
+            "importantTitle": "Important:",
+            "important": [
+              "Always verify critical calculations with additional sources",
+              "Use results as educational reference",
+              "Consult scientific literature for professional applications",
+              "We are not responsible for decisions based on our calculations"
+            ]
+          }
+        },
+        "liability": {
+          "title": "Limitation of Liability",
+          "content": {
+            "disclaimer": "Mol Class is offered \"as is\" and \"as available\", without express or implied warranties of continuous operation, content accuracy, or fitness for specific purposes.",
+            "exclusionsTitle": "7.1 Liability Exclusions",
+            "exclusionsText": "To the maximum extent permitted by law, we are not responsible for:",
+            "exclusions": [
+              "Interruptions, technical failures, temporary or permanent platform unavailability",
+              "Direct, indirect, incidental, or consequential losses arising from tool use",
+              "Academic, professional, or personal decisions made based on presented content",
+              "Accuracy, completeness, or timeliness of provided information",
+              "Use of results in critical or commercial applications without independent validation",
+              "Violation of third-party intellectual property rights"
+            ],
+            "userResponsibilityTitle": "7.2 User Responsibility",
+            "userResponsibilityText": "The user is responsible for:",
+            "userResponsibilities": [
+              "Verifying information accuracy before use",
+              "Complying with their institution's academic standards",
+              "Not using the platform for illicit purposes"
+            ],
+            "paidServicesTitle": "7.3 Future Paid Services",
+            "paidServicesText": "Any future paid services will have their own specific terms, prevailing over these general terms in case of conflict in paid functionalities.",
+            "exceptionsTitle": "7.4 Legal Exceptions",
+            "exceptionsText": "This limitation does not exclude responsibilities in cases of fraud, bad faith, gross negligence, or when prohibited by mandatory law, including Consumer Protection Code."
+          }
+        },
+        "moderation": {
+          "title": "Moderation and Reports",
+          "content": {
+            "inappropriate": {
+              "title": "Inappropriate Content",
+              "text": "We reserve the right to remove, without prior notice, any content that violates these Terms or is considered inappropriate."
+            },
+            "reporting": {
+              "title": "Reporting Procedure",
+              "text": "To report inappropriate content or violations:",
+              "steps": [
+                "Send email to molclassapp@gmail.com",
+                "Subject: \"Report - [Brief description]\"",
+                "Include content link/location and reason for report",
+                "Response time: up to 5 business days"
+              ]
+            },
+            "suspension": {
+              "title": "Account Suspension",
+              "text": "Users who repeatedly violate these Terms may have their accounts suspended temporarily or permanently."
+            }
+          }
+        },
+        "modifications": {
+          "title": "Terms Modifications",
+          "content": {
+            "right": "We reserve the right to modify these terms at any time.",
+            "processTitle": "Modification Process:",
+            "process": [
+              "The last update date will always be indicated",
+              "Continued use after changes constitutes acceptance",
+              "We recommend reviewing these terms periodically"
+            ]
+          }
+        },
+        "governingLaw": {
+          "title": "Governing Law and Dispute Resolution",
+          "content": {
+            "law": "This service follows applicable laws",
+            "disputesTitle": "Dispute Resolution:",
+            "disputes": [
+              "We try to resolve issues amicably",
+              "Legal matters are resolved according to applicable jurisdiction",
+              "We respect consumer protection and privacy legislation",
+              "Competent forum: user's jurisdiction (according to consumer protection laws)"
+            ]
+          }
+        },
+        "general": {
+          "title": "General Provisions",
+          "content": {
+            "entirety": {
+              "title": "Entirety",
+              "text": "These Terms, together with the Privacy Policy, constitute the entire agreement between the parties."
+            },
+            "independence": {
+              "title": "Clause Independence",
+              "text": "The invalidity of any clause will not affect the validity of other provisions."
+            },
+            "assignment": {
+              "title": "Assignment",
+              "text": "These Terms cannot be assigned by the user without express consent. Mol Class may assign its rights with prior notification."
+            },
+            "validity": {
+              "title": "Validity",
+              "text": "These Terms remain valid while you use our services."
+            }
+          }
+        },
+        "usage": {
+          "title": "Platform Usage",
+          "content": {
+            "educational": "This platform is designed exclusively for educational purposes in chemistry and related sciences.",
+            "responsibility": "Users are responsible for using the tools appropriately and verifying results when necessary."
+          }
+        },
+        "cookies": {
+          "title": "Cookies and Tracking",
+          "content": {
+            "usage": "We may use cookies and similar technologies to improve user experience and analyze platform usage.",
+            "control": "You can control cookie preferences through your browser settings."
+          }
+        },
+        "thirdParty": {
+          "title": "Third-Party Services",
+          "content": {
+            "integration": "Our platform may integrate with third-party educational tools and services.",
+            "responsibility": "We are not responsible for the privacy practices or content of third-party services."
+          }
+        },
+        "externalLinks": {
+          "title": "External Links",
+          "content": {
+            "disclaimer": "Our platform may contain links to external websites for educational reference.",
+            "liability": "We are not responsible for the content or practices of external websites."
+          }
+        },
+        "limitation": {
+          "title": "Service Limitations",
+          "content": {
+            "availability": "We strive to maintain service availability but cannot guarantee uninterrupted access.",
+            "accuracy": "While we aim for accuracy, users should verify critical information independently."
+          }
+        },
+        "jurisdiction": {
+          "title": "Jurisdiction and Applicable Law",
+          "content": {
+            "law": "These terms are governed by applicable consumer protection and privacy laws.",
+            "disputes": "Disputes will be resolved according to the user's jurisdiction as provided by consumer protection legislation."
+          }
+        },
+        "changes": {
+          "title": "Service Changes",
+          "content": {
+            "evolution": "Our platform continuously evolves to better serve educational needs.",
+            "notification": "Significant changes to core functionality will be communicated to users when possible."
+          }
+        },
+        "contact": {
+          "title": "Contact and Ombudsman",
+          "content": {
+            "emailLabel": "Email:",
+            "email": "molclassapp@gmail.com",
+            "subjectLabel": "Subject:",
+            "subject": "Terms of Use"
+          }
+        },
+        "finalNotice": {
+          "title": "Final Notice",
+          "content": {
+            "lastUpdate": "Last Update: {date}. By continuing to use Mol Class after this date, you agree to these updated terms."
+          }
+        }
+      },
+      "footer": {
+        "agreement": "By continuing to browse, you agree to our Terms of Use and Privacy Policy."
       }
     }
   },

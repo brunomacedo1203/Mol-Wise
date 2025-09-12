@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PrivacyPolicyClient() {
-  const t = useTranslations("privacy");
+  const t = useTranslations("common.privacy");
 
   const lastUpdateDate = "12 de setembro de 2025";
 

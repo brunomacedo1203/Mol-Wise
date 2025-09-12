@@ -359,6 +359,98 @@ O locale padrão (pt) não aparece na URL para melhor SEO.
 - **Hot Reload**: Mudanças nas traduções são refletidas instantaneamente
 - **Validação**: Chaves faltantes são detectadas em tempo de desenvolvimento
 
+## 🧪 Desabilitação Temporária de Idiomas para Testes
+
+### Quando Usar
+
+É útil desabilitar temporariamente idiomas extras quando:
+- Testando builds da aplicação
+- Debugando problemas específicos de tradução
+- Reduzindo complexidade durante desenvolvimento
+- Melhorando performance de build em desenvolvimento
+
+### Processo Passo a Passo
+
+#### 1. Desabilitar no Roteamento
+
+Edite `src/i18n/routing.ts`:
+
+```typescript
+// ANTES (todos os idiomas)
+export const routing = defineRouting({
+  locales: ['pt', 'en', 'fr', 'es', 'de', 'zh', 'hi', 'ar', 'ru'],
+  defaultLocale: 'pt',
+  localePrefix: 'as-needed'
+});
+
+// DEPOIS (apenas pt e en para teste)
+export const routing = defineRouting({
+  locales: ['pt', 'en'], // Temporariamente desabilitados: 'fr', 'es', 'de', 'zh', 'hi', 'ar', 'ru'
+  defaultLocale: 'pt',
+  localePrefix: 'as-needed'
+});
+```
+
+#### 2. Atualizar o Seletor de Idiomas
+
+Edite `src/shared/components/settings/LanguageSwitcher.tsx`:
+
+```typescript
+// ANTES (todos os idiomas)
+const LOCALES = [
+  { code: "pt", flag: "/flags/br.png" },
+  { code: "en", flag: "/flags/us.png" },
+  { code: "fr", flag: "/flags/fr.png" },
+  { code: "de", flag: "/flags/de.png" },
+  { code: "es", flag: "/flags/es.png" },
+  { code: "ar", flag: "/flags/sa.png" },
+  { code: "hi", flag: "/flags/in.png" },
+  { code: "ru", flag: "/flags/ru.png" },
+  { code: "zh", flag: "/flags/cn.png" },
+] as const;
+
+// DEPOIS (apenas pt e en para teste)
+const LOCALES = [
+  { code: "pt", flag: "/flags/br.png" },
+  { code: "en", flag: "/flags/us.png" },
+  // Temporariamente desabilitados para teste:
+  // { code: "fr", flag: "/flags/fr.png" },
+  // { code: "de", flag: "/flags/de.png" },
+  // { code: "es", flag: "/flags/es.png" },
+  // { code: "ar", flag: "/flags/sa.png" },
+  // { code: "hi", flag: "/flags/in.png" },
+  // { code: "ru", flag: "/flags/ru.png" },
+  // { code: "zh", flag: "/flags/cn.png" },
+] as const;
+```
+
+#### 3. Testar o Build
+
+```bash
+npm run build
+```
+
+### Restaurando Todos os Idiomas
+
+Para reativar todos os idiomas:
+
+1. **No `routing.ts`**: Descomente os idiomas na array `locales`
+2. **No `LanguageSwitcher.tsx`**: Descomente as linhas da constante `LOCALES`
+
+### ⚠️ Importante
+
+- **Use comentários**: Sempre comente ao invés de deletar para facilitar a reversão
+- **Teste completo**: Após reativar, teste todos os idiomas
+- **Documentação**: Mantenha este processo documentado para a equipe
+- **Commits separados**: Faça commits separados para desabilitação e reativação
+
+### Benefícios
+
+- ✅ **Build mais rápido**: Menos arquivos de tradução para processar
+- ✅ **Debug simplificado**: Foco apenas nos idiomas essenciais
+- ✅ **Isolamento de problemas**: Identifica se erros são específicos de idiomas
+- ✅ **Reversão fácil**: Processo simples de comentar/descomentar
+
 ## 📚 Recursos Adicionais
 
 - [Documentação oficial do next-intl](https://next-intl-docs.vercel.app/)

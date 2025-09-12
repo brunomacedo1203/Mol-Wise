@@ -120,7 +120,9 @@
           "list": [
             "Измерение использования сайта",
             "Улучшение пользовательского опыта"
-          ]
+          ],
+          "explanation": "[RU] Data is used exclusively for educational and service improvement purposes.",
+          "explanationItems": "[RU] Educational experience personalization,Service improvement and optimization,Communication about relevant updates,Legal obligation compliance"
         },
         "cookies": {
           "types": "Типы файлов cookie",
@@ -134,7 +136,9 @@
             "Google Analytics: измерение использования",
             "Microsoft Clarity: тепловые карты и сессии"
           ],
-          "management": "Вы можете управлять предпочтениями в баннере cookie."
+          "management": "Вы можете управлять предпочтениями в баннере cookie.",
+          "intro": "[RU] We use cookies to improve your browsing experience and analyze our traffic.",
+          "items": "[RU] Essential cookies for basic functionality,Analytics cookies for usage analysis (optional),Preference cookies for personalization"
         },
         "thirdParty": {
           "intro": "Мы можем использовать сторонние сервисы для аналитики.",
@@ -154,7 +158,13 @@
           "list": [
             "Доступ: вы можете запросить ваши данные",
             "Удаление: вы можете запросить удаление"
-          ]
+          ],
+          "introItems": "[RU] Access and rectification of your data,Deletion and portability rights,Objection and restriction options,Consent withdrawal at any time",
+          "access": "[RU] Access: Know what personal data we hold about you",
+          "correction": "[RU] Rectification: Request correction of inaccurate data",
+          "deletion": "[RU] Erasure: Request deletion of your personal data",
+          "objection": "[RU] Object: Oppose certain types of data processing",
+          "restriction": "[RU] Restrict: Limit how we process your data"
         },
         "contact": {
           "intro": "По вопросам и запросам свяжитесь с нами:",
@@ -163,25 +173,260 @@
           "response": "Мы ответим в разумные сроки.",
           "dataProtectionOfficer": "[RU] For EU residents, you may also contact your local data protection authority if you have concerns about our data handling practices."
         },
-        "changes": "Изменения: мы можем периодически обновлять эту политику."
+        "intro": "[RU] This Privacy Policy explains how we collect, use, store, and protect your information when accessing our website and educational chemistry services.",
+        "introItems": "[RU] Data collection and legal basis,Usage and retention policies,Your rights and how to exercise them,Cookie management and third-party services",
+        "cookieManagement": {
+          "intro": "[RU] We provide comprehensive cookie management options.",
+          "banner": {
+            "intro": "[RU] Our consent banner allows you to:",
+            "list": "[RU] Accept or decline cookies,Access detailed privacy policy and terms of use information"
+          },
+          "howTo": {
+            "label": "[RU] How to manage cookies:",
+            "steps": "[RU] Use our consent banner,Adjust browser settings,Contact us for assistance"
+          }
+        },
+        "externalLinks": {
+          "intro": "[RU] Our website may contain links to external sites not operated by us.",
+          "details": "[RU] We are not responsible for the privacy practices of external websites. We encourage you to review their privacy policies."
+        },
+        "externalServices": {
+          "intro": "[RU] We use trusted third-party services to enhance our educational platform.",
+          "details": "[RU] These services follow their own privacy policies and adequate protection measures. Data may be processed outside your country."
+        },
+        "security": {
+          "intro": "[RU] We implement appropriate technical and organizational measures to protect your personal data:",
+          "items": "[RU] Encryption of data in transit and at rest,Access controls and authentication systems,Regular security assessments and updates,Staff training on data protection practices,Incident response procedures"
+        },
+        "changes": {
+          "intro": "[RU] We may update this Policy to reflect legal, technological, or service changes.",
+          "items": "[RU] The last update date will always be indicated at the top,Important changes will be communicated through the website or email (when available),Continued use after changes constitutes acceptance of the changes,We recommend reviewing this policy periodically"
+        }
+      },
+      "contactSection": {
+        "email": "[RU] molclassapp@gmail.com",
+        "emailLabel": "[RU] Email:",
+        "subjectLabel": "[RU] Subject:",
+        "subjectText": "[RU] Privacy and Data Protection"
       }
     },
     "terms": {
       "title": "Условия Использования",
       "lastUpdated": "Последнее обновление: {date}",
       "sections": {
-        "acceptance": "Принятие Условий",
-        "usage": "Использование Сервиса",
-        "service": "Сервис",
-        "acceptableUse": "Допустимое Использование",
-        "intellectualProperty": "Интеллектуальная Собственность",
-        "accuracy": "Точность",
-        "restrictions": "Ограничения",
-        "liability": "Ответственность",
-        "modifications": "Модификации",
-        "governingLaw": "Применимое Право",
-        "contact": "Контакт",
-        "changes": "Изменения"
+        "intro": {
+          "title": "[RU] Introduction",
+          "content": "[RU] Welcome to Mol Class. These Terms of Use govern your access to and use of our educational platform."
+        },
+        "definitions": {
+          "title": "[RU] Definitions and Controller Identification",
+          "content": {
+            "controller": "[RU] Data Controller: Mol Class",
+            "contact": "[RU] Responsible Contact: molclassapp@gmail.com"
+          }
+        },
+        "serviceDescription": {
+          "title": "[RU] Service Description",
+          "content": {
+            "description": "[RU] Mol Class is a digital educational platform that offers advanced technological tools for chemistry teaching and learning, including interactive, computational, artificial intelligence, and other educational technology resources.",
+            "featuresTitle": "[RU] Available Features (including but not limited to):",
+            "features": "[RU] Chemical and physical calculators, simulators, and computational tools,Molecular visualizers and interactive modeling systems,Interactive periodic table and chemical databases,Catalog of compounds, substances, and reference materials,Games, activities, and gamified learning resources,Artificial intelligence tools and educational support systems,Chemical data analysis, processing, and interpretation tools,Communication and interaction features for learning,Other educational tools and resources related to chemistry",
+            "evolutionTitle": "[RU] 3.1 Service Evolution",
+            "evolutionText": "[RU] The platform's features, functionalities, and technologies may be updated, expanded, modified, or discontinued at any time, always aiming to improve the quality and effectiveness of the educational experience offered to users."
+          }
+        },
+        "chemicalInformation": {
+          "title": "[RU] Chemical Information Accuracy",
+          "content": {
+            "disclaimer": "[RU] While we strive to provide accurate and up-to-date information, we do not guarantee the accuracy, completeness, or timeliness of any information in the service.",
+            "importantTitle": "[RU] Important:",
+            "important": "[RU] Always verify critical calculations with additional sources,Use results as educational reference,Consult scientific literature for professional applications,We are not responsible for decisions based on our calculations"
+          }
+        },
+        "privacy": {
+          "title": "[RU] Privacy Policy and Data Protection",
+          "content": {
+            "lgpd": "[RU] We comply with the General Data Protection Law (GDPR) and other applicable privacy regulations.",
+            "collection": "[RU] We collect only data necessary for educational service operation.",
+            "usage": "[RU] Data is used exclusively for:",
+            "purposes": "[RU] Educational experience personalization,Service improvement,Communication about relevant updates,Legal obligation compliance",
+            "sharing": "[RU] We do not share personal data with third parties for commercial purposes.",
+            "rights": "[RU] You have the right to access, correct, delete, or port your data according to GDPR."
+          }
+        },
+        "moderation": {
+          "title": "[RU] Moderation and Reports",
+          "content": {
+            "inappropriate": {
+              "title": "[RU] Inappropriate Content",
+              "text": "[RU] We reserve the right to remove, without prior notice, any content that violates these Terms or is considered inappropriate."
+            },
+            "reporting": {
+              "title": "[RU] Reporting Procedure",
+              "text": "[RU] To report inappropriate content or violations:",
+              "steps": "[RU] Send email to molclassapp@gmail.com,Subject: \"Report - [Brief description]\",Include content link/location and reason for report,Response time: up to 5 business days"
+            },
+            "suspension": {
+              "title": "[RU] Account Suspension",
+              "text": "[RU] Users who repeatedly violate these Terms may have their accounts suspended temporarily or permanently."
+            }
+          }
+        },
+        "general": {
+          "title": "[RU] General Provisions",
+          "content": {
+            "entirety": {
+              "title": "[RU] Entirety",
+              "text": "[RU] These Terms, together with the Privacy Policy, constitute the entire agreement between the parties."
+            },
+            "independence": {
+              "title": "[RU] Clause Independence",
+              "text": "[RU] The invalidity of any clause will not affect the validity of other provisions."
+            },
+            "assignment": {
+              "title": "[RU] Assignment",
+              "text": "[RU] These Terms cannot be assigned by the user without express consent. Mol Class may assign its rights with prior notification."
+            },
+            "validity": {
+              "title": "[RU] Validity",
+              "text": "[RU] These Terms remain valid while you use our services."
+            }
+          }
+        },
+        "cookies": {
+          "title": "[RU] Cookies and Tracking",
+          "content": {
+            "usage": "[RU] We may use cookies and similar technologies to improve user experience and analyze platform usage.",
+            "control": "[RU] You can control cookie preferences through your browser settings."
+          }
+        },
+        "thirdParty": {
+          "title": "[RU] Third-Party Services",
+          "content": {
+            "integration": "[RU] Our platform may integrate with third-party educational tools and services.",
+            "responsibility": "[RU] We are not responsible for the privacy practices or content of third-party services."
+          }
+        },
+        "externalLinks": {
+          "title": "[RU] External Links",
+          "content": {
+            "disclaimer": "[RU] Our platform may contain links to external websites for educational reference.",
+            "liability": "[RU] We are not responsible for the content or practices of external websites."
+          }
+        },
+        "limitation": {
+          "title": "[RU] Service Limitations",
+          "content": {
+            "availability": "[RU] We strive to maintain service availability but cannot guarantee uninterrupted access.",
+            "accuracy": "[RU] While we aim for accuracy, users should verify critical information independently."
+          }
+        },
+        "jurisdiction": {
+          "title": "[RU] Jurisdiction and Applicable Law",
+          "content": {
+            "law": "[RU] These terms are governed by applicable consumer protection and privacy laws.",
+            "disputes": "[RU] Disputes will be resolved according to the user's jurisdiction as provided by consumer protection legislation."
+          }
+        },
+        "finalNotice": {
+          "title": "[RU] Final Notice",
+          "content": {
+            "lastUpdate": "[RU] Last Update: {date}. By continuing to use Mol Class after this date, you agree to these updated terms."
+          }
+        },
+        "acceptance": {
+          "title": "[RU] Acceptance of Terms",
+          "content": {
+            "agreement": "[RU] By accessing and using Mol Class, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, you should not use our service.",
+            "scope": "[RU] These terms apply to all visitors, users, and other people who access or use the service."
+          }
+        },
+        "acceptableUse": {
+          "title": "[RU] Acceptable Use",
+          "content": {
+            "agreement": "[RU] You agree to use Mol Class only for educational and legal purposes.",
+            "permittedTitle": "[RU] Permitted:",
+            "permitted": "[RU] Use tools for educational studies and research,Share links to specific resources,Use calculation results for academic purposes",
+            "prohibitedTitle": "[RU] Prohibited:",
+            "prohibited": "[RU] Use the service for illegal or harmful activities,Attempt to hack, overload, or damage the system,Reproduce, duplicate, or copy the service without authorization,Use bots or automated scripts without permission"
+          }
+        },
+        "intellectualProperty": {
+          "title": "[RU] Intellectual Property",
+          "content": {
+            "rightsTitle": "[RU] 5.1 Mol Class Rights",
+            "rightsText": "[RU] Mol Class holds rights over:",
+            "rights": "[RU] The platform as a whole (collective work),Compilation, selection, and organization of content,Specific functionalities and features developed,Mol Class brand, name, and visual identity",
+            "sourcesTitle": "[RU] 5.2 Sources and Attributions",
+            "sourcesText": "[RU] Platform content may include:",
+            "sources": "[RU] Public domain scientific information,Data from scientific and educational literature,Content created with the aid of artificial intelligence tools,Adaptations and inspirations from various educational sources,Third-party resources properly used",
+            "commitmentTitle": "[RU] 5.3 Intellectual Property Commitment",
+            "commitment": "[RU] We respect third-party copyrights,We use only permitted or public domain content,When possible, we credit the sources used,We do not claim ownership over fundamental scientific information",
+            "userContentTitle": "[RU] 5.4 User-Generated Content",
+            "userContentText": "[RU] Calculation results, projects, and work created by users using our platform remain their property.",
+            "fairUseTitle": "[RU] 5.5 Educational Fair Use",
+            "fairUseText": "[RU] We recognize that educational use may involve citations, adaptations, and references to existing materials, always respecting fair use and educational principles."
+          }
+        },
+        "liability": {
+          "title": "[RU] Limitation of Liability",
+          "content": {
+            "disclaimer": "[RU] Mol Class is offered \"as is\" and \"as available\", without express or implied warranties of continuous operation, content accuracy, or fitness for specific purposes.",
+            "exclusionsTitle": "[RU] 7.1 Liability Exclusions",
+            "exclusionsText": "[RU] To the maximum extent permitted by law, we are not responsible for:",
+            "exclusions": "[RU] Interruptions, technical failures, temporary or permanent platform unavailability,Direct, indirect, incidental, or consequential losses arising from tool use,Academic, professional, or personal decisions made based on presented content,Accuracy, completeness, or timeliness of provided information,Use of results in critical or commercial applications without independent validation,Violation of third-party intellectual property rights",
+            "userResponsibilityTitle": "[RU] 7.2 User Responsibility",
+            "userResponsibilityText": "[RU] The user is responsible for:",
+            "userResponsibilities": "[RU] Verifying information accuracy before use,Complying with their institution's academic standards,Not using the platform for illicit purposes",
+            "paidServicesTitle": "[RU] 7.3 Future Paid Services",
+            "paidServicesText": "[RU] Any future paid services will have their own specific terms, prevailing over these general terms in case of conflict in paid functionalities.",
+            "exceptionsTitle": "[RU] 7.4 Legal Exceptions",
+            "exceptionsText": "[RU] This limitation does not exclude responsibilities in cases of fraud, bad faith, gross negligence, or when prohibited by mandatory law, including Consumer Protection Code."
+          }
+        },
+        "modifications": {
+          "title": "[RU] Terms Modifications",
+          "content": {
+            "right": "[RU] We reserve the right to modify these terms at any time.",
+            "notification": "[RU] Changes will be indicated by updating the 'last updated' date.",
+            "acceptance": "[RU] Continued use after modifications constitutes acceptance of new terms."
+          }
+        },
+        "governingLaw": {
+          "title": "[RU] Governing Law and Dispute Resolution",
+          "content": {
+            "law": "[RU] This service follows applicable laws",
+            "disputesTitle": "[RU] Dispute Resolution:",
+            "disputes": "[RU] We try to resolve issues amicably,Legal matters are resolved according to applicable jurisdiction,We respect consumer protection and privacy legislation,Competent forum: user's jurisdiction (according to consumer protection laws)"
+          }
+        },
+        "usage": {
+          "title": "[RU] Platform Usage",
+          "content": {
+            "educational": "[RU] This platform is designed exclusively for educational purposes in chemistry and related sciences.",
+            "responsibility": "[RU] Users are responsible for using the tools appropriately and verifying results when necessary."
+          }
+        },
+        "changes": {
+          "title": "[RU] Service Changes",
+          "content": {
+            "evolution": "[RU] Our platform continuously evolves to better serve educational needs.",
+            "notification": "[RU] Significant changes to core functionality will be communicated to users when possible."
+          }
+        },
+        "contact": {
+          "title": "[RU] Contact and Ombudsman",
+          "content": {
+            "emailLabel": "[RU] Email:",
+            "email": "[RU] molclassapp@gmail.com",
+            "subjectLabel": "[RU] Subject:",
+            "subject": "[RU] Terms of Use"
+          }
+        }
+      },
+      "updated": "[RU] 2024-01-15",
+      "footer": {
+        "agreement": "[RU] By continuing to browse, you agree to our Terms of Use and Privacy Policy."
       }
     },
     "cookies": {

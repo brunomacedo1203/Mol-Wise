@@ -17,12 +17,13 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "terms" });
+  const t = await getTranslations({ locale, namespace: "common.terms" });
 
   return buildPageMetadata({
     locale,
     path: "/terms-of-use",
     title: t("title"),
-    description: "Termos de Uso do Mol Class - Condições e diretrizes para utilização da plataforma educacional de química.",
+    description:
+      "Termos de Uso do Mol Class - Condições e diretrizes para utilização da plataforma educacional de química.",
   });
 }
