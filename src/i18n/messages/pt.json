@@ -93,31 +93,247 @@
         "essential": "Cookies Essenciais",
         "essentialDescription": "Necessários para o funcionamento básico do site",
         "analytics": "Cookies de Análise",
-        "analyticsDescription": "Ajudam a entender como você usa o site (Google Analytics, Microsoft Clarity)",
+        "analyticsDescription": "Esses cookies nos ajudam a entender como os usuários interagem com o site, descobrir erros e fornecer uma melhor análise geral",
         "save": "Salvar Preferências",
         "legalLinks": "Para mais informações:",
         "privacyPolicy": "Política de Privacidade",
         "termsOfUse": "Termos de Uso"
       }
-    },
-    "terms": {
-      "title": "Termos de Uso",
-      "lastUpdated": "Última atualização: {date}",
-      "sections": {
-        "definitions": "Definições e Identificação do Controlador",
-        "acceptance": "Aceitação dos Termos",
-        "usage": "Uso do Serviço",
-        "service": "Serviço",
-        "acceptableUse": "Uso Aceitável",
-        "intellectualProperty": "Propriedade Intelectual",
-        "accuracy": "Precisão",
-        "restrictions": "Restrições",
-        "liability": "Responsabilidade",
-        "modifications": "Modificações",
-        "governingLaw": "Lei Aplicável",
-        "contact": "Contato",
-        "changes": "Alterações"
+    }
+  },
+  "terms": {
+    "title": "Termos de Uso",
+    "lastUpdated": "Última atualização: {date}",
+    "sections": {
+      "definitions": {
+        "title": "Definições e Identificação do Controlador",
+        "content": {
+          "controller": "Controlador dos Dados: Mol Class",
+          "contact": "Contato do Responsável: molclassapp@gmail.com"
+        }
+      },
+      "acceptance": {
+        "title": "Aceitação dos Termos",
+        "content": {
+          "agreement": "Ao acessar e utilizar o Mol Class, você concorda em cumprir e estar vinculado a estes Termos de Uso. Se você não concordar com qualquer parte destes termos, não deve usar nosso serviço.",
+          "scope": "Estes termos se aplicam a todos os visitantes, usuários e outras pessoas que acessam ou usam o serviço."
+        }
+      },
+      "serviceDescription": {
+        "title": "Descrição dos Serviços",
+        "content": {
+          "description": "O Mol Class é uma plataforma educacional digital que oferece ferramentas tecnológicas avançadas para o ensino e aprendizado de química, incluindo recursos interativos, computacionais, de inteligência artificial e demais tecnologias educacionais.",
+          "featuresTitle": "Recursos Disponíveis (incluindo mas não limitado a):",
+          "features": [
+            "Calculadoras, simuladores e ferramentas computacionais químicas e físicas",
+            "Visualizadores moleculares e sistemas de modelagem interativos",
+            "Tabela periódica interativa e bases de dados químicos",
+            "Catálogo de compostos, substâncias e materiais de referência",
+            "Jogos, atividades e recursos gamificados de aprendizado",
+            "Ferramentas de inteligência artificial e sistemas de apoio educacional",
+            "Recursos de análise, processamento e interpretação de dados químicos",
+            "Funcionalidades de comunicação e interação para aprendizado",
+            "Outras ferramentas e recursos educacionais relacionados à química"
+          ],
+          "evolutionTitle": "3.1 Evolução dos Serviços",
+          "evolutionText": "Os recursos, funcionalidades e tecnologias da plataforma podem ser atualizados, expandidos, modificados ou descontinuados a qualquer momento, sempre visando melhorar a qualidade e efetividade da experiência educacional oferecida aos usuários."
+        }
+      },
+      "acceptableUse": {
+        "title": "Uso Aceitável",
+        "content": {
+          "agreement": "Você concorda em usar o Mol Class apenas para fins educacionais e legais.",
+          "permittedTitle": "É Permitido:",
+          "permitted": [
+            "Usar as ferramentas para estudos e pesquisas educacionais",
+            "Compartilhar links para recursos específicos",
+            "Usar os resultados dos cálculos para fins acadêmicos"
+          ],
+          "prohibitedTitle": "É Proibido:",
+          "prohibited": [
+            "Usar o serviço para atividades ilegais ou prejudiciais",
+            "Tentar hackear, sobrecarregar ou danificar o sistema",
+            "Reproduzir, duplicar ou copiar o serviço sem autorização",
+            "Usar bots ou scripts automatizados sem permissão"
+          ]
+        }
+      },
+      "intellectualProperty": {
+        "title": "Propriedade Intelectual",
+        "content": {
+          "rightsTitle": "5.1 Direitos do Mol Class",
+          "rightsText": "O Mol Class detém direitos sobre:",
+          "rights": [
+            "A plataforma como um todo (conjunto da obra)",
+            "Compilação, seleção e organização dos conteúdos",
+            "Funcionalidades e características específicas desenvolvidas",
+            "Marca, nome e identidade visual do Mol Class"
+          ],
+          "sourcesTitle": "5.2 Fontes e Atribuições",
+          "sourcesText": "O conteúdo da plataforma pode incluir:",
+          "sources": [
+            "Informações científicas de domínio público",
+            "Dados de literatura científica e educacional",
+            "Conteúdo criado com auxílio de ferramentas de inteligência artificial",
+            "Adaptações e inspirações de fontes educacionais diversas",
+            "Recursos de terceiros devidamente utilizados"
+          ],
+          "commitmentTitle": "5.3 Compromisso com Propriedade Intelectual",
+          "commitment": [
+            "Respeitamos os direitos autorais de terceiros",
+            "Utilizamos apenas conteúdo permitido ou de domínio público",
+            "Quando possível, creditamos as fontes utilizadas",
+            "Não reivindicamos propriedade sobre informações científicas fundamentais"
+          ],
+          "userContentTitle": "5.4 Conteúdo Gerado pelo Usuário",
+          "userContentText": "Resultados de cálculos, projetos e trabalhos criados pelos usuários usando nossa plataforma permanecem de sua propriedade.",
+          "fairUseTitle": "5.5 Uso Educacional Fair Use",
+          "fairUseText": "Reconhecemos que o uso educacional pode envolver citações, adaptações e referências a materiais existentes, sempre respeitando os princípios de uso justo e educacional."
+        }
+      },
+      "chemicalInformation": {
+        "title": "Precisão das Informações Químicas",
+        "content": {
+          "disclaimer": "Embora nos esforcemos para fornecer informações precisas e atualizadas, não garantimos a exatidão, completude ou atualidade de qualquer informação no serviço.",
+          "importantTitle": "Importante:",
+          "important": [
+            "Sempre verifique cálculos críticos com fontes adicionais",
+            "Use os resultados como referência educacional",
+            "Consulte literatura científica para aplicações profissionais",
+            "Não somos responsáveis por decisões baseadas em nossos cálculos"
+          ]
+        }
+      },
+      "liability": {
+        "title": "Limitação de Responsabilidade",
+        "content": {
+          "disclaimer": "O Mol Class é oferecido \"como está\" e \"conforme disponível\", sem garantias expressas ou implícitas de funcionamento contínuo, precisão dos conteúdos ou adequação a objetivos específicos.",
+          "exclusionsTitle": "7.1 Exclusões de Responsabilidade",
+          "exclusionsText": "Na extensão máxima permitida por lei, não nos responsabilizamos por:",
+          "exclusions": [
+            "Interrupções, falhas técnicas, indisponibilidade temporária ou permanente da plataforma",
+            "Perdas diretas, indiretas, incidentais ou consequenciais decorrentes do uso da ferramenta",
+            "Decisões acadêmicas, profissionais ou pessoais tomadas com base nos conteúdos apresentados",
+            "Precisão, completude ou atualidade das informações fornecidas ",
+            "Uso dos resultados em aplicações críticas ou comerciais sem validação independente",
+            "Violação de direitos de propriedade intelectual de terceiros "
+          ],
+          "userResponsibilityTitle": "7.2 Responsabilidade do Usuário",
+          "userResponsibilityText": "O usuário é responsável por:",
+          "userResponsibilities": [
+            "Verificar a precisão das informações antes de utilizá-las",
+            "Cumprir as normas acadêmicas de sua instituição",
+            "Não utilizar a plataforma para fins ilícitos"
+          ],
+          "paidServicesTitle": "7.3 Serviços Pagos Futuros",
+          "paidServicesText": "Eventuais serviços pagos terão termos específicos próprios, prevalecendo sobre estes termos gerais em caso de conflito nas funcionalidades pagas.",
+          "exceptionsTitle": "7.4 Exceções Legais",
+          "exceptionsText": "Esta limitação não exclui responsabilidades nos casos de dolo, fraude, má-fé, culpa grave ou quando vedada por lei imperativa, incluindo o Código de Defesa do Consumidor."
+        }
+      },
+      "privacy": {
+        "title": "Política de Privacidade e Proteção de Dados",
+        "content": {
+          "lgpd": "Cumprimos a Lei Geral de Proteção de Dados (LGPD - Lei 13.709/18) e demais normas de privacidade aplicáveis.",
+          "collection": "Coletamos apenas dados necessários para o funcionamento do serviço educacional.",
+          "usage": "Dados são utilizados exclusivamente para:",
+          "purposes": [
+            "Personalização da experiência educacional",
+            "Melhoria dos serviços oferecidos",
+            "Comunicação sobre atualizações relevantes",
+            "Cumprimento de obrigações legais"
+          ],
+          "sharing": "Não compartilhamos dados pessoais com terceiros para fins comerciais.",
+          "rights": "Você tem direito a acessar, corrigir, excluir ou portar seus dados conforme a LGPD."
+        }
+      },
+      "moderation": {
+        "title": "Moderação e Denúncias",
+        "content": {
+          "inappropriate": {
+            "title": "Conteúdo Inadequado",
+            "text": "Reservamo-nos o direito de remover, sem aviso prévio, qualquer conteúdo que viole estes Termos ou seja considerado inadequado."
+          },
+          "reporting": {
+            "title": "Procedimento de Denúncia",
+            "text": "Para reportar conteúdo inadequado ou violações:",
+            "steps": [
+              "Envie e-mail para molclassapp@gmail.com",
+              "Assunto: \"Denúncia - [Descrição breve]\"",
+              "Inclua link/localização do conteúdo e motivo da denúncia",
+              "Prazo de resposta: até 5 dias úteis"
+            ]
+          },
+          "suspension": {
+            "title": "Suspensão de Contas",
+            "text": "Usuários que violem repetidamente estes Termos poderão ter suas contas suspensas temporária ou permanentemente."
+          }
+        }
+      },
+      "modifications": {
+        "title": "Modificações dos Termos",
+        "content": {
+          "right": "Reservamo-nos o direito de modificar ou substituir estes Termos de Uso a qualquer momento, a nosso exclusivo critério.",
+          "processTitle": "Processo de Alteração:",
+          "process": [
+            "A data da última atualização será sempre indicada",
+            "O uso continuado após alterações constitui aceitação",
+            "Recomendamos revisar periodicamente estes termos"
+          ]
+        }
+      },
+      "governingLaw": {
+        "title": "Lei Aplicável e Resolução de Disputas",
+        "content": {
+          "law": "Este serviço segue as leis brasileiras",
+          "disputesTitle": "Resolução de Disputas:",
+          "disputes": [
+            "Tentamos resolver problemas de forma amigável",
+            "Questões legais são resolvidas no Brasil",
+            "Respeitamos a legislação de proteção ao consumidor e LGPD",
+            "Foro competente: comarca onde reside o usuário (conforme CDC)"
+          ]
+        }
+      },
+      "general": {
+        "title": "Disposições Gerais",
+        "content": {
+          "entirety": {
+            "title": "Integralidade",
+            "text": "Estes Termos, juntamente com a Política de Privacidade, constituem o acordo integral entre as partes."
+          },
+          "independence": {
+            "title": "Independência das Cláusulas",
+            "text": "A invalidade de qualquer cláusula não afetará a validade das demais disposições."
+          },
+          "assignment": {
+            "title": "Cessão",
+            "text": "Estes Termos não podem ser cedidos pelo usuário sem consentimento expresso. O Mol Class pode ceder seus direitos mediante notificação prévia."
+          },
+          "validity": {
+            "title": "Vigência",
+            "text": "Estes Termos permanecem válidos enquanto você utilizar nossos serviços."
+          }
+        }
+      },
+      "contact": {
+        "title": "Contato e ouvidoria",
+        "content": {
+          "emailLabel": "Email:",
+          "email": "molclassapp@gmail.com",
+          "subjectLabel": "Assunto:",
+          "subject": "Termos de Uso"
+        }
+      },
+      "finalNotice": {
+        "title": "Aviso Final",
+        "content": {
+          "lastUpdate": "Última Atualização: {date}. Ao continuar usando o Mol Class após esta data, você concorda com estes termos atualizados."
+        }
       }
+    },
+    "footer": {
+      "agreement": "Ao continuar navegando, você concorda com nossos Termos de Uso e Política de Privacidade."
     }
   },
   "navigation": {
@@ -760,7 +976,7 @@
     "more": "+ {count} mais"
   },
   "privacy": {
-  "title": "Política de Privacidade – Mol Class",
+  "title": "Política de Privacidade",
   "lastUpdated": "Última atualização: {date}",
   "sections": {
     "introduction": "1. Introdução",
@@ -770,14 +986,12 @@
     "rights": "5. Direitos dos Usuários",
     "cookies": "6. Gestão de Cookies",
     "thirdParty": "7. Compartilhamento com Terceiros",
-    "transfers": "8. Transferências Internacionais",
-    "compliance": "9. Conformidade Internacional",
-    "changes": "10. Alterações nesta Política",
-    "contact": "11. Contato e Ouvidoria"
+    "changes": "8. Alterações nesta Política",
+    "contact": "9. Contato e Ouvidoria"
   },
   "content": {
     "introduction": {
-      "paragraph1": "O Mol Class está comprometido em proteger a privacidade e os dados pessoais de seus usuários. Esta Política de Privacidade explica como coletamos, utilizamos, armazenamos e protegemos suas informações ao acessar nosso site e serviços educacionais de química.",
+      "paragraph1": "Esta Política de Privacidade explica como coletamos, utilizamos, armazenamos e protegemos suas informações ao acessar nosso site e serviços educacionais de química.",
       "paragraph2": "Esta política está em conformidade com a Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/18) e o Regulamento Geral de Proteção de Dados da União Europeia (GDPR)."
     },
     "definitions": {
@@ -847,15 +1061,33 @@
       },
       "minorsData": {
         "title": "3.5 Dados de Menores de Idade",
-        "policy": "O Mol Class não coleta intencionalmente dados pessoais de crianças ou adolescentes.",
-        "recommendation": "Recomendamos que menores de 18 anos utilizem o site com supervisão de um responsável."
+        "generalPolicy": {
+          "title": "3.5.1 Política Geral",
+          "items": [
+            "Não coletamos intencionalmente dados pessoais de menores de 18 anos",
+            "Analytics podem processar dados de todos os visitantes, sem identificação de idade",
+            "Recomendamos supervisão parental para menores"
+          ]
+        },
+        "parentalRights": {
+          "title": "3.5.2 Direitos dos Responsáveis",
+          "text": "Pais/responsáveis podem solicitar esclarecimentos ou exclusão de dados relacionados a menores através do nosso contato."
+        },
+        "protectionMeasures": {
+          "title": "3.5.3 Medidas de Proteção",
+          "text": "Se detectarmos coleta inadvertida de dados de menores de 13 anos, providenciaremos exclusão imediata."
+        }
       }
     },
     "retention": {
-      "cookies": "Cookies e dados de sessão: cookies essenciais até 1 ano; cookies analíticos até 14 meses (ou conforme configuração do usuário)",
-      "technical": "Dados técnicos e logs: registros de acesso por 6 meses; dados de segurança até 12 meses",
-      "educational": "Dados de uso educacional: dados agregados e pseudonimizados até 2 anos para fins de pesquisa educacional; dados identificáveis até 12 meses após a última interação",
-      "registration": "Dados cadastrais: contas ativas durante a vigência da conta; contas inativas até 24 meses após a última atividade; dados de comunicação até 3 anos para fins regulatórios"
+      "intro": "Mantemos dados pessoais apenas pelo tempo necessário para:",
+      "items": [
+        "Cookies: conforme configuração do usuário e necessidade técnica",
+        "Dados de navegação: período mínimo legal (Marco Civil da Internet)",
+        "Dados educacionais: tempo razoável para melhoria dos serviços",
+        "Dados cadastrais: durante vigência da conta e período regulatório aplicável"
+      ],
+      "note": "Os períodos específicos podem variar conforme a finalidade, base legal e requisitos técnicos da plataforma."
     },
     "rights": {
       "lgpdGdpr": "5.1 Direitos LGPD e GDPR",
@@ -884,28 +1116,23 @@
       }
     },
     "thirdParty": {
-      "intro": "Para funcionamento dos serviços, compartilhamos dados limitados com:",
-      "google": "Google LLC: Google Analytics (dados de uso pseudonimizados)",
-      "microsoft": "Microsoft Corporation: Microsoft Clarity (dados de interação pseudonimizados)",
-      "note": "Estes prestadores processam dados conforme suas próprias políticas de privacidade e medidas de proteção adequadas."
-    },
-    "transfers": {
-      "intro": "Dados podem ser processados fora do Brasil por prestadores de serviços (Google e Microsoft).",
-      "safeguards": "",
-      "anpd": "Até o momento, a ANPD não publicou lista de países com decisão de adequação."
-    },
-    "compliance": {
-      "intro": "Esta política atende aos requisitos de múltiplas jurisdições:",
-      "list": [
-        "Brasil: LGPD (Lei 13.709/18)",
-        "União Europeia: GDPR",
-        "Reino Unido: UK GDPR",
-        "Califórnia: CCPA (quando aplicável)"
-      ]
+      "intro": "Compartilhamos dados limitados apenas com prestadores essenciais ao funcionamento:",
+      "services": [
+        "Google Analytics (Google LLC - EUA): análise de tráfego, dados pseudonimizados",
+        "Microsoft Clarity (Microsoft Corp - EUA): análise de usabilidade, dados pseudonimizados"
+      ],
+      "legalBasis": "Base legal: consentimento através do banner de cookies",
+      "control": "Controle: você pode rejeitar ou alterar preferências a qualquer momento",
+      "policies": "Estes prestadores seguem suas próprias políticas de privacidade e medidas de proteção adequadas. Dados podem ser processados fora do Brasil."
     },
     "changes": {
-      "info": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou nos serviços.",
-      "date": "A data da última atualização será sempre indicada no topo."
+      "intro": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou nos serviços.",
+      "items": [
+        "A data da última atualização será sempre indicada no topo",
+        "Alterações importantes serão comunicadas através do site ou email (quando disponível)",
+        "O uso continuado após alterações constitui aceitação das mudanças",
+        "Recomendamos revisar esta política periodicamente"
+      ]
     },
     "contact": {
       "email": "molclassapp@gmail.com",

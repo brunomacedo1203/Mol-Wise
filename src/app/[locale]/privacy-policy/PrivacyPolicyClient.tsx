@@ -1,21 +1,13 @@
 "use client";
 
 import Page from "@/shared/components/layout/Page";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PrivacyPolicyClient() {
   const t = useTranslations("privacy");
-  const locale = useLocale();
 
-  const currentDate = new Date().toLocaleDateString(
-    locale === "pt" ? "pt-BR" : "en-US",
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const lastUpdateDate = "12 de setembro de 2025";
 
   return (
     <Page title={t("title")}>
@@ -26,7 +18,7 @@ export default function PrivacyPolicyClient() {
             {t("title")}
           </h1>
           <p className="text-2xl text-gray-600 dark:text-gray-400">
-            {t("lastUpdated", { date: currentDate })}
+            {t("lastUpdated", { date: lastUpdateDate })}
           </p>
         </div>
 
@@ -47,12 +39,8 @@ export default function PrivacyPolicyClient() {
             <CardTitle>{t("sections.definitions")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              <strong>Controlador dos Dados:</strong> Mol Class
-            </p>
-            <p>
-              <strong>Contato do Responsável:</strong> molclassapp@gmail.com
-            </p>
+            <p>{t("content.definitions.controller")}</p>
+            <p>{t("content.definitions.contact")}</p>
           </CardContent>
         </Card>
 
@@ -190,8 +178,32 @@ export default function PrivacyPolicyClient() {
 
             {/* Menores de Idade */}
             <h4>{t("content.dataCollection.minorsData.title")}</h4>
-            <p>{t("content.dataCollection.minorsData.policy")}</p>
-            <p>{t("content.dataCollection.minorsData.recommendation")}</p>
+
+            <h5>
+              {t("content.dataCollection.minorsData.generalPolicy.title")}
+            </h5>
+            <ul>
+              {(Array.isArray(
+                t.raw("content.dataCollection.minorsData.generalPolicy.items")
+              )
+                ? t.raw("content.dataCollection.minorsData.generalPolicy.items")
+                : []
+              ).map((item: string, index: number) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+
+            <h5>
+              {t("content.dataCollection.minorsData.parentalRights.title")}
+            </h5>
+            <p>{t("content.dataCollection.minorsData.parentalRights.text")}</p>
+
+            <h5>
+              {t("content.dataCollection.minorsData.protectionMeasures.title")}
+            </h5>
+            <p>
+              {t("content.dataCollection.minorsData.protectionMeasures.text")}
+            </p>
           </CardContent>
         </Card>
 
@@ -201,12 +213,16 @@ export default function PrivacyPolicyClient() {
             <CardTitle>{t("sections.retention")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
+            <p>{t("content.retention.intro")}</p>
             <ul>
-              <li>{t("content.retention.cookies")}</li>
-              <li>{t("content.retention.technical")}</li>
-              <li>{t("content.retention.educational")}</li>
-              <li>{t("content.retention.registration")}</li>
+              {(Array.isArray(t.raw("content.retention.items"))
+                ? t.raw("content.retention.items")
+                : []
+              ).map((item: string, index: number) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
+            <p>{t("content.retention.note")}</p>
           </CardContent>
         </Card>
 
@@ -266,40 +282,20 @@ export default function PrivacyPolicyClient() {
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>{t("content.thirdParty.intro")}</p>
             <ul>
-              <li>{t("content.thirdParty.google")}</li>
-              <li>{t("content.thirdParty.microsoft")}</li>
-            </ul>
-            <p>{t("content.thirdParty.note")}</p>
-          </CardContent>
-        </Card>
-
-        {/* Transferências Internacionais */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("sections.transfers")}</CardTitle>
-          </CardHeader>
-          <CardContent className="prose dark:prose-invert max-w-none">
-            <p>{t("content.transfers.intro")}</p>
-            <p>{t("content.transfers.safeguards")}</p>
-            <p>{t("content.transfers.anpd")}</p>
-          </CardContent>
-        </Card>
-
-        {/* Conformidade Internacional */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("sections.compliance")}</CardTitle>
-          </CardHeader>
-          <CardContent className="prose dark:prose-invert max-w-none">
-            <p>{t("content.compliance.intro")}</p>
-            <ul>
-              {(Array.isArray(t.raw("content.compliance.list"))
-                ? t.raw("content.compliance.list")
+              {(Array.isArray(t.raw("content.thirdParty.services"))
+                ? t.raw("content.thirdParty.services")
                 : []
-              ).map((item: string, index: number) => (
-                <li key={index}>{item}</li>
+              ).map((service: string, index: number) => (
+                <li key={index}>{service}</li>
               ))}
             </ul>
+            <p>
+              <strong>{t("content.thirdParty.legalBasis")}</strong>
+            </p>
+            <p>
+              <strong>{t("content.thirdParty.control")}</strong>
+            </p>
+            <p>{t("content.thirdParty.policies")}</p>
           </CardContent>
         </Card>
 
@@ -309,8 +305,15 @@ export default function PrivacyPolicyClient() {
             <CardTitle>{t("sections.changes")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>{t("content.changes.info")}</p>
-            <p>{t("content.changes.date")}</p>
+            <p>{t("content.changes.intro")}</p>
+            <ul>
+              {(Array.isArray(t.raw("content.changes.items"))
+                ? t.raw("content.changes.items")
+                : []
+              ).map((item: string, index: number) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
           </CardContent>
         </Card>
 
@@ -321,11 +324,12 @@ export default function PrivacyPolicyClient() {
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>
-              <strong>E-mail:</strong> molclassapp@gmail.com
+              <strong>{t("contactSection.emailLabel")}</strong>{" "}
+              {t("contactSection.email")}
             </p>
             <p>
-              <strong>Assunto:</strong> &ldquo;Privacidade e Proteção de
-              Dados&rdquo;
+              <strong>{t("contactSection.subjectLabel")}</strong> &ldquo;
+              {t("contactSection.subjectText")}&rdquo;
             </p>
           </CardContent>
         </Card>

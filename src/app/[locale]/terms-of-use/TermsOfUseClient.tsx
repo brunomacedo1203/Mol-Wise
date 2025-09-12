@@ -1,42 +1,31 @@
 "use client";
 
 import Page from "@/shared/components/layout/Page";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Users, AlertTriangle, Shield, Gavel, Mail } from "lucide-react";
 
 export default function TermsOfUseClient() {
   const t = useTranslations("terms");
-  const locale = useLocale();
 
-  const currentDate = new Date().toLocaleDateString(
-    locale === "pt" ? "pt-BR" : "en-US",
-    {
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const lastUpdateDate = "12 de setembro de 2025";
 
   return (
     <Page title={t("title")}>
-      <div className="max-w-4xl mx-auto p-6 space-y-8">
+      <div className="w-full mx-auto p-6 space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
-          <div className="flex justify-center">
-            <Gavel className="h-16 w-16 text-blue-600 dark:text-blue-400" />
-          </div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
             {t("title")}
           </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {t("lastUpdated", { date: currentDate })}
+          <p className="text-2xl text-gray-600 dark:text-gray-400">
+            {t("lastUpdated", { date: lastUpdateDate })}
           </p>
         </div>
 
         {/* Definições e Identificação */}
         <Card>
           <CardHeader>
-            <CardTitle>{t("sections.definitions")}</CardTitle>
+            <CardTitle>1. {t("sections.definitions.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>
@@ -51,73 +40,65 @@ export default function TermsOfUseClient() {
         {/* Aceitação dos Termos */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-blue-600" />
-              {t("sections.acceptance")}
-            </CardTitle>
+            <CardTitle>2. {t("sections.acceptance.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              Ao acessar e utilizar o Mol Class, você concorda em cumprir e estar vinculado
-              a estes Termos de Uso. Se você não concordar com qualquer parte destes termos,
-              não deve usar nosso serviço.
-            </p>
-            <p>
-              Estes termos se aplicam a todos os visitantes, usuários e outras pessoas que
-              acessam ou usam o serviço.
-            </p>
+            <p>{t("sections.acceptance.content.agreement")}</p>
+            <p>{t("sections.acceptance.content.scope")}</p>
           </CardContent>
         </Card>
 
-        {/* Uso do Serviço */}
+        {/* Descrição do Serviço */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-green-600" />
-              {t("sections.usage")}
-            </CardTitle>
+            <CardTitle>3. {t("sections.serviceDescription.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              O Mol Class é uma plataforma educacional gratuita que oferece ferramentas
-              para o estudo de química, incluindo calculadoras, visualizadores moleculares
-              e recursos educacionais.
-            </p>
-            <h4>Recursos Disponíveis:</h4>
-            <ul>
-              <li>Calculadoras químicas e físicas</li>
-              <li>Visualizador de moléculas interativo</li>
-              <li>Tabela periódica interativa</li>
-              <li>Catálogo de compostos químicos</li>
-              <li>Jogos educacionais</li>
+            <p>{t("sections.serviceDescription.content.description")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.serviceDescription.content.featuresTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.serviceDescription.content.features.0")}</li>
+              <li>{t("sections.serviceDescription.content.features.1")}</li>
+              <li>{t("sections.serviceDescription.content.features.2")}</li>
+              <li>{t("sections.serviceDescription.content.features.3")}</li>
+              <li>{t("sections.serviceDescription.content.features.4")}</li>
+              <li>{t("sections.serviceDescription.content.features.5")}</li>
+              <li>{t("sections.serviceDescription.content.features.6")}</li>
+              <li>{t("sections.serviceDescription.content.features.7")}</li>
+              <li>{t("sections.serviceDescription.content.features.8")}</li>
             </ul>
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.serviceDescription.content.evolutionTitle")}
+            </h4>
+            <p>{t("sections.serviceDescription.content.evolutionText")}</p>
           </CardContent>
         </Card>
 
         {/* Uso Aceitável */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-blue-600" />
-              {t("sections.acceptableUse")}
-            </CardTitle>
+            <CardTitle>4. {t("sections.acceptableUse.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              Você concorda em usar o Mol Class apenas para fins educacionais e legais.
-            </p>
-            <h4>É Permitido:</h4>
-            <ul>
-              <li>Usar as ferramentas para estudos e pesquisas educacionais</li>
-              <li>Compartilhar links para recursos específicos</li>
-              <li>Usar os resultados dos cálculos para fins acadêmicos</li>
+            <p>{t("sections.acceptableUse.content.agreement")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.acceptableUse.content.permittedTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.acceptableUse.content.permitted.0")}</li>
+              <li>{t("sections.acceptableUse.content.permitted.1")}</li>
+              <li>{t("sections.acceptableUse.content.permitted.2")}</li>
             </ul>
-            <h4>É Proibido:</h4>
-            <ul>
-              <li>Usar o serviço para atividades ilegais ou prejudiciais</li>
-              <li>Tentar hackear, sobrecarregar ou danificar o sistema</li>
-              <li>Reproduzir, duplicar ou copiar o serviço sem autorização</li>
-              <li>Usar bots ou scripts automatizados sem permissão</li>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.acceptableUse.content.prohibitedTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.acceptableUse.content.prohibited.0")}</li>
+              <li>{t("sections.acceptableUse.content.prohibited.1")}</li>
+              <li>{t("sections.acceptableUse.content.prohibited.2")}</li>
+              <li>{t("sections.acceptableUse.content.prohibited.3")}</li>
             </ul>
           </CardContent>
         </Card>
@@ -125,44 +106,65 @@ export default function TermsOfUseClient() {
         {/* Propriedade Intelectual */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-purple-600" />
-              {t("sections.intellectualProperty")}
-            </CardTitle>
+            <CardTitle>5. {t("sections.intellectualProperty.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              O serviço e seu conteúdo original, recursos e funcionalidades são e
-              permanecerão propriedade exclusiva do Mol Class e seus licenciadores.
-            </p>
-            <p>
-              O serviço é protegido por direitos autorais, marcas registradas e outras leis.
-              Nossos direitos de marca registrada e comercial não podem ser usados em
-              conexão com qualquer produto ou serviço sem nossa permissão prévia por escrito.
-            </p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.intellectualProperty.content.rightsTitle")}
+            </h4>
+            <p>{t("sections.intellectualProperty.content.rightsText")}</p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.intellectualProperty.content.rights.0")}</li>
+              <li>{t("sections.intellectualProperty.content.rights.1")}</li>
+              <li>{t("sections.intellectualProperty.content.rights.2")}</li>
+              <li>{t("sections.intellectualProperty.content.rights.3")}</li>
+            </ul>
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.intellectualProperty.content.sourcesTitle")}
+            </h4>
+            <p>{t("sections.intellectualProperty.content.sourcesText")}</p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.intellectualProperty.content.sources.0")}</li>
+              <li>{t("sections.intellectualProperty.content.sources.1")}</li>
+              <li>{t("sections.intellectualProperty.content.sources.2")}</li>
+              <li>{t("sections.intellectualProperty.content.sources.3")}</li>
+              <li>{t("sections.intellectualProperty.content.sources.4")}</li>
+            </ul>
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.intellectualProperty.content.commitmentTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.intellectualProperty.content.commitment.0")}</li>
+              <li>{t("sections.intellectualProperty.content.commitment.1")}</li>
+              <li>{t("sections.intellectualProperty.content.commitment.2")}</li>
+              <li>{t("sections.intellectualProperty.content.commitment.3")}</li>
+            </ul>
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.intellectualProperty.content.userContentTitle")}
+            </h4>
+            <p>{t("sections.intellectualProperty.content.userContentText")}</p>
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.intellectualProperty.content.fairUseTitle")}
+            </h4>
+            <p>{t("sections.intellectualProperty.content.fairUseText")}</p>
           </CardContent>
         </Card>
 
-        {/* Precisão dos Dados */}
+        {/* Informações Químicas */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-yellow-600" />
-              {t("sections.accuracy")}
-            </CardTitle>
+            <CardTitle>6. {t("sections.chemicalInformation.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              Embora nos esforcemos para fornecer informações precisas e atualizadas,
-              não garantimos a exatidão, completude ou atualidade de qualquer informação
-              no serviço.
-            </p>
-            <h4>Importante:</h4>
-            <ul>
-              <li>Sempre verifique cálculos críticos com fontes adicionais</li>
-              <li>Use os resultados como referência educacional</li>
-              <li>Consulte literatura científica para aplicações profissionais</li>
-              <li>Não somos responsáveis por decisões baseadas em nossos cálculos</li>
+            <p>{t("sections.chemicalInformation.content.disclaimer")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.chemicalInformation.content.importantTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.chemicalInformation.content.important.0")}</li>
+              <li>{t("sections.chemicalInformation.content.important.1")}</li>
+              <li>{t("sections.chemicalInformation.content.important.2")}</li>
+              <li>{t("sections.chemicalInformation.content.important.3")}</li>
             </ul>
           </CardContent>
         </Card>
@@ -170,49 +172,56 @@ export default function TermsOfUseClient() {
         {/* Limitação de Responsabilidade */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-red-600" />
-              {t("sections.liability")}
-            </CardTitle>
+            <CardTitle>7. {t("sections.liability.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              Em nenhuma circunstância o Mol Class, nem seus diretores, funcionários,
-              parceiros, agentes, fornecedores ou afiliados, serão responsáveis por
-              qualquer dano indireto, incidental, especial, consequencial ou punitivo.
-            </p>
-            <h4>Limitações:</h4>
-            <ul>
-              <li>Não garantimos disponibilidade contínua do serviço</li>
-              <li>Não somos responsáveis por decisões baseadas em nossos cálculos</li>
-              <li>Limitamos nossa responsabilidade ao máximo permitido por lei</li>
+            <p>{t("sections.liability.content.disclaimer")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.liability.content.exclusionsTitle")}
+            </h4>
+            <p>{t("sections.liability.content.exclusionsText")}</p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.liability.content.exclusions.0")}</li>
+              <li>{t("sections.liability.content.exclusions.1")}</li>
+              <li>{t("sections.liability.content.exclusions.2")}</li>
+              <li>{t("sections.liability.content.exclusions.3")}</li>
+              <li>{t("sections.liability.content.exclusions.4")}</li>
+              <li>{t("sections.liability.content.exclusions.5")}</li>
             </ul>
-            <p>
-              Em nenhuma circunstância nossa responsabilidade total excederá o valor
-              pago por você pelos serviços (que atualmente são gratuitos).
-            </p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.liability.content.userResponsibilityTitle")}
+            </h4>
+            <p>{t("sections.liability.content.userResponsibilityText")}</p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.liability.content.userResponsibilities.0")}</li>
+              <li>{t("sections.liability.content.userResponsibilities.1")}</li>
+              <li>{t("sections.liability.content.userResponsibilities.2")}</li>
+            </ul>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.liability.content.paidServicesTitle")}
+            </h4>
+            <p>{t("sections.liability.content.paidServicesText")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.liability.content.exceptionsTitle")}
+            </h4>
+            <p>{t("sections.liability.content.exceptionsText")}</p>
           </CardContent>
         </Card>
 
-        {/* Modificações */}
+        {/* Modificações dos Termos */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-purple-600" />
-              {t("sections.modifications")}
-            </CardTitle>
+            <CardTitle>8. {t("sections.modifications.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              Reservamo-nos o direito de modificar ou substituir estes Termos de Uso
-              a qualquer momento, a nosso exclusivo critério.
-            </p>
-            <h4>Processo de Alteração:</h4>
-            <ul>
-              <li>Alterações significativas serão notificadas com antecedência</li>
-              <li>A data da última atualização será sempre indicada</li>
-              <li>O uso continuado após alterações constitui aceitação</li>
-              <li>Recomendamos revisar periodicamente estes termos</li>
+            <p>{t("sections.modifications.content.right")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.modifications.content.processTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.modifications.content.process.0")}</li>
+              <li>{t("sections.modifications.content.process.1")}</li>
+              <li>{t("sections.modifications.content.process.2")}</li>
             </ul>
           </CardContent>
         </Card>
@@ -220,22 +229,18 @@ export default function TermsOfUseClient() {
         {/* Lei Aplicável */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Gavel className="h-5 w-5 text-blue-600" />
-              {t("sections.governingLaw")}
-            </CardTitle>
+            <CardTitle>9. {t("sections.governingLaw.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              Estes Termos de Uso são regidos e interpretados de acordo com as leis
-              da República Federativa do Brasil.
-            </p>
-            <h4>Resolução de Disputas:</h4>
-            <ul>
-              <li>Tentaremos resolver disputas de forma amigável</li>
-              <li>Foro competente: comarca onde está sediado o Mol Class</li>
-              <li>Aplicação da legislação brasileira de proteção ao consumidor</li>
-              <li>Conformidade com a LGPD e demais regulamentações aplicáveis</li>
+            <p>{t("sections.governingLaw.content.law")}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">
+              {t("sections.governingLaw.content.disputesTitle")}
+            </h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.governingLaw.content.disputes.0")}</li>
+              <li>{t("sections.governingLaw.content.disputes.1")}</li>
+              <li>{t("sections.governingLaw.content.disputes.2")}</li>
+              <li>{t("sections.governingLaw.content.disputes.3")}</li>
             </ul>
           </CardContent>
         </Card>
@@ -243,31 +248,30 @@ export default function TermsOfUseClient() {
         {/* Contato */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-green-600" />
-              {t("sections.contact")}
-            </CardTitle>
+            <CardTitle>10. {t("sections.contact.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>
-              Se você tiver dúvidas sobre estes Termos de Uso, entre em contato conosco:
+              <strong>{t("sections.contact.content.emailLabel")}</strong>{" "}
+              {t("sections.contact.content.email")}
             </p>
-            <ul>
-              <li><strong>Email:</strong> molclassapp@gmail.com</li>
-              <li><strong>Assunto:</strong> &ldquo;Termos de Uso&rdquo;</li>
-            </ul>
             <p>
-              Faremos o possível para responder às suas perguntas dentro de um prazo razoável.
+              <strong>{t("sections.contact.content.subjectLabel")}</strong>{" "}
+              &ldquo;{t("sections.contact.content.subject")}&rdquo;
             </p>
           </CardContent>
         </Card>
 
         {/* Aviso Final */}
-        <Card className="bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
-          <CardContent className="pt-6">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Última Atualização:</strong> {currentDate}. Ao continuar usando
-              o Mol Class após esta data, você concorda com estes termos atualizados.
+        <Card>
+          <CardHeader>
+            <CardTitle>11. {t("sections.finalNotice.title")}</CardTitle>
+          </CardHeader>
+          <CardContent className="prose dark:prose-invert max-w-none">
+            <p>
+              {t("sections.finalNotice.content.lastUpdate", {
+                date: lastUpdateDate,
+              })}
             </p>
           </CardContent>
         </Card>
