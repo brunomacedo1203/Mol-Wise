@@ -1102,13 +1102,15 @@
               "Gerenciamento de sessão e segurança",
               "Funcionalidade básica do site e navegação"
             ],
-            "essentialBasis": "Base legal: Necessário para operação do serviço (não requer consentimento)",
+            "essentialBasis": "Base legal: Necessário para operação do serviço",
             "analytics": "Cookies de Análise (Opcional):",
             "analyticsList": [
               "Google Analytics: Análise de tráfego e rastreamento de comportamento do usuário",
               "Microsoft Clarity: Análise de experiência do usuário",
               "Monitoramento de desempenho e rastreamento de erros"
             ],
+            "disclaimer": "IMPORTANTE: Estes serviços são operados por terceiros e possuem suas próprias práticas de privacidade. Não somos responsáveis pelas políticas de privacidade ou práticas de dados destes provedores externos.",
+            "management": "Você pode gerenciar suas preferências de cookies através do nosso banner de consentimento ou configurações do seu navegador. Desabilitar cookies de análise não afetará a funcionalidade principal de nossas ferramentas educacionais.",
             "analyticsBasis": "Base legal: Consentimento (pode ser retirado a qualquer momento)",
             "purpose": "Finalidade: Melhorar experiência do usuário e desempenho da plataforma",
             "consent": "Consentimento: Você pode gerenciar preferências de cookies através do nosso banner de consentimento"
@@ -1130,9 +1132,9 @@
             "generalPolicy": {
               "title": "Política Geral",
               "items": [
-                "Não coletamos intencionalmente dados pessoais de crianças menores de 13 anos",
-                "Pais/responsáveis devem supervisionar as atividades online de seus filhos",
-                ""               
+                  "Não coletamos intencionalmente dados pessoais de crianças menores de 13 anos",
+                  "Pais/responsáveis podem solicitar informações sobre dados coletados de seus filhos menores",
+                  "Supervisão Parental: Recomendamos supervisão ativa dos Pais/responsáveis nas atividades online de menores."          
               ]
             }
           }
@@ -1172,32 +1174,44 @@
           ],
           "analytics": "Cookies de Análise (Opcional):",
           "analyticsList": [
-            "Google Analytics: Análise de tráfego e rastreamento de comportamento do usuário",
-            "Microsoft Clarity: Análise de experiência do usuário",
-            "Monitoramento de desempenho e rastreamento de erros"
+            "Google Analytics: Serviço de terceiros para análise de tráfego. Consulte a Política de Privacidade do Google para detalhes sobre coleta e uso de dados",
+            "Microsoft Clarity: Serviço de terceiros para análise de experiência do usuário. Consulte a Política de Privacidade da Microsoft para informações detalhadas",
+            "Monitoramento de desempenho e rastreamento de erros através de serviços externos"
           ],
-          "management": "Você pode gerenciar suas preferências de cookies através do nosso banner de consentimento ou configurações do seu navegador. Desabilitar cookies de análise não afetará a funcionalidade principal de nossas ferramentas educacionais."
+          "analyticsBasis": "Base legal: Consentimento",
+          "purpose": "Finalidade: Análise de uso e melhoria da experiência do usuário",
+          "consent": "Você pode aceitar ou recusar estes cookies através do nosso banner de consentimento."
         },
         "cookieManagement": {
           "banner": {
             "title": "Gerenciamento de Cookies",
             "intro": "Nosso banner de consentimento permite que você:",
             "list": [
-              "Aceite ou recuse cookies",
+              "Aceite ou recuse cookies de terceiros",
               "Acesse informações detalhadas em política de privacidade e termos de uso"
             ]
           }
         },
         "thirdParty": {
-          "intro": "Usamos os seguintes serviços confiáveis de terceiros:",
+          "intro": "Utilizamos os seguintes serviços de terceiros independentes:",
           "services": [
-            "Google Analytics: Análise de tráfego do site e comportamento do usuário",
-            "Microsoft Clarity: Análise de experiência do usuário",
-            "Vercel: Hospedagem e otimização de desempenho"
+            {
+              "name": "Google Analytics",
+              "purpose": "Análise de tráfego do site e comportamento do usuário",
+              "provider": "Google LLC",
+              "responsibility": "O Google é responsável pelo processamento dos dados coletados através deste serviço"
+            },
+            {
+              "name": "Microsoft Clarity",
+              "purpose": "Análise de experiência do usuário e mapas de calor",
+              "provider": "Microsoft Corporation",
+              "responsibility": "A Microsoft é responsável pelo processamento dos dados coletados através deste serviço"
+            }
           ],
-          "legalBasis": "Base legal: Interesse legítimo para melhoria do serviço e consentimento para análise",
-          "control": "Você pode controlar o compartilhamento de dados com terceiros através do nosso banner de consentimento de cookies",
-          "policies": "Cada serviço de terceiros tem sua própria política de privacidade que rege suas práticas de processamento de dados"
+          "legalBasis": "Base legal: Consentimento para serviços de análise e interesse legítimo para hospedagem",
+          "control": "Você pode controlar o compartilhamento de dados com terceiros através do nosso banner de consentimento de cookies. Para mais controle, consulte as configurações de privacidade diretamente nos sites dos provedores",
+          "disclaimer": "RESPONSABILIDADE DE TERCEIROS: Cada serviço terceirizado opera independentemente com suas próprias políticas de privacidade e práticas de processamento de dados. Recomendamos fortemente que você consulte as políticas de privacidade específicas de cada provedor para entender completamente como seus dados são tratados.",
+          "userAction": "É sua responsabilidade revisar essas políticas de terceiros para tomar decisões informadas sobre o uso de nossos serviços."
         },
         "externalLinks": {
           "intro": "Nosso site pode conter links para sites externos não operados por nós.",
@@ -1210,11 +1224,13 @@
         "retention": {
           "intro": "Retemos seus dados pessoais apenas pelo tempo necessário para cumprir os propósitos descritos nesta política:",
           "items": [
-            "Dados técnicos: Até 2 anos para fins de segurança e análise",
-            "Dados educacionais: Até você excluir sua conta ou solicitar exclusão",
-            "Dados de cookies: Até 26 meses para análise"
+            "Dados técnicos: 24 meses a partir da última interação com o serviço",
+            "Dados educacionais: Até a exclusão da conta ou solicitação expressa de remoção pelo usuário",
+            "Dados de cookies essenciais: Durante a sessão ativa",
+            "Dados de cookies de análise: 26 meses a partir da coleta",
+            "Dados de registro: Até 5 anos após o encerramento da conta para fins de auditoria"
           ],
-          "note": "Nota: Alguns dados podem ser retidos por mais tempo se exigido por lei ou para fins comerciais legítimos, como investigação de incidentes de segurança."
+          "note": "Exceções: Alguns dados podem ser retidos por período superior quando exigido por obrigação legal, investigações de segurança em andamento, ou para defesa de direitos em processos judiciais."
         },
         "rights": {
           "lgpdGdpr": "Sob as leis de privacidade aplicáveis (GDPR, CCPA, LGPD, etc.), você tem os seguintes direitos:",
@@ -1253,7 +1269,7 @@
           "intro": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou de serviço.",
           "items": [
             "A data da última atualização sempre será indicada no topo",
-            "Mudanças importantes serão comunicadas através do site ou email (quando disponível)",
+            "Nosso contato está disponível ao final desta página",
             "O uso continuado após as mudanças constitui aceitação das alterações",
             "Recomendamos revisar esta política periodicamente"
           ]

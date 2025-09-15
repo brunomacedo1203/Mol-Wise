@@ -4,6 +4,13 @@ import Page from "@/shared/components/layout/Page";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+interface ThirdPartyService {
+  name: string;
+  purpose: string;
+  provider: string;
+  responsibility: string;
+}
+
 export default function PrivacyPolicyClient() {
   const t = useTranslations("common.privacy");
 
@@ -125,9 +132,7 @@ export default function PrivacyPolicyClient() {
               </strong>
             </p>
 
-            <p>
-              <strong>{t("content.dataCollection.cookies.analytics")}</strong>
-            </p>
+            <p>{t("content.dataCollection.cookies.analytics")}</p>
             <ul>
               {(Array.isArray(
                 t.raw("content.dataCollection.cookies.analyticsList")
@@ -138,6 +143,13 @@ export default function PrivacyPolicyClient() {
                 <li key={index}>{item}</li>
               ))}
             </ul>
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 my-2">
+              <p>
+                <strong>
+                  {t("content.dataCollection.cookies.disclaimer")}
+                </strong>
+              </p>
+            </div>
             <p>
               <strong>
                 {t("content.dataCollection.cookies.analyticsBasis")}
@@ -147,6 +159,10 @@ export default function PrivacyPolicyClient() {
               <strong>{t("content.dataCollection.cookies.purpose")}</strong>
             </p>
             <p>{t("content.dataCollection.cookies.consent")}</p>
+            <p className="mt-4">
+              <strong>Gerenciamento:</strong>{" "}
+              {t("content.dataCollection.cookies.management")}
+            </p>
 
             {/* Dados Cadastrais */}
             <h4>{t("content.dataCollection.registrationData.title")}</h4>
@@ -192,8 +208,6 @@ export default function PrivacyPolicyClient() {
                 <li key={index}>{item}</li>
               ))}
             </ul>
-
-
           </CardContent>
         </Card>
 
@@ -271,21 +285,39 @@ export default function PrivacyPolicyClient() {
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
             <p>{t("content.thirdParty.intro")}</p>
-            <ul>
+            <div className="space-y-4">
               {(Array.isArray(t.raw("content.thirdParty.services"))
                 ? t.raw("content.thirdParty.services")
                 : []
-              ).map((service: string, index: number) => (
-                <li key={index}>{service}</li>
+              ).map((service: ThirdPartyService, index: number) => (
+                <div key={index} className="border-l-4 border-blue-200 pl-4">
+                  <h5 className="font-semibold text-lg">{service.name}</h5>
+                  <p>
+                    <strong>Provedor:</strong> {service.provider}
+                  </p>
+                  <p>
+                    <strong>Finalidade:</strong> {service.purpose}
+                  </p>
+
+                  <p>
+                    <strong>Responsabilidade:</strong> {service.responsibility}
+                  </p>
+                </div>
               ))}
-            </ul>
-            <p>
+            </div>
+            <p className="mt-6">
               <strong>{t("content.thirdParty.legalBasis")}</strong>
             </p>
             <p>
               <strong>{t("content.thirdParty.control")}</strong>
             </p>
-            <p>{t("content.thirdParty.policies")}</p>
+            <p className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800">
+              <strong>{t("content.thirdParty.disclaimer")}</strong>
+            </p>
+
+            <p className="mt-4 font-medium">
+              {t("content.thirdParty.userAction")}
+            </p>
           </CardContent>
         </Card>
 
