@@ -203,14 +203,6 @@
                 "If we discover collection of such data, we will delete it immediately",
                 "Parents/guardians should supervise their children's online activities"
               ]
-            },
-            "parentalRights": {
-              "title": "Parental Rights",
-              "text": "Parents or guardians have the right to review, delete, or refuse further collection of their child's personal information."
-            },
-            "protectionMeasures": {
-              "title": "Protection Measures",
-              "text": "We implement additional safeguards when processing data that may relate to minors, including enhanced data protection measures and restricted data processing."
             }
           }
         },
@@ -289,8 +281,7 @@
           "items": [
             "Technical data: Up to 2 years for security and analytics purposes",
             "Educational data: Until you delete your account or request deletion",
-            "Cookie data: As specified in our cookie policy (up to 26 months for analytics)",
-            "Communication data: Up to 3 years for customer service purposes"
+            "Cookie data: As specified in our cookie policy (up to 26 months for analytics)"
           ],
           "note": "Note: Some data may be retained longer if required by law or for legitimate business purposes such as security incident investigation."
         },
@@ -845,14 +836,6 @@
       "solubilityNumeric": "Maximum amount dissolved in 100g of water (g/100g H₂O)",
       "solubilityQualitative": "Qualitative description of solubility"
     },
-    "categoryTags": {
-      "placeholder": "Filter inorganic categories",
-      "clearAll": "Clear all",
-      "ácido": "Acid",
-      "base": "Base",
-      "sal": "Salt",
-      "óxido": "Oxide"
-    },
     "yearDiscovered": "Year Discovered",
     "discoveredBy": "Discovered By",
     "group": "Group",
@@ -1104,6 +1087,17 @@
     },
     "compounds": {
       "title": "Compounds"
+    },
+    "categoryTags": {
+      "label": "Filter inorganic functions",
+      "placeholder": "Filter inorganic categories",
+      "clearAll": "Clear all",
+      "add": "Add tag",
+      "remove": "Remove tag",
+      "acid": "Acid",
+      "base": "Base",
+      "salt": "Salt",
+      "oxide": "Oxide"
     },
     "compoundProperties": {
       "name": "Name",

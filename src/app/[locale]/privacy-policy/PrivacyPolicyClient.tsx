@@ -193,17 +193,7 @@ export default function PrivacyPolicyClient() {
               ))}
             </ul>
 
-            <h5>
-              {t("content.dataCollection.minorsData.parentalRights.title")}
-            </h5>
-            <p>{t("content.dataCollection.minorsData.parentalRights.text")}</p>
 
-            <h5>
-              {t("content.dataCollection.minorsData.protectionMeasures.title")}
-            </h5>
-            <p>
-              {t("content.dataCollection.minorsData.protectionMeasures.text")}
-            </p>
           </CardContent>
         </Card>
 

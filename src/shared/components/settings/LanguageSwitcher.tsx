@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
-  { code: "en", flag: "/flags/us.png" },
+  //{ code: "en", flag: "/flags/us.png" },//
   // Temporariamente desabilitados para teste:
   // { code: "fr", flag: "/flags/fr.png" },
   // { code: "de", flag: "/flags/de.png" },

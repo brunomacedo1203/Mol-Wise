@@ -15,6 +15,664 @@
     "subtitle": "Calcule a massa molar de compostos químicos",
     "description": "Ferramenta para calcular a massa molar de compostos químicos inserindo sua fórmula molecular"
   },
+  "navigation": {
+    "home": "Início",
+    "about": "Sobre",
+    "contact": "Contato",
+    "calculators": "Calculadoras",
+    "periodicTable": "Tabela Periódica",
+    "catalog": "Catálogo",
+    "visualization": "Visualização",
+    "games": "Jogos",
+    "menu": {
+      "expand": "Expandir menu",
+      "collapse": "Recolher menu"
+    }
+  },
+  "visualization": {
+    "title": "Visualizador de Moléculas",
+    "subtitle": "Explore moléculas interativamente",
+    "description": "Insira fórmulas químicas, visualize estruturas 2D e 3D e explore diferentes representações moleculares.",
+    "placeholder": "Pesquisar por nome, fórmula, SMILES ou CID...",
+    "search": "Pesquisar",
+    "tip": "Dica",
+    "example": "Tente pesquisar por",
+    "notFound": "Molécula não encontrada",
+    "error": "Erro ao pesquisar molécula",
+    "molecules2D3D": {
+      "title": "Moléculas 2D/3D"
+    },
+    "controls": {
+      "dragToMove": "Clique e arraste para mover",
+      "scrollToZoom": "Role para zoom",
+      "shiftScrollToPan": "Shift + rolar para pan",
+      "doubleClickToReset": "Duplo clique para resetar",
+      "tooltip": "Clique e arraste para mover; Role para zoom; Shift + rolar para pan; Duplo clique para resetar"
+    }
+  },
+  "home": {
+    "title": "Mol Class",
+    "welcome": "Bem-vindo ao Mol Class!",
+    "subtitle": "Escolha uma ferramenta na barra lateral para começar.",
+    "description": "Este é o ponto de partida do Mol Class, onde você pode acessar várias ferramentas interativas de química."
+  },
+  "calculators": {
+    "title": "Calculadoras",
+    "subtitle": "Abra uma ou mais calculadoras do menu.",
+    "closeAll": "Fechar Todas",
+    "description": "Acesse calculadoras de química para massa molar, cálculos científicos e mais.",
+    "errors": {
+      "generic": "Ocorreu um erro durante o cálculo",
+      "unsupportedType": "Tipo de calculadora não suportado: {type}"
+    },
+    "molarMass": {
+      "title": "Massa Molar",
+      "subtitle": "Insira uma fórmula química ou símbolo de elemento",
+      "description": "Calcule rapidamente a massa molar de compostos químicos.",
+      "input": {
+        "placeholder": "Insira fórmula (ex: H2O)",
+        "label": "Fórmula Química"
+      },
+      "keyboard": {
+        "calculate": "Calcular",
+        "reset": "Resetar",
+        "backspace": "Backspace",
+        "parentheses": "Adicionar Parênteses",
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado"
+      },
+      "result": {
+        "prefix": "A massa molar de",
+        "suffix": "é",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "A fórmula não pode estar vazia",
+        "invalidElement": "O símbolo \"{symbol}\" não foi encontrado",
+        "invalidFormula": "Fórmula química inválida",
+        "mismatchedParentheses": "Parênteses desbalanceados na fórmula",
+        "calculationFailed": "Falha ao calcular massa molar",
+        "generic": "Ocorreu um erro ao calcular massa molar"
+      },
+      "history": {
+        "title": "Histórico de Cálculos",
+        "show": "Mostrar Histórico",
+        "hide": "Ocultar Histórico",
+        "clear": "Limpar Histórico",
+        "empty": "Nenhum cálculo realizado ainda",
+        "clickToUse": "Clique para usar esta fórmula"
+      }
+    },
+    "scientific": {
+      "title": "Calculadora Científica",
+      "subtitle": "Execute cálculos matemáticos avançados",
+      "input": {
+        "placeholder": "Insira uma expressão matemática",
+        "label": "Expressão"
+      },
+      "keyboard": {
+        "calculate": "Calcular",
+        "reset": "Resetar",
+        "backspace": "Backspace",
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado",
+        "functions": {
+          "sin": "Seno",
+          "cos": "Cosseno",
+          "tan": "Tangente",
+          "log": "Logaritmo",
+          "ln": "Logaritmo Natural",
+          "sqrt": "Raiz Quadrada",
+          "pi": "Pi",
+          "e": "Número de Euler"
+        },
+        "memory": {
+          "store": "Armazenar na Memória",
+          "recall": "Recuperar da Memória",
+          "clear": "Limpar Memória"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Expressão inválida",
+        "empty": "A expressão não pode estar vazia",
+        "divisionByZero": "Divisão por zero não é permitida",
+        "generic": "Ocorreu um erro durante o cálculo"
+      },
+      "history": {
+        "title": "Histórico de Cálculos",
+        "show": "Mostrar Histórico",
+        "hide": "Ocultar Histórico",
+        "clear": "Limpar Histórico",
+        "empty": "Nenhum cálculo realizado ainda",
+        "clickToUse": "Clique para usar este resultado"
+      }
+    }
+  },
+  "periodicTable": {
+    "title": "Tabela Periódica",
+    "subtitle": "Digite um nome ou símbolo para ver detalhes",
+    "description": "Explore todos os elementos químicos com dados completos e filtros interativos.",
+    "filterPlaceholder": "Selecionar classificação(ões)",
+    "filterLabel": "Classificação",
+    "filterOptions": {
+      "TODOS": "Todos",
+      "RARE_EARTHS": "Terra Rara",
+      "Alkali metal": "Metal Alcalino",
+      "Alkaline earth metal": "Metal Alcalino-Terroso",
+      "Transition metal": "Metal de Transição",
+      "Post-transition metal": "Metal Pós-Transição",
+      "Metalloid": "Metalóide",
+      "Nonmetal": "Não Metal",
+      "Halogen": "Halogênio",
+      "Noble gas": "Gás Nobre",
+      "Lanthanide": "Lantanídeo",
+      "Actinide": "Actinídeo",
+      "Boron Family": "Família do Boro",
+      "Carbon Family": "Família do Carbono",
+      "Nitrogen Family": "Família do Nitrogênio",
+      "Chalcogens Family": "Família dos Calcogênios"
+    },
+    "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
+    "element": {
+      "atomicNumber": "Número Atômico",
+      "symbol": "Símbolo",
+      "name": "Nome",
+      "molarMass": "Massa Molar",
+      "category": "Categoria",
+      "electronConfiguration": "Configuração Eletrônica",
+      "electronegativity": "Eletronegatividade",
+      "atomicRadius": "Raio Atômico",
+      "ionizationEnergy": "Energia de Ionização",
+      "electronAffinity": "Afinidade Eletrônica",
+      "oxidationStates": "Estados de Oxidação",
+      "standardState": "Estado Padrão",
+      "meltingPoint": "Ponto de Fusão",
+      "boilingPoint": "Ponto de Ebulição",
+      "density": "Densidade\ng/cm³",
+      "solubilityNumeric": "Solubilidade\ng/100g H₂O",
+      "solubilityQualitative": "Solubilidade\nQualitativa",
+      "group": "Grupo",
+      "period": "Período",
+      "categories": {
+        "alkaliMetal": "Metal Alcalino",
+        "alkalineEarthMetal": "Metal Alcalino-Terroso",
+        "transitionMetal": "Metal de Transição",
+        "postTransitionMetal": "Metal Pós-Transição",
+        "metalloid": "Metalóide",
+        "nonmetal": "Não Metal",
+        "halogen": "Halogênio",
+        "nobleGas": "Gás Nobre",
+        "lanthanide": "Lantanídeo",
+        "actinide": "Actinídeo"
+      },
+      "standardStates": {
+        "solid": "Sólido",
+        "liquid": "Líquido",
+        "gas": "Gasoso"
+      }
+    },
+    "tableHeadersFull": {
+      "number": "Número",
+      "name": "Nome do Composto",
+      "commonName": "Nome Comum",
+      "formula": "Fórmula Molecular",
+      "casNumber": "Número de Registro CAS",
+      "molarMass": "Peso Molecular",
+      "physicalForm": "Forma Física",
+      "meltingPoint": "Ponto de Fusão (°C)",
+      "boilingPoint": "Ponto de Ebulição (°C)",
+      "density": "Densidade (g/cm³)",
+      "refractiveIndex": "Índice de Refração (nD)",
+      "solubility": "Solubilidade"
+    },
+    "tableHeaderDescriptions": {
+      "number": "",
+      "id": "Número identificador único do composto",
+      "name": "Nome do composto químico",
+      "commonName": "Nome comum ou alternativo do composto",
+      "formula": "Fórmula química do composto",
+      "casNumber": "Número de Registro CAS (Chemical Abstracts Service)",
+      "molarMass": "Massa molar em gramas por mol (g/mol)",
+      "physicalForm": "Estado físico à temperatura ambiente",
+      "meltingPoint": "Ponto de fusão em graus Celsius (°C)",
+      "boilingPoint": "Ponto de ebulição em graus Celsius (°C)",
+      "density": "Densidade em gramas por centímetro cúbico (g/cm³)",
+      "refractiveIndex": "Índice de refração (nD)",
+      "solubility": "Descrição qualitativa da solubilidade em água",
+      "solubilityNumeric": "Quantidade máxima dissolvida em 100g de água (g/100g H₂O)",
+      "solubilityQualitative": "Descrição qualitativa da solubilidade"
+    },
+    "categoryTags": {
+      "placeholder": "Filtrar categorias inorgânicas",
+      "clearAll": "Limpar tudo",
+      "add": "Adicionar etiqueta",
+      "remove": "Remover etiqueta",
+      "acid": "Ácido",
+      "base": "Base",
+      "salt": "Sal",
+      "oxide": "Óxido"
+    },
+    "discoveryYear": "Ano Descoberto",
+    "discoveredBy": "Descoberto Por",
+    "group": "Grupo",
+    "period": "Período",
+    "categories": {
+      "alkaliMetal": "Metal Alcalino",
+      "alkalineEarthMetal": "Metal Alcalino-Terroso",
+      "transitionMetal": "Metal de Transição",
+      "postTransitionMetal": "Metal Pós-Transição",
+      "metalloid": "Metalóide",
+      "nonmetal": "Não Metal",
+      "halogen": "Halogênio",
+      "nobleGas": "Gás Nobre",
+      "lanthanide": "Lantanídeo",
+      "actinide": "Actinídeo"
+    },
+    "standardStates": {
+      "solid": "Sólido",
+      "liquid": "Líquido",
+      "gas": "Gasoso"
+    },
+    "groups": {
+      "lanthanide": "Lantanóide",
+      "actinide": "Actinóide"
+    },
+    "elements": {
+      "H": "Hidrogênio",
+      "He": "Hélio",
+      "Li": "Lítio",
+      "Be": "Berílio",
+      "B": "Boro",
+      "C": "Carbono",
+      "N": "Nitrogênio",
+      "O": "Oxigênio",
+      "F": "Flúor",
+      "Ne": "Neônio",
+      "Na": "Sódio",
+      "Mg": "Magnésio",
+      "Al": "Alumínio",
+      "Si": "Silício",
+      "P": "Fósforo",
+      "S": "Enxofre",
+      "Cl": "Cloro",
+      "Ar": "Argônio",
+      "K": "Potássio",
+      "Ca": "Cálcio",
+      "Sc": "Escândio",
+      "Ti": "Titânio",
+      "V": "Vanádio",
+      "Cr": "Cromo",
+      "Mn": "Manganês",
+      "Fe": "Ferro",
+      "Co": "Cobalto",
+      "Ni": "Níquel",
+      "Cu": "Cobre",
+      "Zn": "Zinco",
+      "Ga": "Gálio",
+      "Ge": "Germânio",
+      "As": "Arsênio",
+      "Se": "Selênio",
+      "Br": "Bromo",
+      "Kr": "Criptônio",
+      "Rb": "Rubídio",
+      "Sr": "Estrôncio",
+      "Y": "Ítrio",
+      "Zr": "Zircônio",
+      "Nb": "Nióbio",
+      "Mo": "Molibdênio",
+      "Tc": "Tecnécio",
+      "Ru": "Rutênio",
+      "Rh": "Ródio",
+      "Pd": "Paládio",
+      "Ag": "Prata",
+      "Cd": "Cádmio",
+      "In": "Índio",
+      "Sn": "Estanho",
+      "Sb": "Antimônio",
+      "Te": "Telúrio",
+      "I": "Iodo",
+      "Xe": "Xenônio",
+      "Cs": "Césio",
+      "Ba": "Bário",
+      "La": "Lantânio",
+      "Ce": "Cério",
+      "Pr": "Praseodímio",
+      "Nd": "Neodímio",
+      "Pm": "Promécio",
+      "Sm": "Samário",
+      "Eu": "Európio",
+      "Gd": "Gadolínio",
+      "Tb": "Térbio",
+      "Dy": "Disprósio",
+      "Ho": "Hólmio",
+      "Er": "Érbio",
+      "Tm": "Túlio",
+      "Yb": "Itérbio",
+      "Lu": "Lutécio",
+      "Hf": "Háfnio",
+      "Ta": "Tântalo",
+      "W": "Tungstênio",
+      "Re": "Rênio",
+      "Os": "Ósmio",
+      "Ir": "Irídio",
+      "Pt": "Platina",
+      "Au": "Ouro",
+      "Hg": "Mercúrio",
+      "Tl": "Tálio",
+      "Pb": "Chumbo",
+      "Bi": "Bismuto",
+      "Po": "Polônio",
+      "At": "Astato",
+      "Rn": "Radônio",
+      "Fr": "Frâncio",
+      "Ra": "Rádio",
+      "Ac": "Actínio",
+      "Th": "Tório",
+      "Pa": "Protactínio",
+      "U": "Urânio",
+      "Np": "Neptúnio",
+      "Pu": "Plutônio",
+      "Am": "Amerício",
+      "Cm": "Cúrio",
+      "Bk": "Berquélio",
+      "Cf": "Califórnio",
+      "Es": "Einstênio",
+      "Fm": "Férmio",
+      "Md": "Mendelévio",
+      "No": "Nobélio",
+      "Lr": "Laurêncio",
+      "Rf": "Ruterfórdio",
+      "Db": "Dúbnio",
+      "Sg": "Seabórgio",
+      "Bh": "Bóhrio",
+      "Hs": "Hássio",
+      "Mt": "Meitnério",
+      "Ds": "Darmstádtio",
+      "Rg": "Roentgênio",
+      "Cn": "Copernício",
+      "Nh": "Nihônio",
+      "Fl": "Fleróvio",
+      "Mc": "Moscóvio",
+      "Lv": "Livermório",
+      "Ts": "Tennesso",
+      "Og": "Oganessônio"
+    }
+  },
+  "games": {
+    "elementQuiz": {
+      "title": "Quiz de Elementos"
+    },
+    "compoundBuilder": {
+      "title": "Construtor de Compostos"
+    }
+  },
+  "physicalFormTerms": {
+    "Solid": "Sólido",
+    "Liquid": "Líquido",
+    "Gas": "Gasoso",
+    "Crystals": "Cristais",
+    "Powder": "Pó",
+    "Solution": "Solução",
+    "Blue crystals": "Cristais azuis",
+    "Colorless crystals": "Cristais incolores",
+    "White solid (flakes/pellets)": "Sólido branco (flocos/pelotas)",
+    "White powder": "Pó branco",
+    "White solid (lumps)": "Sólido branco (pedaços)",
+    "White crystalline powder": "Pó cristalino branco",
+    "White crystalline solid": "Sólido cristalino branco",
+    "Purple crystals": "Cristais roxos",
+    "Orange crystals": "Cristais laranjas",
+    "Reddish-brown solid": "Sólido marrom-avermelhado",
+    "Hard solid (crystalline)": "Sólido duro (cristalino)",
+    "White solid (flakes)": "Sólido branco (flocos)",
+    "White solid": "Sólido branco",
+    "Colorless liquid": "Líquido incolor",
+    "Syrupy liquid or solid (crystals)": "Líquido xaroposo ou sólido (cristais)",
+    "Blue-green crystals": "Cristais azul-verdes",
+    "Black powder": "Pó preto",
+    "White deliquescent solid": "Sólido branco deliquescente",
+    "White heavy powder": "Pó branco pesado",
+    "White solid (crystalline)": "Sólido branco (cristalino)",
+    "Usually in aqueous solution": "Geralmente em solução aquosa",
+    "Black or brown solid": "Sólido preto ou marrom",
+    "Transparent crystals": "Cristais transparentes",
+    "Reddish-brown gas": "Gás marrom-avermelhado",
+    "Colorless gas": "Gás incolor",
+    "White/gray powder": "Pó branco/cinza",
+    "Gas (aqueous solution is liquid)": "Gás (solução aquosa é líquida)",
+    "Liquid (viscous)": "Líquido (viscoso)"
+  },
+  "solubilityTerms": {
+    "Soluble": "Solúvel em água",
+    "Insoluble": "Insolúvel em água",
+    "Sparingly": "Pouco solúvel em água",
+    "Highly": "Altamente solúvel em água",
+    "Miscible": "Miscível com água",
+    "Reacts": "Reage com água",
+    "Soluble in water": "Solúvel em água",
+    "Practically insoluble in water": "Praticamente insolúvel em água",
+    "Miscible with many liquids": "Miscível com muitos líquidos",
+    "Sparingly soluble in water": "Pouco solúvel em água",
+    "Highly soluble in water": "Altamente solúvel em água",
+    "Fully miscible with water": "Totalmente miscível com água",
+    "Miscible with water (exothermic)": "Miscível com água (exotérmico)",
+    "Miscible with water": "Miscível com água",
+    "Very soluble in water": "Muito solúvel em água",
+    "Reacts with water (forms Ca(OH)2)": "Reage com água (forma Ca(OH)2)",
+    "Moderately soluble in water": "Moderadamente solúvel em água",
+    "Insoluble in water": "Insolúvel em água",
+    "Slightly soluble in water": "Levemente solúvel em água",
+    "Virtually insoluble in water": "Virtualmente insolúvel em água",
+    "Fully soluble in water": "Totalmente solúvel em água",
+    "Sparingly soluble (reacts with water)": "Pouco solúvel (reage com água)",
+    "Reacts with water (forms H2SO3)": "Reage com água (forma H2SO3)",
+    "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)",
+    "Very soluble in water (deliquescent)": "Muito solúvel em água (deliquescente)",
+    "Soluble_in_water_5_6_g_100mL_at_20C": "Solúvel em água (5,6 g/100mL a 20°C)",
+    "In_water_12_g_100_mL_25_C": "Em água: 12 g/100 mL (25 °C)",
+    "Highly soluble in water (forms H2SO3)": "Altamente solúvel em água (forma H2SO3)"
+  },
+  "compoundTable": {
+    "loading": "Carregando...",
+    "errorLoading": "Erro ao carregar dados.",
+    "search": "Pesquisar",
+    "searchPlaceholder": "Pesquisar compostos...",
+    "columns": "Colunas",
+    "rowsPerPage": "Linhas por página:",
+    "noResults": "Nenhum resultado encontrado.",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "page": "Página",
+    "pageOf": "Página {current} de {total}"
+  },
+  "multiSelect": {
+    "placeholder": "Selecionar opções",
+    "searchPlaceholder": "Pesquisar...",
+    "selectAll": "(Selecionar Todos)",
+    "clear": "Limpar",
+    "close": "Fechar",
+    "noResults": "Nenhum resultado encontrado.",
+    "more": "+ {count} mais"
+  },
+  "catalog": {
+    "title": "Compostos Inorgânicos",
+    "subtitle": "Explore informações detalhadas sobre compostos inorgânicos",
+    "description": "Descubra propriedades, composição e usos de elementos inorgânicos.",
+    "elements": {
+      "title": "Elementos"
+    },
+    "compounds": {
+      "title": "Compostos"
+    },
+    "categoryTags": {
+      "label": "Filtre as funções inorgânicas",
+      "placeholder": "Filtrar categorias inorgânicas",
+      "clearAll": "Limpar tudo",
+      "add": "Adicionar etiqueta",
+      "remove": "Remover etiqueta",
+      "selectAll": "Selecionar Tudo",
+      "clear": "Limpar",
+      "close": "Fechar",
+      "search": "Pesquisar...",
+      "noResults": "Nenhum resultado encontrado.",
+      "more": "+ {count} mais",
+      "acid": "Ácido",
+      "base": "Base",
+      "salt": "Sal",
+      "oxide": "Óxido"
+    },
+    "compoundProperties": {
+      "name": "Nome",
+      "commonName": "Nome Comum",
+      "formula": "Fórmula",
+      "casNumber": "Número CAS",
+      "molarMass": "Massa Molar",
+      "physicalForm": "Forma Física",
+      "meltingPoint": "Ponto de Fusão",
+      "boilingPoint": "Ponto de Ebulição",
+      "density": "Densidade",
+      "refractiveIndex": "Índice de Refração",
+      "solubility": "Solubilidade",
+      "solubilityNumeric": "Solubilidade\ng/100g H₂O",
+      "solubilityQualitative": "Solubilidade\nQualitativa"
+    },
+    "advancedFilters": {
+      "title": "Filtros Avançados",
+      "active": "ativo",
+      "reset": "Resetar",
+      "apply": "Aplicar",
+      "meltingPoint": "Ponto de Fusão",
+      "boilingPoint": "Ponto de Ebulição",
+      "density": "Densidade",
+      "molarMass": "Massa Molar",
+      "physicalForms": "Formas Físicas",
+      "solubilityTypes": "Tipos de Solubilidade",
+      "min": "Mín",
+      "max": "Máx"
+    },
+    "compoundNames": {
+      "NaCl": "Cloreto de Sódio",
+      "CaCO3": "Carbonato de Cálcio",
+      "CuSO4·5H2O": "Sulfato de Cobre(II) Pentaidratado",
+      "H2O": "água",
+      "CO2": "Dióxido de Carbono",
+      "NH3": "Amônia",
+      "HCl": "Ácido Clorídrico",
+      "H2SO4": "Ácido Sulfúrico",
+      "HNO3": "Ácido Nítrico",
+      "NaOH": "Hidróxido de Sódio",
+      "Ca(OH)2": "Hidróxido de Cálcio",
+      "CaO": "Óxido de Cálcio",
+      "NaHCO3": "Bicarbonato de Sódio",
+      "Na2CO3·10H2O": "Carbonato de Sódio Decaidratado",
+      "MgSO4·7H2O": "Sulfato de Magnésio Heptaidratado",
+      "AgNO3": "Nitrato de Prata",
+      "KMnO4": "Permanganato de Potássio",
+      "K2Cr2O7": "Dicromato de Potássio",
+      "Fe2O3": "Óxido de Ferro(III)",
+      "SiO2": "Dióxido de Silício",
+      "Al2O3": "Óxido de Alumínio",
+      "NH4NO3": "Nitrato de Amônio",
+      "CaCl2": "Cloreto de Cálcio",
+      "CaSO4·2H2O": "Sulfato de Cálcio Dihidratado",
+      "KNO3": "Nitrato de Potássio",
+      "NaNO3": "Nitrato de Sódio",
+      "H2O2": "Peróxido de Hidrogênio",
+      "H3PO4": "Ácido Fosfórico",
+      "NH4Cl": "Cloreto de Amônio",
+      "ZnO": "Óxido de Zinco",
+      "MgO": "Óxido de Magnésio",
+      "FeSO4·7H2O": "Sulfato de Ferro(II) Heptaidratado",
+      "ZnSO4·7H2O": "Sulfato de Zinco Heptaidratado",
+      "CuO": "Óxido de Cobre(II)",
+      "KOH": "Hidróxido de Potássio",
+      "BaSO4": "Sulfato de Bário",
+      "Ca3(PO4)2": "Fosfato de Cálcio",
+      "H3BO3": "Ácido Bórico",
+      "H2S": "Sulfeto de Hidrogênio",
+      "NaClO": "Hipoclorito de Sódio",
+      "KCl": "Cloreto de Potássio",
+      "MnO2": "Dióxido de Manganês",
+      "Na2SO4·10H2O": "Sulfato de Sódio Decaidratado",
+      "(NH4)2SO4": "Sulfato de Amônio",
+      "SO2": "Dióxido de Enxofre",
+      "NO2": "Dióxido de Nitrogênio",
+      "Na2S2O3·5H2O": "Tiossulfato de Sódio Pentaidratado",
+      "N2O": "Óxido Nitroso",
+      "Na3PO4": "Fosfato Trissódico",
+      "Ca(ClO)2": "Hipoclorito de Cálcio"
+    },
+    "commonName": {
+      "NaCl": "Sal de Mesa",
+      "CaCO3": "Calcário",
+      "CuSO4·5H2O": "Vitríolo Azul",
+      "H2O": "Água",
+      "CO2": "Anidrido Carbônico",
+      "NH3": "Azano",
+      "HCl": "Ácido Muriático",
+      "H2SO4": "Óleo de Vitríolo",
+      "HNO3": "Água Forte",
+      "NaOH": "Soda Cáustica",
+      "Ca(OH)2": "Cal Apagada",
+      "CaO": "Cal Viva",
+      "NaHCO3": "Bicarbonato de Sódio",
+      "Na2CO3·10H2O": "Soda de Lavar",
+      "MgSO4·7H2O": "Sal de Epsom",
+      "AgNO3": "Cáustico Lunar",
+      "KMnO4": "Cristais de Condy",
+      "K2Cr2O7": "Bicromato de Potássio",
+      "Fe2O3": "Ferrugem",
+      "SiO2": "Quartzo",
+      "Al2O3": "Alumina",
+      "NH4NO3": "Salitre Norueguês",
+      "CaCl2": "Dicloreto de Cálcio",
+      "CaSO4·2H2O": "Gesso",
+      "KNO3": "Salitre",
+      "NaNO3": "Salitre do Chile",
+      "H2O2": "Peróxido",
+      "H3PO4": "Ácido Ortofosfórico",
+      "NH4Cl": "Sal Amoníaco",
+      "ZnO": "Branco de Zinco",
+      "MgO": "Magnésia",
+      "FeSO4·7H2O": "Vitríolo Verde",
+      "ZnSO4·7H2O": "Vitríolo Branco",
+      "CuO": "Óxido Cúprico",
+      "KOH": "Potassa Cáustica",
+      "BaSO4": "Barita",
+      "Ca3(PO4)2": "Fosfato Tricálcico",
+      "H3BO3": "Ácido Bórico",
+      "H2S": "Gás de Esgoto",
+      "NaClO": "Água Sanitária",
+      "KCl": "Muriate de Potassa",
+      "MnO2": "Pirolusita",
+      "Na2SO4·10H2O": "Sal de Glauber",
+      "(NH4)2SO4": "Mascagnita (mineral)",
+      "SO2": "Anidrido Sulfuroso",
+      "NO2": "Peróxido de Nitrogênio",
+      "Na2S2O3·5H2O": "Hipo",
+      "N2O": "Gás do Riso",
+      "Na3PO4": "TSP",
+      "Ca(ClO)2": "Pó de Clareamento"
+    },
+    "tableHeaders": {
+      "no": "Nº",
+      "name": "Nome",
+      "commonName": "Nome Comum",
+      "category": "Categoria",
+      "synonym": "Nome Comum",
+      "formula": "Fórm. Mol.",
+      "casNumber": "Nº CAS",
+      "molarMass": "Peso Mol.",
+      "physicalForm": "Forma Física",
+      "meltingPoint": "pf/°C",
+      "boilingPoint": "pe/°C",
+      "refractiveIndex": "nD",
+      "solubility": "Solubilidade",
+      "solubilityNumeric": "Solubilidade (g/100g H₂O)",
+      "solubilityQualitative": "Solubilidade Qualitativa",
+      "density": "Densidade"
+    }
+  },
   "common": {
     "errors": {
       "emptyFormula": "Por favor, insira uma fórmula química"
@@ -79,270 +737,6 @@
       "privacyPolicy": "Política de Privacidade",
       "termsOfUse": "Termos de Uso",
       "policies": "Políticas"
-    },
-    "cookies": {
-      "banner": {
-        "title": "Consentimento de Cookies",
-        "message": "Este site usa cookies para melhorar sua experiência. Você pode aceitar ou recusar cookies não essenciais.",
-        "accept": "Aceitar",
-        "decline": "Recusar",
-        "learnMore": "Saiba mais",
-        "privacyPolicy": "Política de Privacidade",
-        "termsOfUse": "Termos de Uso"
-      },
-      "preferences": {
-        "title": "Preferências de Cookies",
-        "essential": "Cookies Essenciais",
-        "essentialDescription": "Necessários para funcionalidade básica do site",
-        "analytics": "Cookies de Análise",
-        "analyticsDescription": "Nos ajudam a entender como você usa o site (Google Analytics, Microsoft Clarity)",
-        "save": "Salvar Preferências",
-        "legalLinks": "Para mais informações:",
-        "privacyPolicy": "Política de Privacidade",
-        "termsOfUse": "Termos de Uso"
-      }
-    },
-    "privacy": {
-      "title": "Política de Privacidade",
-      "lastUpdated": "Última atualização: {date}",
-      "sections": {
-        "introduction": "Introdução",
-        "definitions": "Definições",
-        "dataCollection": "Coleta de Dados",
-        "dataUsage": "Uso de Dados",
-        "cookies": "Cookies",
-        "thirdParty": "Serviços de Terceiros",
-        "rights": "Seus Direitos",
-        "retention": "Retenção de Dados",
-        "contact": "Contato",
-        "changes": "Alterações"
-      },
-      "metadata": {
-        "description": "Informações abrangentes sobre como coletamos, usamos e protegemos seus dados, cookies e serviços de terceiros em conformidade com regulamentações internacionais de privacidade."
-      },
-      "content": {
-        "intro": "Esta Política de Privacidade explica como coletamos, usamos, armazenamos e protegemos suas informações ao acessar nosso site e serviços educacionais de química.",
-        "introItems": [
-          "Coleta de dados e base legal",
-          "Políticas de uso e retenção",
-          "Seus direitos e como exercê-los",
-          "Gerenciamento de cookies e serviços de terceiros"
-        ],
-        "introduction": {
-          "paragraph1": "O Mol Class está comprometido em proteger sua privacidade e dados pessoais. Esta Política de Privacidade explica como coletamos, usamos e protegemos suas informações quando você usa nosso site e serviços educacionais de química.",
-          "paragraph2": "Esta política está em conformidade com o Regulamento Geral de Proteção de Dados (GDPR), Lei de Privacidade do Consumidor da Califórnia (CCPA) e outras regulamentações aplicáveis de proteção de dados. Somos transparentes sobre nossas práticas de dados e respeitamos seus direitos de privacidade."
-        },
-        "definitions": {
-          "controller": "Controlador de Dados: Mol Class",
-          "contact": "Contato Responsável: molclassapp@gmail.com"
-        },
-        "dataCollection": {
-          "technicalData": {
-            "title": "Dados Técnicos",
-            "types": "Tipos de dados técnicos coletados:",
-            "typesList": [
-              "Endereço IP e informações do dispositivo",
-              "Tipo de navegador e sistema operacional",
-              "Páginas visitadas e tempo gasto",
-              "Fontes de referência de sites externos",
-              "Identificadores de dispositivo e informações de sessão"
-            ],
-            "legalBasis": "Base legal: Interesse legítimo para operação e segurança do serviço",
-            "purpose": "Finalidade: Garantir o funcionamento adequado e segurança de nossa plataforma educacional"
-          },
-          "educationalData": {
-            "title": "Dados Educacionais",
-            "types": "Tipos de dados educacionais coletados:",
-            "typesList": [
-              "Interações com calculadoras e ferramentas de química",
-              "Preferências de idioma e tema",
-              "Histórico de cálculos (armazenado localmente em seu navegador)",
-              "Padrões de uso de recursos e métricas de desempenho"
-            ],
-            "legalBasis": "Base legal: Consentimento e interesse legítimo para melhoria do serviço",
-            "purpose": "Finalidade: Personalizar experiência de aprendizado e melhorar ferramentas educacionais"
-          },
-          "cookies": {
-            "title": "Cookies e Tecnologias Similares",
-            "essential": "Cookies Essenciais:",
-            "essentialList": [
-              "Preferências de idioma e tema",
-              "Preferências de consentimento de cookies",
-              "Gerenciamento de sessão e segurança",
-              "Funcionalidade básica do site e navegação"
-            ],
-            "essentialBasis": "Base legal: Necessário para operação do serviço (não requer consentimento)",
-            "analytics": "Cookies de Análise (Opcional):",
-            "analyticsList": [
-              "Google Analytics: Análise de tráfego e rastreamento de comportamento do usuário",
-              "Microsoft Clarity: Análise de experiência do usuário e gravações de sessão",
-              "Monitoramento de desempenho e rastreamento de erros"
-            ],
-            "analyticsBasis": "Base legal: Consentimento (pode ser retirado a qualquer momento)",
-            "purpose": "Finalidade: Melhorar experiência do usuário e desempenho da plataforma",
-            "consent": "Consentimento: Você pode gerenciar preferências de cookies através do nosso banner de consentimento"
-          },
-          "registrationData": {
-            "title": "Dados de Registro",
-            "types": "Tipos de dados de registro coletados:",
-            "typesList": [
-              "Endereço de email (se fornecido)",
-              "Nome de usuário (se criado)",
-              "Preferências e configurações da conta",
-              "Preferências de comunicação"
-            ],
-            "legalBasis": "Base legal: Consentimento e execução de contrato",
-            "purpose": "Finalidade: Fornecer serviços personalizados e gerenciamento de conta"
-          },
-          "minorsData": {
-            "title": "Dados de Menores",
-            "generalPolicy": {
-              "title": "Política Geral",
-              "items": [
-                "Não coletamos intencionalmente dados pessoais de crianças menores de 13 anos",
-                "Se descobrirmos coleta de tais dados, os excluiremos imediatamente",
-                "Pais/responsáveis devem supervisionar as atividades online de seus filhos"
-              ]
-            },
-            "parentalRights": {
-              "title": "Direitos dos Pais",
-              "text": "Pais ou responsáveis têm o direito de revisar, excluir ou recusar coleta adicional de informações pessoais de seus filhos."
-            },
-            "protectionMeasures": {
-              "title": "Medidas de Proteção",
-              "text": "Implementamos salvaguardas adicionais ao processar dados que possam se relacionar a menores, incluindo medidas aprimoradas de proteção de dados e processamento restrito de dados."
-            }
-          }
-        },
-        "dataUsage": {
-          "intro": "Usamos seus dados para os seguintes propósitos:",
-          "explanation": "Os dados são usados exclusivamente para fins educacionais e melhoria do serviço.",
-          "explanationItems": [
-            "Personalização da experiência educacional",
-            "Melhoria e otimização do serviço",
-            "Comunicação sobre atualizações relevantes",
-            "Cumprimento de obrigações legais"
-          ],
-          "list": [
-            "Fornecer e melhorar nossos serviços educacionais de química",
-            "Personalizar sua experiência de aprendizado e lembrar preferências",
-            "Analisar o uso do site para melhorias e otimização",
-            "Garantir segurança e funcionamento adequado de nossos serviços",
-            "Cumprir obrigações legais e responder a solicitações legítimas",
-            "Desenvolver novos recursos e conteúdo educacional"
-          ]
-        },
-        "cookies": {
-          "intro": "Usamos cookies para melhorar sua experiência de navegação e analisar nosso tráfego.",
-          "items": [
-            "Cookies essenciais para funcionalidade básica",
-            "Cookies de análise para análise de uso (opcional)",
-            "Cookies de preferência para personalização"
-          ],
-          "types": "Tipos de Cookies que Usamos:",
-          "essential": "Cookies Essenciais:",
-          "essentialList": [
-            "Preferências de idioma e tema",
-            "Preferências de consentimento de cookies",
-            "Gerenciamento de sessão e segurança",
-            "Funcionalidade básica do site e navegação"
-          ],
-          "analytics": "Cookies de Análise (Opcional):",
-          "analyticsList": [
-            "Google Analytics: Análise de tráfego e rastreamento de comportamento do usuário",
-            "Microsoft Clarity: Análise de experiência do usuário e gravações de sessão",
-            "Monitoramento de desempenho e rastreamento de erros"
-          ],
-          "management": "Você pode gerenciar suas preferências de cookies através do nosso banner de consentimento ou configurações do seu navegador. Desabilitar cookies de análise não afetará a funcionalidade principal de nossas ferramentas educacionais."
-        },
-        "cookieManagement": {
-          "banner": {
-            "title": "Gerenciamento de Cookies",
-            "intro": "Nosso banner de consentimento permite que você:",
-            "list": [
-              "Aceite ou recuse cookies",
-              "Acesse informações detalhadas sobre política de privacidade e termos de uso"
-            ]
-          }
-        },
-        "thirdParty": {
-          "intro": "Usamos os seguintes serviços confiáveis de terceiros:",
-          "services": [
-            "Google Analytics: Análise de tráfego do site e comportamento do usuário",
-            "Microsoft Clarity: Análise de experiência do usuário e gravações de sessão",
-            "Vercel: Hospedagem e otimização de desempenho"
-          ],
-          "legalBasis": "Base legal: Interesse legítimo para melhoria do serviço e consentimento para análise",
-          "control": "Você pode controlar o compartilhamento de dados com terceiros através do nosso banner de consentimento de cookies",
-          "policies": "Cada serviço de terceiros tem sua própria política de privacidade que rege suas práticas de processamento de dados"
-        },
-        "externalLinks": {
-          "intro": "Nosso site pode conter links para sites externos não operados por nós.",
-          "details": "Não somos responsáveis pelas práticas de privacidade de sites externos. Encorajamos você a revisar suas políticas de privacidade."
-        },
-        "externalServices": {
-          "intro": "Usamos serviços confiáveis de terceiros para aprimorar nossa plataforma educacional.",
-          "details": "Esses serviços seguem suas próprias políticas de privacidade e medidas de proteção adequadas. Os dados podem ser processados fora do seu país."
-        },
-        "retention": {
-          "intro": "Retemos seus dados pessoais apenas pelo tempo necessário para cumprir os propósitos descritos nesta política:",
-          "items": [
-            "Dados técnicos: Até 2 anos para fins de segurança e análise",
-            "Dados educacionais: Até você excluir sua conta ou solicitar exclusão",
-            "Dados de cookies: Conforme especificado em nossa política de cookies (até 26 meses para análise)",
-            "Dados de comunicação: Até 3 anos para fins de atendimento ao cliente"
-          ],
-          "note": "Nota: Alguns dados podem ser retidos por mais tempo se exigido por lei ou para fins comerciais legítimos, como investigação de incidentes de segurança."
-        },
-        "rights": {
-          "lgpdGdpr": "Sob as leis de privacidade aplicáveis (GDPR, CCPA, LGPD, etc.), você tem os seguintes direitos:",
-          "howToExercise": "Como exercer seus direitos:",
-          "contact": "Entre em contato conosco em molclassapp@gmail.com com sua solicitação",
-          "response": "Responderemos às suas solicitações dentro do prazo exigido pela lei aplicável (normalmente 30 dias para GDPR, 45 dias para CCPA).",
-          "list": [
-            "Acesso: Saber quais dados pessoais mantemos sobre você",
-            "Retificação: Solicitar correção de dados imprecisos",
-            "Exclusão: Solicitar exclusão dos seus dados pessoais",
-            "Portabilidade: Receber seus dados em formato estruturado",
-            "Objeção: Opor-se a certos tipos de processamento de dados",
-            "Restrição: Limitar como processamos seus dados",
-            "Retirar Consentimento: Revogar consentimento a qualquer momento",
-            "Não Discriminação: Não ser discriminado por exercer direitos de privacidade"
-          ]
-        },
-        "security": {
-          "intro": "Implementamos medidas técnicas e organizacionais apropriadas para proteger seus dados pessoais:",
-          "items": [
-            "Criptografia de dados em trânsito e em repouso",
-            "Controles de acesso e sistemas de autenticação",
-            "Avaliações regulares de segurança e atualizações",
-            "Treinamento da equipe sobre práticas de proteção de dados",
-            "Procedimentos de resposta a incidentes"
-          ]
-        },
-        "contact": {
-          "intro": "Para exercer seus direitos de privacidade, fazer perguntas sobre esta política ou relatar preocupações, entre em contato conosco:",
-          "email": "molclassapp@gmail.com",
-          "subject": "Privacidade e Proteção de Dados",
-          "response": "Responderemos às suas solicitações dentro do prazo exigido pela lei aplicável (normalmente 30 dias para GDPR, 45 dias para CCPA).",
-          "dataProtectionOfficer": "Para residentes da UE, você também pode entrar em contato com sua autoridade local de proteção de dados se tiver preocupações sobre nossas práticas de tratamento de dados."
-        },
-        "changes": {
-          "intro": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou de serviço.",
-          "items": [
-            "A data da última atualização sempre será indicada no topo",
-            "Mudanças importantes serão comunicadas através do site ou email (quando disponível)",
-            "O uso continuado após as mudanças constitui aceitação das alterações",
-            "Recomendamos revisar esta política periodicamente"
-          ]
-        }
-      },
-      "contactSection": {
-        "email": "molclassapp@gmail.com",
-        "emailLabel": "Email:",
-        "subjectLabel": "Assunto:",
-        "subjectText": "Privacidade e Proteção de Dados"
-      }
     },
     "terms": {
       "title": "Termos de Uso",
@@ -616,645 +1010,261 @@
       "footer": {
         "agreement": "By continuing to browse, you agree to our Terms of Use and Privacy Policy."
       }
-    }
-  },
-  "navigation": {
-    "home": "Início",
-    "about": "Sobre",
-    "contact": "Contato",
-    "calculators": "Calculadoras",
-    "periodicTable": "Tabela Periódica",
-    "catalog": "Catálogo",
-    "visualization": "Visualização",
-    "games": "Jogos",
-    "menu": {
-      "expand": "Expandir menu",
-      "collapse": "Recolher menu"
-    }
-  },
-  "visualization": {
-    "title": "Visualizador de Moléculas",
-    "subtitle": "Explore moléculas interativamente",
-    "description": "Insira fórmulas químicas, visualize estruturas 2D e 3D e explore diferentes representações moleculares.",
-    "placeholder": "Pesquisar por nome, fórmula, SMILES ou CID...",
-    "search": "Pesquisar",
-    "tip": "Dica",
-    "example": "Tente pesquisar por",
-    "notFound": "Molécula não encontrada",
-    "error": "Erro ao pesquisar molécula",
-    "molecules2D3D": {
-      "title": "Moléculas 2D/3D"
     },
-    "controls": {
-      "dragToMove": "Clique e arraste para mover",
-      "scrollToZoom": "Role para zoom",
-      "shiftScrollToPan": "Shift + rolar para pan",
-      "doubleClickToReset": "Duplo clique para resetar",
-      "tooltip": "Clique e arraste para mover; Role para zoom; Shift + rolar para pan; Duplo clique para resetar"
-    }
-  },
-  "home": {
-    "title": "Mol Class",
-    "welcome": "Bem-vindo ao Mol Class!",
-    "subtitle": "Escolha uma ferramenta na barra lateral para começar.",
-    "description": "Este é o ponto de partida do Mol Class, onde você pode acessar várias ferramentas interativas de química."
-  },
-  "calculators": {
-    "title": "Calculadoras",
-    "subtitle": "Abra uma ou mais calculadoras do menu.",
-    "closeAll": "Fechar Todas",
-    "description": "Acesse calculadoras de química para massa molar, cálculos científicos e mais.",
-    "errors": {
-      "generic": "Ocorreu um erro durante o cálculo",
-      "unsupportedType": "Tipo de calculadora não suportado: {type}"
-    },
-    "molarMass": {
-      "title": "Massa Molar",
-      "subtitle": "Insira uma fórmula química ou símbolo de elemento",
-      "description": "Calcule rapidamente a massa molar de compostos químicos.",
-      "input": {
-        "placeholder": "Insira fórmula (ex: H2O)",
-        "label": "Fórmula Química"
+    "cookies": {
+      "banner": {
+        "title": "Consentimento de Cookies",
+        "message": "Este site usa cookies para melhorar sua experiência. Você pode aceitar ou recusar cookies não essenciais.",
+        "accept": "Aceitar",
+        "decline": "Recusar",
+        "learnMore": "Saiba mais",
+        "privacyPolicy": "Política de Privacidade",
+        "termsOfUse": "Termos de Uso"
       },
-      "keyboard": {
-        "calculate": "Calcular",
-        "reset": "Resetar",
-        "backspace": "Backspace",
-        "parentheses": "Adicionar Parênteses",
-        "showKeyboard": "Mostrar teclado",
-        "hideKeyboard": "Ocultar teclado"
-      },
-      "result": {
-        "prefix": "A massa molar de",
-        "suffix": "é",
-        "unit": "g/mol"
-      },
-      "errors": {
-        "empty": "A fórmula não pode estar vazia",
-        "invalidElement": "O símbolo \"{symbol}\" não foi encontrado",
-        "invalidFormula": "Fórmula química inválida",
-        "mismatchedParentheses": "Parênteses desbalanceados na fórmula",
-        "calculationFailed": "Falha ao calcular massa molar",
-        "generic": "Ocorreu um erro ao calcular massa molar"
-      },
-      "history": {
-        "title": "Histórico de Cálculos",
-        "show": "Mostrar Histórico",
-        "hide": "Ocultar Histórico",
-        "clear": "Limpar Histórico",
-        "empty": "Nenhum cálculo realizado ainda",
-        "clickToUse": "Clique para usar esta fórmula"
+      "preferences": {
+        "title": "Preferências de Cookies",
+        "essential": "Cookies Essenciais",
+        "essentialDescription": "Necessários para funcionalidade básica do site",
+        "analytics": "Cookies de Análise",
+        "analyticsDescription": "Nos ajudam a entender como você usa o site",
+        "save": "Salvar Preferências",
+        "legalLinks": "Para mais informações:",
+        "privacyPolicy": "Política de Privacidade",
+        "termsOfUse": "Termos de Uso"
       }
     },
-    "scientific": {
-      "title": "Calculadora Científica",
-      "subtitle": "Execute cálculos matemáticos avançados",
-      "input": {
-        "placeholder": "Insira uma expressão matemática",
-        "label": "Expressão"
+    "privacy": {
+      "title": "Política de Privacidade",
+      "lastUpdated": "Última atualização: {date}",
+      "sections": {
+        "introduction": "Introdução",
+        "definitions": "Definições",
+        "dataCollection": "Coleta de Dados",
+        "dataUsage": "Uso de Dados",
+        "cookies": "Cookies",
+        "thirdParty": "Serviços de Terceiros",
+        "rights": "Seus Direitos",
+        "retention": "Retenção de Dados",
+        "contact": "Contato",
+        "changes": "Alterações"
       },
-      "keyboard": {
-        "calculate": "Calcular",
-        "reset": "Resetar",
-        "backspace": "Backspace",
-        "showKeyboard": "Mostrar teclado",
-        "hideKeyboard": "Ocultar teclado",
-        "functions": {
-          "sin": "Seno",
-          "cos": "Cosseno",
-          "tan": "Tangente",
-          "log": "Logaritmo",
-          "ln": "Logaritmo Natural",
-          "sqrt": "Raiz Quadrada",
-          "pi": "Pi",
-          "e": "Número de Euler"
+      "metadata": {
+        "description": "Informações abrangentes sobre como coletamos, usamos e protegemos seus dados, cookies e serviços de terceiros em conformidade com regulamentações internacionais de privacidade."
+      },
+      "content": {
+        "intro": "Esta Política de Privacidade explica como coletamos, usamos, armazenamos e protegemos suas informações ao acessar nosso site e serviços educacionais de química.",
+        "introItems": [
+          "Coleta de dados e base legal",
+          "Políticas de uso e retenção",
+          "Seus direitos e como exercê-los",
+          "Gerenciamento de cookies e serviços de terceiros"
+        ],
+        "introduction": {
+          "paragraph1": "O Mol Class está comprometido em proteger sua privacidade e dados pessoais. Esta Política de Privacidade explica como coletamos, usamos e protegemos suas informações quando você usa nosso site e serviços educacionais de química.",
+          "paragraph2": "Esta política está em conformidade com o Regulamento Geral de Proteção de Dados (GDPR) e respeitamos seus direitos de privacidade."
         },
-        "memory": {
-          "store": "Armazenar na Memória",
-          "recall": "Recuperar da Memória",
-          "clear": "Limpar Memória"
+        "definitions": {
+          "controller": "Controlador de Dados: Mol Class",
+          "contact": "Contato Responsável: molclassapp@gmail.com"
+        },
+        "dataCollection": {
+          "technicalData": {
+            "title": "Dados Técnicos",
+            "types": "Tipos de dados técnicos coletados:",
+            "typesList": [
+              "Endereço IP e informações do dispositivo",
+              "Tipo de navegador e sistema operacional",
+              "Páginas visitadas e tempo gasto",
+              "Fontes de referência de sites externos",
+              "Identificadores de dispositivo e informações de sessão"
+            ],
+            "legalBasis": "Base legal: Interesse legítimo para operação e segurança do serviço",
+            "purpose": "Finalidade: Garantir o funcionamento adequado e segurança de nossa plataforma educacional"
+          },
+          "educationalData": {
+            "title": "Dados Educacionais",
+            "types": "Tipos de dados educacionais coletados:",
+            "typesList": [
+              "Interações com calculadoras e ferramentas de química",
+              "Preferências de idioma e tema",
+              "Histórico de cálculos",
+              "Padrões de uso de recursos e métricas de desempenho"
+            ],
+            "legalBasis": "Base legal: Consentimento e interesse legítimo para melhoria do serviço",
+            "purpose": "Finalidade: Personalizar experiência de aprendizado e melhorar ferramentas educacionais"
+          },
+          "cookies": {
+            "title": "Cookies e Tecnologias Similares",
+            "essential": "Cookies Essenciais:",
+            "essentialList": [
+              "Preferências de idioma e tema",
+              "Preferências de consentimento de cookies",
+              "Gerenciamento de sessão e segurança",
+              "Funcionalidade básica do site e navegação"
+            ],
+            "essentialBasis": "Base legal: Necessário para operação do serviço (não requer consentimento)",
+            "analytics": "Cookies de Análise (Opcional):",
+            "analyticsList": [
+              "Google Analytics: Análise de tráfego e rastreamento de comportamento do usuário",
+              "Microsoft Clarity: Análise de experiência do usuário",
+              "Monitoramento de desempenho e rastreamento de erros"
+            ],
+            "analyticsBasis": "Base legal: Consentimento (pode ser retirado a qualquer momento)",
+            "purpose": "Finalidade: Melhorar experiência do usuário e desempenho da plataforma",
+            "consent": "Consentimento: Você pode gerenciar preferências de cookies através do nosso banner de consentimento"
+          },
+          "registrationData": {
+            "title": "Dados de Registro",
+            "types": "Tipos de dados de registro coletados:",
+            "typesList": [
+              "Endereço de email (se fornecido)",
+              "Nome de usuário (se criado)",
+              "Preferências e configurações da conta",
+              "Preferências de comunicação"
+            ],
+            "legalBasis": "Base legal: Consentimento e execução de contrato",
+            "purpose": "Finalidade: Fornecer serviços personalizados e gerenciamento de conta"
+          },
+          "minorsData": {
+            "title": "Dados de Menores",
+            "generalPolicy": {
+              "title": "Política Geral",
+              "items": [
+                "Não coletamos intencionalmente dados pessoais de crianças menores de 13 anos",
+                "Pais/responsáveis devem supervisionar as atividades online de seus filhos",
+                ""               
+              ]
+            }
+          }
+        },
+        "dataUsage": {
+          "intro": "Usamos seus dados para os seguintes propósitos:",
+          "explanation": "Os dados são usados exclusivamente para fins educacionais e melhoria do serviço.",
+          "explanationItems": [
+            "Personalização da experiência educacional",
+            "Melhoria e otimização do serviço",
+            "Comunicação sobre atualizações relevantes",
+            "Cumprimento de obrigações legais"
+          ],
+          "list": [
+            "Fornecer e melhorar nossos serviços educacionais de química",
+            "Personalizar sua experiência de aprendizado e lembrar preferências",
+            "Analisar o uso do site para melhorias e otimização",
+            "Garantir segurança e funcionamento adequado de nossos serviços",
+            "Cumprir obrigações legais e responder a solicitações legítimas",
+            "Desenvolver novos recursos e conteúdo educacional"
+          ]
+        },
+        "cookies": {
+          "intro": "Usamos cookies para melhorar sua experiência de navegação e analisar nosso tráfego.",
+          "items": [
+            "Cookies essenciais para funcionalidade básica",
+            "Cookies de análise para análise de uso (opcional)",
+            "Cookies de preferência para personalização"
+          ],
+          "types": "Tipos de Cookies que Usamos:",
+          "essential": "Cookies Essenciais:",
+          "essentialList": [
+            "Preferências de idioma e tema",
+            "Preferências de consentimento de cookies",
+            "Gerenciamento de sessão e segurança",
+            "Funcionalidade básica do site e navegação"
+          ],
+          "analytics": "Cookies de Análise (Opcional):",
+          "analyticsList": [
+            "Google Analytics: Análise de tráfego e rastreamento de comportamento do usuário",
+            "Microsoft Clarity: Análise de experiência do usuário",
+            "Monitoramento de desempenho e rastreamento de erros"
+          ],
+          "management": "Você pode gerenciar suas preferências de cookies através do nosso banner de consentimento ou configurações do seu navegador. Desabilitar cookies de análise não afetará a funcionalidade principal de nossas ferramentas educacionais."
+        },
+        "cookieManagement": {
+          "banner": {
+            "title": "Gerenciamento de Cookies",
+            "intro": "Nosso banner de consentimento permite que você:",
+            "list": [
+              "Aceite ou recuse cookies",
+              "Acesse informações detalhadas em política de privacidade e termos de uso"
+            ]
+          }
+        },
+        "thirdParty": {
+          "intro": "Usamos os seguintes serviços confiáveis de terceiros:",
+          "services": [
+            "Google Analytics: Análise de tráfego do site e comportamento do usuário",
+            "Microsoft Clarity: Análise de experiência do usuário",
+            "Vercel: Hospedagem e otimização de desempenho"
+          ],
+          "legalBasis": "Base legal: Interesse legítimo para melhoria do serviço e consentimento para análise",
+          "control": "Você pode controlar o compartilhamento de dados com terceiros através do nosso banner de consentimento de cookies",
+          "policies": "Cada serviço de terceiros tem sua própria política de privacidade que rege suas práticas de processamento de dados"
+        },
+        "externalLinks": {
+          "intro": "Nosso site pode conter links para sites externos não operados por nós.",
+          "details": "Não somos responsáveis pelas práticas de privacidade de sites externos. Encorajamos você a revisar suas políticas de privacidade."
+        },
+        "externalServices": {
+          "intro": "Usamos serviços confiáveis de terceiros para aprimorar nossa plataforma educacional.",
+          "details": "Esses serviços seguem suas próprias políticas de privacidade e medidas de proteção adequadas. Os dados podem ser processados fora do seu país."
+        },
+        "retention": {
+          "intro": "Retemos seus dados pessoais apenas pelo tempo necessário para cumprir os propósitos descritos nesta política:",
+          "items": [
+            "Dados técnicos: Até 2 anos para fins de segurança e análise",
+            "Dados educacionais: Até você excluir sua conta ou solicitar exclusão",
+            "Dados de cookies: Até 26 meses para análise"
+          ],
+          "note": "Nota: Alguns dados podem ser retidos por mais tempo se exigido por lei ou para fins comerciais legítimos, como investigação de incidentes de segurança."
+        },
+        "rights": {
+          "lgpdGdpr": "Sob as leis de privacidade aplicáveis (GDPR, CCPA, LGPD, etc.), você tem os seguintes direitos:",
+          "howToExercise": "Como exercer seus direitos:",
+          "contact": "Entre em contato conosco em molclassapp@gmail.com com sua solicitação",
+          "response": "Responderemos às suas solicitações dentro do prazo exigido pela lei aplicável (normalmente 30 dias para GDPR, 45 dias para CCPA).",
+          "list": [
+            "Acesso: Saber quais dados pessoais mantemos sobre você",
+            "Retificação: Solicitar correção de dados imprecisos",
+            "Exclusão: Solicitar exclusão dos seus dados pessoais",
+            "Portabilidade: Receber seus dados em formato estruturado",
+            "Objeção: Opor-se a certos tipos de processamento de dados",
+            "Restrição: Limitar como processamos seus dados",
+            "Retirar Consentimento: Revogar consentimento a qualquer momento",
+            "Não Discriminação: Não ser discriminado por exercer direitos de privacidade"
+          ]
+        },
+        "security": {
+          "intro": "Implementamos medidas técnicas e organizacionais apropriadas para proteger seus dados pessoais:",
+          "items": [
+            "Criptografia de dados em trânsito e em repouso",
+            "Controles de acesso e sistemas de autenticação",
+            "Avaliações regulares de segurança e atualizações",
+            "Treinamento da equipe sobre práticas de proteção de dados",
+            "Procedimentos de resposta a incidentes"
+          ]
+        },
+        "contact": {
+          "intro": "Para exercer seus direitos de privacidade, fazer perguntas sobre esta política ou relatar preocupações, entre em contato conosco:",
+          "email": "molclassapp@gmail.com",
+          "subject": "Privacidade e Proteção de Dados",
+          "response": "Responderemos às suas solicitações dentro do prazo exigido pela lei aplicável (normalmente 30 dias para GDPR, 45 dias para CCPA).",
+          "dataProtectionOfficer": "Para residentes da UE, você também pode entrar em contato com sua autoridade local de proteção de dados se tiver preocupações sobre nossas práticas de tratamento de dados."
+        },
+        "changes": {
+          "intro": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou de serviço.",
+          "items": [
+            "A data da última atualização sempre será indicada no topo",
+            "Mudanças importantes serão comunicadas através do site ou email (quando disponível)",
+            "O uso continuado após as mudanças constitui aceitação das alterações",
+            "Recomendamos revisar esta política periodicamente"
+          ]
         }
       },
-      "errors": {
-        "invalidExpression": "Expressão inválida",
-        "empty": "A expressão não pode estar vazia",
-        "divisionByZero": "Divisão por zero não é permitida",
-        "generic": "Ocorreu um erro durante o cálculo"
-      },
-      "history": {
-        "title": "Histórico de Cálculos",
-        "show": "Mostrar Histórico",
-        "hide": "Ocultar Histórico",
-        "clear": "Limpar Histórico",
-        "empty": "Nenhum cálculo realizado ainda",
-        "clickToUse": "Clique para usar este resultado"
+      "contactSection": {
+        "email": "molclassapp@gmail.com",
+        "emailLabel": "Email:",
+        "subjectLabel": "Assunto:",
+        "subjectText": "Privacidade e Proteção de Dados"
       }
-    }
-  },
-  "periodicTable": {
-    "title": "Tabela Periódica",
-    "subtitle": "Digite um nome ou símbolo para ver detalhes",
-    "description": "Explore todos os elementos químicos com dados completos e filtros interativos.",
-    "filterPlaceholder": "Selecionar classificação(ões)",
-    "filterLabel": "Classificação",
-    "filterOptions": {
-      "TODOS": "Todos",
-      "RARE_EARTHS": "Terra Rara",
-      "Alkali metal": "Metal Alcalino",
-      "Alkaline earth metal": "Metal Alcalino-Terroso",
-      "Transition metal": "Metal de Transição",
-      "Post-transition metal": "Metal Pós-Transição",
-      "Metalloid": "Metalóide",
-      "Nonmetal": "Não Metal",
-      "Halogen": "Halogênio",
-      "Noble gas": "Gás Nobre",
-      "Lanthanide": "Lantanídeo",
-      "Actinide": "Actinídeo",
-      "Boron Family": "Família do Boro",
-      "Carbon Family": "Família do Carbono",
-      "Nitrogen Family": "Família do Nitrogênio",
-      "Chalcogens Family": "Família dos Calcogênios"
-    },
-    "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
-    "element": {
-      "atomicNumber": "Número Atômico",
-      "symbol": "Símbolo",
-      "name": "Nome",
-      "molarMass": "Massa Molar",
-      "category": "Categoria",
-      "electronConfiguration": "Configuração Eletrônica",
-      "electronegativity": "Eletronegatividade",
-      "atomicRadius": "Raio Atômico",
-      "ionizationEnergy": "Energia de Ionização",
-      "electronAffinity": "Afinidade Eletrônica",
-      "oxidationStates": "Estados de Oxidação",
-      "standardState": "Estado Padrão",
-      "meltingPoint": "Ponto de Fusão",
-      "boilingPoint": "Ponto de Ebulição",
-      "density": "Densidade\ng/cm³",
-      "solubilityNumeric": "Solubilidade\ng/100g H₂O",
-      "solubilityQualitative": "Solubilidade\nQualitativa",
-      "group": "Grupo",
-      "period": "Período",
-      "categories": {
-        "alkaliMetal": "Metal Alcalino",
-        "alkalineEarthMetal": "Metal Alcalino-Terroso",
-        "transitionMetal": "Metal de Transição",
-        "postTransitionMetal": "Metal Pós-Transição",
-        "metalloid": "Metalóide",
-        "nonmetal": "Não Metal",
-        "halogen": "Halogênio",
-        "nobleGas": "Gás Nobre",
-        "lanthanide": "Lantanídeo",
-        "actinide": "Actinídeo"
-      },
-      "standardStates": {
-        "solid": "Sólido",
-        "liquid": "Líquido",
-        "gas": "Gasoso"
-      }
-    },
-    "tableHeadersFull": {
-      "number": "Número",
-      "name": "Nome do Composto",
-      "commonName": "Nome Comum",
-      "formula": "Fórmula Molecular",
-      "casNumber": "Número de Registro CAS",
-      "molarMass": "Peso Molecular",
-      "physicalForm": "Forma Física",
-      "meltingPoint": "Ponto de Fusão (°C)",
-      "boilingPoint": "Ponto de Ebulição (°C)",
-      "density": "Densidade (g/cm³)",
-      "refractiveIndex": "Índice de Refração (nD)",
-      "solubility": "Solubilidade"
-    },
-    "tableHeaderDescriptions": {
-      "number": "",
-      "id": "Número identificador único do composto",
-      "name": "Nome do composto químico",
-      "commonName": "Nome comum ou alternativo do composto",
-      "formula": "Fórmula química do composto",
-      "casNumber": "Número de Registro CAS (Chemical Abstracts Service)",
-      "molarMass": "Massa molar em gramas por mol (g/mol)",
-      "physicalForm": "Estado físico à temperatura ambiente",
-      "meltingPoint": "Ponto de fusão em graus Celsius (°C)",
-      "boilingPoint": "Ponto de ebulição em graus Celsius (°C)",
-      "density": "Densidade em gramas por centímetro cúbico (g/cm³)",
-      "refractiveIndex": "Índice de refração (nD)",
-      "solubility": "Descrição qualitativa da solubilidade em água",
-      "solubilityNumeric": "Quantidade máxima dissolvida em 100g de água (g/100g H₂O)",
-      "solubilityQualitative": "Descrição qualitativa da solubilidade"
-    },
-    "categoryTags": {
-      "placeholder": "Filtrar categorias inorgânicas",
-      "clearAll": "Limpar tudo",
-      "acid": "Ácido",
-      "base": "Base",
-      "salt": "Sal",
-      "oxide": "Óxido"
-    },
-    "discoveryYear": "Ano Descoberto",
-    "discoveredBy": "Descoberto Por",
-    "group": "Grupo",
-    "period": "Período",
-    "categories": {
-      "alkaliMetal": "Metal Alcalino",
-      "alkalineEarthMetal": "Metal Alcalino-Terroso",
-      "transitionMetal": "Metal de Transição",
-      "postTransitionMetal": "Metal Pós-Transição",
-      "metalloid": "Metalóide",
-      "nonmetal": "Não Metal",
-      "halogen": "Halogênio",
-      "nobleGas": "Gás Nobre",
-      "lanthanide": "Lantanídeo",
-      "actinide": "Actinídeo"
-    },
-    "standardStates": {
-      "solid": "Sólido",
-      "liquid": "Líquido",
-      "gas": "Gasoso"
-    },
-    "groups": {
-      "lanthanide": "Lantanóide",
-      "actinide": "Actinóide"
-    },
-    "elements": {
-      "H": "Hidrogênio",
-      "He": "Hélio",
-      "Li": "Lítio",
-      "Be": "Berílio",
-      "B": "Boro",
-      "C": "Carbono",
-      "N": "Nitrogênio",
-      "O": "Oxigênio",
-      "F": "Flúor",
-      "Ne": "Neônio",
-      "Na": "Sódio",
-      "Mg": "Magnésio",
-      "Al": "Alumínio",
-      "Si": "Silício",
-      "P": "Fósforo",
-      "S": "Enxofre",
-      "Cl": "Cloro",
-      "Ar": "Argônio",
-      "K": "Potássio",
-      "Ca": "Cálcio",
-      "Sc": "Escândio",
-      "Ti": "Titânio",
-      "V": "Vanádio",
-      "Cr": "Cromo",
-      "Mn": "Manganês",
-      "Fe": "Ferro",
-      "Co": "Cobalto",
-      "Ni": "Níquel",
-      "Cu": "Cobre",
-      "Zn": "Zinco",
-      "Ga": "Gálio",
-      "Ge": "Germânio",
-      "As": "Arsênio",
-      "Se": "Selênio",
-      "Br": "Bromo",
-      "Kr": "Criptônio",
-      "Rb": "Rubídio",
-      "Sr": "Estrôncio",
-      "Y": "Ítrio",
-      "Zr": "Zircônio",
-      "Nb": "Nióbio",
-      "Mo": "Molibdênio",
-      "Tc": "Tecnécio",
-      "Ru": "Rutênio",
-      "Rh": "Ródio",
-      "Pd": "Paládio",
-      "Ag": "Prata",
-      "Cd": "Cádmio",
-      "In": "Índio",
-      "Sn": "Estanho",
-      "Sb": "Antimônio",
-      "Te": "Telúrio",
-      "I": "Iodo",
-      "Xe": "Xenônio",
-      "Cs": "Césio",
-      "Ba": "Bário",
-      "La": "Lantânio",
-      "Ce": "Cério",
-      "Pr": "Praseodímio",
-      "Nd": "Neodímio",
-      "Pm": "Promécio",
-      "Sm": "Samário",
-      "Eu": "Európio",
-      "Gd": "Gadolínio",
-      "Tb": "Térbio",
-      "Dy": "Disprósio",
-      "Ho": "Hólmio",
-      "Er": "Érbio",
-      "Tm": "Túlio",
-      "Yb": "Itérbio",
-      "Lu": "Lutécio",
-      "Hf": "Háfnio",
-      "Ta": "Tântalo",
-      "W": "Tungstênio",
-      "Re": "Rênio",
-      "Os": "Ósmio",
-      "Ir": "Irídio",
-      "Pt": "Platina",
-      "Au": "Ouro",
-      "Hg": "Mercúrio",
-      "Tl": "Tálio",
-      "Pb": "Chumbo",
-      "Bi": "Bismuto",
-      "Po": "Polônio",
-      "At": "Astato",
-      "Rn": "Radônio",
-      "Fr": "Frâncio",
-      "Ra": "Rádio",
-      "Ac": "Actínio",
-      "Th": "Tório",
-      "Pa": "Protactínio",
-      "U": "Urânio",
-      "Np": "Neptúnio",
-      "Pu": "Plutônio",
-      "Am": "Amerício",
-      "Cm": "Cúrio",
-      "Bk": "Berquélio",
-      "Cf": "Califórnio",
-      "Es": "Einstênio",
-      "Fm": "Férmio",
-      "Md": "Mendelévio",
-      "No": "Nobélio",
-      "Lr": "Laurêncio",
-      "Rf": "Ruterfórdio",
-      "Db": "Dúbnio",
-      "Sg": "Seabórgio",
-      "Bh": "Bóhrio",
-      "Hs": "Hássio",
-      "Mt": "Meitnério",
-      "Ds": "Darmstádtio",
-      "Rg": "Roentgênio",
-      "Cn": "Copernício",
-      "Nh": "Nihônio",
-      "Fl": "Fleróvio",
-      "Mc": "Moscóvio",
-      "Lv": "Livermório",
-      "Ts": "Tennesso",
-      "Og": "Oganessônio"
-    }
-  },
-  "games": {
-    "elementQuiz": {
-      "title": "Quiz de Elementos"
-    },
-    "compoundBuilder": {
-      "title": "Construtor de Compostos"
-    }
-  },
-  "physicalFormTerms": {
-    "Solid": "Sólido",
-    "Liquid": "Líquido",
-    "Gas": "Gasoso",
-    "Crystals": "Cristais",
-    "Powder": "Pó",
-    "Solution": "Solução",
-    "Blue crystals": "Cristais azuis",
-    "Colorless crystals": "Cristais incolores",
-    "White solid (flakes/pellets)": "Sólido branco (flocos/pelotas)",
-    "White powder": "Pó branco",
-    "White solid (lumps)": "Sólido branco (pedaços)",
-    "White crystalline powder": "Pó cristalino branco",
-    "White crystalline solid": "Sólido cristalino branco",
-    "Purple crystals": "Cristais roxos",
-    "Orange crystals": "Cristais laranjas",
-    "Reddish-brown solid": "Sólido marrom-avermelhado",
-    "Hard solid (crystalline)": "Sólido duro (cristalino)",
-    "White solid (flakes)": "Sólido branco (flocos)",
-    "White solid": "Sólido branco",
-    "Colorless liquid": "Líquido incolor",
-    "Syrupy liquid or solid (crystals)": "Líquido xaroposo ou sólido (cristais)",
-    "Blue-green crystals": "Cristais azul-verdes",
-    "Black powder": "Pó preto",
-    "White deliquescent solid": "Sólido branco deliquescente",
-    "White heavy powder": "Pó branco pesado",
-    "White solid (crystalline)": "Sólido branco (cristalino)",
-    "Usually in aqueous solution": "Geralmente em solução aquosa",
-    "Black or brown solid": "Sólido preto ou marrom",
-    "Transparent crystals": "Cristais transparentes",
-    "Reddish-brown gas": "Gás marrom-avermelhado",
-    "Colorless gas": "Gás incolor",
-    "White/gray powder": "Pó branco/cinza",
-    "Gas (aqueous solution is liquid)": "Gás (solução aquosa é líquida)",
-    "Liquid (viscous)": "Líquido (viscoso)"
-  },
-  "solubilityTerms": {
-    "Soluble": "Solúvel em água",
-    "Insoluble": "Insolúvel em água",
-    "Sparingly": "Pouco solúvel em água",
-    "Highly": "Altamente solúvel em água",
-    "Miscible": "Miscível com água",
-    "Reacts": "Reage com água",
-    "Soluble in water": "Solúvel em água",
-    "Practically insoluble in water": "Praticamente insolúvel em água",
-    "Miscible with many liquids": "Miscível com muitos líquidos",
-    "Sparingly soluble in water": "Pouco solúvel em água",
-    "Highly soluble in water": "Altamente solúvel em água",
-    "Fully miscible with water": "Totalmente miscível com água",
-    "Miscible with water (exothermic)": "Miscível com água (exotérmico)",
-    "Miscible with water": "Miscível com água",
-    "Very soluble in water": "Muito solúvel em água",
-    "Reacts with water (forms Ca(OH)2)": "Reage com água (forma Ca(OH)2)",
-    "Moderately soluble in water": "Moderadamente solúvel em água",
-    "Insoluble in water": "Insolúvel em água",
-    "Slightly soluble in water": "Levemente solúvel em água",
-    "Virtually insoluble in water": "Virtualmente insolúvel em água",
-    "Fully soluble in water": "Totalmente solúvel em água",
-    "Sparingly soluble (reacts with water)": "Pouco solúvel (reage com água)",
-    "Reacts with water (forms H2SO3)": "Reage com água (forma H2SO3)",
-    "Reacts with water (forms HNO2/HNO3)": "Reage com água (forma HNO2/HNO3)",
-    "Very soluble in water (deliquescent)": "Muito solúvel em água (deliquescente)",
-    "Soluble_in_water_5_6_g_100mL_at_20C": "Solúvel em água (5,6 g/100mL a 20°C)",
-    "In_water_12_g_100_mL_25_C": "Em água: 12 g/100 mL (25 °C)",
-    "Highly soluble in water (forms H2SO3)": "Altamente solúvel em água (forma H2SO3)"
-  },
-  "compoundTable": {
-    "loading": "Carregando...",
-    "errorLoading": "Erro ao carregar dados.",
-    "search": "Pesquisar",
-    "searchPlaceholder": "Pesquisar compostos...",
-    "columns": "Colunas",
-    "rowsPerPage": "Linhas por página:",
-    "noResults": "Nenhum resultado encontrado.",
-    "previous": "Anterior",
-    "next": "Próximo",
-    "page": "Página",
-    "pageOf": "Página {current} de {total}"
-  },
-  "multiSelect": {
-    "placeholder": "Selecionar opções",
-    "searchPlaceholder": "Pesquisar...",
-    "selectAll": "(Selecionar Todos)",
-    "clear": "Limpar",
-    "close": "Fechar",
-    "noResults": "Nenhum resultado encontrado.",
-    "more": "+ {count} mais"
-  },
-  "catalog": {
-    "title": "Compostos Inorgânicos",
-    "subtitle": "Explore informações detalhadas sobre compostos inorgânicos",
-    "description": "Descubra propriedades, composição e usos de elementos inorgânicos.",
-    "elements": {
-      "title": "Elementos"
-    },
-    "compounds": {
-      "title": "Compostos"
-    },
-    "compoundProperties": {
-      "name": "Nome",
-      "commonName": "Nome Comum",
-      "formula": "Fórmula",
-      "casNumber": "Número CAS",
-      "molarMass": "Massa Molar",
-      "physicalForm": "Forma Física",
-      "meltingPoint": "Ponto de Fusão",
-      "boilingPoint": "Ponto de Ebulição",
-      "density": "Densidade",
-      "refractiveIndex": "Índice de Refração",
-      "solubility": "Solubilidade",
-      "solubilityNumeric": "Solubilidade\ng/100g H₂O",
-      "solubilityQualitative": "Solubilidade\nQualitativa"
-    },
-    "advancedFilters": {
-      "title": "Filtros Avançados",
-      "active": "ativo",
-      "reset": "Resetar",
-      "apply": "Aplicar",
-      "meltingPoint": "Ponto de Fusão",
-      "boilingPoint": "Ponto de Ebulição",
-      "density": "Densidade",
-      "molarMass": "Massa Molar",
-      "physicalForms": "Formas Físicas",
-      "solubilityTypes": "Tipos de Solubilidade",
-      "min": "Mín",
-      "max": "Máx"
-    },
-    "compoundNames": {
-      "NaCl": "Cloreto de Sódio",
-      "CaCO3": "Carbonato de Cálcio",
-      "CuSO4·5H2O": "Sulfato de Cobre(II) Pentaidratado",
-      "H2O": "água",
-      "CO2": "Dióxido de Carbono",
-      "NH3": "Amônia",
-      "HCl": "Ácido Clorídrico",
-      "H2SO4": "Ácido Sulfúrico",
-      "HNO3": "Ácido Nítrico",
-      "NaOH": "Hidróxido de Sódio",
-      "Ca(OH)2": "Hidróxido de Cálcio",
-      "CaO": "Óxido de Cálcio",
-      "NaHCO3": "Bicarbonato de Sódio",
-      "Na2CO3·10H2O": "Carbonato de Sódio Decaidratado",
-      "MgSO4·7H2O": "Sulfato de Magnésio Heptaidratado",
-      "AgNO3": "Nitrato de Prata",
-      "KMnO4": "Permanganato de Potássio",
-      "K2Cr2O7": "Dicromato de Potássio",
-      "Fe2O3": "Óxido de Ferro(III)",
-      "SiO2": "Dióxido de Silício",
-      "Al2O3": "Óxido de Alumínio",
-      "NH4NO3": "Nitrato de Amônio",
-      "CaCl2": "Cloreto de Cálcio",
-      "CaSO4·2H2O": "Sulfato de Cálcio Dihidratado",
-      "KNO3": "Nitrato de Potássio",
-      "NaNO3": "Nitrato de Sódio",
-      "H2O2": "Peróxido de Hidrogênio",
-      "H3PO4": "Ácido Fosfórico",
-      "NH4Cl": "Cloreto de Amônio",
-      "ZnO": "Óxido de Zinco",
-      "MgO": "Óxido de Magnésio",
-      "FeSO4·7H2O": "Sulfato de Ferro(II) Heptaidratado",
-      "ZnSO4·7H2O": "Sulfato de Zinco Heptaidratado",
-      "CuO": "Óxido de Cobre(II)",
-      "KOH": "Hidróxido de Potássio",
-      "BaSO4": "Sulfato de Bário",
-      "Ca3(PO4)2": "Fosfato de Cálcio",
-      "H3BO3": "Ácido Bórico",
-      "H2S": "Sulfeto de Hidrogênio",
-      "NaClO": "Hipoclorito de Sódio",
-      "KCl": "Cloreto de Potássio",
-      "MnO2": "Dióxido de Manganês",
-      "Na2SO4·10H2O": "Sulfato de Sódio Decaidratado",
-      "(NH4)2SO4": "Sulfato de Amônio",
-      "SO2": "Dióxido de Enxofre",
-      "NO2": "Dióxido de Nitrogênio",
-      "Na2S2O3·5H2O": "Tiossulfato de Sódio Pentaidratado",
-      "N2O": "Óxido Nitroso",
-      "Na3PO4": "Fosfato Trissódico",
-      "Ca(ClO)2": "Hipoclorito de Cálcio"
-    },
-    "commonName": {
-      "NaCl": "Sal de Mesa",
-      "CaCO3": "Calcário",
-      "CuSO4·5H2O": "Vitríolo Azul",
-      "H2O": "Água",
-      "CO2": "Anidrido Carbônico",
-      "NH3": "Azano",
-      "HCl": "Ácido Muriático",
-      "H2SO4": "Óleo de Vitríolo",
-      "HNO3": "Água Forte",
-      "NaOH": "Soda Cáustica",
-      "Ca(OH)2": "Cal Apagada",
-      "CaO": "Cal Viva",
-      "NaHCO3": "Bicarbonato de Sódio",
-      "Na2CO3·10H2O": "Soda de Lavar",
-      "MgSO4·7H2O": "Sal de Epsom",
-      "AgNO3": "Cáustico Lunar",
-      "KMnO4": "Cristais de Condy",
-      "K2Cr2O7": "Bicromato de Potássio",
-      "Fe2O3": "Ferrugem",
-      "SiO2": "Quartzo",
-      "Al2O3": "Alumina",
-      "NH4NO3": "Salitre Norueguês",
-      "CaCl2": "Dicloreto de Cálcio",
-      "CaSO4·2H2O": "Gesso",
-      "KNO3": "Salitre",
-      "NaNO3": "Salitre do Chile",
-      "H2O2": "Peróxido",
-      "H3PO4": "Ácido Ortofosfórico",
-      "NH4Cl": "Sal Amoníaco",
-      "ZnO": "Branco de Zinco",
-      "MgO": "Magnésia",
-      "FeSO4·7H2O": "Vitríolo Verde",
-      "ZnSO4·7H2O": "Vitríolo Branco",
-      "CuO": "Óxido Cúprico",
-      "KOH": "Potassa Cáustica",
-      "BaSO4": "Barita",
-      "Ca3(PO4)2": "Fosfato Tricálcico",
-      "H3BO3": "Ácido Bórico",
-      "H2S": "Gás de Esgoto",
-      "NaClO": "Água Sanitária",
-      "KCl": "Muriate de Potassa",
-      "MnO2": "Pirolusita",
-      "Na2SO4·10H2O": "Sal de Glauber",
-      "(NH4)2SO4": "Mascagnita (mineral)",
-      "SO2": "Anidrido Sulfuroso",
-      "NO2": "Peróxido de Nitrogênio",
-      "Na2S2O3·5H2O": "Hipo",
-      "N2O": "Gás do Riso",
-      "Na3PO4": "TSP",
-      "Ca(ClO)2": "Pó de Clareamento"
-    },
-    "tableHeaders": {
-      "no": "Nº",
-      "name": "Nome",
-      "commonName": "Nome Comum",
-      "category": "Categoria",
-      "synonym": "Nome Comum",
-      "formula": "Fórm. Mol.",
-      "casNumber": "Nº CAS",
-      "molarMass": "Peso Mol.",
-      "physicalForm": "Forma Física",
-      "meltingPoint": "pf/°C",
-      "boilingPoint": "pe/°C",
-      "refractiveIndex": "nD",
-      "solubility": "Solubilidade",
-      "solubilityNumeric": "Solubilidade (g/100g H₂O)",
-      "solubilityQualitative": "Solubilidade Qualitativa",
-      "density": "Densidade"
     }
   }
 }

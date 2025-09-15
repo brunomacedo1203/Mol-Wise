@@ -6,6 +6,7 @@ import React from "react";
 import type { CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
 import { ColumnsDropdown } from "./ColumnsDropdown";
 import { CategoryDropdown } from "./CategoryDropdown";
+import { useTranslations } from "next-intl";
 
 interface CompoundTableToolbarProps {
   selectedCategories: CompoundCategory[];
@@ -17,7 +18,6 @@ interface CompoundTableToolbarProps {
   allColumns: { key: TableColumnKey; label: React.ReactNode }[];
   visibleColumns: Record<TableColumnKey, boolean>;
   toggleColumn: (col: TableColumnKey) => void;
-  t: (key: string) => string;
 }
 
 export function CompoundTableToolbar({
@@ -30,8 +30,9 @@ export function CompoundTableToolbar({
   allColumns,
   visibleColumns,
   toggleColumn,
-  t,
 }: CompoundTableToolbarProps) {
+  const t = useTranslations();
+  
   return (
     <div className="p-2 border border-zinc-400 dark:border-zinc-600 rounded-lg bg-background dark:bg-zinc-900">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -53,7 +54,6 @@ export function CompoundTableToolbar({
         <CategoryDropdown
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
-          t={t}
         />
 
         {/* Dropdown de colunas - Direita */}
