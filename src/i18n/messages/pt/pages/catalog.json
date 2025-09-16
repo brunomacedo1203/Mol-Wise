@@ -48,17 +48,17 @@
       "biomolecule": "Biomolécula"
     },
     "states": {
-      "solid": "Sólido",
-      "liquid": "Líquido",
-      "gas": "Gasoso",
-      "plasma": "Plasma"
+      "Solid": "Sólido",
+      "Liquid": "Líquido",
+      "Gas": "Gasoso",
+      "Plasma": "Plasma"
     },
     "solubilityLevels": {
-      "insoluble": "Insolúvel",
-      "slightly": "Pouco Solúvel",
-      "moderately": "Moderadamente Solúvel",
-      "highly": "Altamente Solúvel",
-      "miscible": "Miscível"
+      "Insoluble": "Insolúvel",
+      "Slightly": "Pouco Solúvel",
+      "Moderately": "Moderadamente Solúvel",
+      "Highly": "Altamente Solúvel",
+      "Miscible": "Miscível"
     },
     "tableHeaders": {
       "no": "Nº",

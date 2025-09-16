@@ -23,7 +23,7 @@
       "Nitrogen Family": "Família do Nitrogênio",
       "Chalcogens Family": "Família dos Calcogênios"
     },
-    "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
+    "ariaLabel": "Elemento {name} ({symbol}), número atômico {atomicNumber}",
     "element": {
       "atomicNumber": "Número Atômico",
       "symbol": "Símbolo",
