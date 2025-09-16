@@ -1,0 +1,62 @@
+{
+  "games": {
+    "title": "Jogos",
+    "subtitle": "Aprenda química de forma divertida",
+    "description": "Jogos educativos interativos para aprender química brincando.",
+    "elementGuess": {
+      "title": "Adivinhe o Elemento",
+      "subtitle": "Teste seus conhecimentos sobre elementos químicos",
+      "description": "Identifique elementos químicos baseado em suas propriedades.",
+      "startGame": "Iniciar Jogo",
+      "nextQuestion": "Próxima Pergunta",
+      "restartGame": "Reiniciar Jogo",
+      "score": "Pontuação: {score}/{total}",
+      "question": "Qual elemento tem estas propriedades?",
+      "correct": "Correto!",
+      "incorrect": "Incorreto. A resposta correta é {answer}.",
+      "gameOver": "Fim de Jogo!",
+      "finalScore": "Sua pontuação final: {score}/{total}",
+      "playAgain": "Jogar Novamente",
+      "loading": "Carregando próxima pergunta...",
+      "properties": {
+        "atomicNumber": "Número Atômico: {value}",
+        "category": "Categoria: {value}",
+        "period": "Período: {value}",
+        "group": "Grupo: {value}"
+      }
+    },
+    "formulaBuilder": {
+      "title": "Construtor de Fórmulas",
+      "subtitle": "Monte fórmulas químicas corretas",
+      "description": "Aprenda a construir fórmulas químicas de compostos.",
+      "startGame": "Iniciar Jogo",
+      "checkAnswer": "Verificar Resposta",
+      "nextCompound": "Próximo Composto",
+      "restartGame": "Reiniciar Jogo",
+      "score": "Pontuação: {score}/{total}",
+      "question": "Qual é a fórmula química para {compound}?",
+      "placeholder": "Digite a fórmula (ex: H2O)",
+      "correct": "Correto!",
+      "incorrect": "Incorreto. A resposta correta é {answer}.",
+      "gameOver": "Fim de Jogo!",
+      "finalScore": "Sua pontuação final: {score}/{total}",
+      "playAgain": "Jogar Novamente",
+      "hint": "Dica: {hint}"
+    },
+    "memoryMatch": {
+      "title": "Jogo da Memória",
+      "subtitle": "Combine elementos com seus símbolos",
+      "description": "Teste sua memória combinando nomes de elementos com seus símbolos.",
+      "startGame": "Iniciar Jogo",
+      "restartGame": "Reiniciar Jogo",
+      "moves": "Movimentos: {count}",
+      "matches": "Pares: {found}/{total}",
+      "time": "Tempo: {time}",
+      "gameComplete": "Parabéns! Jogo Completo!",
+      "finalStats": "Estatísticas Finais:",
+      "playAgain": "Jogar Novamente",
+      "cardFlipped": "Carta virada",
+      "cardMatched": "Par encontrado"
+    }
+  }
+}

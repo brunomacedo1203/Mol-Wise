@@ -12,7 +12,7 @@ export function normalize(str: string) {
 
 
 export function useElementSearch() {
-  const tElements = useTranslations("periodicTable.elements");
+  const tElements = useTranslations("elements");
 
   function searchElement(term: string): Element | undefined {
     const normalized = normalize(term);

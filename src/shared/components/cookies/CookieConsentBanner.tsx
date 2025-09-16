@@ -17,7 +17,7 @@ import { X, Settings, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function CookieConsentBanner() {
-  const t = useTranslations("common.cookies");
+  const t = useTranslations("cookies");
   const { showBanner, acceptAll, declineAll, savePreferences } =
     useCookieConsent();
   const [showPreferences, setShowPreferences] = useState(false);

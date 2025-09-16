@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function TermsOfUseClient() {
-  const t = useTranslations("common.terms");
+  const t = useTranslations("terms");
 
   const lastUpdateDate = "12 de setembro de 2025";
 
@@ -139,14 +139,7 @@ export default function TermsOfUseClient() {
               <li>{t("sections.intellectualProperty.content.commitment.2")}</li>
               <li>{t("sections.intellectualProperty.content.commitment.3")}</li>
             </ul>
-            <h4 className="text-lg font-semibold mt-6 mb-2">
-              {t("sections.intellectualProperty.content.userContentTitle")}
-            </h4>
-            <p>{t("sections.intellectualProperty.content.userContentText")}</p>
-            <h4 className="text-lg font-semibold mt-6 mb-2">
-              {t("sections.intellectualProperty.content.fairUseTitle")}
-            </h4>
-            <p>{t("sections.intellectualProperty.content.fairUseText")}</p>
+
           </CardContent>
         </Card>
 
@@ -175,20 +168,33 @@ export default function TermsOfUseClient() {
             <CardTitle>7. {t("sections.liability.title")}</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert max-w-none">
-            <p>{t("sections.liability.content.disclaimer")}</p>
-            <h4 className="text-lg font-semibold mt-4 mb-2">
-              {t("sections.liability.content.exclusionsTitle")}
+            <h4 className="text-lg font-semibold mb-2">
+              {t("sections.liability.content.serviceNatureTitle")}
             </h4>
-            <p>{t("sections.liability.content.exclusionsText")}</p>
+            <p>{t("sections.liability.content.serviceNatureText")}</p>
+            
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.liability.content.ourResponsibilitiesTitle")}
+            </h4>
             <ul className="list-disc pl-6 space-y-1">
-              <li>{t("sections.liability.content.exclusions.0")}</li>
-              <li>{t("sections.liability.content.exclusions.1")}</li>
-              <li>{t("sections.liability.content.exclusions.2")}</li>
-              <li>{t("sections.liability.content.exclusions.3")}</li>
-              <li>{t("sections.liability.content.exclusions.4")}</li>
-              <li>{t("sections.liability.content.exclusions.5")}</li>
+               <li>{t("sections.liability.content.ourResponsibilities.0")}</li>
+               <li>{t("sections.liability.content.ourResponsibilities.1")}</li>
+               <li>{t("sections.liability.content.ourResponsibilities.2")}</li>
+             </ul>
+            
+            <h4 className="text-lg font-semibold mt-6 mb-2">
+              {t("sections.liability.content.legalLimitationsTitle")}
+            </h4>
+            <p>{t("sections.liability.content.legalLimitationsText")}</p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("sections.liability.content.legalLimitations.0")}</li>
+              <li>{t("sections.liability.content.legalLimitations.1")}</li>
+              <li>{t("sections.liability.content.legalLimitations.2")}</li>
+              <li>{t("sections.liability.content.legalLimitations.3")}</li>
+              <li>{t("sections.liability.content.legalLimitations.4")}</li>
             </ul>
-            <h4 className="text-lg font-semibold mt-4 mb-2">
+            
+            <h4 className="text-lg font-semibold mt-6 mb-2">
               {t("sections.liability.content.userResponsibilityTitle")}
             </h4>
             <p>{t("sections.liability.content.userResponsibilityText")}</p>
@@ -196,15 +202,12 @@ export default function TermsOfUseClient() {
               <li>{t("sections.liability.content.userResponsibilities.0")}</li>
               <li>{t("sections.liability.content.userResponsibilities.1")}</li>
               <li>{t("sections.liability.content.userResponsibilities.2")}</li>
+              <li>{t("sections.liability.content.userResponsibilities.3")}</li>
             </ul>
-            <h4 className="text-lg font-semibold mt-4 mb-2">
-              {t("sections.liability.content.paidServicesTitle")}
-            </h4>
-            <p>{t("sections.liability.content.paidServicesText")}</p>
-            <h4 className="text-lg font-semibold mt-4 mb-2">
-              {t("sections.liability.content.exceptionsTitle")}
-            </h4>
-            <p>{t("sections.liability.content.exceptionsText")}</p>
+            
+            <p className="mt-6 font-semibold">
+              <strong>Importante:</strong> {t("sections.liability.content.importantNote")}
+            </p>
           </CardContent>
         </Card>
 
@@ -258,20 +261,6 @@ export default function TermsOfUseClient() {
             <p>
               <strong>{t("sections.contact.content.subjectLabel")}</strong>{" "}
               &ldquo;{t("sections.contact.content.subject")}&rdquo;
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Aviso Final */}
-        <Card>
-          <CardHeader>
-            <CardTitle>11. {t("sections.finalNotice.title")}</CardTitle>
-          </CardHeader>
-          <CardContent className="prose dark:prose-invert max-w-none">
-            <p>
-              {t("sections.finalNotice.content.lastUpdate", {
-                date: lastUpdateDate,
-              })}
             </p>
           </CardContent>
         </Card>

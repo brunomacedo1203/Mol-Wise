@@ -1,0 +1,167 @@
+{
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização: 15 de janeiro de 2024",
+    "sections": {
+      "introduction": "Introdução",
+      "definitions": "Definições",
+      "dataCollection": "Coleta de Dados",
+      "dataUsage": "Uso de Dados",
+      "cookies": "Cookies",
+      "thirdParty": "Serviços de Terceiros",
+      "rights": "Seus Direitos",
+      "retention": "Retenção de Dados",
+      "contact": "Contato",
+      "changes": "Alterações"
+    },
+    "metadata": {
+      "description": "Informações completas sobre coleta, uso e proteção de dados, cookies e serviços de terceiros em conformidade com regulações de privacidade."
+    },
+    "content": {
+      "introduction": {
+        "paragraph1": "O Mol Class está comprometido com a proteção da sua privacidade e de seus dados pessoais. Esta Política explica como coletamos, usamos e protegemos suas informações ao utilizar nosso site e serviços educacionais de química.",
+        "paragraph2": "Esta política está em conformidade com a LGPD, GDPR, CCPA e outras legislações aplicáveis, com transparência e respeito aos seus direitos."
+      },
+      "definitions": {
+        "controller": "Controlador de Dados: Mol Class",
+        "contact": "Contato do Responsável: molclassapp@gmail.com"
+      },
+      "dataCollection": {
+        "technicalData": {
+          "title": "Dados Técnicos",
+          "types": "Tipos de dados técnicos coletados:",
+          "typesList": [
+            "Endereço IP e informações do dispositivo",
+            "Tipo de navegador e sistema operacional",
+            "Páginas visitadas e tempo de permanência",
+            "Origem de referência de sites externos",
+            "Identificadores de dispositivo e informações de sessão"
+          ],
+          "legalBasis": "Base legal: Interesse legítimo para operação e segurança do serviço",
+          "purpose": "Finalidade: Garantir funcionamento adequado e segurança de nossa plataforma educacional"
+        },
+        "educationalData": {
+          "title": "Dados Educacionais",
+          "types": "Tipos de dados educacionais coletados:",
+          "typesList": [
+            "Interações com calculadoras e ferramentas de química",
+            "Preferências de idioma e tema",
+            "Histórico de cálculos (armazenado localmente no navegador)",
+            "Padrões de uso de funcionalidades e métricas de desempenho"
+          ],
+          "legalBasis": "Base legal: Consentimento e interesse legítimo para melhoria do serviço",
+          "purpose": "Finalidade: Personalizar a experiência de aprendizagem e aprimorar as ferramentas educacionais"
+        },
+        "cookies": {
+          "title": "Cookies e Tecnologias Similares",
+          "essential": "Cookies Essenciais:",
+          "essentialList": [
+            "Preferências de idioma e tema",
+            "Preferências de consentimento de cookies",
+            "Gerenciamento de sessão e segurança",
+            "Funcionalidade básica do site e navegação"
+          ],
+          "essentialBasis": "Base legal: Necessários para operação do serviço (sem necessidade de consentimento)",
+          "analytics": "Cookies de Análise (Opcionais):",
+          "analyticsList": [
+            "Google Analytics: análise de tráfego e comportamento",
+            "Microsoft Clarity: análise de experiência e gravações de sessão",
+            "Monitoramento de performance e erros"
+          ],
+          "analyticsBasis": "Base legal: Consentimento (pode ser revogado a qualquer momento)",
+          "purpose": "Finalidade: Melhorar a experiência do usuário e o desempenho da plataforma",
+          "consent": "Consentimento: Você pode gerenciar as preferências de cookies em nosso banner de consentimento",
+          "disclaimer": "Cookies analíticos são opcionais e não afetam o funcionamento principal das ferramentas educacionais.",
+          "management": "Você pode gerenciar suas preferências de cookies pelo nosso banner ou nas configurações do navegador. Desabilitar cookies analíticos não afeta a funcionalidade principal das ferramentas educacionais."
+        },
+        "registrationData": {
+          "title": "Dados Cadastrais",
+          "types": "Tipos de dados cadastrais coletados:",
+          "typesList": [
+            "Endereço de e-mail (quando fornecido)",
+            "Nome de usuário (se criado)",
+            "Preferências e configurações de conta",
+            "Preferências de comunicação"
+          ],
+          "legalBasis": "Base legal: Consentimento e execução de contrato",
+          "purpose": "Finalidade: Fornecer serviços personalizados e gestão de conta"
+        },
+        "minorsData": {
+          "title": "Dados de Menores",
+          "generalPolicy": {
+            "title": "Política Geral",
+            "items": [
+              "Não coletamos intencionalmente dados de menores de 13 anos",
+              "Se identificado, excluiremos imediatamente tais dados",
+              "Pais/responsáveis devem supervisionar atividades online de menores"
+            ]
+          }
+        }
+      },
+      "retention": {
+        "intro": "Mantemos seus dados pessoais apenas pelo tempo necessário para cumprir as finalidades previstas nesta política:",
+        "items": [
+          "Dados técnicos: até 2 anos para segurança e análises",
+          "Dados educacionais: até exclusão da conta ou solicitação",
+          "Dados de cookies: conforme nossa política de cookies (até 26 meses para analíticos)",
+          "Dados de comunicação: até 3 anos para atendimento ao usuário"
+        ],
+        "note": "Observação: Alguns dados podem ser mantidos por mais tempo se exigido por lei ou para fins legítimos, como investigação de incidentes de segurança."
+      },
+      "rights": {
+        "lgpdGdpr": "Nos termos das leis de privacidade aplicáveis (LGPD, GDPR, CCPA etc.), você possui os seguintes direitos:",
+        "howToExercise": "Como exercer seus direitos:",
+        "contact": "Entre em contato pelo e-mail molclassapp@gmail.com com sua solicitação",
+        "response": "Responderemos dentro do prazo exigido pela legislação aplicável (em geral, 30 dias para GDPR, 45 dias para CCPA).",
+        "list": [
+          "Acesso: Saiba quais dados pessoais mantemos sobre você",
+          "Retificação: Corrija dados imprecisos",
+          "Exclusão: Solicite a exclusão dos seus dados pessoais",
+          "Portabilidade: Receba seus dados em formato estruturado",
+          "Oposição: Oponha-se a certos tipos de processamento",
+          "Restrição: Limite como processamos seus dados",
+          "Revogação de Consentimento: Revogue o consentimento a qualquer momento",
+          "Não Discriminação: Não ser discriminado por exercer direitos de privacidade"
+        ]
+      },
+      "thirdParty": {
+        "intro": "Utilizamos os seguintes serviços de terceiros confiáveis:",
+        "services": [],
+        "legalBasis": "Base legal: Interesse legítimo para melhoria do serviço e consentimento para analíticos",
+        "control": "Você pode controlar o compartilhamento de dados com terceiros por meio do nosso banner de consentimento de cookies",
+        "disclaimer": "Cada serviço de terceiros possui sua própria política de privacidade que rege suas práticas de tratamento de dados",
+        "userAction": "Para gerenciar preferências de terceiros, use o banner de cookies"
+      },
+      "cookieManagement": {
+        "banner": {
+          "title": "Gerenciamento de Cookies",
+          "intro": "Nosso banner de consentimento permite:",
+          "list": [
+            "Aceitar ou recusar cookies",
+            "Acessar detalhes da política de privacidade e termos de uso"
+          ]
+        }
+      },
+      "changes": {
+        "intro": "Podemos atualizar esta Política para refletir mudanças legais, tecnológicas ou de serviço.",
+        "items": [
+          "A data da última atualização será sempre indicada no topo",
+          "Mudanças importantes serão comunicadas no site ou por e-mail (quando aplicável)",
+          "O uso contínuo após alterações implica aceitação das mudanças",
+          "Recomendamos revisar esta política periodicamente"
+        ]
+      },
+      "contact": {
+        "intro": "Para exercer seus direitos, tirar dúvidas ou relatar preocupações, entre em contato:",
+        "email": "molclassapp@gmail.com",
+        "subject": "Privacidade e Proteção de Dados"
+      }
+    },
+    "contactSection": {
+      "email": "molclassapp@gmail.com",
+      "emailLabel": "E-mail:",
+      "subjectLabel": "Assunto:",
+      "subjectText": "Privacidade e Proteção de Dados"
+    }
+  }
+}

@@ -12,7 +12,7 @@ interface ThirdPartyService {
 }
 
 export default function PrivacyPolicyClient() {
-  const t = useTranslations("common.privacy");
+  const t = useTranslations("privacy");
 
   const lastUpdateDate = "12 de setembro de 2025";
 
@@ -143,7 +143,7 @@ export default function PrivacyPolicyClient() {
                 <li key={index}>{item}</li>
               ))}
             </ul>
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 my-2">
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 ">
               <p>
                 <strong>
                   {t("content.dataCollection.cookies.disclaimer")}

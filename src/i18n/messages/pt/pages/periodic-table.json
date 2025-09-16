@@ -1,0 +1,91 @@
+{
+  "periodicTable": {
+    "title": "Tabela Periódica",
+    "subtitle": "Digite um nome ou símbolo para ver detalhes",
+    "description": "Explore todos os elementos químicos com dados completos e filtros interativos.",
+    "filterPlaceholder": "Selecionar classificação(ões)",
+    "filterLabel": "Classificação",
+    "filterOptions": {
+      "TODOS": "Todos",
+      "RARE_EARTHS": "Terra Rara",
+      "Alkali metal": "Metal Alcalino",
+      "Alkaline earth metal": "Metal Alcalino-Terroso",
+      "Transition metal": "Metal de Transição",
+      "Post-transition metal": "Metal Pós-Transição",
+      "Metalloid": "Metalóide",
+      "Nonmetal": "Não Metal",
+      "Halogen": "Halogênio",
+      "Noble gas": "Gás Nobre",
+      "Lanthanide": "Lantanídeo",
+      "Actinide": "Actinídeo",
+      "Boron Family": "Família do Boro",
+      "Carbon Family": "Família do Carbono",
+      "Nitrogen Family": "Família do Nitrogênio",
+      "Chalcogens Family": "Família dos Calcogênios"
+    },
+    "ariaLabel": "Element {name} ({symbol}), atomic number {atomicNumber}",
+    "element": {
+      "atomicNumber": "Número Atômico",
+      "symbol": "Símbolo",
+      "name": "Nome",
+      "molarMass": "Massa Molar",
+      "category": "Categoria",
+      "electronConfiguration": "Configuração Eletrônica",
+      "electronegativity": "Eletronegatividade",
+      "atomicRadius": "Raio Atômico",
+      "ionizationEnergy": "Energia de Ionização",
+      "electronAffinity": "Afinidade Eletrônica",
+      "oxidationStates": "Estados de Oxidação",
+      "standardState": "Estado Padrão",
+      "meltingPoint": "Ponto de Fusão",
+      "boilingPoint": "Ponto de Ebulição",
+      "density": "Densidade\ng/cm³",
+      "solubilityNumeric": "Solubilidade\ng/100g H₂O",
+      "solubilityQualitative": "Solubilidade\nQualitativa",
+      "group": "Grupo",
+      "period": "Período",
+      "categories": {
+        "alkaliMetal": "Metal Alcalino",
+        "alkalineEarthMetal": "Metal Alcalino-Terroso",
+        "transitionMetal": "Metal de Transição",
+        "postTransitionMetal": "Metal Pós-Transição",
+        "metalloid": "Metalóide",
+        "nonmetal": "Não Metal",
+        "halogen": "Halogênio",
+        "nobleGas": "Gás Nobre",
+        "lanthanide": "Lantanídeo",
+        "actinide": "Actinídeo"
+      },
+      "standardStates": {
+        "solid": "Sólido",
+        "liquid": "Líquido",
+        "gas": "Gasoso"
+      }
+    },
+    "discoveryYear": "Ano Descoberto",
+    "discoveredBy": "Descoberto Por",
+    "group": "Grupo",
+    "period": "Período",
+    "categories": {
+      "alkaliMetal": "Metal Alcalino",
+      "alkalineEarthMetal": "Metal Alcalino-Terroso",
+      "transitionMetal": "Metal de Transição",
+      "postTransitionMetal": "Metal Pós-Transição",
+      "metalloid": "Metalóide",
+      "nonmetal": "Não Metal",
+      "halogen": "Halogênio",
+      "nobleGas": "Gás Nobre",
+      "lanthanide": "Lantanídeo",
+      "actinide": "Actinídeo"
+    },
+    "standardStates": {
+      "solid": "Sólido",
+      "liquid": "Líquido",
+      "gas": "Gasoso"
+    },
+    "groups": {
+      "lanthanide": "Lantanóide",
+      "actinide": "Actinóide"
+    }
+  }
+}

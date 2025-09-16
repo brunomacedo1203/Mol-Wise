@@ -1,0 +1,23 @@
+{
+  "visualization": {
+    "title": "Visualizador de Moléculas",
+    "subtitle": "Explore moléculas interativamente",
+    "description": "Insira fórmulas químicas, visualize estruturas 2D e 3D e explore diferentes representações moleculares.",
+    "placeholder": "Pesquisar por nome, fórmula, SMILES ou CID...",
+    "search": "Pesquisar",
+    "tip": "Dica",
+    "example": "Tente pesquisar por",
+    "notFound": "Molécula não encontrada",
+    "error": "Erro ao pesquisar molécula",
+    "molecules2D3D": {
+      "title": "Moléculas 2D/3D"
+    },
+    "controls": {
+      "dragToMove": "Clique e arraste para mover",
+      "scrollToZoom": "Role para zoom",
+      "shiftScrollToPan": "Shift + rolar para pan",
+      "doubleClickToReset": "Duplo clique para resetar",
+      "tooltip": "Clique e arraste para mover; Role para zoom; Shift + rolar para pan; Duplo clique para resetar"
+    }
+  }
+}

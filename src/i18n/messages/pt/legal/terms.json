@@ -1,0 +1,229 @@
+{
+  "terms": {
+    "title": "Termos de Uso",
+    "lastUpdated": "Última atualização: 15 de janeiro de 2024",
+    "sections": {
+      "definitions": {
+        "title": "Definições e Identificação do Controlador"
+      },
+      "acceptance": {
+        "title": "Aceitação dos Termos",
+        "content": {
+          "agreement": "Ao acessar e usar o Mol Class, você concorda em cumprir e estar vinculado a estes Termos de Uso. Se você não concorda com qualquer parte destes termos, não deve usar nosso serviço.",
+          "scope": "Estes termos se aplicam a todos os visitantes, usuários e outras pessoas que acessam ou usam o serviço."
+        }
+      },
+      "serviceDescription": {
+        "title": "Descrição do Serviço",
+        "content": {
+          "description": "O Mol Class é uma plataforma educacional digital que oferece ferramentas tecnológicas avançadas para o ensino e aprendizagem de química, incluindo recursos interativos, computacionais, de inteligência artificial e outras tecnologias educacionais.",
+          "featuresTitle": "Funcionalidades Disponíveis (incluindo, mas não se limitando a):",
+          "features": [
+            "Calculadoras químicas e físicas, simuladores e ferramentas computacionais",
+            "Visualizadores moleculares e sistemas de modelagem interativa",
+            "Tabela periódica interativa e bases de dados químicas",
+            "Catálogo de compostos, substâncias e materiais de referência",
+            "Jogos, atividades e recursos de aprendizagem gamificados",
+            "Ferramentas de inteligência artificial e sistemas de apoio educacional",
+            "Ferramentas de análise, processamento e interpretação de dados químicos",
+            "Funcionalidades de comunicação e interação para aprendizagem",
+            "Outras ferramentas e recursos educacionais relacionados à química"
+          ],
+          "evolutionTitle": "3.1 Evolução do Serviço",
+          "evolutionText": "As funcionalidades, recursos e tecnologias da plataforma podem ser atualizados, expandidos, modificados ou descontinuados a qualquer momento, sempre visando melhorar a qualidade e eficácia da experiência educacional oferecida aos usuários."
+        }
+      },
+      "acceptableUse": {
+        "title": "Uso Aceitável",
+        "content": {
+          "agreement": "Você concorda em usar o Mol Class apenas para fins educacionais e legais.",
+          "permittedTitle": "Permitido:",
+          "permitted": [
+            "Usar ferramentas para estudos e pesquisas educacionais",
+            "Compartilhar links para recursos específicos",
+            "Utilizar resultados de cálculos para fins acadêmicos"
+          ],
+          "prohibitedTitle": "Proibido:",
+          "prohibited": [
+            "Usos ilegais ou não autorizados",
+            "Prejudicar, assediar ou ameaçar outros",
+            "Enviar spam ou comunicações não solicitadas",
+            "Transmitir vírus ou código malicioso"
+          ]
+        }
+      },
+      "intellectualProperty": {
+        "title": "Propriedade Intelectual",
+        "content": {
+          "rightsTitle": "Direitos e Licenças",
+          "rightsText": "Todo o conteúdo do Mol Class é de nossa propriedade ou de nossos licenciadores, e é protegido por direitos autorais e outras leis.",
+          "rights": [
+            "Textos, gráficos, logos e interfaces",
+            "Códigos-fonte, algoritmos e modelos",
+            "Bases de dados e compilações de dados",
+            "Materiais educativos e conteúdos originais"
+          ],
+          "sourcesTitle": "Fontes e Referências",
+          "sourcesText": "Quando aplicável, indicamos as fontes e referências utilizadas para composição de conteúdos educacionais e dados químicos.",
+          "sources": [
+            "Literatura e bases químicas reconhecidas",
+            "Documentação técnica e normas internacionais",
+            "Repositórios acadêmicos e educacionais",
+            "Dados públicos de autoridades científicas",
+            "Materiais de referência confiáveis"
+          ],
+          "commitmentTitle": "Nosso Compromisso",
+          "commitment": [
+            "Respeitar direitos autorais e propriedade intelectual",
+            "Remover conteúdos mediante notificação válida",
+            "Atribuir créditos quando exigido",
+            "Zelar pela integridade do conteúdo educacional"
+          ]
+        }
+      },
+      "chemicalInformation": {
+        "title": "Informações Químicas",
+        "content": {
+          "disclaimer": "Informações químicas são fornecidas para fins educacionais e podem conter simplificações. Não substituem orientação profissional.",
+          "importantTitle": "Importante:",
+          "important": [
+            "Verifique fontes adicionais quando necessário",
+            "Use as informações com senso crítico",
+            "Sempre considere o contexto experimental",
+            "Siga normas de segurança laboratoriais"
+          ]
+        }
+      },
+      "liability": {
+        "title": "Limitação de Responsabilidade",
+        "content": {
+          "serviceNatureTitle": "Natureza do Serviço",
+          "serviceNatureText": "O Mol Class é fornecido como ferramenta educacional, com o compromisso de manter qualidade e funcionamento adequado dentro das limitações técnicas inerentes a serviços digitais.",
+          "ourResponsibilitiesTitle": "Nossas Responsabilidades",
+          "ourResponsibilities": [
+             "Manter o serviço funcionando adequadamente",
+             "Corrigir erros conhecidos em prazo razoável",
+             "Fornecer informações precisas baseadas em fontes científicas reconhecidas"
+           ],
+          "legalLimitationsTitle": "Limitações Legalmente Permitidas",
+          "legalLimitationsText": "Dentro dos limites da legislação brasileira, nossa responsabilidade é limitada em casos de:",
+          "legalLimitations": [
+            "Uso das ferramentas em desconformidade com instruções fornecidas",
+            "Interrupções temporárias para manutenção programada (com aviso prévio quando possível)",
+            "Falhas decorrentes de problemas de conectividade do usuário",
+            "Decisões baseadas exclusivamente em resultados automatizados sem validação adicional",
+            "Conteúdo de terceiros claramente identificado como tal"
+          ],
+          "userResponsibilityTitle": "Responsabilidades do Usuário",
+          "userResponsibilityText": "O usuário deve:",
+          "userResponsibilities": [
+            "Verificar resultados antes de aplicações críticas",
+            "Usar as ferramentas conforme orientações fornecidas",
+            "Reportar erros ou problemas identificados",
+            "Respeitar limitações técnicas comunicadas"
+          ],
+          "importantNote": "Esta limitação não exclui responsabilidades que não podem ser limitadas por lei, incluindo danos causados por negligência grave ou dolo."
+        }
+      },
+      "modifications": {
+        "title": "Modificações",
+        "content": {
+          "right": "Podemos modificar estes termos a qualquer momento.",
+          "processTitle": "Processo de Modificação",
+          "process": [
+            "Publicação de nova versão",
+            "Indicação da data de atualização",
+            "Comunicação em caso de mudanças relevantes"
+          ]
+        }
+      },
+      "governingLaw": {
+        "title": "Lei Aplicável",
+        "content": {
+          "law": "Estes termos são regidos pelas leis do Brasil.",
+          "disputesTitle": "Resolução de Conflitos",
+          "disputes": [
+            "Busca de solução amigável",
+            "Mediação ou arbitragem, quando aplicável",
+            "Foro competente conforme legislação",
+            "Outras medidas previstas em lei"
+          ]
+        }
+      },
+      "contact": {
+        "title": "Contato",
+        "content": {
+          "emailLabel": "E-mail:",
+          "email": "molclassapp@gmail.com",
+          "subjectLabel": "Assunto:",
+          "subject": "Termos de Uso"
+        }
+      }
+    },
+    "acceptance": {
+      "title": "Aceitação dos Termos",
+      "content": "Ao acessar e usar o Mol Class, você concorda em cumprir e estar vinculado a estes Termos de Uso."
+    },
+    "description": {
+      "title": "Descrição do Serviço",
+      "content": "O Mol Class é uma plataforma educacional online que fornece ferramentas e recursos para o aprendizado de química."
+    },
+    "userResponsibilities": {
+      "title": "Responsabilidades do Usuário",
+      "content": "Você é responsável por usar o serviço de forma adequada e em conformidade com todas as leis aplicáveis.",
+      "rules": {
+        "appropriate": "Usar o serviço apenas para fins educacionais apropriados",
+        "accurate": "Fornecer informações precisas quando solicitado",
+        "respect": "Respeitar outros usuários e a propriedade intelectual",
+        "security": "Manter a segurança de sua conta e credenciais"
+      }
+    },
+    "prohibitedUses": {
+      "title": "Usos Proibidos",
+      "content": "Você concorda em não usar o serviço para:",
+      "list": {
+        "illegal": "Qualquer propósito ilegal ou não autorizado",
+        "harm": "Prejudicar, abusar, assediar ou ameaçar outros",
+        "spam": "Enviar spam ou comunicações não solicitadas",
+        "malware": "Transmitir vírus ou código malicioso",
+        "interfere": "Interferir no funcionamento do serviço"
+      }
+    },
+    "intellectualProperty": {
+      "title": "Propriedade Intelectual",
+      "content": "Todo o conteúdo do Mol Class, incluindo textos, gráficos, logos e software, é propriedade nossa ou de nossos licenciadores."
+    },
+    "userContent": {
+      "title": "Conteúdo do Usuário",
+      "content": "Você mantém a propriedade de qualquer conteúdo que enviar, mas nos concede uma licença para usar esse conteúdo em conexão com o serviço."
+    },
+    "privacy": {
+      "title": "Privacidade",
+      "content": "Sua privacidade é importante para nós. Consulte nossa Política de Privacidade para informações sobre como coletamos e usamos seus dados."
+    },
+    "disclaimers": {
+      "title": "Isenções de Responsabilidade",
+      "content": "O serviço é fornecido 'como está' sem garantias de qualquer tipo. Não garantimos que o serviço será ininterrupto ou livre de erros."
+    },
+    "limitation": {
+      "title": "Limitação de Responsabilidade",
+      "content": "Em nenhuma circunstância seremos responsáveis por danos indiretos, incidentais ou consequenciais decorrentes do uso do serviço."
+    },
+    "termination": {
+      "title": "Rescisão",
+      "content": "Podemos encerrar ou suspender seu acesso ao serviço a qualquer momento, com ou sem causa, com ou sem aviso."
+    },
+    "changes": {
+      "title": "Alterações nos Termos",
+      "content": "Reservamo-nos o direito de modificar estes termos a qualquer momento. As alterações entrarão em vigor imediatamente após a publicação."
+    },
+    "governingLaw": {
+      "title": "Lei Aplicável",
+      "content": "Estes termos são regidos pelas leis do Brasil, sem consideração aos princípios de conflito de leis."
+    },
+    "contact": {
+      "title": "Contato",
+      "content": "Se você tiver dúvidas sobre estes Termos de Uso, entre em contato conosco através dos canais disponíveis na plataforma."
+    }
+  }
+}
