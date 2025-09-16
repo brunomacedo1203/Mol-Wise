@@ -8,7 +8,6 @@ import common from "./common.json";
 import home from "./pages/home.json";
 import calculators from "./pages/calculators.json";
 import periodicTable from "./pages/periodic-table.json";
-import games from "./pages/games.json";
 import visualization from "./pages/visualization.json";
 import catalog from "./pages/catalog.json";
 import molarMass from "./pages/molar-mass.json";
@@ -38,7 +37,6 @@ const translations = {
   ...home,
   ...calculators,
   ...periodicTable,
-  ...games,
   ...visualization,
   ...catalog,
   ...molarMass,
@@ -68,7 +66,6 @@ export {
   home,
   calculators,
   periodicTable,
-  games,
   visualization,
   catalog,
   molarMass,
