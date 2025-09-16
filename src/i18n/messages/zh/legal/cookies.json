@@ -1,0 +1,56 @@
+{
+  "cookies": {
+    "banner": {
+      "title": "Cookie 的使用",
+      "message": "我们使用 Cookie 来提升您的体验。继续浏览即表示您同意我们的 Cookie 政策。",
+      "accept": "全部接受",
+      "decline": "全部拒绝",
+      "acceptAll": "全部接受",
+      "rejectAll": "全部拒绝",
+      "customize": "自定义",
+      "learnMore": "了解更多"
+    },
+    "preferences": {
+      "title": "Cookie 偏好设置",
+      "description": "管理您的 Cookie 偏好设置。您可以在下方启用或禁用不同类型的 Cookie。",
+      "essential": "必要的 Cookie",
+      "essentialDescription": "这些 Cookie 对网站的基本功能是必需的，无法禁用。",
+      "analytics": "分析 Cookie",
+      "analyticsDescription": "这些 Cookie 帮助我们通过匿名收集和报告信息来了解访客如何与网站互动。",
+      "legalLinks": "更多信息，请参阅：",
+      "privacyPolicy": "隐私政策",
+      "termsOfUse": "使用条款",
+      "save": "保存偏好",
+      "cancel": "取消",
+      "acceptAll": "全部接受",
+      "rejectAll": "全部拒绝"
+    },
+    "policy": {
+      "title": "Cookie 政策",
+      "lastUpdated": "最后更新：2024年1月15日",
+      "whatAreCookies": {
+        "title": "什么是 Cookie？",
+        "content": "Cookie 是您访问网站时存储在设备上的小型文本文件。它们被广泛用于提高网站的运行效率。"
+      },
+      "howWeUseCookies": {
+        "title": "我们如何使用 Cookie",
+        "content": "我们出于多种目的使用 Cookie，包括改进网站功能、分析流量和个性化内容。"
+      },
+      "typesOfCookies": {
+        "title": "我们使用的 Cookie 类型",
+        "essential": "必要的 Cookie：用于基本操作",
+        "analytics": "分析 Cookie：了解您如何使用网站",
+        "preferences": "偏好 Cookie：记住您的设置",
+        "marketing": "营销 Cookie：提供相关广告"
+      },
+      "manageCookies": {
+        "title": "管理 Cookie",
+        "content": "您可以按照自己的意愿控制和/或删除 Cookie。您可以删除计算机上已有的所有 Cookie，并设置大多数浏览器以阻止它们的存放。"
+      },
+      "contact": {
+        "title": "联系方式",
+        "content": "如果您对我们的 Cookie 政策有任何疑问，请与我们联系。"
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "cookies": {
+    "banner": {
+      "title": "Verwendung von Cookies",
+      "message": "Wir verwenden Cookies, um Ihr Erlebnis zu verbessern. Durch weiteres Browsen stimmen Sie unserer Cookie-Richtlinie zu.",
+      "accept": "Alle akzeptieren",
+      "decline": "Alle ablehnen",
+      "acceptAll": "Alle akzeptieren",
+      "rejectAll": "Alle ablehnen",
+      "customize": "Anpassen",
+      "learnMore": "Mehr erfahren"
+    },
+    "preferences": {
+      "title": "Cookie-Einstellungen",
+      "description": "Verwalten Sie Ihre Cookie-Einstellungen. Sie können unten verschiedene Arten von Cookies aktivieren oder deaktivieren.",
+      "essential": "Essenzielle Cookies",
+      "essentialDescription": "Diese Cookies sind für die Grundfunktionalität der Website erforderlich und können nicht deaktiviert werden.",
+      "analytics": "Analyse-Cookies",
+      "analyticsDescription": "Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren, indem sie Informationen anonym sammeln und melden.",
+      "legalLinks": "Für weitere Informationen siehe:",
+      "privacyPolicy": "Datenschutzrichtlinie",
+      "termsOfUse": "Nutzungsbedingungen",
+      "save": "Einstellungen speichern",
+      "cancel": "Abbrechen",
+      "acceptAll": "Alle akzeptieren",
+      "rejectAll": "Alle ablehnen"
+    },
+    "policy": {
+      "title": "Cookie-Richtlinie",
+      "lastUpdated": "Zuletzt aktualisiert: 15. Januar 2024",
+      "whatAreCookies": {
+        "title": "Was sind Cookies?",
+        "content": "Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie eine Website besuchen. Sie werden häufig verwendet, um Websites effizienter zu machen."
+      },
+      "howWeUseCookies": {
+        "title": "Wie wir Cookies verwenden",
+        "content": "Wir verwenden Cookies für verschiedene Zwecke, einschließlich der Verbesserung der Website-Funktionalität, der Analyse des Datenverkehrs und der Personalisierung von Inhalten."
+      },
+      "typesOfCookies": {
+        "title": "Arten von Cookies, die wir verwenden",
+        "essential": "Essenzielle Cookies: Notwendig für den grundlegenden Betrieb",
+        "analytics": "Analyse-Cookies: Zum Verständnis der Nutzung der Website",
+        "preferences": "Präferenz-Cookies: Zum Speichern Ihrer Einstellungen",
+        "marketing": "Marketing-Cookies: Für relevante Werbung"
+      },
+      "manageCookies": {
+        "title": "Cookies verwalten",
+        "content": "Sie können Cookies nach Belieben kontrollieren und/oder löschen. Sie können alle Cookies löschen, die sich bereits auf Ihrem Computer befinden, und die meisten Browser so einstellen, dass sie deren Platzierung verhindern."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "content": "Wenn Sie Fragen zu unserer Cookie-Richtlinie haben, kontaktieren Sie uns bitte."
+      }
+    }
+  }
+}
