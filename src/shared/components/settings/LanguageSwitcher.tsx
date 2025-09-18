@@ -22,7 +22,7 @@ const LOCALES = [
   { code: "ru", flag: "/flags/ru.png" },
   { code: "zh", flag: "/flags/cn.png" },
   { code: "id", flag: "/flags/id.png" },
-  { code: "bn", flag: "/flags/id.png" },
+  { code: "bn", flag: "/flags/bn.png" },
 ] as const;
 
 interface LanguageSwitcherProps {
