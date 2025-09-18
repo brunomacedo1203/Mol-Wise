@@ -1,0 +1,91 @@
+{
+  "periodicTable": {
+    "title": "পর্যায় সারণি",
+    "subtitle": "বিস্তারিত দেখতে একটি নাম বা প্রতীক লিখুন",
+    "description": "সমস্ত রাসায়নিক মৌল অন্বেষণ করুন, সম্পূর্ণ তথ্য এবং ইন্টারেক্টিভ ফিল্টারসহ।",
+    "filterPlaceholder": "শ্রেণিবিন্যাস নির্বাচন করুন",
+    "filterLabel": "শ্রেণিবিন্যাস",
+    "filterOptions": {
+      "TODOS": "সব",
+      "RARE_EARTHS": "দুর্লভ মৃত্তিকা উপাদান",
+      "Alkali metal": "ক্ষার ধাতু",
+      "Alkaline earth metal": "ক্ষারীয় মৃত্তিকা ধাতু",
+      "Transition metal": "সংক্রমণ ধাতু",
+      "Post-transition metal": "পর-সংক্রমণ ধাতু",
+      "Metalloid": "উপধাতু",
+      "Nonmetal": "অধাতু",
+      "Halogen": "হ্যালোজেন",
+      "Noble gas": "গুণী গ্যাস",
+      "Lanthanide": "ল্যান্থানাইড",
+      "Actinide": "অ্যাক্টিনাইড",
+      "Boron Family": "বোরন পরিবার",
+      "Carbon Family": "কার্বন পরিবার",
+      "Nitrogen Family": "নাইট্রোজেন পরিবার",
+      "Chalcogens Family": "ক্যালকোজেন পরিবার"
+    },
+    "ariaLabel": "উপাদান {name} ({symbol}), পারমাণবিক সংখ্যা {atomicNumber}",
+    "element": {
+      "atomicNumber": "পারমাণবিক সংখ্যা",
+      "symbol": "প্রতীক",
+      "name": "নাম",
+      "molarMass": "মোলার ভর",
+      "category": "শ্রেণি",
+      "electronConfiguration": "ইলেকট্রন বিন্যাস",
+      "electronegativity": "বিদ্যুত্বণাত্মকতা",
+      "atomicRadius": "পারমাণবিক ব্যাসার্ধ",
+      "ionizationEnergy": "আয়নীকরণ শক্তি",
+      "electronAffinity": "ইলেকট্রন আসক্তি",
+      "oxidationStates": "জারণ অবস্থাসমূহ",
+      "standardState": "মানক অবস্থা",
+      "meltingPoint": "গলনাঙ্ক",
+      "boilingPoint": "স্ফুটাঙ্ক",
+      "density": "ঘনত্ব\ng/cm³",
+      "solubilityNumeric": "দ্রাব্যতা\ng/100g H₂O",
+      "solubilityQualitative": "দ্রাব্যতা\nগুণগত",
+      "group": "গ্রুপ",
+      "period": "পর্যায়",
+      "categories": {
+        "alkaliMetal": "ক্ষার ধাতু",
+        "alkalineEarthMetal": "ক্ষারীয় মৃত্তিকা ধাতু",
+        "transitionMetal": "সংক্রমণ ধাতু",
+        "postTransitionMetal": "পর-সংক্রমণ ধাতু",
+        "metalloid": "উপধাতু",
+        "nonmetal": "অধাতু",
+        "halogen": "হ্যালোজেন",
+        "nobleGas": "গুণী গ্যাস",
+        "lanthanide": "ল্যান্থানাইড",
+        "actinide": "অ্যাক্টিনাইড"
+      },
+      "standardStates": {
+        "solid": "ঠোস",
+        "liquid": "তরল",
+        "gas": "গ্যাসীয়"
+      }
+    },
+    "discoveryYear": "আবিষ্কারের বছর",
+    "discoveredBy": "আবিষ্কারক",
+    "group": "গ্রুপ",
+    "period": "পর্যায়",
+    "categories": {
+      "alkaliMetal": "ক্ষার ধাতু",
+      "alkalineEarthMetal": "ক্ষারীয় মৃত্তিকা ধাতু",
+      "transitionMetal": "সংক্রমণ ধাতু",
+      "postTransitionMetal": "পর-সংক্রমণ ধাতু",
+      "metalloid": "উপধাতু",
+      "nonmetal": "অধাতু",
+      "halogen": "হ্যালোজেন",
+      "nobleGas": "গুণী গ্যাস",
+      "lanthanide": "ল্যান্থানাইড",
+      "actinide": "অ্যাক্টিনাইড"
+    },
+    "standardStates": {
+      "solid": "ঠোস",
+      "liquid": "তরল",
+      "gas": "গ্যাসীয়"
+    },
+    "groups": {
+      "lanthanide": "ল্যান্থানাইড",
+      "actinide": "অ্যাক্টিনাইড"
+    }
+  }
+}

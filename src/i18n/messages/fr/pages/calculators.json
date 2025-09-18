@@ -1,0 +1,94 @@
+{
+  "calculators": {
+    "title": "Calculatrices",
+    "subtitle": "Ouvrez une ou plusieurs calculatrices depuis le menu.",
+    "closeAll": "Tout fermer",
+    "description": "Accédez à des calculatrices de chimie pour la masse molaire, les calculs scientifiques, et plus encore.",
+    "errors": {
+      "generic": "Une erreur s'est produite pendant le calcul",
+      "unsupportedType": "Type de calculatrice non pris en charge : {type}"
+    },
+    "molarMass": {
+      "title": "Masse molaire",
+      "subtitle": "Entrez une formule chimique ou un symbole d'élément",
+      "description": "Calculez rapidement la masse molaire des composés chimiques.",
+      "input": {
+        "placeholder": "Entrez une formule (ex. : H2O)",
+        "label": "Formule chimique"
+      },
+      "keyboard": {
+        "calculate": "Calculer",
+        "reset": "Réinitialiser",
+        "backspace": "Retour arrière",
+        "parentheses": "Ajouter des parenthèses",
+        "showKeyboard": "Afficher le clavier",
+        "hideKeyboard": "Masquer le clavier"
+      },
+      "result": {
+        "prefix": "La masse molaire de",
+        "suffix": "est",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "La formule ne peut pas être vide",
+        "invalidElement": "Le symbole \"{symbol}\" est introuvable",
+        "invalidFormula": "Formule chimique invalide",
+        "mismatchedParentheses": "Parenthèses déséquilibrées dans la formule",
+        "calculationFailed": "Échec du calcul de la masse molaire",
+        "generic": "Une erreur s'est produite lors du calcul de la masse molaire"
+      },
+      "history": {
+        "title": "Historique des calculs",
+        "show": "Afficher l'historique",
+        "hide": "Masquer l'historique",
+        "clear": "Effacer l'historique",
+        "empty": "Aucun calcul effectué pour le moment",
+        "clickToUse": "Cliquez pour utiliser cette formule"
+      }
+    },
+    "scientific": {
+      "title": "Calculatrice scientifique",
+      "subtitle": "Effectuez des calculs mathématiques avancés",
+      "input": {
+        "placeholder": "Entrez une expression mathématique",
+        "label": "Expression"
+      },
+      "keyboard": {
+        "calculate": "Calculer",
+        "reset": "Réinitialiser",
+        "backspace": "Retour arrière",
+        "showKeyboard": "Afficher le clavier",
+        "hideKeyboard": "Masquer le clavier",
+        "functions": {
+          "sin": "Sinus",
+          "cos": "Cosinus",
+          "tan": "Tangente",
+          "log": "Logarithme",
+          "ln": "Logarithme naturel",
+          "sqrt": "Racine carrée",
+          "pi": "Pi",
+          "e": "Nombre d'Euler"
+        },
+        "memory": {
+          "store": "Stocker en mémoire",
+          "recall": "Rappeler depuis la mémoire",
+          "clear": "Effacer la mémoire"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Expression invalide",
+        "empty": "L'expression ne peut pas être vide",
+        "divisionByZero": "La division par zéro n'est pas autorisée",
+        "generic": "Une erreur s'est produite pendant le calcul"
+      },
+      "history": {
+        "title": "Historique des calculs",
+        "show": "Afficher l'historique",
+        "hide": "Masquer l'historique",
+        "clear": "Effacer l'historique",
+        "empty": "Aucun calcul effectué pour le moment",
+        "clickToUse": "Cliquez pour utiliser ce résultat"
+      }
+    }
+  }
+}

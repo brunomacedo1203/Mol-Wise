@@ -1,0 +1,91 @@
+{
+  "periodicTable": {
+    "title": "Периодическая таблица",
+    "subtitle": "Введите название или символ для просмотра деталей",
+    "description": "Исследуйте все химические элементы с полными данными и интерактивными фильтрами.",
+    "filterPlaceholder": "Выберите классификацию",
+    "filterLabel": "Классификация",
+    "filterOptions": {
+      "TODOS": "Все",
+      "RARE_EARTHS": "Редкоземельные элементы",
+      "Alkali metal": "Щелочной металл",
+      "Alkaline earth metal": "Щёлочноземельный металл",
+      "Transition metal": "Переходный металл",
+      "Post-transition metal": "Постпереходный металл",
+      "Metalloid": "Металлоид",
+      "Nonmetal": "Неметалл",
+      "Halogen": "Галоген",
+      "Noble gas": "Благородный газ",
+      "Lanthanide": "Лантаноид",
+      "Actinide": "Актиноид",
+      "Boron Family": "Семейство бора",
+      "Carbon Family": "Семейство углерода",
+      "Nitrogen Family": "Семейство азота",
+      "Chalcogens Family": "Семейство халькогенов"
+    },
+    "ariaLabel": "Элемент {name} ({symbol}), атомный номер {atomicNumber}",
+    "element": {
+      "atomicNumber": "Атомный номер",
+      "symbol": "Символ",
+      "name": "Название",
+      "molarMass": "Молярная масса",
+      "category": "Категория",
+      "electronConfiguration": "Электронная конфигурация",
+      "electronegativity": "Электроотрицательность",
+      "atomicRadius": "Атомный радиус",
+      "ionizationEnergy": "Энергия ионизации",
+      "electronAffinity": "Электронное сродство",
+      "oxidationStates": "Степени окисления",
+      "standardState": "Стандартное состояние",
+      "meltingPoint": "Температура плавления",
+      "boilingPoint": "Температура кипения",
+      "density": "Плотность\ng/см³",
+      "solubilityNumeric": "Растворимость\ng/100g H₂O",
+      "solubilityQualitative": "Растворимость\nкачественная",
+      "group": "Группа",
+      "period": "Период",
+      "categories": {
+        "alkaliMetal": "Щелочной металл",
+        "alkalineEarthMetal": "Щёлочноземельный металл",
+        "transitionMetal": "Переходный металл",
+        "postTransitionMetal": "Постпереходный металл",
+        "metalloid": "Металлоид",
+        "nonmetal": "Неметалл",
+        "halogen": "Галоген",
+        "nobleGas": "Благородный газ",
+        "lanthanide": "Лантаноид",
+        "actinide": "Актиноид"
+      },
+      "standardStates": {
+        "solid": "Твердое",
+        "liquid": "Жидкое",
+        "gas": "Газообразное"
+      }
+    },
+    "discoveryYear": "Год открытия",
+    "discoveredBy": "Открыватель",
+    "group": "Группа",
+    "period": "Период",
+    "categories": {
+      "alkaliMetal": "Щелочной металл",
+      "alkalineEarthMetal": "Щёлочноземельный металл",
+      "transitionMetal": "Переходный металл",
+      "postTransitionMetal": "Постпереходный металл",
+      "metalloid": "Металлоид",
+      "nonmetal": "Неметалл",
+      "halogen": "Галоген",
+      "nobleGas": "Благородный газ",
+      "lanthanide": "Лантаноид",
+      "actinide": "Актиноид"
+    },
+    "standardStates": {
+      "solid": "Твердое",
+      "liquid": "Жидкое",
+      "gas": "Газообразное"
+    },
+    "groups": {
+      "lanthanide": "Лантаноид",
+      "actinide": "Актиноид"
+    }
+  }
+}

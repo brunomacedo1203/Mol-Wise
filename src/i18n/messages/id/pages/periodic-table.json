@@ -1,0 +1,91 @@
+{
+  "periodicTable": {
+    "title": "Tabel Periodik",
+    "subtitle": "Masukkan nama atau simbol untuk melihat detail",
+    "description": "Jelajahi semua unsur kimia dengan data lengkap dan filter interaktif.",
+    "filterPlaceholder": "Pilih klasifikasi",
+    "filterLabel": "Klasifikasi",
+    "filterOptions": {
+      "TODOS": "Semua",
+      "RARE_EARTHS": "Logam Tanah Jarang",
+      "Alkali metal": "Logam Alkali",
+      "Alkaline earth metal": "Logam Alkali Tanah",
+      "Transition metal": "Logam Transisi",
+      "Post-transition metal": "Logam Pasca Transisi",
+      "Metalloid": "Metaloid",
+      "Nonmetal": "Nonlogam",
+      "Halogen": "Halogen",
+      "Noble gas": "Gas Mulia",
+      "Lanthanide": "Lantanida",
+      "Actinide": "Aktinida",
+      "Boron Family": "Golongan Boron",
+      "Carbon Family": "Golongan Karbon",
+      "Nitrogen Family": "Golongan Nitrogen",
+      "Chalcogens Family": "Golongan Kalskogen"
+    },
+    "ariaLabel": "Unsur {name} ({symbol}), nomor atom {atomicNumber}",
+    "element": {
+      "atomicNumber": "Nomor Atom",
+      "symbol": "Simbol",
+      "name": "Nama",
+      "molarMass": "Massa Mol",
+      "category": "Kategori",
+      "electronConfiguration": "Konfigurasi Elektron",
+      "electronegativity": "Elektronegativitas",
+      "atomicRadius": "Jari-jari Atom",
+      "ionizationEnergy": "Energi Ionisasi",
+      "electronAffinity": "Afinitas Elektron",
+      "oxidationStates": "Keadaan Oksidasi",
+      "standardState": "Keadaan Standar",
+      "meltingPoint": "Titik Leleh",
+      "boilingPoint": "Titik Didih",
+      "density": "Massa Jenis\ng/cm³",
+      "solubilityNumeric": "Kelarutan\ng/100g H₂O",
+      "solubilityQualitative": "Kelarutan\nKualitatif",
+      "group": "Golongan",
+      "period": "Periode",
+      "categories": {
+        "alkaliMetal": "Logam Alkali",
+        "alkalineEarthMetal": "Logam Alkali Tanah",
+        "transitionMetal": "Logam Transisi",
+        "postTransitionMetal": "Logam Pasca Transisi",
+        "metalloid": "Metaloid",
+        "nonmetal": "Nonlogam",
+        "halogen": "Halogen",
+        "nobleGas": "Gas Mulia",
+        "lanthanide": "Lantanida",
+        "actinide": "Aktinida"
+      },
+      "standardStates": {
+        "solid": "Padat",
+        "liquid": "Cair",
+        "gas": "Gas"
+      }
+    },
+    "discoveryYear": "Tahun Penemuan",
+    "discoveredBy": "Ditemukan Oleh",
+    "group": "Golongan",
+    "period": "Periode",
+    "categories": {
+      "alkaliMetal": "Logam Alkali",
+      "alkalineEarthMetal": "Logam Alkali Tanah",
+      "transitionMetal": "Logam Transisi",
+      "postTransitionMetal": "Logam Pasca Transisi",
+      "metalloid": "Metaloid",
+      "nonmetal": "Nonlogam",
+      "halogen": "Halogen",
+      "nobleGas": "Gas Mulia",
+      "lanthanide": "Lantanida",
+      "actinide": "Aktinida"
+    },
+    "standardStates": {
+      "solid": "Padat",
+      "liquid": "Cair",
+      "gas": "Gas"
+    },
+    "groups": {
+      "lanthanide": "Lantanida",
+      "actinide": "Aktinida"
+    }
+  }
+}

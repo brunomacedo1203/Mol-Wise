@@ -1,0 +1,23 @@
+{
+  "visualization": {
+    "title": "Penampil Molekul",
+    "subtitle": "Jelajahi molekul secara interaktif",
+    "description": "Masukkan rumus kimia, lihat struktur 2D dan 3D, dan jelajahi berbagai representasi molekul.",
+    "placeholder": "Cari berdasarkan nama, rumus, SMILES, atau CID...",
+    "search": "Cari",
+    "tip": "Tip",
+    "example": "Coba cari",
+    "notFound": "Molekul tidak ditemukan",
+    "error": "Kesalahan saat mencari molekul",
+    "molecules2D3D": {
+      "title": "Molekul 2D/3D"
+    },
+    "controls": {
+      "dragToMove": "Klik dan seret untuk memindahkan",
+      "scrollToZoom": "Gulir untuk memperbesar atau memperkecil",
+      "shiftScrollToPan": "Shift + gulir untuk menggeser",
+      "doubleClickToReset": "Klik ganda untuk mengatur ulang",
+      "tooltip": "Klik dan seret untuk memindahkan; Gulir untuk memperbesar atau memperkecil; Shift + gulir untuk menggeser; Klik ganda untuk mengatur ulang"
+    }
+  }
+}
