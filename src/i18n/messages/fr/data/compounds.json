@@ -1,1 +1,124 @@
-{}
+{
+  "compounds": {
+    "H2O": {
+      "formula": "H₂O",
+      "commonName": "Eau"
+    },
+    "NaCl": {
+      "formula": "NaCl",
+      "commonName": "Sel de table"
+    },
+    "CO2": {
+      "formula": "CO₂",
+      "commonName": "Dioxyde de carbone"
+    },
+    "NH3": {
+      "formula": "NH₃",
+      "commonName": "Ammoniac"
+    },
+    "CH4": {
+      "formula": "CH₄",
+      "commonName": "Méthane"
+    },
+    "C2H6O": {
+      "formula": "C₂H₆O",
+      "commonName": "Éthanol"
+    },
+    "C6H12O6": {
+      "formula": "C₆H₁₂O₆",
+      "commonName": "Glucose"
+    },
+    "CaCO3": {
+      "formula": "CaCO₃",
+      "commonName": "Carbonate de calcium"
+    },
+    "H2SO4": {
+      "formula": "H₂SO₄",
+      "commonName": "Acide sulfurique"
+    },
+    "HCl": {
+      "formula": "HCl",
+      "commonName": "Acide chlorhydrique"
+    },
+    "NaOH": {
+      "formula": "NaOH",
+      "commonName": "Hydroxyde de sodium"
+    },
+    "Ca(OH)2": {
+      "formula": "Ca(OH)₂",
+      "commonName": "Hydroxyde de calcium"
+    },
+    "Fe2O3": {
+      "formula": "Fe₂O₃",
+      "commonName": "Oxyde de fer(III)"
+    },
+    "Al2O3": {
+      "formula": "Al₂O₃",
+      "commonName": "Oxyde d'aluminium"
+    },
+    "SiO2": {
+      "formula": "SiO₂",
+      "commonName": "Dioxyde de silicium"
+    },
+    "C8H18": {
+      "formula": "C₈H₁₈",
+      "commonName": "Octane"
+    },
+    "C2H4": {
+      "formula": "C₂H₄",
+      "commonName": "Éthylène"
+    },
+    "C2H2": {
+      "formula": "C₂H₂",
+      "commonName": "Acétylène"
+    },
+    "C6H6": {
+      "formula": "C₆H₆",
+      "commonName": "Benzène"
+    },
+    "CH3COOH": {
+      "formula": "CH₃COOH",
+      "commonName": "Acide acétique"
+    },
+    "C12H22O11": {
+      "formula": "C₁₂H₂₂O₁₁",
+      "commonName": "Saccharose"
+    },
+    "CaCl2": {
+      "formula": "CaCl₂",
+      "commonName": "Chlorure de calcium"
+    },
+    "MgSO4": {
+      "formula": "MgSO₄",
+      "commonName": "Sulfate de magnésium"
+    },
+    "KNO3": {
+      "formula": "KNO₃",
+      "commonName": "Nitrate de potassium"
+    },
+    "AgNO3": {
+      "formula": "AgNO₃",
+      "commonName": "Nitrate d'argent"
+    },
+    "BaCl2": {
+      "formula": "BaCl₂",
+      "commonName": "Chlorure de baryum"
+    },
+    "CuSO4": {
+      "formula": "CuSO₄",
+      "commonName": "Sulfate de cuivre"
+    },
+    "ZnO": {
+      "formula": "ZnO",
+      "commonName": "Oxyde de zinc"
+    },
+    "TiO2": {
+      "formula": "TiO₂",
+      "commonName": "Dioxyde de titane"
+    },
+    "H2O2": {
+      "formula": "H₂O₂",
+      "commonName": "Peroxyde d'hydrogène"
+    }
+  }
+}

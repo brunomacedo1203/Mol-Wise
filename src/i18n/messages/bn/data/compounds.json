@@ -1,1 +1,34 @@
-{}
+{
+  "compounds": {
+    "H2O": { "formula": "H₂O", "commonName": "পানি" },
+    "NaCl": { "formula": "NaCl", "commonName": "খাবার লবণ" },
+    "CO2": { "formula": "CO₂", "commonName": "কার্বন ডাই অক্সাইড" },
+    "NH3": { "formula": "NH₃", "commonName": "অ্যামোনিয়া" },
+    "CH4": { "formula": "CH₄", "commonName": "মিথেন" },
+    "C2H6O": { "formula": "C₂H₆O", "commonName": "ইথানল" },
+    "C6H12O6": { "formula": "C₆H₁₂O₆", "commonName": "গ্লুকোজ" },
+    "CaCO3": { "formula": "CaCO₃", "commonName": "ক্যালসিয়াম কার্বোনেট" },
+    "H2SO4": { "formula": "H₂SO₄", "commonName": "সালফিউরিক অ্যাসিড" },
+    "HCl": { "formula": "HCl", "commonName": "হাইড্রোক্লোরিক অ্যাসিড" },
+    "NaOH": { "formula": "NaOH", "commonName": "সোডিয়াম হাইড্রক্সাইড" },
+    "Ca(OH)2": { "formula": "Ca(OH)₂", "commonName": "ক্যালসিয়াম হাইড্রক্সাইড" },
+    "Fe2O3": { "formula": "Fe₂O₃", "commonName": "আয়রন(III) অক্সাইড" },
+    "Al2O3": { "formula": "Al₂O₃", "commonName": "অ্যালুমিনিয়াম অক্সাইড" },
+    "SiO2": { "formula": "SiO₂", "commonName": "সিলিকন ডাই অক্সাইড" },
+    "C8H18": { "formula": "C₈H₁₈", "commonName": "অকটেন" },
+    "C2H4": { "formula": "C₂H₄", "commonName": "ইথিলিন" },
+    "C2H2": { "formula": "C₂H₂", "commonName": "অ্যাসিটিলিন" },
+    "C6H6": { "formula": "C₆H₆", "commonName": "বেনজিন" },
+    "CH3COOH": { "formula": "CH₃COOH", "commonName": "অ্যাসিটিক অ্যাসিড" },
+    "C12H22O11": { "formula": "C₁₂H₂₂O₁₁", "commonName": "সুক্রোজ" },
+    "CaCl2": { "formula": "CaCl₂", "commonName": "ক্যালসিয়াম ক্লোরাইড" },
+    "MgSO4": { "formula": "MgSO₄", "commonName": "ম্যাগনেসিয়াম সালফেট" },
+    "KNO3": { "formula": "KNO₃", "commonName": "পটাশিয়াম নাইট্রেট" },
+    "AgNO3": { "formula": "AgNO₃", "commonName": "সিলভার নাইট্রেট" },
+    "BaCl2": { "formula": "BaCl₂", "commonName": "বেরিয়াম ক্লোরাইড" },
+    "CuSO4": { "formula": "CuSO₄", "commonName": "কপার সালফেট" },
+    "ZnO": { "formula": "ZnO", "commonName": "জিঙ্ক অক্সাইড" },
+    "TiO2": { "formula": "TiO₂", "commonName": "টাইটানিয়াম ডাই অক্সাইড" },
+    "H2O2": { "formula": "H₂O₂", "commonName": "হাইড্রোজেন পের অক্সাইড" }
+  }
+}

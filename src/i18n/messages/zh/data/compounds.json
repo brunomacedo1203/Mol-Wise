@@ -2,123 +2,123 @@
   "compounds": {
     "H2O": {
       "formula": "H₂O",
-      "commonName": "Wasser"
+      "commonName": "水"
     },
     "NaCl": {
       "formula": "NaCl",
-      "commonName": "Kochsalz"
+      "commonName": "食盐"
     },
     "CO2": {
       "formula": "CO₂",
-      "commonName": "Kohlenstoffdioxid"
+      "commonName": "二氧化碳"
     },
     "NH3": {
       "formula": "NH₃",
-      "commonName": "Ammoniak"
+      "commonName": "氨"
     },
     "CH4": {
       "formula": "CH₄",
-      "commonName": "Methan"
+      "commonName": "甲烷"
     },
     "C2H6O": {
       "formula": "C₂H₆O",
-      "commonName": "Ethanol"
+      "commonName": "乙醇"
     },
     "C6H12O6": {
       "formula": "C₆H₁₂O₆",
-      "commonName": "Glukose"
+      "commonName": "葡萄糖"
     },
     "CaCO3": {
       "formula": "CaCO₃",
-      "commonName": "Calciumcarbonat"
+      "commonName": "碳酸钙"
     },
     "H2SO4": {
       "formula": "H₂SO₄",
-      "commonName": "Schwefelsäure"
+      "commonName": "硫酸"
     },
     "HCl": {
       "formula": "HCl",
-      "commonName": "Salzsäure"
+      "commonName": "盐酸"
     },
     "NaOH": {
       "formula": "NaOH",
-      "commonName": "Natriumhydroxid"
+      "commonName": "氢氧化钠"
     },
     "Ca(OH)2": {
       "formula": "Ca(OH)₂",
-      "commonName": "Calciumhydroxid"
+      "commonName": "氢氧化钙"
     },
     "Fe2O3": {
       "formula": "Fe₂O₃",
-      "commonName": "Eisen(III)-oxid"
+      "commonName": "三氧化二铁"
     },
     "Al2O3": {
       "formula": "Al₂O₃",
-      "commonName": "Aluminiumoxid"
+      "commonName": "氧化铝"
     },
     "SiO2": {
       "formula": "SiO₂",
-      "commonName": "Siliciumdioxid"
+      "commonName": "二氧化硅"
     },
     "C8H18": {
       "formula": "C₈H₁₈",
-      "commonName": "Oktan"
+      "commonName": "辛烷"
     },
     "C2H4": {
       "formula": "C₂H₄",
-      "commonName": "Ethylen"
+      "commonName": "乙烯"
     },
     "C2H2": {
       "formula": "C₂H₂",
-      "commonName": "Acetylen"
+      "commonName": "乙炔"
     },
     "C6H6": {
       "formula": "C₆H₆",
-      "commonName": "Benzol"
+      "commonName": "苯"
     },
     "CH3COOH": {
       "formula": "CH₃COOH",
-      "commonName": "Essigsäure"
+      "commonName": "乙酸"
     },
     "C12H22O11": {
       "formula": "C₁₂H₂₂O₁₁",
-      "commonName": "Saccharose"
+      "commonName": "蔗糖"
     },
     "CaCl2": {
       "formula": "CaCl₂",
-      "commonName": "Calciumchlorid"
+      "commonName": "氯化钙"
     },
     "MgSO4": {
       "formula": "MgSO₄",
-      "commonName": "Magnesiumsulfat"
+      "commonName": "硫酸镁"
     },
     "KNO3": {
       "formula": "KNO₃",
-      "commonName": "Kaliumnitrat"
+      "commonName": "硝酸钾"
     },
     "AgNO3": {
       "formula": "AgNO₃",
-      "commonName": "Silbernitrat"
+      "commonName": "硝酸银"
     },
     "BaCl2": {
       "formula": "BaCl₂",
-      "commonName": "Bariumchlorid"
+      "commonName": "氯化钡"
     },
     "CuSO4": {
       "formula": "CuSO₄",
-      "commonName": "Kupfersulfat"
+      "commonName": "硫酸铜"
     },
     "ZnO": {
       "formula": "ZnO",
-      "commonName": "Zinkoxid"
+      "commonName": "氧化锌"
     },
     "TiO2": {
       "formula": "TiO₂",
-      "commonName": "Titandioxid"
+      "commonName": "二氧化钛"
     },
     "H2O2": {
       "formula": "H₂O₂",
-      "commonName": "Wasserstoffperoxid"
+      "commonName": "过氧化氢"
     }
   }
 }
