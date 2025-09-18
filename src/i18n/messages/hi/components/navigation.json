@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "home": "होम",
+    "calculators": "कैलकुलेटर",
+    "periodicTable": "आवर्त सारणी",
+    "games": "गेम्स",
+    "visualization": "विज़ुअलाइज़ेशन",
+    "catalog": "कैटलॉग",
+    "settings": "सेटिंग्स",
+    "about": "परिचय",
+    "help": "सहायता",
+    "menu": "मेनू",
+    "close": "बंद करें",
+    "back": "वापस",
+    "next": "अगला",
+    "previous": "पिछला",
+    "search": "खोज",
+    "filter": "फ़िल्टर",
+    "sort": "सॉर्ट",
+    "view": "देखें",
+    "edit": "संपादित करें",
+    "delete": "हटाएँ",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "confirm": "पुष्टि करें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफलता",
+    "warning": "चेतावनी",
+    "info": "जानकारी",
+    "breadcrumb": {
+      "home": "होम",
+      "separator": ">"
+    },
+    "sidebar": {
+      "toggle": "साइडबार टॉगल करें",
+      "expand": "विस्तार करें",
+      "collapse": "संकुचित करें"
+    },
+    "footer": {
+      "copyright": "© 2024 Mol Class. सर्वाधिकार सुरक्षित।",
+      "privacy": "गोपनीयता नीति",
+      "terms": "उपयोग की शर्तें",
+      "contact": "संपर्क"
+    }
+  }
+}

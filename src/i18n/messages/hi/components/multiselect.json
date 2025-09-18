@@ -1,0 +1,34 @@
+{
+  "multiSelect": {
+    "placeholder": "विकल्प चुनें...",
+    "noOptions": "कोई विकल्प उपलब्ध नहीं",
+    "selectAll": "सभी चुनें",
+    "deselectAll": "सभी चयन हटाएँ",
+    "selected": "{count} चयनित",
+    "more": "+ {count} और",
+    "search": "विकल्प खोजें...",
+    "searchPlaceholder": "विकल्प खोजें...",
+    "noResults": "कोई परिणाम नहीं मिला",
+    "loading": "विकल्प लोड हो रहे हैं...",
+    "clear": "चयन साफ़ करें",
+    "close": "बंद करें",
+    "open": "विकल्प खोलें",
+    "remove": "हटाएँ",
+    "add": "जोड़ें",
+    "maxSelections": "अधिकतम {max} चयन की अनुमति है",
+    "minSelections": "कम से कम {min} चयन आवश्यक",
+    "validation": {
+      "required": "कम से कम एक विकल्प चुना जाना चाहिए",
+      "maxExceeded": "अधिकतम चयन की संख्या पार हो गई",
+      "minNotMet": "न्यूनतम चयन की संख्या पूरी नहीं हुई"
+    },
+    "accessibility": {
+      "listbox": "विकल्पों की सूची",
+      "option": "विकल्प {index} में से {total}",
+      "selected": "चयनित",
+      "notSelected": "चयनित नहीं",
+      "toggleSelection": "चयन टॉगल करें",
+      "expandCollapse": "सूची विस्तृत या संक्षिप्त करें"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "compoundTable": {
+    "loading": "Загрузка...",
+    "errorLoading": "Ошибка при загрузке данных.",
+    "search": "Поиск",
+    "searchPlaceholder": "Поиск соединений...",
+    "columns": "Столбцы",
+    "rowsPerPage": "Строк на страницу:",
+    "noResults": "Результатов не найдено.",
+    "previous": "Предыдущая",
+    "next": "Следующая",
+    "page": "Страница",
+    "pageOf": "Страница {current} из {total}"
+  }
+}

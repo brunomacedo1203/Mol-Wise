@@ -1,0 +1,15 @@
+{
+  "compoundTable": {
+    "loading": "Cargando...",
+    "errorLoading": "Error al cargar los datos.",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar compuestos...",
+    "columns": "Columnas",
+    "rowsPerPage": "Filas por página:",
+    "noResults": "No se encontraron resultados.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página",
+    "pageOf": "Página {current} de {total}"
+  }
+}

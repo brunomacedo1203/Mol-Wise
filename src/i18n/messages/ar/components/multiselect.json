@@ -1,0 +1,34 @@
+{
+  "multiSelect": {
+    "placeholder": "اختر الخيارات...",
+    "noOptions": "لا توجد خيارات متاحة",
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل",
+    "selected": "{count} محددة",
+    "more": "+ {count} أخرى",
+    "search": "ابحث عن خيارات...",
+    "searchPlaceholder": "ابحث عن خيارات...",
+    "noResults": "لم يتم العثور على نتائج",
+    "loading": "جارٍ تحميل الخيارات...",
+    "clear": "مسح التحديد",
+    "close": "إغلاق",
+    "open": "فتح الخيارات",
+    "remove": "إزالة",
+    "add": "إضافة",
+    "maxSelections": "الحد الأقصى المسموح به هو {max} تحديدات",
+    "minSelections": "الحد الأدنى المطلوب هو {min} تحديدات",
+    "validation": {
+      "required": "يجب تحديد خيار واحد على الأقل",
+      "maxExceeded": "تم تجاوز الحد الأقصى لعدد التحديدات",
+      "minNotMet": "لم يتم استيفاء الحد الأدنى لعدد التحديدات"
+    },
+    "accessibility": {
+      "listbox": "قائمة الخيارات",
+      "option": "الخيار {index} من {total}",
+      "selected": "محدد",
+      "notSelected": "غير محدد",
+      "toggleSelection": "تبديل التحديد",
+      "expandCollapse": "توسيع أو طي القائمة"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "compoundTable": {
+    "loading": "লোড হচ্ছে...",
+    "errorLoading": "ডেটা লোড করতে ত্রুটি।",
+    "search": "অনুসন্ধান",
+    "searchPlaceholder": "যৌগ অনুসন্ধান করুন...",
+    "columns": "কলাম",
+    "rowsPerPage": "প্রতি পৃষ্ঠায় সারি:",
+    "noResults": "কোন ফলাফল পাওয়া যায়নি।",
+    "previous": "পূর্ববর্তী",
+    "next": "পরবর্তী",
+    "page": "পৃষ্ঠা",
+    "pageOf": "পৃষ্ঠা {current} এর মধ্যে {total}"
+  }
+}

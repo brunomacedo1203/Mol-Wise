@@ -14,15 +14,15 @@ import { cn } from "@/lib/utils";
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
   { code: "en", flag: "/flags/us.png" },
-  // { code: "fr", flag: "/flags/fr.png" },
-  // { code: "de", flag: "/flags/de.png" },
-  // { code: "es", flag: "/flags/es.png" },
-  // { code: "ar", flag: "/flags/sa.png" },
-  // { code: "hi", flag: "/flags/in.png" },
-  // { code: "ru", flag: "/flags/ru.png" },
-  // { code: "zh", flag: "/flags/cn.png" },
-  // { code: "id", flag: "/flags/id.png" },
-  // { code: "bn", flag: "/flags/id.png" },
+  { code: "fr", flag: "/flags/fr.png" },
+  { code: "de", flag: "/flags/de.png" },
+  { code: "es", flag: "/flags/es.png" },
+  { code: "ar", flag: "/flags/sa.png" },
+  { code: "hi", flag: "/flags/in.png" },
+  { code: "ru", flag: "/flags/ru.png" },
+  { code: "zh", flag: "/flags/cn.png" },
+  { code: "id", flag: "/flags/id.png" },
+  { code: "bn", flag: "/flags/id.png" },
 ] as const;
 
 interface LanguageSwitcherProps {
