@@ -1,0 +1,34 @@
+{
+  "multiSelect": {
+    "placeholder": "অপশন নির্বাচন করুন...",
+    "noOptions": "কোনও অপশন উপলব্ধ নেই",
+    "selectAll": "সব নির্বাচন করুন",
+    "deselectAll": "সব নির্বাচন বাতিল",
+    "selected": "{count} নির্বাচিত",
+    "more": "+ {count} আরও",
+    "search": "অপশন অনুসন্ধান করুন...",
+    "searchPlaceholder": "অপশন অনুসন্ধান করুন...",
+    "noResults": "কোনও ফলাফল পাওয়া যায়নি",
+    "loading": "অপশন লোড হচ্ছে...",
+    "clear": "নির্বাচন মুছুন",
+    "close": "বন্ধ করুন",
+    "open": "অপশন খুলুন",
+    "remove": "অপসারণ করুন",
+    "add": "যোগ করুন",
+    "maxSelections": "সর্বাধিক {max}টি নির্বাচন অনুমোদিত",
+    "minSelections": "কমপক্ষে {min}টি নির্বাচন প্রয়োজন",
+    "validation": {
+      "required": "অন্তত একটি অপশন নির্বাচন করতে হবে",
+      "maxExceeded": "সর্বাধিক নির্বাচনের সংখ্যা অতিক্রম করা হয়েছে",
+      "minNotMet": "ন্যূনতম নির্বাচনের সংখ্যা পূরণ হয়নি"
+    },
+    "accessibility": {
+      "listbox": "অপশনের তালিকা",
+      "option": "অপশন {index} এর মধ্যে {total}",
+      "selected": "নির্বাচিত",
+      "notSelected": "নির্বাচিত নয়",
+      "toggleSelection": "নির্বাচন টগল করুন",
+      "expandCollapse": "তালিকা প্রসারিত বা সংকুচিত করুন"
+    }
+  }
+}

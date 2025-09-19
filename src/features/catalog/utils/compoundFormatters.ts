@@ -13,11 +13,11 @@ export function getCompoundName(
 
 export function getCompoundSynonym(
   t: (key: string) => string,
-  formula: string,
+  commonName: string,
   fallback: string
 ): string {
   try {
-    const translated = t(`catalog.compoundSynonyms.${formula}`);
+    const translated = t(`catalog.CommonName.${commonName}`);
     return translated || fallback;
   } catch {
     return fallback;
@@ -52,4 +52,4 @@ export function getPhysicalFormTranslation(
   } catch {
     return physicalForm;
   }
-} 
+}

@@ -1,0 +1,16 @@
+{
+  "compoundTable": {
+    "loading": "加载中...",
+    "errorLoading": "加载数据时出错。",
+    "search": "搜索",
+    "searchPlaceholder": "搜索化合物...",
+    "columns": "列",
+    "columnsButton": "选择要显示的列",
+    "rowsPerPage": "每页行数：",
+    "noResults": "未找到结果。",
+    "previous": "上一页",
+    "next": "下一页",
+    "page": "页",
+    "pageOf": "第 {current} 页，共 {total} 页"
+  }
+}

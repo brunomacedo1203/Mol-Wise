@@ -85,7 +85,6 @@ export function CompoundTable({ data: _data }: CompoundTableProps) {
           allColumns={allColumns}
           visibleColumns={visibleColumns}
           toggleColumn={toggleColumn}
-          t={t}
         />
 
         {/* Painel de Filtros Avançados */}

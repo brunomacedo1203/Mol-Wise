@@ -1,0 +1,94 @@
+{
+  "calculators": {
+    "title": "Kalkulator",
+    "subtitle": "Buka satu atau lebih kalkulator dari menu.",
+    "closeAll": "Tutup Semua",
+    "description": "Akses kalkulator kimia untuk massa molar, perhitungan ilmiah, dan lainnya.",
+    "errors": {
+      "generic": "Terjadi kesalahan selama perhitungan",
+      "unsupportedType": "Jenis kalkulator tidak didukung: {type}"
+    },
+    "molarMass": {
+      "title": "Massa molar",
+      "subtitle": "Masukkan rumus kimia atau simbol unsur",
+      "description": "Hitung massa molar senyawa kimia dengan cepat.",
+      "input": {
+        "placeholder": "Masukkan rumus (mis. H2O)",
+        "label": "Rumus kimia"
+      },
+      "keyboard": {
+        "calculate": "Hitung",
+        "reset": "Atur Ulang",
+        "backspace": "Hapus",
+        "parentheses": "Tambahkan Tanda Kurung",
+        "showKeyboard": "Tampilkan Keyboard",
+        "hideKeyboard": "Sembunyikan Keyboard"
+      },
+      "result": {
+        "prefix": "Massa molar dari",
+        "suffix": "adalah",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "Rumus tidak boleh kosong",
+        "invalidElement": "Simbol \"{symbol}\" tidak ditemukan",
+        "invalidFormula": "Rumus kimia tidak valid",
+        "mismatchedParentheses": "Tanda kurung tidak seimbang dalam rumus",
+        "calculationFailed": "Gagal menghitung massa molar",
+        "generic": "Terjadi kesalahan saat menghitung massa molar"
+      },
+      "history": {
+        "title": "Riwayat Perhitungan",
+        "show": "Tampilkan Riwayat",
+        "hide": "Sembunyikan Riwayat",
+        "clear": "Hapus Riwayat",
+        "empty": "Belum ada perhitungan yang dilakukan",
+        "clickToUse": "Klik untuk menggunakan rumus ini"
+      }
+    },
+    "scientific": {
+      "title": "Kalkulator Ilmiah",
+      "subtitle": "Lakukan perhitungan matematika lanjutan",
+      "input": {
+        "placeholder": "Masukkan ekspresi matematika",
+        "label": "Ekspresi"
+      },
+      "keyboard": {
+        "calculate": "Hitung",
+        "reset": "Atur Ulang",
+        "backspace": "Hapus",
+        "showKeyboard": "Tampilkan Keyboard",
+        "hideKeyboard": "Sembunyikan Keyboard",
+        "functions": {
+          "sin": "Sinus",
+          "cos": "Cosinus",
+          "tan": "Tangen",
+          "log": "Logaritma",
+          "ln": "Logaritma Natural",
+          "sqrt": "Akar Kuadrat",
+          "pi": "Pi",
+          "e": "Bilangan Euler"
+        },
+        "memory": {
+          "store": "Simpan di Memori",
+          "recall": "Panggil dari Memori",
+          "clear": "Hapus Memori"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Ekspresi tidak valid",
+        "empty": "Ekspresi tidak boleh kosong",
+        "divisionByZero": "Pembagian dengan nol tidak diperbolehkan",
+        "generic": "Terjadi kesalahan selama perhitungan"
+      },
+      "history": {
+        "title": "Riwayat Perhitungan",
+        "show": "Tampilkan Riwayat",
+        "hide": "Sembunyikan Riwayat",
+        "clear": "Hapus Riwayat",
+        "empty": "Belum ada perhitungan yang dilakukan",
+        "clickToUse": "Klik untuk menggunakan hasil ini"
+      }
+    }
+  }
+}

@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { ChemicalCompound, CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
-import rawExtendedMetadata from "../../../../../public/data/inorganicCompoundExtended.json";
+import rawExtendedMetadata from "../../../../../public/data/inorganic-compounds.json";
 
-const extendedMetadata: Record<string, { commonName: string; category: string }> = rawExtendedMetadata;
+// Transform the array into a Record indexed by formula
+const extendedMetadata: Record<string, { commonName: string; category: string }> = 
+  rawExtendedMetadata.reduce((acc, compound) => {
+    acc[compound.Formula] = {
+      commonName: compound.commonName || "—",
+      category: compound.category || "desconhecida"
+    };
+    return acc;
+  }, {} as Record<string, { commonName: string; category: string }>);
 
 // Tipo para os dados brutos do JSON
 export type RawCompound = {

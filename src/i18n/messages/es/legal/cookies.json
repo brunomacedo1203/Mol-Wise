@@ -1,0 +1,56 @@
+{
+  "cookies": {
+    "banner": {
+      "title": "Uso de Cookies",
+      "message": "Utilizamos cookies para mejorar su experiencia. Al continuar navegando, usted acepta nuestra política de cookies.",
+      "accept": "Aceptar todo",
+      "decline": "Rechazar todo",
+      "acceptAll": "Aceptar todo",
+      "rejectAll": "Rechazar todo",
+      "customize": "Personalizar",
+      "learnMore": "Saber más"
+    },
+    "preferences": {
+      "title": "Preferencias de Cookies",
+      "description": "Administre sus preferencias de cookies. Puede habilitar o deshabilitar diferentes tipos de cookies a continuación.",
+      "essential": "Cookies esenciales",
+      "essentialDescription": "Estas cookies son necesarias para el funcionamiento básico del sitio y no se pueden desactivar.",
+      "analytics": "Cookies de análisis",
+      "analyticsDescription": "Estas cookies nos ayudan a comprender cómo los visitantes interactúan con el sitio recopilando y reportando información de forma anónima.",
+      "legalLinks": "Para más información, consulte:",
+      "privacyPolicy": "Política de Privacidad",
+      "termsOfUse": "Términos de Uso",
+      "save": "Guardar preferencias",
+      "cancel": "Cancelar",
+      "acceptAll": "Aceptar todo",
+      "rejectAll": "Rechazar todo"
+    },
+    "policy": {
+      "title": "Política de Cookies",
+      "lastUpdated": "Última actualización: 15 de enero de 2024",
+      "whatAreCookies": {
+        "title": "¿Qué son las Cookies?",
+        "content": "Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita un sitio web. Se utilizan ampliamente para que los sitios web funcionen de manera más eficiente."
+      },
+      "howWeUseCookies": {
+        "title": "Cómo usamos las Cookies",
+        "content": "Utilizamos cookies para diversos fines, incluido mejorar la funcionalidad del sitio, analizar el tráfico y personalizar el contenido."
+      },
+      "typesOfCookies": {
+        "title": "Tipos de Cookies que usamos",
+        "essential": "Cookies esenciales: necesarias para el funcionamiento básico",
+        "analytics": "Cookies de análisis: para comprender cómo utiliza el sitio",
+        "preferences": "Cookies de preferencia: para recordar su configuración",
+        "marketing": "Cookies de marketing: para publicidad relevante"
+      },
+      "manageCookies": {
+        "title": "Administrar Cookies",
+        "content": "Puede controlar y/o eliminar las cookies como desee. Puede eliminar todas las cookies que ya están en su computadora y configurar la mayoría de los navegadores para evitar que se coloquen."
+      },
+      "contact": {
+        "title": "Contacto",
+        "content": "Si tiene alguna pregunta sobre nuestra política de cookies, por favor contáctenos."
+      }
+    }
+  }
+}

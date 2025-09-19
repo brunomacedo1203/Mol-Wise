@@ -1,0 +1,167 @@
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: January 15, 2024",
+    "sections": {
+      "introduction": "Introduction",
+      "definitions": "Definitions",
+      "dataCollection": "Data Collection",
+      "dataUsage": "Data Usage",
+      "cookies": "Cookies",
+      "thirdParty": "Third-Party Services",
+      "rights": "Your Rights",
+      "retention": "Data Retention",
+      "contact": "Contact",
+      "changes": "Changes"
+    },
+    "metadata": {
+      "description": "Complete information on data collection, usage, and protection, cookies, and third-party services in compliance with privacy regulations."
+    },
+    "content": {
+      "introduction": {
+        "paragraph1": "Mol Class is committed to protecting your privacy and personal data. This Policy explains how we collect, use, and protect your information when using our website and educational chemistry services.",
+        "paragraph2": "This policy complies with LGPD, GDPR, CCPA, and other applicable regulations, with transparency and respect for your rights."
+      },
+      "definitions": {
+        "controller": "Data Controller: Mol Class",
+        "contact": "Controller Contact: molclassapp@gmail.com"
+      },
+      "dataCollection": {
+        "technicalData": {
+          "title": "Technical Data",
+          "types": "Types of technical data collected:",
+          "typesList": [
+            "IP address and device information",
+            "Browser type and operating system",
+            "Pages visited and time spent",
+            "Referral source from external sites",
+            "Device identifiers and session information"
+          ],
+          "legalBasis": "Legal basis: Legitimate interest for service operation and security",
+          "purpose": "Purpose: Ensure proper operation and security of our educational platform"
+        },
+        "educationalData": {
+          "title": "Educational Data",
+          "types": "Types of educational data collected:",
+          "typesList": [
+            "Interactions with chemistry calculators and tools",
+            "Language and theme preferences",
+            "Calculation history (stored locally in the browser)",
+            "Usage patterns of features and performance metrics"
+          ],
+          "legalBasis": "Legal basis: Consent and legitimate interest for service improvement",
+          "purpose": "Purpose: Personalize the learning experience and enhance educational tools"
+        },
+        "cookies": {
+          "title": "Cookies and Similar Technologies",
+          "essential": "Essential Cookies:",
+          "essentialList": [
+            "Language and theme preferences",
+            "Cookie consent preferences",
+            "Session management and security",
+            "Basic site functionality and navigation"
+          ],
+          "essentialBasis": "Legal basis: Necessary for service operation (no consent required)",
+          "analytics": "Analytics Cookies (Optional):",
+          "analyticsList": [
+            "Google Analytics: traffic and behavior analysis",
+            "Microsoft Clarity: experience analysis and session recordings",
+            "Performance and error monitoring"
+          ],
+          "analyticsBasis": "Legal basis: Consent (may be revoked at any time)",
+          "purpose": "Purpose: Improve user experience and platform performance",
+          "consent": "Consent: You can manage cookie preferences in our consent banner",
+          "disclaimer": "Analytics cookies are optional and do not affect the core functionality of educational tools.",
+          "management": "You can manage your cookie preferences through our banner or browser settings. Disabling analytics cookies does not affect the main functionality of educational tools."
+        },
+        "registrationData": {
+          "title": "Registration Data",
+          "types": "Types of registration data collected:",
+          "typesList": [
+            "Email address (when provided)",
+            "Username (if created)",
+            "Account preferences and settings",
+            "Communication preferences"
+          ],
+          "legalBasis": "Legal basis: Consent and contract execution",
+          "purpose": "Purpose: Provide personalized services and account management"
+        },
+        "minorsData": {
+          "title": "Minors' Data",
+          "generalPolicy": {
+            "title": "General Policy",
+            "items": [
+              "We do not intentionally collect data from children under 13 years old",
+              "If identified, such data will be promptly deleted",
+              "Parents/guardians should supervise minors' online activities"
+            ]
+          }
+        }
+      },
+      "retention": {
+        "intro": "We retain your personal data only as long as necessary to fulfill the purposes outlined in this policy:",
+        "items": [
+          "Technical data: up to 2 years for security and analytics",
+          "Educational data: until account deletion or request",
+          "Cookie data: according to our cookie policy (up to 26 months for analytics)",
+          "Communication data: up to 3 years for user support"
+        ],
+        "note": "Note: Some data may be retained longer if required by law or for legitimate purposes, such as security incident investigations."
+      },
+      "rights": {
+        "lgpdGdpr": "Under applicable privacy laws (LGPD, GDPR, CCPA, etc.), you have the following rights:",
+        "howToExercise": "How to exercise your rights:",
+        "contact": "Contact us at molclassapp@gmail.com with your request",
+        "response": "We will respond within the timeframe required by applicable law (generally 30 days for GDPR, 45 days for CCPA).",
+        "list": [
+          "Access: Know which personal data we maintain about you",
+          "Rectification: Correct inaccurate data",
+          "Deletion: Request deletion of your personal data",
+          "Portability: Receive your data in a structured format",
+          "Objection: Object to certain types of processing",
+          "Restriction: Limit how we process your data",
+          "Withdrawal of Consent: Withdraw consent at any time",
+          "Non-Discrimination: Not be discriminated against for exercising privacy rights"
+        ]
+      },
+      "thirdParty": {
+        "intro": "We use the following trusted third-party services:",
+        "services": [],
+        "legalBasis": "Legal basis: Legitimate interest for service improvement and consent for analytics",
+        "control": "You can control data sharing with third parties through our cookie consent banner",
+        "disclaimer": "Each third-party service has its own privacy policy governing its data processing practices",
+        "userAction": "To manage third-party preferences, use the cookie banner"
+      },
+      "cookieManagement": {
+        "banner": {
+          "title": "Cookie Management",
+          "intro": "Our consent banner allows you to:",
+          "list": [
+            "Accept or refuse cookies",
+            "Access details of the privacy policy and terms of use"
+          ]
+        }
+      },
+      "changes": {
+        "intro": "We may update this Policy to reflect legal, technological, or service changes.",
+        "items": [
+          "The date of the last update will always be indicated at the top",
+          "Important changes will be communicated on the site or by email (when applicable)",
+          "Continued use after changes implies acceptance of the updates",
+          "We recommend reviewing this policy periodically"
+        ]
+      },
+      "contact": {
+        "intro": "To exercise your rights, ask questions, or report concerns, contact us:",
+        "email": "molclassapp@gmail.com",
+        "subject": "Privacy and Data Protection"
+      }
+    },
+    "contactSection": {
+      "email": "molclassapp@gmail.com",
+      "emailLabel": "Email:",
+      "subjectLabel": "Subject:",
+      "subjectText": "Privacy and Data Protection"
+    }
+  }
+}

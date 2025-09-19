@@ -1,0 +1,94 @@
+{
+  "calculators": {
+    "title": "Calculators",
+    "subtitle": "Open one or more calculators from the menu.",
+    "closeAll": "Close All",
+    "description": "Access chemistry calculators for molar mass, scientific calculations, and more.",
+    "errors": {
+      "generic": "An error occurred during the calculation",
+      "unsupportedType": "Unsupported calculator type: {type}"
+    },
+    "molarMass": {
+      "title": "Molar Mass",
+      "subtitle": "Enter a chemical formula or element symbol",
+      "description": "Quickly calculate the molar mass of chemical compounds.",
+      "input": {
+        "placeholder": "Enter formula (e.g., H2O)",
+        "label": "Chemical Formula"
+      },
+      "keyboard": {
+        "calculate": "Calculate",
+        "reset": "Reset",
+        "backspace": "Backspace",
+        "parentheses": "Add Parentheses",
+        "showKeyboard": "Show Keyboard",
+        "hideKeyboard": "Hide Keyboard"
+      },
+      "result": {
+        "prefix": "The molar mass of",
+        "suffix": "is",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "The formula cannot be empty",
+        "invalidElement": "The symbol \"{symbol}\" was not found",
+        "invalidFormula": "Invalid chemical formula",
+        "mismatchedParentheses": "Unbalanced parentheses in the formula",
+        "calculationFailed": "Failed to calculate molar mass",
+        "generic": "An error occurred while calculating molar mass"
+      },
+      "history": {
+        "title": "Calculation History",
+        "show": "Show History",
+        "hide": "Hide History",
+        "clear": "Clear History",
+        "empty": "No calculations performed yet",
+        "clickToUse": "Click to use this formula"
+      }
+    },
+    "scientific": {
+      "title": "Scientific Calculator",
+      "subtitle": "Perform advanced mathematical calculations",
+      "input": {
+        "placeholder": "Enter a mathematical expression",
+        "label": "Expression"
+      },
+      "keyboard": {
+        "calculate": "Calculate",
+        "reset": "Reset",
+        "backspace": "Backspace",
+        "showKeyboard": "Show Keyboard",
+        "hideKeyboard": "Hide Keyboard",
+        "functions": {
+          "sin": "Sine",
+          "cos": "Cosine",
+          "tan": "Tangent",
+          "log": "Logarithm",
+          "ln": "Natural Logarithm",
+          "sqrt": "Square Root",
+          "pi": "Pi",
+          "e": "Euler's Number"
+        },
+        "memory": {
+          "store": "Store in Memory",
+          "recall": "Recall from Memory",
+          "clear": "Clear Memory"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Invalid expression",
+        "empty": "The expression cannot be empty",
+        "divisionByZero": "Division by zero is not allowed",
+        "generic": "An error occurred during the calculation"
+      },
+      "history": {
+        "title": "Calculation History",
+        "show": "Show History",
+        "hide": "Hide History",
+        "clear": "Clear History",
+        "empty": "No calculations performed yet",
+        "clickToUse": "Click to use this result"
+      }
+    }
+  }
+}

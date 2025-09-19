@@ -44,7 +44,7 @@ export function getCellValue(
     case "synonym":
       return getCompoundSynonym(
         t,
-        compound.formula,
+        compound.commonName ?? "",
         compound.synonym ?? ""
       );
     case "formula":
@@ -70,8 +70,15 @@ export function getCellValue(
     case "solubility":
       return getSolubilityTranslation(t, compound.solubility);
     case "commonName":
-      return compound.commonName || "";
+      try {
+        const translated = compound.commonName
+          ? t(`catalog.CommonName.${compound.commonName}`)
+          : '';
+        return translated || compound.commonName || '';
+      } catch {
+        return compound.commonName || '';
+      }
     default:
       return "";
   }
-} 
+}

@@ -1,8 +1,8 @@
 import { CompoundCategory } from "./types/ChemicalCompound";
 
 export const CATEGORY_TAGS: { id: CompoundCategory; label: string }[] = [
-  { id: "ácido", label: "Ácido" },
+  { id: "acid", label: "Ácido" },
   { id: "base", label: "Base" },
-  { id: "sal", label: "Sal" },
-  { id: "óxido", label: "Óxido" },
-]; 
+  { id: "salt", label: "Sal" },
+  { id: "oxide", label: "Óxido" },
+];

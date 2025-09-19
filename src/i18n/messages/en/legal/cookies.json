@@ -1,0 +1,56 @@
+{
+  "cookies": {
+    "banner": {
+      "title": "Use of Cookies",
+      "message": "We use cookies to enhance your experience. By continuing to browse, you agree to our cookie policy.",
+      "accept": "Accept All",
+      "decline": "Reject All",
+      "acceptAll": "Accept All",
+      "rejectAll": "Reject All",
+      "customize": "Customize",
+      "learnMore": "Learn More"
+    },
+    "preferences": {
+      "title": "Cookie Preferences",
+      "description": "Manage your cookie preferences. You can enable or disable different types of cookies below.",
+      "essential": "Essential Cookies",
+      "essentialDescription": "These cookies are necessary for the basic functioning of the site and cannot be disabled.",
+      "analytics": "Analytics Cookies",
+      "analyticsDescription": "These cookies help us understand how visitors interact with the site by collecting and reporting information anonymously.",
+      "legalLinks": "For more information, see:",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfUse": "Terms of Use",
+      "save": "Save Preferences",
+      "cancel": "Cancel",
+      "acceptAll": "Accept All",
+      "rejectAll": "Reject All"
+    },
+    "policy": {
+      "title": "Cookie Policy",
+      "lastUpdated": "Last updated: January 15, 2024",
+      "whatAreCookies": {
+        "title": "What Are Cookies?",
+        "content": "Cookies are small text files that are stored on your device when you visit a website. They are widely used to make websites work more efficiently."
+      },
+      "howWeUseCookies": {
+        "title": "How We Use Cookies",
+        "content": "We use cookies for various purposes, including improving site functionality, analyzing traffic, and personalizing content."
+      },
+      "typesOfCookies": {
+        "title": "Types of Cookies We Use",
+        "essential": "Essential Cookies: Necessary for basic operation",
+        "analytics": "Analytics Cookies: To understand how you use the site",
+        "preferences": "Preference Cookies: To remember your settings",
+        "marketing": "Marketing Cookies: For relevant advertising"
+      },
+      "manageCookies": {
+        "title": "Manage Cookies",
+        "content": "You can control and/or delete cookies as you wish. You can delete all cookies already on your computer and configure most browsers to prevent them from being placed."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "If you have any questions about our cookie policy, please contact us."
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "compoundTable": {
+    "loading": "Chargement...",
+    "errorLoading": "Erreur lors du chargement des données.",
+    "search": "Rechercher",
+    "searchPlaceholder": "Rechercher des composés...",
+    "columns": "Colonnes",
+    "columnsButton": "Choisissez les colonnes à afficher",
+    "rowsPerPage": "Lignes par page :",
+    "noResults": "Aucun résultat trouvé.",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page",
+    "pageOf": "Page {current} sur {total}"
+  }
+}

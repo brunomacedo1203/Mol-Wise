@@ -1,0 +1,15 @@
+{
+  "compoundTable": {
+    "loading": "Memuat...",
+    "errorLoading": "Kesalahan memuat data.",
+    "search": "Cari",
+    "searchPlaceholder": "Cari senyawa...",
+    "columns": "Kolom",
+    "rowsPerPage": "Baris per halaman:",
+    "noResults": "Tidak ada hasil ditemukan.",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "page": "Halaman",
+    "pageOf": "Halaman {current} dari {total}"
+  }
+}

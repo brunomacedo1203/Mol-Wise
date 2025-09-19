@@ -1,0 +1,23 @@
+{
+  "visualization": {
+    "title": "分子查看器",
+    "subtitle": "交互式探索分子",
+    "description": "输入化学式，查看二维和三维结构，并探索不同的分子表示。",
+    "placeholder": "按名称、化学式、SMILES 或 CID 搜索...",
+    "search": "搜索",
+    "tip": "提示",
+    "example": "尝试搜索",
+    "notFound": "未找到分子",
+    "error": "搜索分子时出错",
+    "molecules2D3D": {
+      "title": "2D/3D 分子"
+    },
+    "controls": {
+      "dragToMove": "点击并拖动以移动",
+      "scrollToZoom": "滚动以缩放",
+      "shiftScrollToPan": "Shift + 滚动以平移",
+      "doubleClickToReset": "双击以重置",
+      "tooltip": "点击并拖动移动；滚动缩放；Shift + 滚动平移；双击重置"
+    }
+  }
+}

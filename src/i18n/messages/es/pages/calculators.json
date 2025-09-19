@@ -1,0 +1,94 @@
+{
+  "calculators": {
+    "title": "Calculadoras",
+    "subtitle": "Abra una o más calculadoras desde el menú.",
+    "closeAll": "Cerrar todo",
+    "description": "Accede a calculadoras de química para masa molar, cálculos científicos y más.",
+    "errors": {
+      "generic": "Ocurrió un error durante el cálculo",
+      "unsupportedType": "Tipo de calculadora no compatible: {type}"
+    },
+    "molarMass": {
+      "title": "Masa molar",
+      "subtitle": "Ingrese una fórmula química o símbolo de elemento",
+      "description": "Calcule rápidamente la masa molar de los compuestos químicos.",
+      "input": {
+        "placeholder": "Ingrese fórmula (p. ej., H2O)",
+        "label": "Fórmula química"
+      },
+      "keyboard": {
+        "calculate": "Calcular",
+        "reset": "Restablecer",
+        "backspace": "Retroceso",
+        "parentheses": "Agregar paréntesis",
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado"
+      },
+      "result": {
+        "prefix": "La masa molar de",
+        "suffix": "es",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "La fórmula no puede estar vacía",
+        "invalidElement": "El símbolo \"{symbol}\" no fue encontrado",
+        "invalidFormula": "Fórmula química inválida",
+        "mismatchedParentheses": "Paréntesis desequilibrados en la fórmula",
+        "calculationFailed": "No se pudo calcular la masa molar",
+        "generic": "Ocurrió un error al calcular la masa molar"
+      },
+      "history": {
+        "title": "Historial de cálculos",
+        "show": "Mostrar historial",
+        "hide": "Ocultar historial",
+        "clear": "Borrar historial",
+        "empty": "Aún no se han realizado cálculos",
+        "clickToUse": "Haga clic para usar esta fórmula"
+      }
+    },
+    "scientific": {
+      "title": "Calculadora científica",
+      "subtitle": "Realice cálculos matemáticos avanzados",
+      "input": {
+        "placeholder": "Ingrese una expresión matemática",
+        "label": "Expresión"
+      },
+      "keyboard": {
+        "calculate": "Calcular",
+        "reset": "Restablecer",
+        "backspace": "Retroceso",
+        "showKeyboard": "Mostrar teclado",
+        "hideKeyboard": "Ocultar teclado",
+        "functions": {
+          "sin": "Seno",
+          "cos": "Coseno",
+          "tan": "Tangente",
+          "log": "Logaritmo",
+          "ln": "Logaritmo natural",
+          "sqrt": "Raíz cuadrada",
+          "pi": "Pi",
+          "e": "Número de Euler"
+        },
+        "memory": {
+          "store": "Guardar en memoria",
+          "recall": "Recuperar de memoria",
+          "clear": "Borrar memoria"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Expresión inválida",
+        "empty": "La expresión no puede estar vacía",
+        "divisionByZero": "No se permite la división por cero",
+        "generic": "Ocurrió un error durante el cálculo"
+      },
+      "history": {
+        "title": "Historial de cálculos",
+        "show": "Mostrar historial",
+        "hide": "Ocultar historial",
+        "clear": "Borrar historial",
+        "empty": "Aún no se han realizado cálculos",
+        "clickToUse": "Haga clic para usar este resultado"
+      }
+    }
+  }
+}

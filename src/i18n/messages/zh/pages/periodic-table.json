@@ -1,0 +1,91 @@
+{
+  "periodicTable": {
+    "title": "元素周期表",
+    "subtitle": "输入名称或符号以查看详细信息",
+    "description": "探索所有化学元素，提供完整数据和交互式筛选。",
+    "filterPlaceholder": "选择分类",
+    "filterLabel": "分类",
+    "filterOptions": {
+      "TODOS": "全部",
+      "RARE_EARTHS": "稀土",
+      "Alkali metal": "碱金属",
+      "Alkaline earth metal": "碱土金属",
+      "Transition metal": "过渡金属",
+      "Post-transition metal": "后过渡金属",
+      "Metalloid": "类金属",
+      "Nonmetal": "非金属",
+      "Halogen": "卤素",
+      "Noble gas": "惰性气体",
+      "Lanthanide": "镧系元素",
+      "Actinide": "锕系元素",
+      "Boron Family": "硼族",
+      "Carbon Family": "碳族",
+      "Nitrogen Family": "氮族",
+      "Chalcogens Family": "氧族"
+    },
+    "ariaLabel": "元素 {name} ({symbol})，原子序数 {atomicNumber}",
+    "element": {
+      "atomicNumber": "原子序数",
+      "symbol": "符号",
+      "name": "名称",
+      "molarMass": "摩尔质量",
+      "category": "类别",
+      "electronConfiguration": "电子排布",
+      "electronegativity": "电负性",
+      "atomicRadius": "原子半径",
+      "ionizationEnergy": "电离能",
+      "electronAffinity": "电子亲和能",
+      "oxidationStates": "氧化态",
+      "standardState": "标准状态",
+      "meltingPoint": "熔点",
+      "boilingPoint": "沸点",
+      "density": "密度\ng/cm³",
+      "solubilityNumeric": "溶解度\ng/100g H₂O",
+      "solubilityQualitative": "溶解度\n定性",
+      "group": "族",
+      "period": "周期",
+      "categories": {
+        "alkaliMetal": "碱金属",
+        "alkalineEarthMetal": "碱土金属",
+        "transitionMetal": "过渡金属",
+        "postTransitionMetal": "后过渡金属",
+        "metalloid": "类金属",
+        "nonmetal": "非金属",
+        "halogen": "卤素",
+        "nobleGas": "惰性气体",
+        "lanthanide": "镧系元素",
+        "actinide": "锕系元素"
+      },
+      "standardStates": {
+        "solid": "固体",
+        "liquid": "液体",
+        "gas": "气体"
+      }
+    },
+    "discoveryYear": "发现年份",
+    "discoveredBy": "发现者",
+    "group": "族",
+    "period": "周期",
+    "categories": {
+      "alkaliMetal": "碱金属",
+      "alkalineEarthMetal": "碱土金属",
+      "transitionMetal": "过渡金属",
+      "postTransitionMetal": "后过渡金属",
+      "metalloid": "类金属",
+      "nonmetal": "非金属",
+      "halogen": "卤素",
+      "nobleGas": "惰性气体",
+      "lanthanide": "镧系元素",
+      "actinide": "锕系元素"
+    },
+    "standardStates": {
+      "solid": "固体",
+      "liquid": "液体",
+      "gas": "气体"
+    },
+    "groups": {
+      "lanthanide": "镧系元素",
+      "actinide": "锕系元素"
+    }
+  }
+}

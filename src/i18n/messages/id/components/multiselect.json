@@ -1,0 +1,34 @@
+{
+  "multiSelect": {
+    "placeholder": "Pilih opsi...",
+    "noOptions": "Tidak ada opsi tersedia",
+    "selectAll": "Pilih Semua",
+    "deselectAll": "Batalkan Semua",
+    "selected": "{count} dipilih",
+    "more": "+ {count} lainnya",
+    "search": "Cari opsi...",
+    "searchPlaceholder": "Cari opsi...",
+    "noResults": "Tidak ada hasil ditemukan",
+    "loading": "Memuat opsi...",
+    "clear": "Hapus pilihan",
+    "close": "Tutup",
+    "open": "Buka opsi",
+    "remove": "Hapus",
+    "add": "Tambah",
+    "maxSelections": "Maksimum {max} pilihan diizinkan",
+    "minSelections": "Minimal {min} pilihan diperlukan",
+    "validation": {
+      "required": "Setidaknya satu opsi harus dipilih",
+      "maxExceeded": "Jumlah pilihan maksimum terlampaui",
+      "minNotMet": "Jumlah pilihan minimum belum terpenuhi"
+    },
+    "accessibility": {
+      "listbox": "Daftar opsi",
+      "option": "Opsi {index} dari {total}",
+      "selected": "Dipilih",
+      "notSelected": "Tidak dipilih",
+      "toggleSelection": "Alihkan pilihan",
+      "expandCollapse": "Perluas atau ciutkan daftar"
+    }
+  }
+}

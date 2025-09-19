@@ -1,0 +1,94 @@
+{
+  "calculators": {
+    "title": "Rechner",
+    "subtitle": "Öffnen Sie einen oder mehrere Rechner über das Menü.",
+    "closeAll": "Alle schließen",
+    "description": "Greifen Sie auf Chemie-Rechner für Molmasse, wissenschaftliche Berechnungen und mehr zu.",
+    "errors": {
+      "generic": "Während der Berechnung ist ein Fehler aufgetreten",
+      "unsupportedType": "Nicht unterstützter Rechnertyp: {type}"
+    },
+    "molarMass": {
+      "title": "Molmasse",
+      "subtitle": "Geben Sie eine chemische Formel oder ein Elementsymbol ein",
+      "description": "Berechnen Sie schnell die Molmasse chemischer Verbindungen.",
+      "input": {
+        "placeholder": "Formel eingeben (z. B. H2O)",
+        "label": "Chemische Formel"
+      },
+      "keyboard": {
+        "calculate": "Berechnen",
+        "reset": "Zurücksetzen",
+        "backspace": "Rücktaste",
+        "parentheses": "Klammern hinzufügen",
+        "showKeyboard": "Tastatur anzeigen",
+        "hideKeyboard": "Tastatur ausblenden"
+      },
+      "result": {
+        "prefix": "Die Molmasse von",
+        "suffix": "beträgt",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "Die Formel darf nicht leer sein",
+        "invalidElement": "Das Symbol \"{symbol}\" wurde nicht gefunden",
+        "invalidFormula": "Ungültige chemische Formel",
+        "mismatchedParentheses": "Unausgeglichene Klammern in der Formel",
+        "calculationFailed": "Molmasse konnte nicht berechnet werden",
+        "generic": "Fehler beim Berechnen der Molmasse"
+      },
+      "history": {
+        "title": "Berechnungsverlauf",
+        "show": "Verlauf anzeigen",
+        "hide": "Verlauf ausblenden",
+        "clear": "Verlauf löschen",
+        "empty": "Bisher keine Berechnungen durchgeführt",
+        "clickToUse": "Klicken, um diese Formel zu verwenden"
+      }
+    },
+    "scientific": {
+      "title": "Wissenschaftlicher Rechner",
+      "subtitle": "Führen Sie erweiterte mathematische Berechnungen durch",
+      "input": {
+        "placeholder": "Mathematischen Ausdruck eingeben",
+        "label": "Ausdruck"
+      },
+      "keyboard": {
+        "calculate": "Berechnen",
+        "reset": "Zurücksetzen",
+        "backspace": "Rücktaste",
+        "showKeyboard": "Tastatur anzeigen",
+        "hideKeyboard": "Tastatur ausblenden",
+        "functions": {
+          "sin": "Sinus",
+          "cos": "Kosinus",
+          "tan": "Tangens",
+          "log": "Logarithmus",
+          "ln": "Natürlicher Logarithmus",
+          "sqrt": "Quadratwurzel",
+          "pi": "Pi",
+          "e": "Eulersche Zahl"
+        },
+        "memory": {
+          "store": "Im Speicher speichern",
+          "recall": "Aus Speicher abrufen",
+          "clear": "Speicher löschen"
+        }
+      },
+      "errors": {
+        "invalidExpression": "Ungültiger Ausdruck",
+        "empty": "Der Ausdruck darf nicht leer sein",
+        "divisionByZero": "Division durch Null ist nicht erlaubt",
+        "generic": "Während der Berechnung ist ein Fehler aufgetreten"
+      },
+      "history": {
+        "title": "Berechnungsverlauf",
+        "show": "Verlauf anzeigen",
+        "hide": "Verlauf ausblenden",
+        "clear": "Verlauf löschen",
+        "empty": "Bisher keine Berechnungen durchgeführt",
+        "clickToUse": "Klicken, um dieses Ergebnis zu verwenden"
+      }
+    }
+  }
+}

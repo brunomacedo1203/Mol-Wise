@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function CategoryTagsSelector({ tags, selected, onChange }: Props) {
-  const t = useTranslations();
+  const t = useTranslations('catalog.categoryTags');
 
   const add = (tag: Tag) => onChange([...selected, tag.id]);
   const remove = (id: CompoundCategory) =>
@@ -36,7 +36,7 @@ export function CategoryTagsSelector({ tags, selected, onChange }: Props) {
         >
           {selected.length === 0 ? (
             <span className="text-sm text-gray-400 select-none whitespace-nowrap">
-              {t("catalog.categoryTags.placeholder")}
+              {t("placeholder")}
             </span>
           ) : (
             <div className="flex items-center gap-2 w-full">
@@ -54,7 +54,7 @@ export function CategoryTagsSelector({ tags, selected, onChange }: Props) {
                   `}
                   >
                     <span className="mr-2 text-sm text-gray-700 dark:text-zinc-200">
-                      {t(`catalog.categoryTags.${tag.id}`)}
+                      {t(tag.id)}
                     </span>
                     <button
                       onClick={() => remove(id)}
@@ -62,7 +62,7 @@ export function CategoryTagsSelector({ tags, selected, onChange }: Props) {
                       text-gray-500 hover:text-red-500
                       focus:outline-none ml-1
                     `}
-                      aria-label={t("catalog.categoryTags.remove")}
+                      aria-label={t("remove")}
                     >
                       <X size={14} />
                     </button>
@@ -91,9 +91,9 @@ export function CategoryTagsSelector({ tags, selected, onChange }: Props) {
                 transition
               `}
               tabIndex={0}
-              aria-label={t(`catalog.categoryTags.add`)}
+              aria-label={t("add")}
             >
-              {t(`catalog.categoryTags.${tag.id}`)}
+              {t(tag.id)}
             </button>
           ))}
       </div>

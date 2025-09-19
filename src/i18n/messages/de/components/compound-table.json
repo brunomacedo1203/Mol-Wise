@@ -1,0 +1,16 @@
+{
+  "compoundTable": {
+    "loading": "Wird geladen...",
+    "errorLoading": "Fehler beim Laden der Daten.",
+    "search": "Suchen",
+    "searchPlaceholder": "Verbindungen suchen...",
+    "columns": "Spalten",
+    "columnsButton": "Wählen Sie die anzuzeigenden Spalten",
+    "rowsPerPage": "Zeilen pro Seite:",
+    "noResults": "Keine Ergebnisse gefunden.",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page": "Seite",
+    "pageOf": "Seite {current} von {total}"
+  }
+}

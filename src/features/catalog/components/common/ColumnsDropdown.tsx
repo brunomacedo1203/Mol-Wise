@@ -43,16 +43,16 @@ export function ColumnsDropdown({
             className={`
               w-full justify-between
               bg-white dark:bg-zinc-900
-              border-2 border-border dark:border-zinc-400
+              border-2 border-zinc-400 dark:border-zinc-400
               text-gray-700 dark:text-zinc-200
               hover:bg-gray-50 dark:hover:bg-zinc-800
               transition rounded-lg
             `}
           >
-            <span className="text-sm">
+            <span className="text-sm text-gray-500 dark:text-zinc-400">
               {visibleCount === totalCount
-                ? t("compoundTable.columns")
-                : `${visibleCount}/${totalCount} ${t("compoundTable.columns")}`}
+                ? t("compoundTable.columnsButton")
+                : `${visibleCount}/${totalCount} ${t("compoundTable.columnsButton")}`}
             </span>
             <ChevronDown className="h-4 w-4 flex-shrink-0" />
           </Button>

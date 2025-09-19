@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "home": "الصفحة الرئيسية",
+    "calculators": "الحاسبات",
+    "periodicTable": "الجدول الدوري",
+    "games": "ألعاب",
+    "visualization": "التصور",
+    "catalog": "الفهرس",
+    "settings": "الإعدادات",
+    "about": "حول",
+    "help": "مساعدة",
+    "menu": "القائمة",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "فرز",
+    "view": "عرض",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "loading": "جارٍ التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "warning": "تحذير",
+    "info": "معلومة",
+    "breadcrumb": {
+      "home": "الصفحة الرئيسية",
+      "separator": ">"
+    },
+    "sidebar": {
+      "toggle": "تبديل الشريط الجانبي",
+      "expand": "توسيع",
+      "collapse": "طي"
+    },
+    "footer": {
+      "copyright": "© 2024 Mol Class. جميع الحقوق محفوظة.",
+      "privacy": "سياسة الخصوصية",
+      "terms": "شروط الاستخدام",
+      "contact": "اتصل"
+    }
+  }
+}

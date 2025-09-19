@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "home": "Beranda",
+    "calculators": "Kalkulator",
+    "periodicTable": "Tabel Periodik",
+    "games": "Permainan",
+    "visualization": "Visualisasi",
+    "catalog": "Katalog",
+    "settings": "Pengaturan",
+    "about": "Tentang",
+    "help": "Bantuan",
+    "menu": "Menu",
+    "close": "Tutup",
+    "back": "Kembali",
+    "next": "Berikutnya",
+    "previous": "Sebelumnya",
+    "search": "Cari",
+    "filter": "Filter",
+    "sort": "Urutkan",
+    "view": "Lihat",
+    "edit": "Editar",
+    "delete": "Hapus",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "confirm": "Konfirmasi",
+    "loading": "Memuat...",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "warning": "Peringatan",
+    "info": "Informasi",
+    "breadcrumb": {
+      "home": "Beranda",
+      "separator": ">"
+    },
+    "sidebar": {
+      "toggle": "Beralih sidebar",
+      "expand": "Perluas",
+      "collapse": "Ciutkan"
+    },
+    "footer": {
+      "copyright": "© 2024 Mol Class. Semua hak dilindungi.",
+      "privacy": "Kebijakan Privasi",
+      "terms": "Ketentuan Penggunaan",
+      "contact": "Kontak"
+    }
+  }
+}

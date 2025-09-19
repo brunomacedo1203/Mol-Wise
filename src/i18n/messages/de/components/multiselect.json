@@ -1,0 +1,34 @@
+{
+  "multiSelect": {
+    "placeholder": "Optionen auswählen...",
+    "noOptions": "Keine Optionen verfügbar",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "selected": "{count} ausgewählt",
+    "more": "+ {count} mehr",
+    "search": "Optionen suchen...",
+    "searchPlaceholder": "Optionen suchen...",
+    "noResults": "Keine Ergebnisse gefunden",
+    "loading": "Optionen werden geladen...",
+    "clear": "Auswahl löschen",
+    "close": "Schließen",
+    "open": "Optionen öffnen",
+    "remove": "Entfernen",
+    "add": "Hinzufügen",
+    "maxSelections": "Maximal {max} Auswahlen erlaubt",
+    "minSelections": "Mindestens {min} Auswahlen erforderlich",
+    "validation": {
+      "required": "Es muss mindestens eine Option ausgewählt werden",
+      "maxExceeded": "Maximale Anzahl von Auswahlen überschritten",
+      "minNotMet": "Mindestanzahl von Auswahlen nicht erreicht"
+    },
+    "accessibility": {
+      "listbox": "Optionsliste",
+      "option": "Option {index} von {total}",
+      "selected": "Ausgewählt",
+      "notSelected": "Nicht ausgewählt",
+      "toggleSelection": "Auswahl umschalten",
+      "expandCollapse": "Liste erweitern oder reduzieren"
+    }
+  }
+}

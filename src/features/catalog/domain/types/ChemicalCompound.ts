@@ -1,4 +1,4 @@
-export type CompoundCategory = "ácido" | "base" | "sal" | "óxido";
+export type CompoundCategory = "acid" | "base" | "salt" | "oxide";
 
 export interface ChemicalCompound {
   id: number;
@@ -20,7 +20,7 @@ export interface ChemicalCompound {
 // Tipo estendido com nome usual e função inorgânica
 export type ExtendedCompound = ChemicalCompound & {
   commonName: string;
-  category: "ácido" | "base" | "sal" | "óxido" | "desconhecida";
+  category: "acid" | "base" | "salt" | "oxide" | "unknown";
 };
 
 // Tipos para filtros avançados - Fase 1: Faixas de valores

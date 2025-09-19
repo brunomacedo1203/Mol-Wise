@@ -7,7 +7,27 @@ const enabled = typeof window !== "undefined" && !!GA_TRACKING_ID;
 const hasGtag = () =>
   typeof window !== "undefined" && typeof window.gtag === "function";
 
-const canSend = () => enabled && hasGtag();
+const canSend = () => enabled && hasGtag() && isConsentGranted();
+
+let analyticsConsentGranted = false;
+
+export const isConsentGranted = () => analyticsConsentGranted === true;
+
+export const setAnalyticsConsent = (granted: boolean) => {
+  analyticsConsentGranted = granted;
+  if (!hasGtag()) return;
+
+  try {
+    // Consent Mode: atualizar de acordo com a preferência do usuário
+    // Mantemos ad_storage como 'denied' pois não usamos ads.
+    (window as unknown as { gtag: (command: string, action: string, params: Record<string, string>) => void }).gtag('consent', 'update', {
+      analytics_storage: granted ? 'granted' : 'denied',
+      ad_storage: 'denied',
+    });
+  } catch {
+    // silencioso
+  }
+};
 
 export const pageview = (url: string) => {
   if (!canSend()) return;

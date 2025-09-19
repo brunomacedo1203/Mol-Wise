@@ -37,7 +37,8 @@ export default function ElementCardWrapper({
   highlightedCategories = [],
 }: ElementCardWrapperProps) {
   const t = useTranslations("periodicTable");
-  const translatedElementName = t(`elements.${element.symbol}`);
+  const tElements = useTranslations("elements");
+  const translatedElementName = tElements(element.symbol);
 
   // Casos especiais existentes
   const terrasRarasAtiva = highlightedCategories.includes(RARE_EARTHS_LABEL);

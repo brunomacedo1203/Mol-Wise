@@ -19,7 +19,6 @@ export interface PageProps {
 }
 
 export default function Page({ title, children, ...rest }: PageProps) {
-  const year = new Date().getFullYear();
   const sectionTitle = useSectionTitle();
   const collapsed = useSidebarStore((state) => state.collapsed);
   const toggleCollapsed = useSidebarStore((state) => state.toggleCollapsed);
@@ -36,7 +35,7 @@ export default function Page({ title, children, ...rest }: PageProps) {
             ? React.cloneElement(children, rest)
             : children}
         </Content>
-        <Footer year={year} />
+        <Footer />
       </div>
     </div>
   );

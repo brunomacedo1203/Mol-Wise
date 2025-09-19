@@ -1,0 +1,94 @@
+{
+  "calculators": {
+    "title": "计算器",
+    "subtitle": "从菜单中打开一个或多个计算器。",
+    "closeAll": "全部关闭",
+    "description": "访问用于摩尔质量、科学计算等的化学计算器。",
+    "errors": {
+      "generic": "计算过程中发生错误",
+      "unsupportedType": "不支持的计算器类型：{type}"
+    },
+    "molarMass": {
+      "title": "摩尔质量",
+      "subtitle": "输入化学式或元素符号",
+      "description": "快速计算化学化合物的摩尔质量。",
+      "input": {
+        "placeholder": "输入化学式（例如 H2O）",
+        "label": "化学式"
+      },
+      "keyboard": {
+        "calculate": "计算",
+        "reset": "重置",
+        "backspace": "退格",
+        "parentheses": "添加括号",
+        "showKeyboard": "显示键盘",
+        "hideKeyboard": "隐藏键盘"
+      },
+      "result": {
+        "prefix": "",
+        "suffix": "的摩尔质量为",
+        "unit": "g/mol"
+      },
+      "errors": {
+        "empty": "化学式不能为空",
+        "invalidElement": "未找到符号 \"{symbol}\"",
+        "invalidFormula": "无效的化学式",
+        "mismatchedParentheses": "化学式中的括号不匹配",
+        "calculationFailed": "无法计算摩尔质量",
+        "generic": "计算摩尔质量时发生错误"
+      },
+      "history": {
+        "title": "计算历史",
+        "show": "显示历史",
+        "hide": "隐藏历史",
+        "clear": "清除历史",
+        "empty": "尚未进行任何计算",
+        "clickToUse": "点击以使用此化学式"
+      }
+    },
+    "scientific": {
+      "title": "科学计算器",
+      "subtitle": "执行高级数学计算",
+      "input": {
+        "placeholder": "输入数学表达式",
+        "label": "表达式"
+      },
+      "keyboard": {
+        "calculate": "计算",
+        "reset": "重置",
+        "backspace": "退格",
+        "showKeyboard": "显示键盘",
+        "hideKeyboard": "隐藏键盘",
+        "functions": {
+          "sin": "正弦",
+          "cos": "余弦",
+          "tan": "正切",
+          "log": "对数",
+          "ln": "自然对数",
+          "sqrt": "平方根",
+          "pi": "圆周率",
+          "e": "欧拉数"
+        },
+        "memory": {
+          "store": "存储到内存",
+          "recall": "从内存调用",
+          "clear": "清除内存"
+        }
+      },
+      "errors": {
+        "invalidExpression": "无效的表达式",
+        "empty": "表达式不能为空",
+        "divisionByZero": "不允许除以零",
+        "generic": "计算过程中发生错误"
+      },
+      "history": {
+        "title": "计算历史",
+        "show": "显示历史",
+        "hide": "隐藏历史",
+        "clear": "清除历史",
+        "empty": "尚未进行任何计算",
+        "clickToUse": "点击以使用此结果"
+      }
+    }
+  }
+}

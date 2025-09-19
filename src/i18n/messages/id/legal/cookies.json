@@ -1,0 +1,56 @@
+{
+  "cookies": {
+    "banner": {
+      "title": "Penggunaan Cookie",
+      "message": "Kami menggunakan cookie untuk meningkatkan pengalaman Anda. Dengan terus menelusuri, Anda menyetujui kebijakan cookie kami.",
+      "accept": "Terima Semua",
+      "decline": "Tolak Semua",
+      "acceptAll": "Terima Semua",
+      "rejectAll": "Tolak Semua",
+      "customize": "Sesuaikan",
+      "learnMore": "Pelajari Lebih Lanjut"
+    },
+    "preferences": {
+      "title": "Preferensi Cookie",
+      "description": "Kelola preferensi cookie Anda. Anda dapat mengaktifkan atau menonaktifkan berbagai jenis cookie di bawah ini.",
+      "essential": "Cookie Esensial",
+      "essentialDescription": "Cookie ini diperlukan untuk fungsi dasar situs dan tidak dapat dinonaktifkan.",
+      "analytics": "Cookie Analitik",
+      "analyticsDescription": "Cookie ini membantu kami memahami bagaimana pengunjung berinteraksi dengan situs dengan mengumpulkan dan melaporkan informasi secara anonim.",
+      "legalLinks": "Untuk informasi lebih lanjut, lihat:",
+      "privacyPolicy": "Kebijakan Privasi",
+      "termsOfUse": "Ketentuan Penggunaan",
+      "save": "Simpan Preferensi",
+      "cancel": "Batal",
+      "acceptAll": "Terima Semua",
+      "rejectAll": "Tolak Semua"
+    },
+    "policy": {
+      "title": "Kebijakan Cookie",
+      "lastUpdated": "Terakhir diperbarui: 15 Januari 2024",
+      "whatAreCookies": {
+        "title": "Apa itu Cookie?",
+        "content": "Cookie adalah file teks kecil yang disimpan di perangkat Anda ketika Anda mengunjungi sebuah situs web. Cookie banyak digunakan untuk membuat situs web bekerja lebih efisien."
+      },
+      "howWeUseCookies": {
+        "title": "Bagaimana Kami Menggunakan Cookie",
+        "content": "Kami menggunakan cookie untuk berbagai tujuan, termasuk meningkatkan fungsionalitas situs, menganalisis lalu lintas, dan mempersonalisasi konten."
+      },
+      "typesOfCookies": {
+        "title": "Jenis Cookie yang Kami Gunakan",
+        "essential": "Cookie Esensial: Diperlukan untuk operasi dasar",
+        "analytics": "Cookie Analitik: Untuk memahami bagaimana Anda menggunakan situs",
+        "preferences": "Cookie Preferensi: Untuk mengingat pengaturan Anda",
+        "marketing": "Cookie Pemasaran: Untuk iklan yang relevan"
+      },
+      "manageCookies": {
+        "title": "Kelola Cookie",
+        "content": "Anda dapat mengontrol dan/atau menghapus cookie sesuai keinginan Anda. Anda dapat menghapus semua cookie yang sudah ada di komputer Anda dan mengatur sebagian besar browser untuk mencegah penempatannya."
+      },
+      "contact": {
+        "title": "Kontak",
+        "content": "Jika Anda memiliki pertanyaan tentang kebijakan cookie kami, silakan hubungi kami."
+      }
+    }
+  }
+}

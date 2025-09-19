@@ -136,12 +136,19 @@ export function useCatalogData() {
         }
       }
       if (column === 'commonName') {
-        return compound.commonName || '';
+        try {
+          const translated = compound.commonName
+            ? t(`catalog.CommonName.${compound.commonName}`, { fallback: '' })
+            : '';
+          return translated || compound.commonName || '';
+        } catch {
+          return compound.commonName || '';
+        }
       }
       if (column === 'synonym') {
         try {
-          const translated = compound.formula
-            ? t(`catalog.compoundSynonyms.${compound.formula}`, { fallback: '' })
+          const translated = compound.commonName
+            ? t(`catalog.CommonName.${compound.commonName}`, { fallback: '' })
             : '';
           return translated || compound.synonym || '';
         } catch {
@@ -207,4 +214,4 @@ export function useCatalogData() {
     totalCompounds: rawCompounds.length,
     filteredCount: filteredData.length,
   };
-} 
+}

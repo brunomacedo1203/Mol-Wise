@@ -21,18 +21,18 @@ import {
 import { CATEGORY_TAGS } from "../../domain/categoryTags";
 import type { CompoundCategory } from "@/features/catalog/domain/types/ChemicalCompound";
 import { useGlobalMultiSelect } from "@/shared/hooks/useGlobalMultiSelect";
+import { useTranslations } from "next-intl";
 
 interface CategoryDropdownProps {
   selectedCategories: CompoundCategory[];
   setSelectedCategories: (cats: CompoundCategory[]) => void;
-  t: (key: string) => string;
 }
 
 export function CategoryDropdown({
   selectedCategories,
   setSelectedCategories,
-  t,
 }: CategoryDropdownProps) {
+  const t = useTranslations("catalog.categoryTags");
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
   const { config, variants, icons, animation } = useGlobalMultiSelect(
     "category-dropdown",
@@ -75,7 +75,7 @@ export function CategoryDropdown({
   return (
     <div className="space-y-2">
       <label className="text-sm font-semibold text-gray-900 dark:text-zinc-200">
-        {t("catalog.categoryTags.placeholder")}
+        {t("label")}
       </label>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger asChild>
@@ -83,9 +83,9 @@ export function CategoryDropdown({
             variant="outline"
             onClick={handleTogglePopover}
             className={`
-              flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between
+              flex w-full p-1 rounded-md border min-h-9 h-auto items-center justify-between
               bg-white dark:bg-zinc-900
-              border-2 border-border dark:border-zinc-400
+              border-2 border-zinc-400 dark:border-zinc-400
               text-gray-700 dark:text-zinc-200
               hover:bg-gray-50 dark:hover:bg-zinc-800
               transition
@@ -108,7 +108,7 @@ export function CategoryDropdown({
                         )}
                         style={{ animationDuration: `${animation.duration}s` }}
                       >
-                        {t(`catalog.categoryTags.${category}`)}
+                        {t(category)}
                         <XCircle
                           className={cn(icons.remove.className)}
                           onClick={(event) => {
@@ -131,10 +131,11 @@ export function CategoryDropdown({
                           })
                         )}
                       >
-                        {`+ ${
-                          selectedCategories.length -
-                          (config.maxDisplayCount || 3)
-                        } more`}
+                        {t("more", {
+                          count:
+                            selectedCategories.length -
+                            (config.maxDisplayCount || 3),
+                        })}
                         <XCircle
                           className={cn(icons.remove.className)}
                           onClick={(event) => {
@@ -162,8 +163,11 @@ export function CategoryDropdown({
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-end w-full">
-                <ChevronDown className={cn(icons.dropdown.className, "mr-2")} />
+              <div className="flex items-center justify-between w-full">
+                <span className="text-gray-500 dark:text-zinc-400 text-sm">
+                  {t("placeholder")}
+                </span>
+                <ChevronDown className={cn(icons.dropdown.className)} />
               </div>
             )}
           </Button>
@@ -175,9 +179,9 @@ export function CategoryDropdown({
           alignOffset={-150}
         >
           <Command>
-            <CommandInput placeholder="Search..." />
+            <CommandInput placeholder={t("search")} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>{t("noResults")}</CommandEmpty>
               <CommandGroup>
                 <CommandItem
                   key="all"
@@ -194,7 +198,7 @@ export function CategoryDropdown({
                   >
                     <CheckIcon className="h-4 w-4" />
                   </div>
-                  <span>(Select All)</span>
+                  <span>({t("selectAll")})</span>
                 </CommandItem>
                 {CATEGORY_TAGS.map((tag) => {
                   const isSelected = selectedCategories.includes(
@@ -218,7 +222,7 @@ export function CategoryDropdown({
                       >
                         <CheckIcon className="h-4 w-4" />
                       </div>
-                      <span>{t(`catalog.categoryTags.${tag.id}`)}</span>
+                      <span>{t(tag.id)}</span>
                     </CommandItem>
                   );
                 })}
@@ -232,7 +236,7 @@ export function CategoryDropdown({
                         onSelect={handleClear}
                         className="flex-1 justify-center cursor-pointer"
                       >
-                        Clear
+                        {t("clear")}
                       </CommandItem>
                       <div className="w-px h-6 bg-border" />
                     </>
@@ -241,7 +245,7 @@ export function CategoryDropdown({
                     onSelect={() => setIsPopoverOpen(false)}
                     className="flex-1 justify-center cursor-pointer max-w-full"
                   >
-                    Close
+                    {t("close")}
                   </CommandItem>
                 </div>
               </CommandGroup>

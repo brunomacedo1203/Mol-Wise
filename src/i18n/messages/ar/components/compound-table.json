@@ -1,0 +1,16 @@
+{
+  "compoundTable": {
+    "loading": "جارٍ التحميل...",
+    "errorLoading": "حدث خطأ أثناء تحميل البيانات.",
+    "search": "بحث",
+    "searchPlaceholder": "ابحث عن المركبات...",
+    "columns": "الأعمدة",
+    "columnsButton": "اختر الأعمدة المراد عرضها",
+    "rowsPerPage": "عدد الصفوف لكل صفحة:",
+    "noResults": "لم يتم العثور على نتائج.",
+    "previous": "السابق",
+    "next": "التالي",
+    "page": "الصفحة",
+    "pageOf": "صفحة {current} من {total}"
+  }
+}

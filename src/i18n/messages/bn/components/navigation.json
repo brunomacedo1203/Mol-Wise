@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "home": "হোম",
+    "calculators": "ক্যালকুলেটর",
+    "periodicTable": "পিরিয়ডিক টেবিল",
+    "games": "গেমস",
+    "visualization": "ভিজ্যুয়ালাইজেশন",
+    "catalog": "ক্যাটালগ",
+    "settings": "সেটিংস",
+    "about": "সম্পর্কে",
+    "help": "সহায়তা",
+    "menu": "মেনু",
+    "close": "বন্ধ করুন",
+    "back": "পেছনে",
+    "next": "পরবর্তী",
+    "previous": "পূর্ববর্তী",
+    "search": "অনুসন্ধান",
+    "filter": "ফিল্টার",
+    "sort": "সাজান",
+    "view": "দেখুন",
+    "edit": "সম্পাদনা",
+    "delete": "মুছুন",
+    "save": "সংরক্ষণ করুন",
+    "cancel": "বাতিল",
+    "confirm": "নিশ্চিত করুন",
+    "loading": "লোড হচ্ছে...",
+    "error": "ত্রুটি",
+    "success": "সাফল্য",
+    "warning": "সতর্কতা",
+    "info": "তথ্য",
+    "breadcrumb": {
+      "home": "হোম",
+      "separator": ">"
+    },
+    "sidebar": {
+      "toggle": "সাইডবার টগল করুন",
+      "expand": "প্রসারিত করুন",
+      "collapse": "সংকুচিত করুন"
+    },
+    "footer": {
+      "copyright": "© 2024 Mol Class. সর্বস্বত্ব সংরক্ষিত।",
+      "privacy": "গোপনীয়তা নীতি",
+      "terms": "ব্যবহারের শর্তাবলী",
+      "contact": "যোগাযোগ"
+    }
+  }
+}

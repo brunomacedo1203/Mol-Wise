@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "home": "Início",
+    "calculators": "Calculadoras",
+    "periodicTable": "Tabela Periódica",
+    "games": "Jogos",
+    "visualization": "Visualização",
+    "catalog": "Catálogo",
+    "settings": "Configurações",
+    "about": "Sobre",
+    "help": "Ajuda",
+    "menu": "Menu",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "view": "Visualizar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "warning": "Aviso",
+    "info": "Informação",
+    "breadcrumb": {
+      "home": "Início",
+      "separator": ">"
+    },
+    "sidebar": {
+      "toggle": "Alternar barra lateral",
+      "expand": "Expandir",
+      "collapse": "Recolher"
+    },
+    "footer": {
+      "copyright": "© 2024 Mol Class. Todos os direitos reservados.",
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Uso",
+      "contact": "Contato"
+    }
+  }
+}

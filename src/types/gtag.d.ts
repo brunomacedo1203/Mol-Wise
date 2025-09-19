@@ -4,6 +4,7 @@ declare global {
     gtag(command: 'js', date: Date): void;
     gtag(command: 'config', targetId: string, params?: Gtag.ConfigParams): void;
     gtag(command: 'event', name: string, params?: Gtag.EventParams): void;
+    clarity?: (command: string, ...args: unknown[]) => void;
   }
 }
 

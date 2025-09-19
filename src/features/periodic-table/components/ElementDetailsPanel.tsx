@@ -26,6 +26,7 @@ export default function ElementDetailsPanel({
   const elementToShow = searchedElement || element;
 
   const t = useTranslations("periodicTable");
+  const tElements = useTranslations("elements");
   const { setHighlight, setSearchValue } = usePeriodicTableStore();
 
   // Aguarda o usuário parar de digitar por 500ms antes de enviar a busca
@@ -86,7 +87,7 @@ export default function ElementDetailsPanel({
             {elementToShow.symbol}
           </p>
           <p className="text-sm text-gray-700 dark:text-zinc-100">
-            {t(`elements.${elementToShow.symbol}`)}
+            {tElements(elementToShow.symbol)}
           </p>
         </div>
 

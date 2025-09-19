@@ -1,0 +1,34 @@
+{
+  "multiSelect": {
+    "placeholder": "Выберите варианты...",
+    "noOptions": "Нет доступных вариантов",
+    "selectAll": "Выбрать все",
+    "deselectAll": "Снять все",
+    "selected": "Выбрано: {count}",
+    "more": "+ ещё {count}",
+    "search": "Поиск вариантов...",
+    "searchPlaceholder": "Поиск вариантов...",
+    "noResults": "Ничего не найдено",
+    "loading": "Загрузка вариантов...",
+    "clear": "Очистить выбор",
+    "close": "Закрыть",
+    "open": "Открыть варианты",
+    "remove": "Удалить",
+    "add": "Добавить",
+    "maxSelections": "Допустимо максимум {max} выборов",
+    "minSelections": "Требуется минимум {min} выборов",
+    "validation": {
+      "required": "Необходимо выбрать хотя бы один вариант",
+      "maxExceeded": "Превышено максимальное количество выборов",
+      "minNotMet": "Не достигнуто минимальное количество выборов"
+    },
+    "accessibility": {
+      "listbox": "Список вариантов",
+      "option": "Вариант {index} из {total}",
+      "selected": "Выбран",
+      "notSelected": "Не выбран",
+      "toggleSelection": "Переключить выбор",
+      "expandCollapse": "Развернуть или свернуть список"
+    }
+  }
+}

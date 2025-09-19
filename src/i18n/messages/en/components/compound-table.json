@@ -1,0 +1,16 @@
+{
+  "compoundTable": {
+    "loading": "Loading...",
+    "errorLoading": "Error loading data.",
+    "search": "Search",
+    "searchPlaceholder": "Search compounds...",
+    "columns": "Columns",
+    "columnsButton": "Choose which columns to view",
+    "rowsPerPage": "Rows per page:",
+    "noResults": "No results found.",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "pageOf": "Page {current} of {total}"
+  }
+}
