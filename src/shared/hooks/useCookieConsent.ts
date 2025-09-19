@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react";
 
 export interface CookieConsentState {
-  hasConsented: boolean | null; // null = não decidiu ainda, true = aceitou, false = recusou
+  hasConsented: boolean | null; 
   analyticsEnabled: boolean;
 }
 
 const COOKIE_NAME = "molclass-cookie-consent";
 const STORAGE_KEY = "molclass-cookie-consent";
 const COOKIE_EXPIRY_DAYS = 365;
+const CONSENT_REFRESH_MONTHS = 12; // Renovar consentimento anualmente
 
-// Utilitários para cookies
+// Utilitários para cookies - CORRIGIDO com Secure flag
 const setCookie = (name: string, value: string, days: number) => {
   const expires = new Date();
   expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+  const isSecure = window.location.protocol === 'https:';
+  const secureFlag = isSecure ? ';Secure' : '';
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax${secureFlag}`;
 };
 
 const getCookie = (name: string): string | null => {
@@ -48,10 +51,89 @@ const getLocalStorage = <T>(key: string): T | null => {
   }
 };
 
+// Função para verificar se precisa renovar consentimento
+const shouldRefreshConsent = (timestamp: string): boolean => {
+  const consentDate = new Date(timestamp);
+  const refreshDate = new Date();
+  refreshDate.setMonth(refreshDate.getMonth() - CONSENT_REFRESH_MONTHS);
+  return consentDate < refreshDate;
+};
+
+// Função para controlar scripts de terceiros
+const manageThirdPartyScripts = (analyticsEnabled: boolean) => {
+  if (typeof window === 'undefined') return;
+
+  // Google Analytics
+  const gaScript = document.querySelector('script[src*="googletagmanager.com"]');
+  const gaConfig = document.querySelector('script[data-type="ga-config"]');
+  
+  if (analyticsEnabled) {
+    // Habilitar Google Analytics se consentimento dado
+    if (!gaScript) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+      document.head.appendChild(script);
+      
+      const configScript = document.createElement('script');
+      configScript.setAttribute('data-type', 'ga-config');
+      configScript.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID', {
+          'anonymize_ip': true,
+          'cookie_expires': 60 * 60 * 24 * 365, // 1 ano
+        });
+      `;
+      document.head.appendChild(configScript);
+    }
+  } else {
+    // Desabilitar/remover scripts de analytics
+    if (gaScript) gaScript.remove();
+    if (gaConfig) gaConfig.remove();
+    
+    // Limpar Google Analytics
+    if (window.gtag) {
+      window.gtag('config', 'GA_MEASUREMENT_ID', {
+        'send_page_view': false
+      });
+    }
+    
+    // Remover cookies de terceiros
+    const cookiesToRemove = ['_ga', '_ga_', '_gid', '_gat', '_gat_gtag_'];
+    cookiesToRemove.forEach(cookieName => {
+      document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=.${window.location.hostname}`;
+      document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=${window.location.hostname}`;
+      document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
+    });
+  }
+
+  // Microsoft Clarity
+  if (analyticsEnabled) {
+    if (!window.clarity) {
+      const clarityScript = document.createElement('script');
+      clarityScript.innerHTML = `
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+      `;
+      document.head.appendChild(clarityScript);
+    }
+  } else {
+    // Desabilitar Clarity
+    if (window.clarity) {
+      window.clarity('stop');
+    }
+  }
+};
+
 export const useCookieConsent = () => {
   const [consentState, setConsentState] = useState<CookieConsentState>({
     hasConsented: null,
-    analyticsEnabled: false,
+    analyticsEnabled: false, // CORRIGIDO: false por padrão (LGPD compliance)
   });
 
   const [showBanner, setShowBanner] = useState(false);
@@ -64,8 +146,22 @@ export const useCookieConsent = () => {
       if (cookieValue) {
         try {
           const parsed = JSON.parse(cookieValue);
-          setConsentState(parsed);
+          
+          // Verificar se precisa renovar consentimento
+          if (parsed.timestamp && shouldRefreshConsent(parsed.timestamp)) {
+            // Consentimento expirado, mostrar banner novamente
+            setShowBanner(true);
+            return;
+          }
+          
+          setConsentState({
+            hasConsented: parsed.hasConsented,
+            analyticsEnabled: parsed.analyticsEnabled
+          });
           setShowBanner(false);
+          
+          // Aplicar configurações de terceiros
+          manageThirdPartyScripts(parsed.analyticsEnabled);
           return;
         } catch (error) {
           console.warn("Erro ao parsear cookie de consentimento:", error);
@@ -81,13 +177,22 @@ export const useCookieConsent = () => {
           const maxAgeMs = COOKIE_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
           const isExpired = !timestamp || now - timestamp > maxAgeMs;
 
-          if (isExpired) {
-            // Expirado: limpar storage e exibir banner novamente
+          // Verificar também renovação de consentimento
+          const needsRefresh = storageValue.timestamp && shouldRefreshConsent(storageValue.timestamp);
+
+          if (isExpired || needsRefresh) {
+            // Expirado ou precisa renovar: limpar storage e exibir banner novamente
             try { localStorage.removeItem(STORAGE_KEY); } catch {}
             setShowBanner(true);
           } else {
-            setConsentState({ hasConsented: storageValue.hasConsented, analyticsEnabled: storageValue.analyticsEnabled });
+            setConsentState({ 
+              hasConsented: storageValue.hasConsented, 
+              analyticsEnabled: storageValue.analyticsEnabled 
+            });
             setShowBanner(false);
+            
+            // Aplicar configurações de terceiros
+            manageThirdPartyScripts(storageValue.analyticsEnabled);
             return;
           }
         } catch (error) {
@@ -101,6 +206,13 @@ export const useCookieConsent = () => {
 
     loadConsentState();
   }, []);
+
+  // Efeito para gerenciar scripts quando o estado muda
+  useEffect(() => {
+    if (consentState.hasConsented !== null) {
+      manageThirdPartyScripts(consentState.analyticsEnabled);
+    }
+  }, [consentState.analyticsEnabled, consentState.hasConsented]);
 
   // Salva o estado do consentimento
   const saveConsentState = (newState: CookieConsentState) => {
@@ -117,6 +229,9 @@ export const useCookieConsent = () => {
 
     setConsentState(newState);
     setShowBanner(false);
+
+    // Aplicar imediatamente as configurações de terceiros
+    manageThirdPartyScripts(newState.analyticsEnabled);
   };
 
   // Aceita todos os cookies
@@ -149,7 +264,9 @@ export const useCookieConsent = () => {
   // Reseta o consentimento (para testes ou mudança de preferências)
   const resetConsent = () => {
     // Remove cookie
-    document.cookie = `${COOKIE_NAME}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
+    const isSecure = window.location.protocol === 'https:';
+    const secureFlag = isSecure ? ';Secure' : '';
+    document.cookie = `${COOKIE_NAME}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/${secureFlag}`;
     
     // Remove localStorage
     try {
@@ -157,6 +274,9 @@ export const useCookieConsent = () => {
     } catch (error) {
       console.warn("Erro ao remover do localStorage:", error);
     }
+
+    // Desabilitar todos os scripts de terceiros
+    manageThirdPartyScripts(false);
 
     setConsentState({
       hasConsented: null,

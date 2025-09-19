@@ -5,6 +5,7 @@
     "search": "Buscar",
     "searchPlaceholder": "Buscar compuestos...",
     "columns": "Columnas",
+    "columnsButton": "Elige qué columnas ver",
     "rowsPerPage": "Filas por página:",
     "noResults": "No se encontraron resultados.",
     "previous": "Anterior",

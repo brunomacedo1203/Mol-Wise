@@ -59,7 +59,7 @@ export const MultiSelectTrigger = React.forwardRef<
         {...props}
         onClick={onTogglePopover}
         className={cn(
-          "flex min-w-[280px] w-full p-1 rounded-md border border-zinc-300 dark:border-zinc-500 min-h-10 h-auto items-center justify-between bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 [&_svg]:pointer-events-auto",
+          "flex min-w-[280px] w-full p-1 rounded-md border border-zinc-400 dark:border-zinc-500 min-h-10 h-auto items-center justify-between bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 [&_svg]:pointer-events-auto",
           customConfig?.customStyles?.container,
           className
         )}

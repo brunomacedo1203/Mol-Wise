@@ -5,6 +5,7 @@
     "search": "Suchen",
     "searchPlaceholder": "Verbindungen suchen...",
     "columns": "Spalten",
+    "columnsButton": "Wählen Sie die anzuzeigenden Spalten",
     "rowsPerPage": "Zeilen pro Seite:",
     "noResults": "Keine Ergebnisse gefunden.",
     "previous": "Zurück",

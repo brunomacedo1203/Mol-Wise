@@ -5,6 +5,7 @@
     "search": "Search",
     "searchPlaceholder": "Search compounds...",
     "columns": "Columns",
+    "columnsButton": "Choose which columns to view",
     "rowsPerPage": "Rows per page:",
     "noResults": "No results found.",
     "previous": "Previous",

@@ -32,7 +32,7 @@ export function CategoryDropdown({
   selectedCategories,
   setSelectedCategories,
 }: CategoryDropdownProps) {
-  const t = useTranslations('catalog.categoryTags');
+  const t = useTranslations("catalog.categoryTags");
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
   const { config, variants, icons, animation } = useGlobalMultiSelect(
     "category-dropdown",
@@ -75,7 +75,7 @@ export function CategoryDropdown({
   return (
     <div className="space-y-2">
       <label className="text-sm font-semibold text-gray-900 dark:text-zinc-200">
-        {t("placeholder")}
+        {t("label")}
       </label>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger asChild>
@@ -83,9 +83,9 @@ export function CategoryDropdown({
             variant="outline"
             onClick={handleTogglePopover}
             className={`
-              flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between
+              flex w-full p-1 rounded-md border min-h-9 h-auto items-center justify-between
               bg-white dark:bg-zinc-900
-              border-2 border-border dark:border-zinc-400
+              border-2 border-zinc-400 dark:border-zinc-400
               text-gray-700 dark:text-zinc-200
               hover:bg-gray-50 dark:hover:bg-zinc-800
               transition
@@ -131,7 +131,11 @@ export function CategoryDropdown({
                           })
                         )}
                       >
-                        {t("more", { count: selectedCategories.length - (config.maxDisplayCount || 3) })}
+                        {t("more", {
+                          count:
+                            selectedCategories.length -
+                            (config.maxDisplayCount || 3),
+                        })}
                         <XCircle
                           className={cn(icons.remove.className)}
                           onClick={(event) => {
@@ -159,8 +163,11 @@ export function CategoryDropdown({
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-end w-full">
-                <ChevronDown className={cn(icons.dropdown.className, "mr-2")} />
+              <div className="flex items-center justify-between w-full">
+                <span className="text-gray-500 dark:text-zinc-400 text-sm">
+                  {t("placeholder")}
+                </span>
+                <ChevronDown className={cn(icons.dropdown.className)} />
               </div>
             )}
           </Button>

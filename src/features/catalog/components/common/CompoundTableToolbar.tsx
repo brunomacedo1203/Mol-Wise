@@ -46,7 +46,7 @@ export function CompoundTableToolbar({
             placeholder={t("compoundTable.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-white dark:bg-zinc-900 border-2 border-border dark:border-zinc-400 text-gray-700 dark:text-zinc-200"
+            className="bg-white dark:bg-zinc-900 border-2 border-zinc-400 dark:border-zinc-400 text-gray-700 dark:text-zinc-200"
           />
         </div>
 

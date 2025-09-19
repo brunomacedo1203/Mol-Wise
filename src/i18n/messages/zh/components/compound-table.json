@@ -5,6 +5,7 @@
     "search": "搜索",
     "searchPlaceholder": "搜索化合物...",
     "columns": "列",
+    "columnsButton": "选择要显示的列",
     "rowsPerPage": "每页行数：",
     "noResults": "未找到结果。",
     "previous": "上一页",
