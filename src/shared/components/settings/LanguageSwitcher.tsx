@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { trackLanguageChange } from "@/shared/events/interfaceEvents";
 
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
@@ -37,6 +38,14 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
 
   const handleChange = (nextLocale: string) => {
     if (!nextLocale || nextLocale === currentLocale) return;
+
+    // Rastrear mudança de idioma
+    trackLanguageChange({
+      from_language: currentLocale,
+      to_language: nextLocale,
+      trigger_method: "manual",
+      section: "header"
+    });
 
     // Limpa o cookie atual do next-intl
     document.cookie =
