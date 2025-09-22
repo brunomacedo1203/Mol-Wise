@@ -65,18 +65,63 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
     category: false, 
   });
 
-  // 🔍 Filtro por texto + categoria
+  // 🔍 Filtro por texto + categoria - VERSÃO CORRIGIDA
   const filteredData = useMemo(() => {
     let result = data;
     const term = searchTerm.toLowerCase();
+    
     result = result.filter((compound) => {
+      // Funções para obter valores traduzidos (reutilizando a lógica já existente)
+      const getTranslatedName = (compound: ExtendedCompound) => {
+        try {
+          const translated = compound.formula
+            ? t(`catalog.compoundNames.${compound.formula}`, { fallback: '' })
+            : '';
+          return translated || compound.name || '';
+        } catch {
+          return compound.name || '';
+        }
+      };
+
+      const getTranslatedCommonName = (compound: ExtendedCompound) => {
+        try {
+          const translated = compound.commonName
+            ? t(`catalog.CommonName.${compound.commonName}`, { fallback: '' })
+            : '';
+          return translated || compound.commonName || '';
+        } catch {
+          return compound.commonName || '';
+        }
+      };
+
+      const getTranslatedSynonym = (compound: ExtendedCompound) => {
+        try {
+          const translated = compound.commonName
+            ? t(`catalog.CommonName.${compound.commonName}`, { fallback: '' })
+            : '';
+          return translated || compound.synonym || '';
+        } catch {
+          return compound.synonym || '';
+        }
+      };
+
+      // Busca expandida incluindo traduções e ID
       const matchesSearch =
+        // Campos originais
         (compound.name ?? '').toLowerCase().includes(term) ||
         (compound.commonName ?? '').toLowerCase().includes(term) ||
         (compound.formula ?? '').toLowerCase().includes(term) ||
         (compound.synonym ?? '').toLowerCase().includes(term) ||
         (compound.casNumber ?? '').toLowerCase().includes(term) ||
-        (compound.solubility ?? '').toLowerCase().includes(term);
+        (compound.solubility ?? '').toLowerCase().includes(term) ||
+        // Campos traduzidos
+        getTranslatedName(compound).toLowerCase().includes(term) ||
+        getTranslatedCommonName(compound).toLowerCase().includes(term) ||
+        getTranslatedSynonym(compound).toLowerCase().includes(term) ||
+        // Busca por ID
+        compound.id.toString().includes(term) ||
+        // Busca por categoria traduzida (se necessário)
+        (compound.category ?? '').toLowerCase().includes(term);
 
       const matchesCategory =
         selectedCategory === 'todas' || compound.category === selectedCategory;
@@ -89,8 +134,9 @@ export function useCompoundTable({ data }: UseCompoundTableProps) {
         selectedCategories.includes(compound.category)
       );
     }
+    
     return result;
-  }, [data, searchTerm, selectedCategory, selectedCategories]);
+  }, [data, searchTerm, selectedCategory, selectedCategories, t]);
 
   // Tracking de busca com debounce
   useEffect(() => {
