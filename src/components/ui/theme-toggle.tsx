@@ -4,6 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useThemeStore } from "@/shared/store/themeStore";
 import { useTranslations } from "next-intl";
+import { trackThemeChange } from "@/shared/events/interfaceEvents";
 
 interface ThemeToggleProps {
   className?: string;
@@ -16,9 +17,25 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
 
   const t = useTranslations("common.theme");
 
+  const handleThemeToggle = () => {
+    const currentTheme = theme;
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    
+    // Rastrear mudança de tema
+    trackThemeChange({
+      from_theme: currentTheme,
+      to_theme: newTheme,
+      trigger_method: "manual",
+      section: "header"
+    });
+    
+    // Executar mudança de tema
+    toggleTheme();
+  };
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={handleThemeToggle}
       className={cn(
         "relative w-20 h-9 flex items-center rounded-full border  transition-colors duration-300 outline-none shadow focus:ring-2 focus:ring-cyan-500/50",
         isDark ? "bg-zinc-900 border-zinc-400" : "bg-zinc-100 border-zinc-400",

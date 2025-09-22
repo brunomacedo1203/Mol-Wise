@@ -17,6 +17,7 @@ import {
   NITROGEN_FAMILY_COLOR,
   OXYGEN_FAMILY_COLOR,
 } from "../../domain/types/elementCategories";
+import { trackElementClick } from "../../events/elementClickEvents";
 
 interface ElementCardWrapperProps {
   element: Element;
@@ -110,6 +111,15 @@ export default function ElementCardWrapper({
         const isSame =
           highlightedElement?.atomicNumber === element.atomicNumber;
         const isClick = highlightSource === "click";
+
+        // Rastrear clique no elemento
+        trackElementClick({
+          element_symbol: element.symbol,
+          element_name: translatedElementName,
+          atomic_number: element.atomicNumber,
+          element_category: element.category,
+          action_type: "click",
+        });
 
         if (isSame && isClick) {
           setHighlight(null, null);

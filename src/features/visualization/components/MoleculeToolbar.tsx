@@ -6,7 +6,9 @@ import { getSmiles, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
 import { trackMoleculeSearch } from "../events/moleculeSearchEvents";
+import { trackMolecule3DInteraction } from "../events/molecule3DEvents";
 import { useTranslations } from "next-intl";
+import { getMoleculeKey } from "../utils/moleculeKey";
 
 export function MoleculeToolbar() {
   const t = useTranslations("visualization");
@@ -21,6 +23,8 @@ export function MoleculeToolbar() {
   const setSdf = useVisualizationStore((s) => s.setSdfData);
   const setViewMode = useVisualizationStore((s) => s.setViewMode);
   const viewMode = useVisualizationStore((s) => s.viewMode);
+  const smiles = useVisualizationStore((s) => s.smilesData);
+  const sdfData = useVisualizationStore((s) => s.sdfData);
 
   // Função para detectar o tipo de busca
   const detectSearchType = (
@@ -196,7 +200,20 @@ export function MoleculeToolbar() {
         {/* 🎛️ Toggle 2D / 3D */}
         <button
           type="button"
-          onClick={() => setViewMode(viewMode === "2D" ? "3D" : "2D")}
+          onClick={() => {
+            const newMode = viewMode === "2D" ? "3D" : "2D";
+            setViewMode(newMode);
+            
+            // Tracking de mudança de modo de visualização
+            if (newMode === "3D" && (smiles || sdfData)) {
+              const moleculeName = getMoleculeKey(smiles, sdfData);
+              trackMolecule3DInteraction({
+                molecule_name: moleculeName,
+                interaction_type: "style_change",
+                interaction_value: "switch_to_3d",
+              });
+            }
+          }}
           className="relative w-24 h-11 flex items-center justify-between px-3 rounded-full
             border border-zinc-400 dark:border-zinc-500
             bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-zinc-800

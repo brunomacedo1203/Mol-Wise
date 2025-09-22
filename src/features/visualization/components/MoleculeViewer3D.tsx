@@ -6,6 +6,7 @@ import { useVisualizationStore } from "../store/visualizationStore";
 import { waitFor3Dmol } from "../utils/waitFor3Dmol";
 import type { ThreeDMolViewer, ThreeDMolNamespace } from "../types/3dmol";
 import { getMoleculeKey } from "../utils/moleculeKey";
+import { trackMolecule3DView, trackMolecule3DError, trackMolecule3DInteraction } from "../events/molecule3DEvents";
 
 export function MoleculeViewer3D() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -45,6 +46,12 @@ export function MoleculeViewer3D() {
             ? e.message
             : "Falha ao inicializar o visualizador 3D."
         );
+
+        // Tracking de erro na inicialização da biblioteca 3D
+        trackMolecule3DError({
+          error_type: "library_load_failed",
+          error_message: e instanceof Error ? e.message : "Failed to initialize 3D viewer",
+        });
       }
     }
 
@@ -86,6 +93,9 @@ export function MoleculeViewer3D() {
     async function updateModel() {
       if (!viewerRef.current || !libReady || !sdfData) return;
 
+      const startTime = performance.now();
+      const moleculeName = getMoleculeKey(smiles ?? null, sdfData ?? null);
+
       try {
         const v = viewerRef.current;
         v.clear();
@@ -99,13 +109,36 @@ export function MoleculeViewer3D() {
           v.setView(saved);
         } else {
           v.zoomTo();
+          // Tracking de reset automático da visão
+          trackMolecule3DInteraction({
+            molecule_name: moleculeName,
+            interaction_type: "reset_view",
+            interaction_value: "auto_zoom",
+          });
         }
 
         v.render();
         setErr(null); // 🟢 Limpa erros anteriores
+
+        // Tracking de visualização 3D bem-sucedida
+        const renderTime = performance.now() - startTime;
+        trackMolecule3DView({
+          molecule_name: moleculeName,
+          render_time: Math.round(renderTime),
+          view_style: "stick_sphere",
+          success: true,
+        });
       } catch (e) {
         console.error("Erro ao renderizar modelo 3D:", e);
-        setErr("Não foi possível renderizar o modelo 3D (SDF inválido?).");
+        const errorMessage = "Não foi possível renderizar o modelo 3D (SDF inválido?).";
+        setErr(errorMessage);
+
+        // Tracking de erro na visualização 3D
+        trackMolecule3DError({
+          molecule_name: moleculeName,
+          error_type: "render_failed",
+          error_message: e instanceof Error ? e.message : "Unknown render error",
+        });
       }
     }
 
@@ -128,17 +161,42 @@ export function MoleculeViewer3D() {
       }
     };
 
-    el.addEventListener("mouseup", save, true);
-    el.addEventListener("wheel", save, {
+    // Função para rastrear interações com a molécula 3D
+    const trackInteraction = (interactionType: "zoom" | "rotate") => {
+      const moleculeName = getMoleculeKey(smiles ?? null, sdfData ?? null);
+      trackMolecule3DInteraction({
+        molecule_name: moleculeName,
+        interaction_type: interactionType,
+      });
+    };
+
+    // Event listeners com tracking de interações
+    const handleMouseUp = () => {
+      save();
+      trackInteraction("rotate"); // Mouse interactions são principalmente rotação
+    };
+
+    const handleWheel = () => {
+      save();
+      trackInteraction("zoom"); // Wheel é zoom
+    };
+
+    const handleTouchEnd = () => {
+      save();
+      trackInteraction("rotate"); // Touch interactions são principalmente rotação
+    };
+
+    el.addEventListener("mouseup", handleMouseUp, true);
+    el.addEventListener("wheel", handleWheel, {
       capture: true,
       passive: true,
     } as unknown as AddEventListenerOptions);
-    el.addEventListener("touchend", save, true);
+    el.addEventListener("touchend", handleTouchEnd, true);
 
     return () => {
-      el.removeEventListener("mouseup", save, true);
-      el.removeEventListener("wheel", save, true);
-      el.removeEventListener("touchend", save, true);
+      el.removeEventListener("mouseup", handleMouseUp, true);
+      el.removeEventListener("wheel", handleWheel, true);
+      el.removeEventListener("touchend", handleTouchEnd, true);
     };
   }, [smiles, sdfData, setView3D, libReady]);
 

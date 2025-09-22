@@ -5,6 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { MenuItemProps } from "../types";
 import { MENU_CLASSES } from "../constants";
+import { trackMenuInteraction } from "@/shared/events/interfaceEvents";
 
 type MenuItemPropsExtended = MenuItemProps & { isSubmenuItem?: boolean };
 
@@ -17,6 +18,20 @@ export const MenuItem = memo(function MenuItem({
   isCollapsed,
   isSubmenuItem = false,
 }: MenuItemPropsExtended) {
+  const handleClick = () => {
+    // Rastrear interação do menu
+    trackMenuInteraction({
+      menu_item: label,
+      action_type: "click",
+      menu_section: isSubmenuItem ? "dropdown" : "sidebar",
+      section: "navigation"
+    });
+    
+    // Executar onClick original se existir
+    if (onClick) {
+      onClick();
+    }
+  };
   const content = (
     <>
       <Icon className={cn("w-5 h-5 flex-shrink-0", isCollapsed && "mx-auto")} />
@@ -38,6 +53,7 @@ export const MenuItem = memo(function MenuItem({
     return (
       <Link
         href={href}
+        onClick={handleClick}
         className={cn(baseClass, activeClass, collapsedClass)}
         aria-current={isActive ? "page" : undefined}
         title={isCollapsed ? label : undefined}
@@ -49,7 +65,7 @@ export const MenuItem = memo(function MenuItem({
 
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(baseClass, activeClass, collapsedClass)}
       aria-pressed={isActive}
       type="button"
