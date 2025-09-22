@@ -1,6 +1,7 @@
 "use client";
 
 import { MoleculeViewer2D } from "./MoleculeViewer2D";
+import { MoleculeViewer2D_Kekule } from "./MoleculeViewer2D_Kekule";
 import { MoleculeViewer3D } from "./MoleculeViewer3D";
 import { MoleculeToolbar } from "./MoleculeToolbar";
 import { useVisualizationStore } from "../store/visualizationStore";
@@ -8,7 +9,7 @@ import { useTranslations } from "next-intl";
 
 export function VisualizationPageContent() {
   const t = useTranslations("visualization");
-  const { viewMode, smilesData, sdfData } = useVisualizationStore();
+  const { viewMode, renderer, smilesData, sdfData } = useVisualizationStore();
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -17,7 +18,9 @@ export function VisualizationPageContent() {
 
       {/* Área principal sem restrições */}
       <div className="flex-1 min-h-0 p-0 relative overflow-hidden">
-        {viewMode === "2D" ? <MoleculeViewer2D /> : <MoleculeViewer3D />}
+        {viewMode === "2D" && renderer === "openchemlib" && <MoleculeViewer2D />}
+        {viewMode === "2D" && renderer === "kekule" && <MoleculeViewer2D_Kekule />}
+        {viewMode === "3D" && <MoleculeViewer3D />}
       </div>
 
       {/* Dica quando nada é carregado */}

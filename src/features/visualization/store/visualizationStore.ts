@@ -6,11 +6,13 @@ import type { MolView } from "../types/3dmol";
 
 type ViewMode = "2D" | "3D";
 type MolKey = string; // e.g., smiles:<str> or sdf:<hash>
+type RendererEngine = 'openchemlib' | 'kekule';
 
 interface VisualizationState {
   viewMode: ViewMode;
   smilesData: string | null;
   sdfData: string | null;
+  renderer: RendererEngine;
 
   // Estado persistente de visualização
   currentMolKey: MolKey | null;
@@ -20,6 +22,7 @@ interface VisualizationState {
   setViewMode: (m: ViewMode) => void;
   setSmilesData: (s: string | null) => void;
   setSdfData: (s: string | null) => void;
+  setRenderer: (r: RendererEngine) => void;
 
   setCurrentMolKey: (k: MolKey | null) => void;
   setZoom2D: (k: MolKey, vb: ViewBox) => void;
@@ -34,6 +37,7 @@ export const useVisualizationStore = create<VisualizationState>()(
       viewMode: "2D",
       smilesData: null,
       sdfData: null,
+      renderer: 'openchemlib',
 
       currentMolKey: null,
       zoom2DByMol: {},
@@ -42,6 +46,7 @@ export const useVisualizationStore = create<VisualizationState>()(
       setViewMode: (m) => set({ viewMode: m }),
       setSmilesData: (s) => set({ smilesData: s }),
       setSdfData: (s) => set({ sdfData: s }),
+      setRenderer: (r) => set({ renderer: r }),
 
       setCurrentMolKey: (k) => set({ currentMolKey: k }),
       setZoom2D: (k, vb) =>

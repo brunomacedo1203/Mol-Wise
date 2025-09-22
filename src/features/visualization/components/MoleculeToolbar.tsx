@@ -22,7 +22,9 @@ export function MoleculeToolbar() {
   const setSmiles = useVisualizationStore((s) => s.setSmilesData);
   const setSdf = useVisualizationStore((s) => s.setSdfData);
   const setViewMode = useVisualizationStore((s) => s.setViewMode);
+  const setRenderer = useVisualizationStore((s) => s.setRenderer);
   const viewMode = useVisualizationStore((s) => s.viewMode);
+  const renderer = useVisualizationStore((s) => s.renderer);
   const smiles = useVisualizationStore((s) => s.smilesData);
   const sdfData = useVisualizationStore((s) => s.sdfData);
 
@@ -237,6 +239,21 @@ export function MoleculeToolbar() {
             <span className="text-sm font-bold">{viewMode}</span>
           </div>
         </button>
+
+        {/* 🎛️ Botão para alternar motor de renderização 2D */}
+        {viewMode === "2D" && (
+          <button
+            type="button"
+            onClick={() => setRenderer(renderer === "kekule" ? "openchemlib" : "kekule")}
+            className="w-28 h-11 px-3 rounded-full border border-zinc-400 dark:border-zinc-500 
+              bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 
+              shadow-inner dark:shadow-none transition-all duration-300 text-sm font-semibold 
+              text-zinc-700 dark:text-zinc-300"
+            title="Alternar motor de visualização 2D"
+          >
+            {renderer === "kekule" ? "Kekule.js" : "OpenChemLib"}
+          </button>
+        )}
 
         {/* ⛔️ HIDDEN: CH button — keep commented until implemented */}
         {/*

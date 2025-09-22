@@ -41,8 +41,6 @@ const themeScript = `
   })();
 `;
 
-// (Removido) Injeção direta de GA/Clarity. Passará a ser controlada por consentimento via AnalyticsManager.
-
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -64,6 +62,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        {/* ✅ Inclusão do CSS do Kekule.js via CDN */}
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/kekule@latest/themes/default/kekule.css"
+        />
+      </head>
       <body className={inter.className}>
         {/* ✅ Scripts globais */}
         <Script
