@@ -252,6 +252,21 @@
       "Nitrous oxide": "Distickstoffmonoxid",
       "Sodium phosphate": "Natriumphosphat",
       "Calcium hypochlorite": "Calciumhypochlorit"
+    },
+    "tableHeaderDescriptions": {
+      "id": "Sequenznummer der Verbindung in der Tabelle",
+      "no": "Sequenznummer der Verbindung in der Tabelle",
+      "name": "Offizieller chemischer Name der Verbindung",
+      "commonName": "Populärer oder kommerzieller Name der Verbindung",
+      "formula": "Molekularformel der chemischen Verbindung",
+      "casNumber": "CAS-Registrierungsnummer (Chemical Abstracts Service)",
+      "molarMass": "Molmasse in Gramm pro Mol (g/mol)",
+      "physicalForm": "Physikalischer Zustand der Verbindung unter normalen Bedingungen",
+      "meltingPoint": "Schmelztemperatur in Grad Celsius (°C)",
+      "boilingPoint": "Siedetemperatur in Grad Celsius (°C)",
+      "density": "Dichte in Gramm pro Kubikzentimeter (g/cm³)",
+      "solubilityNumeric": "Numerische Löslichkeit in Wasser (g/100g H₂O)",
+      "solubilityQualitative": "Qualitative Klassifizierung der Löslichkeit in Wasser"
     }
   }
 }

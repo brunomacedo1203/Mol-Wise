@@ -254,6 +254,7 @@
       "Calcium hypochlorite": "Hipoclorito de Cálcio"
     },
     "tableHeaderDescriptions": {
+      "id": "Número sequencial do composto na tabela",
       "no": "Número sequencial do composto na tabela",
       "name": "Nome químico oficial do composto",
       "commonName": "Nome popular ou comercial do composto",

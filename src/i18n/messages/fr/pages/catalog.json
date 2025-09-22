@@ -252,6 +252,21 @@
       "Nitrous oxide": "Oxyde nitreux",
       "Sodium phosphate": "Phosphate de sodium",
       "Calcium hypochlorite": "Hypochlorite de calcium"
+    },
+    "tableHeaderDescriptions": {
+      "id": "Numéro séquentiel du composé dans le tableau",
+      "no": "Numéro séquentiel du composé dans le tableau",
+      "name": "Nom chimique officiel du composé",
+      "commonName": "Nom populaire ou commercial du composé",
+      "formula": "Formule moléculaire du composé chimique",
+      "casNumber": "Numéro d'enregistrement CAS (Chemical Abstracts Service)",
+      "molarMass": "Masse molaire en grammes par mole (g/mol)",
+      "physicalForm": "État physique du composé dans des conditions normales",
+      "meltingPoint": "Température de fusion en degrés Celsius (°C)",
+      "boilingPoint": "Température d'ébullition en degrés Celsius (°C)",
+      "density": "Densité en grammes par centimètre cube (g/cm³)",
+      "solubilityNumeric": "Solubilité numérique dans l'eau (g/100g H₂O)",
+      "solubilityQualitative": "Classification qualitative de la solubilité dans l'eau"
     }
   }
 }

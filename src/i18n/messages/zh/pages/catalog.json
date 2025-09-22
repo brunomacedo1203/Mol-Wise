@@ -252,6 +252,21 @@
       "Nitrous oxide": "一氧化二氮",
       "Sodium phosphate": "磷酸钠",
       "Calcium hypochlorite": "次氯酸钙"
+    },
+    "tableHeaderDescriptions": {
+      "id": "表格中化合物的序号",
+      "no": "表格中化合物的序号",
+      "name": "化合物的官方化学名称",
+      "commonName": "化合物的通用或商业名称",
+      "formula": "化学化合物的分子式",
+      "casNumber": "CAS注册号（化学文摘服务）",
+      "molarMass": "摩尔质量，单位为克每摩尔 (g/mol)",
+      "physicalForm": "正常条件下化合物的物理形态",
+      "meltingPoint": "熔点，单位为摄氏度 (°C)",
+      "boilingPoint": "沸点，单位为摄氏度 (°C)",
+      "density": "密度，单位为克每立方厘米 (g/cm³)",
+      "solubilityNumeric": "在水中的数值溶解度 (g/100g H₂O)",
+      "solubilityQualitative": "在水中溶解度的定性分类"
     }
   }
 }

@@ -252,6 +252,21 @@
       "Nitrous oxide": "Nitrogen oksida",
       "Sodium phosphate": "Natrium fosfat",
       "Calcium hypochlorite": "Kalsium hipoklorit"
+    },
+    "tableHeaderDescriptions": {
+      "id": "Nomor urut senyawa dalam tabel",
+      "no": "Nomor urut senyawa dalam tabel",
+      "name": "Nama kimia resmi senyawa",
+      "commonName": "Nama populer atau komersial senyawa",
+      "formula": "Rumus molekul senyawa kimia",
+      "casNumber": "Nomor registrasi CAS (Chemical Abstracts Service)",
+      "molarMass": "Massa molar dalam gram per mol (g/mol)",
+      "physicalForm": "Bentuk fisik senyawa dalam kondisi normal",
+      "meltingPoint": "Titik leleh dalam derajat Celsius (°C)",
+      "boilingPoint": "Titik didih dalam derajat Celsius (°C)",
+      "density": "Densitas dalam gram per sentimeter kubik (g/cm³)",
+      "solubilityNumeric": "Kelarutan numerik dalam air (g/100g H₂O)",
+      "solubilityQualitative": "Klasifikasi kualitatif kelarutan dalam air"
     }
   }
 }

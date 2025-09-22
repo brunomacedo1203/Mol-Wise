@@ -252,6 +252,21 @@
       "Nitrous oxide": "Nitrous oxide",
       "Sodium phosphate": "Sodium phosphate",
       "Calcium hypochlorite": "Calcium hypochlorite"
+    },
+    "tableHeaderDescriptions": {
+      "id": "Sequential number of the compound in the table",
+      "no": "Sequential number of the compound in the table",
+      "name": "Official chemical name of the compound",
+      "commonName": "Popular or commercial name of the compound",
+      "formula": "Molecular formula of the chemical compound",
+      "casNumber": "CAS (Chemical Abstracts Service) registry number",
+      "molarMass": "Molar mass in grams per mole (g/mol)",
+      "physicalForm": "Physical state of the compound under normal conditions",
+      "meltingPoint": "Melting temperature in degrees Celsius (°C)",
+      "boilingPoint": "Boiling temperature in degrees Celsius (°C)",
+      "density": "Density in grams per cubic centimeter (g/cm³)",
+      "solubilityNumeric": "Numerical solubility in water (g/100g H₂O)",
+      "solubilityQualitative": "Qualitative classification of solubility in water"
     }
   }
 }
