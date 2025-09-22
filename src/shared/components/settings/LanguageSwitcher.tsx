@@ -76,7 +76,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <Select value={currentLocale} onValueChange={handleChange}>
-        <SelectTrigger className="w-[140px] h-9 border border-zinc-400 dark:border-zinc-400 rounded-full px-4 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
+        <SelectTrigger aria-label={t("Select language")} className="w-[140px] h-9 border border-zinc-400 dark:border-zinc-400 rounded-full px-4 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
           <div className="flex items-center gap-2">
             <div className="relative w-5 h-[15px]">
               <Image
