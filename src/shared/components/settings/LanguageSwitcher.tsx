@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, usePathname } from "next/navigation"; // Removido useRouter
+import { useParams, usePathname, useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -34,6 +34,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const t = useTranslations("languages");
   const params = useParams();
   const pathname = usePathname();
+  const router = useRouter();
   const currentLocale = params.locale as string;
 
   const handleChange = (nextLocale: string) => {
@@ -66,8 +67,8 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     // Constrói o novo caminho
     const newPath = pathname.replace(`/${currentLocale}`, `/${nextLocale}`);
 
-    // Usa window.location.href ao invés de router.replace para garantir que os cookies sejam enviados
-    window.location.href = newPath;
+    // Usa router.push para navegação client-side mais suave
+    router.push(newPath);
   };
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];

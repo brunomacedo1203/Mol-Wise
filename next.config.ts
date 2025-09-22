@@ -6,6 +6,8 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+  // Configuração para melhorar navegação em produção
+  trailingSlash: false,
   // Configuração para servir arquivos WASM
   async headers() {
     return [
@@ -15,6 +17,20 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Type',
             value: 'application/wasm',
+          },
+        ],
+      },
+      // Headers para melhorar cache e navegação
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
           },
         ],
       },
