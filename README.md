@@ -543,11 +543,11 @@ interface CookieConsentState {
 
 ```tsx
 // O sistema automaticamente controla o GA baseado no consentimento
-import { gtag } from "@/lib/gtag";
+import { gtag, GA_TRACKING_ID } from "@/lib/gtag";
 
 // Analytics só é ativado se analyticsEnabled === true
 if (consentState.analyticsEnabled) {
-  gtag("config", "GA_MEASUREMENT_ID");
+  gtag("config", GA_TRACKING_ID);
 }
 ```
 

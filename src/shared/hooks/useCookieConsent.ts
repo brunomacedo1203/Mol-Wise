@@ -60,75 +60,8 @@ const shouldRefreshConsent = (timestamp: string): boolean => {
 };
 
 // Função para controlar scripts de terceiros
-const manageThirdPartyScripts = (analyticsEnabled: boolean) => {
-  if (typeof window === 'undefined') return;
-
-  // Google Analytics
-  const gaScript = document.querySelector('script[src*="googletagmanager.com"]');
-  const gaConfig = document.querySelector('script[data-type="ga-config"]');
-  
-  if (analyticsEnabled) {
-    // Habilitar Google Analytics se consentimento dado
-    if (!gaScript) {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
-      document.head.appendChild(script);
-      
-      const configScript = document.createElement('script');
-      configScript.setAttribute('data-type', 'ga-config');
-      configScript.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID', {
-          'anonymize_ip': true,
-          'cookie_expires': 60 * 60 * 24 * 365, // 1 ano
-        });
-      `;
-      document.head.appendChild(configScript);
-    }
-  } else {
-    // Desabilitar/remover scripts de analytics
-    if (gaScript) gaScript.remove();
-    if (gaConfig) gaConfig.remove();
-    
-    // Limpar Google Analytics
-    if (window.gtag) {
-      window.gtag('config', 'GA_MEASUREMENT_ID', {
-        'send_page_view': false
-      });
-    }
-    
-    // Remover cookies de terceiros
-    const cookiesToRemove = ['_ga', '_ga_', '_gid', '_gat', '_gat_gtag_'];
-    cookiesToRemove.forEach(cookieName => {
-      document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=.${window.location.hostname}`;
-      document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=${window.location.hostname}`;
-      document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
-    });
-  }
-
-  // Microsoft Clarity
-  if (analyticsEnabled) {
-    if (!window.clarity) {
-      const clarityScript = document.createElement('script');
-      clarityScript.innerHTML = `
-        (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
-      `;
-      document.head.appendChild(clarityScript);
-    }
-  } else {
-    // Desabilitar Clarity
-    if (window.clarity) {
-      window.clarity('stop');
-    }
-  }
-};
+// Analytics scripts são agora gerenciados centralmente pelo AnalyticsManager.tsx
+// Esta função foi removida para evitar duplicação e placeholders hard-coded
 
 export const useCookieConsent = () => {
   const [consentState, setConsentState] = useState<CookieConsentState>({
@@ -160,8 +93,7 @@ export const useCookieConsent = () => {
           });
           setShowBanner(false);
           
-          // Aplicar configurações de terceiros
-          manageThirdPartyScripts(parsed.analyticsEnabled);
+          // Analytics são gerenciados pelo AnalyticsManager.tsx
           return;
         } catch (error) {
           console.warn("Erro ao parsear cookie de consentimento:", error);
@@ -191,8 +123,7 @@ export const useCookieConsent = () => {
             });
             setShowBanner(false);
             
-            // Aplicar configurações de terceiros
-            manageThirdPartyScripts(storageValue.analyticsEnabled);
+            // Analytics são gerenciados pelo AnalyticsManager.tsx
             return;
           }
         } catch (error) {
@@ -209,9 +140,8 @@ export const useCookieConsent = () => {
 
   // Efeito para gerenciar scripts quando o estado muda
   useEffect(() => {
-    if (consentState.hasConsented !== null) {
-      manageThirdPartyScripts(consentState.analyticsEnabled);
-    }
+    // Analytics são gerenciados pelo AnalyticsManager.tsx
+    // Este hook apenas gerencia o estado do consentimento
   }, [consentState.analyticsEnabled, consentState.hasConsented]);
 
   // Salva o estado do consentimento
@@ -230,8 +160,7 @@ export const useCookieConsent = () => {
     setConsentState(newState);
     setShowBanner(false);
 
-    // Aplicar imediatamente as configurações de terceiros
-    manageThirdPartyScripts(newState.analyticsEnabled);
+    // Analytics são gerenciados pelo AnalyticsManager.tsx
   };
 
   // Aceita todos os cookies
@@ -275,8 +204,7 @@ export const useCookieConsent = () => {
       console.warn("Erro ao remover do localStorage:", error);
     }
 
-    // Desabilitar todos os scripts de terceiros
-    manageThirdPartyScripts(false);
+    // Desabilitar todos os scripts de terceiros é gerenciado pelo AnalyticsManager.tsx
 
     setConsentState({
       hasConsented: null,
