@@ -37,7 +37,7 @@ declare module 'kekule' {
 // Global window extension for Kekule
 declare global {
   interface Window {
-    Kekule?: {
+    Kekule: {
       ChemWidget: {
         Viewer: new (container: HTMLElement) => ViewerWidget;
         [key: string]: unknown;

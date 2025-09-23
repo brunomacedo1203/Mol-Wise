@@ -81,6 +81,12 @@ export default async function LocaleLayout({
           src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.4/3Dmol-min.js"
           strategy="beforeInteractive"
         />
+        
+        {/* ✅ Script do Kekule.js via CDN */}
+        <Script
+          src="https://unpkg.com/kekule@latest/dist/kekule.min.js"
+          strategy="beforeInteractive"
+        />
 
         {/* Scripts de analytics e Clarity condicionados ao consentimento */}
         <AnalyticsManager />

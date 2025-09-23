@@ -42,13 +42,26 @@ export function MoleculeViewer2D_Kekule() {
 
     async function load() {
       try {
-        const { Kekule } = (await import("kekule")) as { Kekule: KekuleLib };
-        if (!containerRef.current || disposed || !smiles) return;
+        // Aguarda o Kekule estar disponível globalmente
+        if (typeof window === 'undefined' || !window.Kekule) {
+          console.error("Kekule.js não está disponível globalmente");
+          return;
+        }
+        
+        const Kekule = window.Kekule as KekuleLib;
+        if (!containerRef.current || disposed || !smiles || typeof smiles !== "string") {
+          console.warn("Viewer não iniciado: smiles inválido", smiles);
+          return;
+        }
 
         widget = new Kekule.ChemWidget.Viewer(containerRef.current);
         widget.setPredefinedSetting("basic");
         widget.setEnableToolbar(false);
         widget.setEnableEdit(false);
+        
+        console.log("smiles recebido:", smiles);
+        console.log("tipo de smiles:", typeof smiles);
+        
         widget.setChemObj(Kekule.IO.loadFormatData(smiles, "smi"));
         widget.setViewSize({ width: "100%", height: "100%" });
       } catch (e) {
