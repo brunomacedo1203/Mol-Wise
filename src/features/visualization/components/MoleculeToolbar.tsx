@@ -119,7 +119,7 @@ export function MoleculeToolbar() {
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
-
+    console.log("input", input.trim());
     if (input.trim() !== "") {
       const timer = setTimeout(() => {
         // Tracking de interação com o campo (sem envio da busca)
@@ -137,7 +137,7 @@ export function MoleculeToolbar() {
         clearTimeout(debounceTimer);
       }
     };
-  }, [input, debounceTimer]);
+  }, [input]);
 
   return (
     <div
@@ -205,7 +205,7 @@ export function MoleculeToolbar() {
           onClick={() => {
             const newMode = viewMode === "2D" ? "3D" : "2D";
             setViewMode(newMode);
-            
+
             // Tracking de mudança de modo de visualização
             if (newMode === "3D" && (smiles || sdfData)) {
               const moleculeName = getMoleculeKey(smiles, sdfData);
@@ -244,7 +244,9 @@ export function MoleculeToolbar() {
         {viewMode === "2D" && (
           <button
             type="button"
-            onClick={() => setRenderer(renderer === "kekule" ? "openchemlib" : "kekule")}
+            onClick={() =>
+              setRenderer(renderer === "kekule" ? "openchemlib" : "kekule")
+            }
             className="w-28 h-11 px-3 rounded-full border border-zinc-400 dark:border-zinc-500 
               bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 
               shadow-inner dark:shadow-none transition-all duration-300 text-sm font-semibold 
