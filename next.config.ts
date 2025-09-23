@@ -1,36 +1,39 @@
 import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import withBundleAnalyzer from "@next/bundle-analyzer"; // ✅ Novo
+
+// ⚙️ Ativa o bundle analyzer se a variável de ambiente ANALYZE=true
+const withAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
-  // Configuração para melhorar navegação em produção
   trailingSlash: false,
-  // Configuração para servir arquivos WASM
   async headers() {
     return [
       {
-        source: '/(.*)\.wasm',
+        source: "/(.*)\\.wasm",
         headers: [
           {
-            key: 'Content-Type',
-            value: 'application/wasm',
+            key: "Content-Type",
+            value: "application/wasm",
           },
         ],
       },
-      // Headers para melhorar cache e navegação
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'DENY',
+            key: "X-Frame-Options",
+            value: "DENY",
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
         ],
       },
@@ -40,23 +43,22 @@ const nextConfig: NextConfig = {
     config.experiments = config.experiments || {};
     config.experiments.asyncWebAssembly = true;
     config.experiments.syncWebAssembly = true;
-    
-    // Configuração específica para OpenChemLib
+
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
       path: false,
       crypto: false,
     };
-    
-    // Configuração para arquivos WASM
+
     config.module.rules.push({
       test: /\.wasm$/,
-      type: 'webassembly/async',
+      type: "webassembly/async",
     });
-    
+
     return config;
-  }
+  },
 };
 
-export default withNextIntl(nextConfig);
+// Composição dos plugins: bundle analyzer + next-intl
+export default withAnalyzer(withNextIntl(nextConfig));

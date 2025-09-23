@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { evaluate } from "mathjs";
 import { parseFormulaForEvaluation } from "@/features/calculators/domain/services/formulaParser";
 import { isValidZeroInsertion } from "@/features/calculators/utils/zeroValidation";
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
@@ -10,6 +9,12 @@ import {
   trackScientificMemory,
   trackScientificHistory
 } from "../../../events/scientificEvents";
+
+// Importação dinâmica do mathjs
+const loadMathjs = async () => {
+  const { evaluate } = await import("mathjs");
+  return { evaluate };
+};
 
 interface UseScientificCalculatorProps {
   initialFormula?: string;
@@ -53,8 +58,8 @@ function convertTrigArgsToRad(expr: string): string {
       if (!isNaN(simpleNumber)) {
         return `${fn}(${degToRad(simpleNumber)})`;
       }
-      const evaluatedArg = evaluate(arg);
-      return `${fn}(${degToRad(evaluatedArg)})`;
+      // Para argumentos complexos, mantém como está - será avaliado no contexto principal
+      return match;
     } catch {
       const fallbackValue = Number(arg);
       if (!isNaN(fallbackValue)) {
@@ -65,7 +70,7 @@ function convertTrigArgsToRad(expr: string): string {
   });
 }
 
-function validateDivisionByZero(formula: string): boolean {
+async function validateDivisionByZero(formula: string): Promise<boolean> {
   const divisionRegex = /\/\s*([^+\-*/()]+)/g;
   let match;
   while ((match = divisionRegex.exec(formula)) !== null) {
@@ -75,6 +80,7 @@ function validateDivisionByZero(formula: string): boolean {
       return false;
     }
     try {
+      const { evaluate } = await loadMathjs();
       const evaluatedDivisor = evaluate(divisor);
       if (evaluatedDivisor === 0) {
         return false;
@@ -139,7 +145,7 @@ export function useScientificCalculator({
     [onFormulaChange, onResultChange]
   );
 
-  const calculate = useCallback(() => {
+  const calculate = useCallback(async () => {
     try {
       if (!formula.trim()) {
         setResult(null);
@@ -156,7 +162,7 @@ export function useScientificCalculator({
         return;
       }
 
-      if (!validateDivisionByZero(formula)) {
+      if (!(await validateDivisionByZero(formula))) {
         setResult(null);
         setErrorMessage(
           getErrorMessage
@@ -173,6 +179,9 @@ export function useScientificCalculator({
         return;
       }
 
+      // Carregamento dinâmico do mathjs
+      const { evaluate } = await loadMathjs();
+      
       const formulaToEvaluate = parseFormulaForEvaluation(formula);
       const formulaWithRad = convertTrigArgsToRad(formulaToEvaluate);
       const calculatedResult = evaluate(formulaWithRad);

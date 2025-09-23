@@ -1,11 +1,23 @@
 "use client";
 
-import { MolarMassCalculator } from "@/features/calculators/components/calculators/molar-mass";
-import { ScientificCalculator } from "@/features/calculators/components/calculators/scientific";
+import { lazy, Suspense } from "react";
 import { useCalculatorInstancesStore } from "@/features/calculators/store/calculatorInstancesStore";
 import { useCalculatorHistoryStore } from "@/features/calculators/store/calculatorHistoryStore";
 import { CloseAllButton } from "@/shared/components/buttons/CloseAllButton";
 import { PositionWithWidth } from "@/features/calculators/domain/types";
+
+// Lazy loading dos componentes de calculadora
+const MolarMassCalculator = lazy(() => 
+  import("@/features/calculators/components/calculators/molar-mass").then(module => ({
+    default: module.MolarMassCalculator
+  }))
+);
+
+const ScientificCalculator = lazy(() => 
+  import("@/features/calculators/components/calculators/scientific").then(module => ({
+    default: module.ScientificCalculator
+  }))
+);
 
 export function CalculatorPageContent() {
   // Ajustado para remover a prop e interface, mantendo compatibilidade
@@ -59,9 +71,17 @@ export function CalculatorPageContent() {
 
     switch (calculator.type) {
       case "molar-mass":
-        return <MolarMassCalculator key={calculator.id} {...commonProps} />;
+        return (
+          <Suspense fallback={<div className="flex items-center justify-center p-8">Carregando calculadora...</div>}>
+            <MolarMassCalculator key={calculator.id} {...commonProps} />
+          </Suspense>
+        );
       case "scientific":
-        return <ScientificCalculator key={calculator.id} {...commonProps} />;
+        return (
+          <Suspense fallback={<div className="flex items-center justify-center p-8">Carregando calculadora...</div>}>
+            <ScientificCalculator key={calculator.id} {...commonProps} />
+          </Suspense>
+        );
       default:
         return null;
     }
