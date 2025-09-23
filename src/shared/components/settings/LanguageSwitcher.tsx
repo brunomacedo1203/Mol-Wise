@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -34,7 +34,6 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const t = useTranslations("languages");
   const params = useParams();
   const pathname = usePathname();
-  const router = useRouter();
   const currentLocale = params.locale as string;
 
   const handleChange = (nextLocale: string) => {
@@ -64,11 +63,22 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
         "user-locale=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     }
 
-    // Constrói o novo caminho
-    const newPath = pathname.replace(`/${currentLocale}`, `/${nextLocale}`);
+    // Constrói o novo caminho de forma mais robusta
+    let newPath: string;
+    
+    // Se estamos na raiz (/) ou sem locale no path
+    if (pathname === "/" || !pathname.startsWith(`/${currentLocale}`)) {
+      // Para português (idioma padrão), não adiciona prefixo
+      newPath = nextLocale === "pt" ? "/" : `/${nextLocale}`;
+    } else {
+      // Remove o locale atual e adiciona o novo
+      const pathWithoutLocale = pathname.replace(`/${currentLocale}`, "");
+      // Para português (idioma padrão), não adiciona prefixo
+      newPath = nextLocale === "pt" ? pathWithoutLocale || "/" : `/${nextLocale}${pathWithoutLocale}`;
+    }
 
-    // Usa router.push para navegação client-side mais suave
-    router.push(newPath);
+    // Força um refresh da página para garantir que o middleware processe corretamente
+    window.location.href = newPath;
   };
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];

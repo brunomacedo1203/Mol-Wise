@@ -204,6 +204,7 @@
       "Ca(ClO)2": "Calcium Hypochlorite"
     },
     "CommonName": {
+      "—": "—",
       "Table salt": "Table salt",
       "Limestone": "Limestone",
       "Copper(II) sulfate pentahydrate": "Copper(II) sulfate pentahydrate",

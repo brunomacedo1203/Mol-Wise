@@ -269,7 +269,8 @@
       "developed": "Developed in {year}",
       "privacyPolicy": "Privacy Policy",
       "termsOfUse": "Terms of Use",
-      "policies": "Policies"
+      "policies": "Policies",
+      "rightClickToCopy": "Right click to copy"
     },
     "privacy": {
       "title": "Privacy Policy",

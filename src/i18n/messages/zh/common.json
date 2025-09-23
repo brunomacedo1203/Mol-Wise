@@ -269,7 +269,8 @@
       "developed": "开发于 {year}",
       "privacyPolicy": "隐私政策",
       "termsOfUse": "使用条款",
-      "policies": "政策"
+      "policies": "政策",
+      "rightClickToCopy": "右键点击复制"
     },
     "privacy": {
       "title": "隐私政策",

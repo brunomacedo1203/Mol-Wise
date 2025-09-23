@@ -269,7 +269,8 @@
       "developed": "Desenvolvido em {year}",
       "privacyPolicy": "Política de Privacidade",
       "termsOfUse": "Termos de Uso",
-      "policies": "Políticas"
+      "policies": "Políticas",
+      "rightClickToCopy": "Clique direito para copiar"
     },
     "privacy": {
       "title": "Política de Privacidade",
