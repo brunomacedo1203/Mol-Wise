@@ -205,7 +205,8 @@
     },
     "CommonName": {
       "—": "—",
-      "Table salt": "Garam dapur",
+      "notAvailable": "Tidak tersedia",
+      "Table salt": "Garam meja",
       "Limestone": "Batu kapur",
       "Copper(II) sulfate pentahydrate": "Tembaga(II) sulfat pentahidrat",
       "Water": "Air",

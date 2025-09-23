@@ -205,6 +205,7 @@
     },
     "CommonName": {
       "—": "—",
+      "notAvailable": "غير متوفر",
       "Table salt": "ملح الطعام",
       "Limestone": "الحجر الجيري",
       "Copper(II) sulfate pentahydrate": "كبريتات النحاس الثنائي خماسي الماء",

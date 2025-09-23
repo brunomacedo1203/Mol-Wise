@@ -11,6 +11,11 @@ import { GA_TRACKING_ID, setAnalyticsConsent } from "@/lib/gtag";
  */
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID ?? "";
 
+// Desabilita Clarity em desenvolvimento local para evitar erros 400
+const isLocalDevelopment = typeof window !== 'undefined' && 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const shouldLoadClarity = CLARITY_ID && !isLocalDevelopment;
+
 export default function AnalyticsManager() {
   const { consentState } = useCookieConsent();
   const analyticsEnabled = !!consentState.analyticsEnabled;
@@ -22,7 +27,7 @@ export default function AnalyticsManager() {
 
   // --- Microsoft Clarity ---
   const claritySnippet = useMemo(() => {
-    if (!CLARITY_ID) return "";
+    if (!shouldLoadClarity) return "";
     return `
       (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -70,7 +75,7 @@ export default function AnalyticsManager() {
         </>
       )}
 
-      {CLARITY_ID && (
+      {shouldLoadClarity && (
         <Script
           id="microsoft-clarity"
           strategy="afterInteractive"

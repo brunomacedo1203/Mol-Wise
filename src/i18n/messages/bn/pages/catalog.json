@@ -205,6 +205,7 @@
     },
     "CommonName": {
       "—": "—",
+      "notAvailable": "উপলব্ধ নয়",
       "Table salt": "খাবার লবণ",
       "Limestone": "চুনাপাথর",
       "Copper(II) sulfate pentahydrate": "কপার(II) সালফেট পেন্টাহাইড্রেট",

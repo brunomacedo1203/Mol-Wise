@@ -28,7 +28,7 @@ import compounds from "./data/compounds.json";
 import dataTerms from "./data/terms.json";
 import elements from "./data/elements.json";
 
-// Exportação consolidada - TODAS as chaves são espalhadas no nível raiz
+// Exportação consolidada - mantendo estrutura hierárquica para termos técnicos
 const translations = {
   // Traduções globais
   ...common,
@@ -52,9 +52,15 @@ const translations = {
   ...cookies,
   ...terms,
 
-  // Dados - usando spread operator para espalhar todas as chaves
+  // Compostos - usando spread operator para espalhar todas as chaves
   ...compounds,
-  ...dataTerms,
+
+  // MANTENDO ESTRUTURA HIERÁRQUICA para termos técnicos (SOLUÇÃO DO PROBLEMA)
+  solubilityTerms: dataTerms.solubilityTerms,
+  physicalFormTerms: dataTerms.physicalFormTerms,
+  chemicalTerms: dataTerms.chemicalTerms,
+
+  // Elementos - usando spread operator para espalhar todas as chaves
   ...elements,
 };
 

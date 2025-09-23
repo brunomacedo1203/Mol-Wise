@@ -205,7 +205,8 @@
     },
     "CommonName": {
       "—": "—",
-      "Table salt": "खाना नमक",
+      "notAvailable": "उपलब्ध नहीं",
+      "Table salt": "नमक",
       "Limestone": "चूना पत्थर",
       "Copper(II) sulfate pentahydrate": "कॉपर(II) सल्फेट पेंटाहाइड्रेट",
       "Water": "पानी",

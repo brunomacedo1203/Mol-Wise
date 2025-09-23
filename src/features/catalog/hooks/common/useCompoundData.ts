@@ -6,7 +6,7 @@ import rawExtendedMetadata from "../../../../../public/data/inorganic-compounds.
 const extendedMetadata: Record<string, { commonName: string; category: string }> = 
   rawExtendedMetadata.reduce((acc, compound) => {
     acc[compound.Formula] = {
-      commonName: compound.commonName || "—",
+      commonName: compound.commonName || "notAvailable",
       category: compound.category || "desconhecida"
     };
     return acc;
@@ -75,7 +75,7 @@ export function useCompoundData() {
           const meta = extendedMetadata[compound.formula] ?? {};
           return {
             ...compound,
-            commonName: meta.commonName ?? "—",
+            commonName: meta.commonName ?? "notAvailable",
             category: (meta.category as ExtendedCompound["category"]) ?? "desconhecida",
           };
         };
