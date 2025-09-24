@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useRef } from "react";
 import { useVisualizationStore } from "../store/visualizationStore";
@@ -12,6 +13,7 @@ interface KekuleViewer {
   setChemObj: (obj: unknown) => void;
   setViewSize: (size: { width: string; height: string }) => void;
   finalize?: () => void;
+  setDimension?: (width: string, height: string) => void;
 }
 
 interface KekuleIO {
@@ -23,6 +25,7 @@ interface KekuleChemWidget {
 }
 
 interface KekuleLib {
+  OpenBabel: any;
   ChemWidget: KekuleChemWidget;
   IO: KekuleIO;
 }
@@ -47,23 +50,46 @@ export function MoleculeViewer2D_Kekule() {
           console.error("Kekule.js não está disponível globalmente");
           return;
         }
-        
+
         const Kekule = window.Kekule as KekuleLib;
         if (!containerRef.current || disposed || !smiles || typeof smiles !== "string") {
           console.warn("Viewer não iniciado: smiles inválido", smiles);
           return;
         }
 
-        widget = new Kekule.ChemWidget.Viewer(containerRef.current);
-        widget.setPredefinedSetting("basic");
-        widget.setEnableToolbar(false);
-        widget.setEnableEdit(false);
-        
-        console.log("smiles recebido:", smiles);
-        console.log("tipo de smiles:", typeof smiles);
-        
-        widget.setChemObj(Kekule.IO.loadFormatData(smiles, "smi"));
-        widget.setViewSize({ width: "100%", height: "100%" });
+         await new Promise<void>((resolve, reject) => {
+        Kekule.OpenBabel.enable((err?: any) => err ? reject(err) : resolve());
+      });
+
+
+      // 2) cria viewer
+      widget = new Kekule.ChemWidget.Viewer(containerRef.current!);
+      widget.setPredefinedSetting('basic');
+      widget.setEnableToolbar(true);
+      widget.setEnableEdit(true);
+      widget.setDimension?.('100%', '100%');      // importante: container precisa ter altura real
+      (widget as any).setAutofit?.(true);
+
+      // 3) lê o SMILES
+      const mol = Kekule.IO.loadFormatData(smiles, 'smi');
+
+      // 4) GERA 2D (tente OB; se falhar, caia no gerador interno)
+      let laidOut = mol;
+      try {
+        const ob2d = new (Kekule as any).Calculator.ObStructure2DGenerator();
+        ob2d.setSourceMol(mol);
+        ob2d.executeSync(() => {
+          laidOut = ob2d.getGeneratedMol() || mol;
+        });
+      } catch {
+        const gen2d = new (Kekule as any).Calculator.Structure2DGenerator(); // fallback
+        gen2d.setSourceMol(mol);
+        gen2d.executeSync(() => {
+          laidOut = gen2d.getGeneratedMol() || mol;
+        });
+      }
+
+      widget.setChemObj(laidOut);
       } catch (e) {
         console.error("Erro ao inicializar Kekule.js:", e);
       }

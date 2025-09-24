@@ -63,10 +63,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        {/* ✅ Inclusão do CSS do Kekule.js via CDN */}
         <link
           rel="stylesheet"
-          href="https://unpkg.com/kekule@latest/themes/default/kekule.css"
+          href="https://unpkg.com/kekule@latest/dist/themes/default/kekule.css"
         />
       </head>
       <body className={inter.className}>
@@ -81,10 +80,10 @@ export default async function LocaleLayout({
           src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.4/3Dmol-min.js"
           strategy="beforeInteractive"
         />
-        
-        {/* ✅ Script do Kekule.js via CDN */}
+
         <Script
-          src="https://unpkg.com/kekule@latest/dist/kekule.min.js"
+          id="kekule-cdn"
+          src="https://unpkg.com/kekule@latest/dist/kekule.min.js?modules=chemWidget,io,io-smiles"
           strategy="beforeInteractive"
         />
 
