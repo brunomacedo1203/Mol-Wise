@@ -1,9 +1,10 @@
 {
   "calculators": {
     "title": "Rechner",
-    "subtitle": "Öffnen Sie einen oder mehrere Rechner über das Menü.",
+    "subtitle": "Öffnen Sie einen oder mehrere Rechner aus dem Menü.",
     "closeAll": "Alle schließen",
-    "description": "Greifen Sie auf Chemie-Rechner für Molmasse, wissenschaftliche Berechnungen und mehr zu.",
+    "description": "Zugriff auf Chemie-Rechner für Molmasse, wissenschaftliche Berechnungen und mehr.",
+    "loadingCalculator": "Rechner wird geladen...",
     "errors": {
       "generic": "Während der Berechnung ist ein Fehler aufgetreten",
       "unsupportedType": "Nicht unterstützter Rechnertyp: {type}"
