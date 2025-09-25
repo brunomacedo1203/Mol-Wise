@@ -14,31 +14,13 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Para a página home, verificar se há um locale preferido
+  // Para a página home, NÃO interferir - deixar o next-intl lidar com tudo
   if (pathname === '/') {
-    // Primeiro verifica o cookie do next-intl (que é o mais atualizado)
-    const nextIntlLocale = request.cookies.get('NEXT_LOCALE')?.value;
-    
-    if (
-      nextIntlLocale &&
-      (routing.locales as readonly string[]).includes(nextIntlLocale) &&
-      nextIntlLocale !== routing.defaultLocale
-    ) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/${nextIntlLocale}`;
-      return NextResponse.redirect(url);
-    }
+    return handleI18nRouting(request);
   }
 
-  // Deixa o middleware do next-intl lidar com o resto
-  const response = handleI18nRouting(request);
-
-  // Se a resposta for um redirect ou já processada, retorna ela
-  if (response.status !== 200) {
-    return response;
-  }
-
-  return response;
+  // Para outras rotas, também deixar o next-intl lidar
+  return handleI18nRouting(request);
 }
 
 export const config = {

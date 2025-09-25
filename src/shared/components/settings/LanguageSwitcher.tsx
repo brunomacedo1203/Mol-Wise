@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -13,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { trackLanguageChange } from "@/shared/events/interfaceEvents";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { useEffect } from "react";
+import { useLocale } from "next-intl";
 
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
@@ -34,10 +34,11 @@ interface LanguageSwitcherProps {
 
 export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const t = useTranslations("languages");
-  const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
-  const currentLocale = params.locale as string;
+
+  // Use o hook useLocale do next-intl para obter o locale atual
+  const currentLocale = useLocale();
 
   // Garante que o cookie está sempre atualizado com o locale atual
   useEffect(() => {
@@ -61,8 +62,19 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     // Definir o cookie antes de navegar
     document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
 
-    // Usar o router do next-intl para navegar mantendo a página atual
-    router.replace(pathname, { locale: nextLocale });
+    // Para português (default locale), navegar para a raiz sem prefixo
+    if (nextLocale === "pt") {
+      // Se estamos na home, forçar reload para garantir o locale correto
+      if (pathname === "/") {
+        window.location.href = "/";
+        return;
+      }
+      // Para outras páginas, navegar normalmente
+      router.replace(pathname, { locale: nextLocale });
+    } else {
+      // Para outros idiomas, usar navegação normal
+      router.replace(pathname, { locale: nextLocale });
+    }
   };
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];
