@@ -14,23 +14,31 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
- if (pathname === '/') {
-    const savedLocale = request.cookies.get('NEXT_LOCALE')?.value;
-    const userLocale = request.cookies.get('user-locale')?.value;
-    const localeToUse = userLocale || savedLocale;
-
+  // Para a página home, verificar se há um locale preferido
+  if (pathname === '/') {
+    // Primeiro verifica o cookie do next-intl (que é o mais atualizado)
+    const nextIntlLocale = request.cookies.get('NEXT_LOCALE')?.value;
+    
     if (
-      localeToUse &&
-      (routing.locales as readonly string[]).includes(localeToUse) &&
-      localeToUse !== routing.defaultLocale
+      nextIntlLocale &&
+      (routing.locales as readonly string[]).includes(nextIntlLocale) &&
+      nextIntlLocale !== routing.defaultLocale
     ) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${localeToUse}`;
+      url.pathname = `/${nextIntlLocale}`;
       return NextResponse.redirect(url);
     }
   }
 
-  return handleI18nRouting(request);
+  // Deixa o middleware do next-intl lidar com o resto
+  const response = handleI18nRouting(request);
+
+  // Se a resposta for um redirect ou já processada, retorna ela
+  if (response.status !== 200) {
+    return response;
+  }
+
+  return response;
 }
 
 export const config = {

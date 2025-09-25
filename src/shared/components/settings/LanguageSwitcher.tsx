@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { trackLanguageChange } from "@/shared/events/interfaceEvents";
 import { useRouter, usePathname } from "@/i18n/navigation";
+import { useEffect } from "react";
 
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
@@ -38,6 +39,14 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const router = useRouter();
   const currentLocale = params.locale as string;
 
+  // Garante que o cookie está sempre atualizado com o locale atual
+  useEffect(() => {
+    if (currentLocale) {
+      // Define o cookie que o middleware vai verificar
+      document.cookie = `NEXT_LOCALE=${currentLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    }
+  }, [currentLocale]);
+
   const handleChange = (nextLocale: string) => {
     if (!nextLocale || nextLocale === currentLocale) return;
 
@@ -48,6 +57,9 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       trigger_method: "manual",
       section: "header",
     });
+
+    // Definir o cookie antes de navegar
+    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
 
     // Usar o router do next-intl para navegar mantendo a página atual
     router.replace(pathname, { locale: nextLocale });
