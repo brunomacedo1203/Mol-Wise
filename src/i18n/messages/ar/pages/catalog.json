@@ -204,6 +204,8 @@
       "Ca(ClO)2": "هيبوكلوريت الكالسيوم"
     },
     "CommonName": {
+      "—": "—",
+      "notAvailable": "غير متوفر",
       "Table salt": "ملح الطعام",
       "Limestone": "الحجر الجيري",
       "Copper(II) sulfate pentahydrate": "كبريتات النحاس الثنائي خماسي الماء",

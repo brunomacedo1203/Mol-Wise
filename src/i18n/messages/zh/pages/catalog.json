@@ -204,6 +204,8 @@
       "Ca(ClO)2": "次氯酸钙"
     },
     "CommonName": {
+      "—": "—",
+      "notAvailable": "不可用",
       "Table salt": "食盐",
       "Limestone": "石灰石",
       "Copper(II) sulfate pentahydrate": "硫酸铜五水合物",

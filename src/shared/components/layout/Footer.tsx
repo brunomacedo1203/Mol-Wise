@@ -53,7 +53,7 @@ export default function Footer() {
             </TooltipTrigger>
             <TooltipContent>
               <p>{"molclassapp" + "@gmail.com"}</p>
-              <p className="text-xs text-zinc-400 mt-1">Clique direito para copiar</p>
+              <p className="text-xs text-zinc-400 mt-1">{t("footer.rightClickToCopy")}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

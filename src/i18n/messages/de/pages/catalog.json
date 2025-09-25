@@ -204,6 +204,8 @@
       "Ca(ClO)2": "Calciumhypochlorit"
     },
     "CommonName": {
+      "—": "—",
+      "notAvailable": "Nicht verfügbar",
       "Table salt": "Kochsalz",
       "Limestone": "Kalkstein",
       "Copper(II) sulfate pentahydrate": "Kupfer(II)-sulfat-Pentahydrat",

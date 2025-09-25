@@ -4,6 +4,7 @@
     "subtitle": "Buka satu atau lebih kalkulator dari menu.",
     "closeAll": "Tutup Semua",
     "description": "Akses kalkulator kimia untuk massa molar, perhitungan ilmiah, dan lainnya.",
+    "loadingCalculator": "Memuat kalkulator...",
     "errors": {
       "generic": "Terjadi kesalahan selama perhitungan",
       "unsupportedType": "Jenis kalkulator tidak didukung: {type}"

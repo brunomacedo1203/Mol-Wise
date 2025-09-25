@@ -4,6 +4,7 @@
     "subtitle": "从菜单中打开一个或多个计算器。",
     "closeAll": "全部关闭",
     "description": "访问用于摩尔质量、科学计算等的化学计算器。",
+    "loadingCalculator": "正在加载计算器...",
     "errors": {
       "generic": "计算过程中发生错误",
       "unsupportedType": "不支持的计算器类型：{type}"

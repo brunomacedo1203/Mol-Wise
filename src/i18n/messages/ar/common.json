@@ -269,7 +269,8 @@
       "developed": "تم التطوير في {year}",
       "privacyPolicy": "سياسة الخصوصية",
       "termsOfUse": "شروط الاستخدام",
-      "policies": "السياسات"
+      "policies": "السياسات",
+      "rightClickToCopy": "انقر بالزر الأيمن للنسخ"
     },
     "privacy": {
       "title": "سياسة الخصوصية",

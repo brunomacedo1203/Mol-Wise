@@ -4,6 +4,7 @@
     "subtitle": "Abra uma ou mais calculadoras do menu.",
     "closeAll": "Fechar Todas",
     "description": "Acesse calculadoras de química para massa molar, cálculos científicos e mais.",
+    "loadingCalculator": "Carregando calculadora...",
     "errors": {
       "generic": "Ocorreu um erro durante o cálculo",
       "unsupportedType": "Tipo de calculadora não suportado: {type}"

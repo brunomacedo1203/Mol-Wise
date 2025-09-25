@@ -265,11 +265,12 @@
       "length": "Länge"
     },
     "footer": {
-      "contact": "Kontakt",
+      "contact": "Kontaktieren Sie uns",
       "developed": "Entwickelt im Jahr {year}",
-      "privacyPolicy": "Datenschutzerklärung",
+      "privacyPolicy": "Datenschutzrichtlinie",
       "termsOfUse": "Nutzungsbedingungen",
-      "policies": "Richtlinien"
+      "policies": "Richtlinien",
+      "rightClickToCopy": "Rechtsklick zum Kopieren"
     },
     "privacy": {
       "title": "Datenschutzerklärung",

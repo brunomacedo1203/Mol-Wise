@@ -204,6 +204,8 @@
       "Ca(ClO)2": "Гипохлорит кальция"
     },
     "CommonName": {
+      "—": "—",
+      "notAvailable": "Недоступно",
       "Table salt": "Поваренная соль",
       "Limestone": "Известняк",
       "Copper(II) sulfate pentahydrate": "Медный купорос",

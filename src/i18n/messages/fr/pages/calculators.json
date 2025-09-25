@@ -2,8 +2,9 @@
   "calculators": {
     "title": "Calculatrices",
     "subtitle": "Ouvrez une ou plusieurs calculatrices depuis le menu.",
-    "closeAll": "Tout fermer",
-    "description": "Accédez à des calculatrices de chimie pour la masse molaire, les calculs scientifiques, et plus encore.",
+    "closeAll": "Fermer tout",
+    "description": "Accédez aux calculatrices de chimie pour la masse molaire, les calculs scientifiques et plus.",
+    "loadingCalculator": "Chargement de la calculatrice...",
     "errors": {
       "generic": "Une erreur s'est produite pendant le calcul",
       "unsupportedType": "Type de calculatrice non pris en charge : {type}"

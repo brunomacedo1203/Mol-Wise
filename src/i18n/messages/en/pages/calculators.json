@@ -4,6 +4,7 @@
     "subtitle": "Open one or more calculators from the menu.",
     "closeAll": "Close All",
     "description": "Access chemistry calculators for molar mass, scientific calculations, and more.",
+    "loadingCalculator": "Loading calculator...",
     "errors": {
       "generic": "An error occurred during the calculation",
       "unsupportedType": "Unsupported calculator type: {type}"

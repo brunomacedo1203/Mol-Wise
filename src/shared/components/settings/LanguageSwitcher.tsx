@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -11,6 +11,7 @@ import {
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { trackLanguageChange } from "@/shared/events/interfaceEvents";
+import { useRouter, usePathname } from "@/i18n/navigation";
 
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
@@ -48,27 +49,8 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       section: "header",
     });
 
-    // Limpa o cookie atual do next-intl
-    document.cookie =
-      "NEXT_LOCALE=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-
-    // Define o novo cookie
-    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`; // 1 ano
-
-    // Se não for português, salva também um cookie personalizado para controle extra
-    if (nextLocale !== "pt") {
-      document.cookie = `user-locale=${nextLocale}; path=/; max-age=31536000`;
-    } else {
-      // Remove o cookie personalizado se voltar para português
-      document.cookie =
-        "user-locale=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-    }
-
-    // Constrói o novo caminho
-    const newPath = pathname.replace(`/${currentLocale}`, `/${nextLocale}`);
-
-    // Usa router.push para navegação client-side mais suave
-    router.push(newPath);
+    // Usar o router do next-intl para navegar mantendo a página atual
+    router.replace(pathname, { locale: nextLocale });
   };
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];
@@ -85,9 +67,9 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
               <Image
                 src={current.flag}
                 alt={`Bandeira de ${t(current.code)}`}
-                fill
+                width={20}
+                height={15}
                 className="rounded-sm object-contain shadow-sm"
-                sizes="20px"
               />
             </div>
             <span className="leading-none">{t(current.code)}</span>
@@ -104,6 +86,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                   width={20}
                   height={15}
                   className="rounded-sm shadow-sm"
+                  style={{ width: "auto", height: "auto" }}
                 />
                 <span>{t(code)}</span>
               </span>

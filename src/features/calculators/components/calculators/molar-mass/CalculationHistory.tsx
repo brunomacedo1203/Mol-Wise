@@ -71,7 +71,7 @@ const CalculationHistory = ({
         onClick={onToggleVisibility}
         className="w-full p-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
       >
-        📋 {t("history.show")}
+        ▼ {t("history.show")}
       </button>
     );
   }
@@ -101,7 +101,7 @@ const CalculationHistory = ({
             className="text-xs px-2 py-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
             title={t("history.hide")}
           >
-            ✕
+            ▲
           </button>
         </div>
       </div>
@@ -126,10 +126,14 @@ const CalculationHistory = ({
               const formattedFormulaForResult = sanitizeSubSup(
                 formatWithSub(calculation.rawFormula)
               );
-              
+
               // Gera o texto de resultado traduzido dinamicamente usando o valor numérico armazenado
-              const resultText = `${t("result.prefix")} ${formattedFormulaForResult} ${t("result.suffix")} ${calculation.result} ${t("result.unit")}`;
-              
+              const resultText = `${t(
+                "result.prefix"
+              )} ${formattedFormulaForResult} ${t("result.suffix")} ${
+                calculation.result
+              } ${t("result.unit")}`;
+
               // Sanitiza o HTML resultante
               const resultHtml = sanitizeSubSup(resultText);
 
