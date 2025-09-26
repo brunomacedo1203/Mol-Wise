@@ -62,19 +62,8 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     // Definir o cookie antes de navegar
     document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
 
-    // Para português (default locale), navegar para a raiz sem prefixo
-    if (nextLocale === "pt") {
-      // Se estamos na home, forçar reload para garantir o locale correto
-      if (pathname === "/") {
-        window.location.href = "/";
-        return;
-      }
-      // Para outras páginas, navegar normalmente
-      router.replace(pathname, { locale: nextLocale });
-    } else {
-      // Para outros idiomas, usar navegação normal
-      router.replace(pathname, { locale: nextLocale });
-    }
+    // Sempre usa router.replace para manter consistência na navegação
+    router.replace(pathname, { locale: nextLocale });
   };
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];
