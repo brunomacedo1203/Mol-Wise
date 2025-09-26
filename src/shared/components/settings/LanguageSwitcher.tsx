@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -12,6 +11,8 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { trackLanguageChange } from "@/shared/events/interfaceEvents";
 import { useRouter, usePathname } from "@/i18n/navigation";
+import { useEffect } from "react";
+import { useLocale } from "next-intl";
 
 const LOCALES = [
   { code: "pt", flag: "/flags/br.png" },
@@ -33,10 +34,19 @@ interface LanguageSwitcherProps {
 
 export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const t = useTranslations("languages");
-  const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
-  const currentLocale = params.locale as string;
+
+  // Use o hook useLocale do next-intl para obter o locale atual
+  const currentLocale = useLocale();
+
+  // Garante que o cookie está sempre atualizado com o locale atual
+  useEffect(() => {
+    if (currentLocale) {
+      // Define o cookie que o middleware vai verificar
+      document.cookie = `NEXT_LOCALE=${currentLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    }
+  }, [currentLocale]);
 
   const handleChange = (nextLocale: string) => {
     if (!nextLocale || nextLocale === currentLocale) return;
@@ -49,7 +59,10 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       section: "header",
     });
 
-    // Usar o router do next-intl para navegar mantendo a página atual
+    // Definir o cookie antes de navegar
+    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
+
+    // Sempre usa router.replace para manter consistência na navegação
     router.replace(pathname, { locale: nextLocale });
   };
 

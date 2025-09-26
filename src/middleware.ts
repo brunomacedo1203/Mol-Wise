@@ -14,22 +14,12 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
- if (pathname === '/') {
-    const savedLocale = request.cookies.get('NEXT_LOCALE')?.value;
-    const userLocale = request.cookies.get('user-locale')?.value;
-    const localeToUse = userLocale || savedLocale;
-
-    if (
-      localeToUse &&
-      (routing.locales as readonly string[]).includes(localeToUse) &&
-      localeToUse !== routing.defaultLocale
-    ) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/${localeToUse}`;
-      return NextResponse.redirect(url);
-    }
+  // Para a página home, NÃO interferir - deixar o next-intl lidar com tudo
+  if (pathname === '/') {
+    return handleI18nRouting(request);
   }
 
+  // Para outras rotas, também deixar o next-intl lidar
   return handleI18nRouting(request);
 }
 
