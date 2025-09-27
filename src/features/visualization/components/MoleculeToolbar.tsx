@@ -1,7 +1,7 @@
 // src/features/visualization/components/MoleculeToolbar.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getSmiles, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
@@ -15,9 +15,9 @@ export function MoleculeToolbar() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
-    null
-  );
+
+  // ✅ CORREÇÃO: Use useRef ao invés de useState para o timer
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const setSmiles = useVisualizationStore((s) => s.setSmilesData);
   const setSdf = useVisualizationStore((s) => s.setSdfData);
@@ -112,14 +112,15 @@ export function MoleculeToolbar() {
     }
   };
 
-  // Debounce para tracking de digitação (opcional - apenas para analytics de interação)
+  // ✅ CORREÇÃO: Debounce corrigido usando useRef
   useEffect(() => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
+    // Limpa o timer anterior se existir
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
     }
 
     if (input.trim() !== "") {
-      const timer = setTimeout(() => {
+      debounceTimerRef.current = setTimeout(() => {
         // Tracking de interação com o campo (sem envio da busca)
         trackMoleculeSearch({
           search_term: input.trim(),
@@ -127,15 +128,15 @@ export function MoleculeToolbar() {
           success: false, // Apenas interação, não busca efetiva
         });
       }, 1000); // 1 segundo de debounce para interação
-      setDebounceTimer(timer);
     }
 
+    // Cleanup function
     return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [input, debounceTimer]);
+  }, [input]); // ✅ CORREÇÃO: Apenas 'input' como dependência
 
   return (
     <div
@@ -203,7 +204,7 @@ export function MoleculeToolbar() {
           onClick={() => {
             const newMode = viewMode === "2D" ? "3D" : "2D";
             setViewMode(newMode);
-            
+
             // Tracking de mudança de modo de visualização
             if (newMode === "3D" && (smiles || sdfData)) {
               const moleculeName = getMoleculeKey(smiles, sdfData);

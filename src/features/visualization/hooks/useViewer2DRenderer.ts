@@ -42,25 +42,46 @@ export function useViewer2DRenderer({
 }: UseViewer2DRendererProps) {
   const [ready, setReady] = useState(false);
   const oclRef = useRef<OpenChemLibModule | null>(null);
+  
+  // ✅ CORREÇÃO: Ref para rastrear se o hook ainda está ativo
+  const mountedRef = useRef(true);
+
+  // ✅ CORREÇÃO: Cleanup ao desmontar
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   // Carrega OpenChemLib dinamicamente
   useEffect(() => {
     let disposed = false;
+    
     (async () => {
       try {
         const mod: OpenChemLibModule = await import("openchemlib");
         const OCL: OpenChemLibModule =
           (mod as unknown as { default?: OpenChemLibModule }).default ?? mod;
-        if (disposed) return;
+          
+        // ✅ CORREÇÃO: Verifica se ainda está montado
+        if (disposed || !mountedRef.current) return;
+        
         oclRef.current = OCL;
-        setReady(true);
+        
+        if (mountedRef.current) {
+          setReady(true);
+        }
       } catch (error) {
+        if (!mountedRef.current) return; // Ignora erros se desmontado
+        
         console.error("❌ Erro ao carregar OpenChemLib:", {
           error,
           userAgent: navigator.userAgent,
         });
       }
     })();
+    
     return () => {
       disposed = true;
     };
@@ -68,10 +89,13 @@ export function useViewer2DRenderer({
 
   // Renderização principal da molécula
   useEffect(() => {
+    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
+    
     async function render() {
       const host = svgHostRef.current;
       const OCL = oclRef.current;
-      if (!host || !OCL || !ready) return;
+      
+      if (!host || !OCL || !ready || !mountedRef.current) return;
 
       try {
         let mol: import("openchemlib").Molecule | null = null;
@@ -96,11 +120,15 @@ export function useViewer2DRenderer({
 
         // Caso falhe em carregar a molécula
         if (!mol) {
-          host.innerHTML = "";
-          svgElRef.current = null;
-          vbRef.current = null;
-          vbInitialRef.current = null;
-          contentBoundsRef.current = null;
+          if (mountedRef.current && host) {
+            host.innerHTML = "";
+            if (mountedRef.current) {
+              svgElRef.current = null;
+              vbRef.current = null;
+              vbInitialRef.current = null;
+              contentBoundsRef.current = null;
+            }
+          }
           return;
         }
 
@@ -111,6 +139,9 @@ export function useViewer2DRenderer({
         } catch (error) {
           console.warn("Erro ao preparar molécula:", error);
         }
+
+        // ✅ CORREÇÃO: Verifica novamente se ainda está montado após operações async
+        if (!mountedRef.current) return;
 
         // Calcula dimensões do canvas
         const rect = host.getBoundingClientRect();
@@ -148,6 +179,9 @@ export function useViewer2DRenderer({
             '<svg style="width:100%;height:100%;display:block;cursor:grab;touch-action:none;"'
           );
 
+        // ✅ CORREÇÃO: Só atualiza DOM se ainda estiver montado
+        if (!mountedRef.current) return;
+
         // Insere SVG no container
         host.innerHTML = svgWithStyle;
 
@@ -158,10 +192,12 @@ export function useViewer2DRenderer({
         // Aplica tema atual
         const mode: "dark" | "light" =
           document.documentElement.classList.contains("dark") ? "dark" : "light";
-        if (svgEl) applyThemeToSVG(svgEl, mode);
+        if (svgEl && mountedRef.current) {
+          applyThemeToSVG(svgEl, mode);
+        }
 
         // 🔹 Centraliza molécula automaticamente
-        if (svgEl) {
+        if (svgEl && mountedRef.current) {
           const bounds = getContentBounds(svgEl);
           if (bounds) {
             contentBoundsRef.current = bounds;
@@ -179,7 +215,9 @@ export function useViewer2DRenderer({
           }
         }
       } catch (error) {
-        console.error("Erro durante a renderização:", error);
+        if (mountedRef.current) {
+          console.error("Erro durante a renderização:", error);
+        }
       }
     }
 
@@ -195,12 +233,15 @@ export function useViewer2DRenderer({
     vbRef,
   ]);
 
-  // Observa mudanças de tema e reaplica estilos
+  // ✅ CORREÇÃO: MutationObserver com cleanup forçado
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || !mountedRef.current) return;
 
     const html = document.documentElement;
     const updateTheme = () => {
+      // ✅ CORREÇÃO: Verifica se ainda está montado antes de executar
+      if (!mountedRef.current) return;
+      
       const svgEl = svgElRef.current;
       if (!svgEl) return;
       
@@ -215,7 +256,9 @@ export function useViewer2DRenderer({
     const observer = new MutationObserver(updateTheme);
     observer.observe(html, { attributes: true, attributeFilter: ["class"] });
     
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, [ready, svgElRef]);
 
   return { ready };
