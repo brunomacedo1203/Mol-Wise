@@ -5,7 +5,7 @@ import { useVisualizationStore } from "../store/visualizationStore";
 import { getMoleculeKey } from "../utils/moleculeKey";
 import { useTranslations } from "next-intl";
 
-// Define types for Kekule objects
+// 🔹 Interface ampliada para incluir métodos extras usados no Viewer
 interface KekuleViewer {
   setPredefinedSetting: (setting: string) => void;
   setEnableToolbar: (enabled: boolean) => void;
@@ -14,6 +14,9 @@ interface KekuleViewer {
   setViewSize: (size: { width: string; height: string }) => void;
   finalize?: () => void;
   setDimension?: (width: string, height: string) => void;
+  setBackgroundColor?: (color: string) => void; // ✅ fundo seguro
+  setEnableWheelZoom?: (enabled: boolean) => void; // ✅ zoom com roda
+  setEnableDirectInteraction?: (enabled: boolean) => void; // ✅ pan/drag
 }
 
 interface KekuleIO {
@@ -45,51 +48,66 @@ export function MoleculeViewer2D_Kekule() {
 
     async function load() {
       try {
-        // Aguarda o Kekule estar disponível globalmente
-        if (typeof window === 'undefined' || !window.Kekule) {
+        // Verifica disponibilidade global do Kekule
+        if (typeof window === "undefined" || !window.Kekule) {
           console.error("Kekule.js não está disponível globalmente");
           return;
         }
 
         const Kekule = window.Kekule as KekuleLib;
-        if (!containerRef.current || disposed || !smiles || typeof smiles !== "string") {
+        if (
+          !containerRef.current ||
+          disposed ||
+          !smiles ||
+          typeof smiles !== "string"
+        ) {
           console.warn("Viewer não iniciado: smiles inválido", smiles);
           return;
         }
 
-         await new Promise<void>((resolve, reject) => {
-        Kekule.OpenBabel.enable((err?: any) => err ? reject(err) : resolve());
-      });
-
-
-      // 2) cria viewer
-      widget = new Kekule.ChemWidget.Viewer(containerRef.current!);
-      widget.setPredefinedSetting('basic');
-      widget.setEnableToolbar(true);
-      widget.setEnableEdit(true);
-      widget.setDimension?.('100%', '100%');      // importante: container precisa ter altura real
-      (widget as any).setAutofit?.(true);
-
-      // 3) lê o SMILES
-      const mol = Kekule.IO.loadFormatData(smiles, 'smi');
-
-      // 4) GERA 2D (tente OB; se falhar, caia no gerador interno)
-      let laidOut = mol;
-      try {
-        const ob2d = new (Kekule as any).Calculator.ObStructure2DGenerator();
-        ob2d.setSourceMol(mol);
-        ob2d.executeSync(() => {
-          laidOut = ob2d.getGeneratedMol() || mol;
+        // Ativa OpenBabel
+        await new Promise<void>((resolve, reject) => {
+          Kekule.OpenBabel.enable((err?: any) =>
+            err ? reject(err) : resolve()
+          );
         });
-      } catch {
-        const gen2d = new (Kekule as any).Calculator.Structure2DGenerator(); // fallback
-        gen2d.setSourceMol(mol);
-        gen2d.executeSync(() => {
-          laidOut = gen2d.getGeneratedMol() || mol;
-        });
-      }
 
-      widget.setChemObj(laidOut);
+        // 2) cria viewer
+        widget = new Kekule.ChemWidget.Viewer(containerRef.current!);
+        widget.setPredefinedSetting("basic");
+        widget.setEnableToolbar(true);
+        widget.setEnableEdit(true);
+        widget.setDimension?.("100%", "100%");
+        (widget as any).setAutofit?.(true); // ainda não tipado no d.ts oficial
+
+        // ➕ Habilitar zoom/pan
+        widget.setEnableWheelZoom?.(true);
+        widget.setEnableDirectInteraction?.(true);
+
+        // ➕ Ajustar fundo conforme tema
+        const isDark = document.documentElement.classList.contains("dark");
+        widget.setBackgroundColor?.(isDark ? "#18181b" : "#ffffff");
+
+        // 3) lê o SMILES
+        const mol = Kekule.IO.loadFormatData(smiles, "smi");
+
+        // 4) Gera 2D (OpenBabel → fallback interno)
+        let laidOut = mol;
+        try {
+          const ob2d = new (Kekule as any).Calculator.ObStructure2DGenerator();
+          ob2d.setSourceMol(mol);
+          ob2d.executeSync(() => {
+            laidOut = ob2d.getGeneratedMol() || mol;
+          });
+        } catch {
+          const gen2d = new (Kekule as any).Calculator.Structure2DGenerator();
+          gen2d.setSourceMol(mol);
+          gen2d.executeSync(() => {
+            laidOut = gen2d.getGeneratedMol() || mol;
+          });
+        }
+
+        widget.setChemObj(laidOut);
       } catch (e) {
         console.error("Erro ao inicializar Kekule.js:", e);
       }

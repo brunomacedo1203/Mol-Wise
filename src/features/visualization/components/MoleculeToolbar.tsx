@@ -1,10 +1,9 @@
-// src/features/visualization/components/MoleculeToolbar.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getSmiles, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
-import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
+import { Search, Loader2 } from "lucide-react";
 import { trackMoleculeSearch } from "../events/moleculeSearchEvents";
 import { trackMolecule3DInteraction } from "../events/molecule3DEvents";
 import { useTranslations } from "next-intl";
@@ -15,9 +14,9 @@ export function MoleculeToolbar() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
-    null
-  );
+
+  // ✅ useRef para timer de debounce (evita warnings e renders extras)
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const setSmiles = useVisualizationStore((s) => s.setSmilesData);
   const setSdf = useVisualizationStore((s) => s.setSdfData);
@@ -28,32 +27,15 @@ export function MoleculeToolbar() {
   const smiles = useVisualizationStore((s) => s.smilesData);
   const sdfData = useVisualizationStore((s) => s.sdfData);
 
-  // Função para detectar o tipo de busca
+  // Detecta o tipo de busca
   const detectSearchType = (
     query: string
   ): "name" | "formula" | "smiles" | "cid" | "unknown" => {
     const trimmed = query.trim();
-
-    // Se é apenas números, provavelmente é um CID
-    if (/^\d+$/.test(trimmed)) {
-      return "cid";
-    }
-
-    // Se contém caracteres típicos de SMILES (brackets, parênteses, etc.)
-    if (/[\[\]()=#@\\\/]/.test(trimmed)) {
-      return "smiles";
-    }
-
-    // Se contém apenas letras e números (possível fórmula química)
-    if (/^[A-Za-z0-9]+$/.test(trimmed)) {
-      return "formula";
-    }
-
-    // Se contém espaços ou caracteres especiais, provavelmente é nome
-    if (/\s/.test(trimmed) || /[^A-Za-z0-9]/.test(trimmed)) {
-      return "name";
-    }
-
+    if (/^\d+$/.test(trimmed)) return "cid";
+    if (/[\[\]()=#@\\\/]/.test(trimmed)) return "smiles";
+    if (/^[A-Za-z0-9]+$/.test(trimmed)) return "formula";
+    if (/\s/.test(trimmed) || /[^A-Za-z0-9]/.test(trimmed)) return "name";
     return "unknown";
   };
 
@@ -64,27 +46,45 @@ export function MoleculeToolbar() {
 
     setErr(null);
     setLoading(true);
-
-    // Detecta o tipo de busca para analytics
     const searchType = detectSearchType(q);
 
-    try {
-      const [smilesRes, sdfRes] = await Promise.allSettled([
-        getSmiles(q),
-        getSdf(q),
-      ]);
+    const safeFetchText = async (url: string) => {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return await res.text();
+      } catch {
+        return null;
+      }
+    };
 
-      const smiles = smilesRes.status === "fulfilled" ? smilesRes.value : null;
-      const sdf = sdfRes.status === "fulfilled" ? sdfRes.value : null;
+    try {
+      let smiles: string | null = null;
+      let sdf: string | null = null;
+
+      if (searchType === "cid") {
+        // 🔹 Busca direta pelo CID
+        smiles = await safeFetchText(
+          `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${q}/property/IsomericSMILES/TXT`
+        );
+        sdf = await safeFetchText(
+          `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${q}/SDF`
+        );
+      } else {
+        // 🔹 Busca padrão
+        const [smilesRes, sdfRes] = await Promise.allSettled([
+          getSmiles(q),
+          getSdf(q),
+        ]);
+        smiles = smilesRes.status === "fulfilled" ? smilesRes.value : null;
+        sdf = sdfRes.status === "fulfilled" ? sdfRes.value : null;
+      }
 
       setSmiles(smiles);
       setSdf(sdf);
 
-      if (!smiles && !sdf) {
-        throw new Error(t("notFound"));
-      }
+      if (!smiles && !sdf) throw new Error(t("notFound"));
 
-      // Tracking de busca bem-sucedida
       trackMoleculeSearch({
         search_term: q,
         search_type: searchType,
@@ -96,7 +96,6 @@ export function MoleculeToolbar() {
       setSmiles(null);
       setSdf(null);
 
-      // Tracking de busca falhada
       trackMoleculeSearch({
         search_term: q,
         search_type: searchType,
@@ -107,35 +106,26 @@ export function MoleculeToolbar() {
     }
   }
 
-  // Função para limpar o erro quando o usuário interage com o input
   const clearError = () => {
-    if (err) {
-      setErr(null);
-    }
+    if (err) setErr(null);
   };
 
-  // Debounce para tracking de digitação (opcional - apenas para analytics de interação)
+  // ✅ Debounce usando ref (sem dependência extra)
   useEffect(() => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    console.log("input", input.trim());
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+
     if (input.trim() !== "") {
-      const timer = setTimeout(() => {
-        // Tracking de interação com o campo (sem envio da busca)
+      debounceTimer.current = setTimeout(() => {
         trackMoleculeSearch({
           search_term: input.trim(),
           search_type: detectSearchType(input),
           success: false, // Apenas interação, não busca efetiva
         });
-      }, 1000); // 1 segundo de debounce para interação
-      setDebounceTimer(timer);
+      }, 1000);
     }
 
     return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
-      }
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
     };
   }, [input]);
 
@@ -147,24 +137,10 @@ export function MoleculeToolbar() {
         shadow-lg ring-1 ring-zinc-200 dark:ring-zinc-800 
         transition-shadow"
     >
-      {/* ⛔️ HIDDEN: Zoom Buttons (ZoomOut/ZoomIn) — keep commented until implemented */}
-      {/*
-      <div className="flex items-center gap-2">
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <ZoomOut className="w-5 h-5" />
-        </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <ZoomIn className="w-5 h-5" />
-        </button>
-      </div>
-      */}
-
-      {/* 🔎 Search + ViewMode (mantidos) */}
       <form
         onSubmit={handleSearch}
         className="flex items-center gap-2 flex-1 max-w-md"
       >
-        {/* 🔎 Input com tratamento correto do erro */}
         <div className="relative w-full">
           <input
             value={input}
@@ -199,14 +175,12 @@ export function MoleculeToolbar() {
           </button>
         </div>
 
-        {/* 🎛️ Toggle 2D / 3D */}
+        {/* Toggle 2D/3D */}
         <button
           type="button"
           onClick={() => {
             const newMode = viewMode === "2D" ? "3D" : "2D";
             setViewMode(newMode);
-
-            // Tracking de mudança de modo de visualização
             if (newMode === "3D" && (smiles || sdfData)) {
               const moleculeName = getMoleculeKey(smiles, sdfData);
               trackMolecule3DInteraction({
@@ -240,7 +214,7 @@ export function MoleculeToolbar() {
           </div>
         </button>
 
-        {/* 🎛️ Botão para alternar motor de renderização 2D */}
+        {/* Botão para alternar motor 2D */}
         {viewMode === "2D" && (
           <button
             type="button"
@@ -256,23 +230,8 @@ export function MoleculeToolbar() {
             {renderer === "kekule" ? "Kekule.js" : "OpenChemLib"}
           </button>
         )}
-
-        {/* ⛔️ HIDDEN: CH button — keep commented until implemented */}
-        {/*
-        <button
-          className="h-10 w-10 rounded-full flex items-center justify-center text-base font-semibold
-            dark:from-zinc-900 dark:to-zinc-800
-            shadow-inner dark:shadow-none
-            hover:shadow-md hover:bg-zinc-200 dark:hover:bg-zinc-700
-            text-zinc-700 dark:text-zinc-300 transition-all"
-          title="Toggle CH mode"
-        >
-          CH
-        </button>
-        */}
       </form>
 
-      {/* 🚨 Mensagem de erro fora do input */}
       {err && (
         <div
           className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-2 
@@ -282,18 +241,6 @@ export function MoleculeToolbar() {
           {err}
         </div>
       )}
-
-      {/* ⛔️ HIDDEN: Trash & Download — keep commented until implemented */}
-      {/*
-      <div className="flex items-center gap-2">
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800" title="Clear">
-          <Trash2 className="w-5 h-5" />
-        </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800" title="Download">
-          <Download className="w-5 h-5" />
-        </button>
-      </div>
-      */}
     </div>
   );
 }
