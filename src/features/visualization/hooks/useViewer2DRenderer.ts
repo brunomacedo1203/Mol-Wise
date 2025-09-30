@@ -11,6 +11,7 @@ import {
   removeCIPLabelsAndNames,
   getContentBounds,
   applyThemeToSVG,
+  cleanStereochemistryLabels, // 🔥 ADICIONAR
 } from "../utils/svgUtils";
 import { centerViewBox } from "../utils/viewBoxUtils";
 import {
@@ -31,6 +32,27 @@ interface UseViewer2DRendererProps {
   smiles: string | null;
 }
 
+// Função para normalizar SVG e remover labels de estereoquímica
+function normalizeMoleculeSVG(svgString: string): string {
+  return svgString
+    .replace(/stroke-width="[\d.]+"/g, 'stroke-width="1.5"')
+    .replace(/font-size="[\d.]+"/g, 'font-size="16"')
+    .replace(/letter-spacing="[\d.-]+"/g, '')
+    .replace(
+      '<svg',
+      '<svg shape-rendering="geometricPrecision" text-rendering="geometricPrecision"'
+    )
+    .replace(/font-family="[^"]*"/g, 'font-family="Arial, Helvetica, sans-serif"')
+    .replace(/<text([^>]*)>\s+/g, '<text$1>')
+    .replace(/\s+<\/text>/g, '</text>')
+    // Remove labels "abs", "rac", "and", "or" que ainda passam
+    .replace(/<text[^>]*>\s*(abs|rac|and|or|AND|OR)\s*<\/text>/gi, '')
+    // Remove textos vermelhos (estereoquímica)
+    .replace(/<text[^>]*fill="#[fF]{2}0{4}"[^>]*>.*?<\/text>/g, '')
+    // Remove textos italic vermelhos
+    .replace(/<text[^>]*font-style="italic"[^>]*fill="#[fF]{2}0{4}"[^>]*>.*?<\/text>/g, '');
+}
+
 export function useViewer2DRenderer({
   svgHostRef,
   svgElRef,
@@ -42,46 +64,25 @@ export function useViewer2DRenderer({
 }: UseViewer2DRendererProps) {
   const [ready, setReady] = useState(false);
   const oclRef = useRef<OpenChemLibModule | null>(null);
-  
-  // ✅ CORREÇÃO: Ref para rastrear se o hook ainda está ativo
-  const mountedRef = useRef(true);
-
-  // ✅ CORREÇÃO: Cleanup ao desmontar
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
 
   // Carrega OpenChemLib dinamicamente
   useEffect(() => {
     let disposed = false;
-    
     (async () => {
       try {
         const mod: OpenChemLibModule = await import("openchemlib");
         const OCL: OpenChemLibModule =
           (mod as unknown as { default?: OpenChemLibModule }).default ?? mod;
-          
-        // ✅ CORREÇÃO: Verifica se ainda está montado
-        if (disposed || !mountedRef.current) return;
-        
+        if (disposed) return;
         oclRef.current = OCL;
-        
-        if (mountedRef.current) {
-          setReady(true);
-        }
+        setReady(true);
       } catch (error) {
-        if (!mountedRef.current) return; // Ignora erros se desmontado
-        
         console.error("❌ Erro ao carregar OpenChemLib:", {
           error,
           userAgent: navigator.userAgent,
         });
       }
     })();
-    
     return () => {
       disposed = true;
     };
@@ -89,13 +90,10 @@ export function useViewer2DRenderer({
 
   // Renderização principal da molécula
   useEffect(() => {
-    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
-    
     async function render() {
       const host = svgHostRef.current;
       const OCL = oclRef.current;
-      
-      if (!host || !OCL || !ready || !mountedRef.current) return;
+      if (!host || !OCL || !ready) return;
 
       try {
         let mol: import("openchemlib").Molecule | null = null;
@@ -120,28 +118,28 @@ export function useViewer2DRenderer({
 
         // Caso falhe em carregar a molécula
         if (!mol) {
-          if (mountedRef.current && host) {
-            host.innerHTML = "";
-            if (mountedRef.current) {
-              svgElRef.current = null;
-              vbRef.current = null;
-              vbInitialRef.current = null;
-              contentBoundsRef.current = null;
-            }
-          }
+          host.innerHTML = "";
+          svgElRef.current = null;
+          vbRef.current = null;
+          vbInitialRef.current = null;
+          contentBoundsRef.current = null;
           return;
         }
 
-        // Prepara molécula
+        // Prepara molécula com coordenadas 2D otimizadas
         try {
+          // ORDEM CORRETA: Adiciona hidrogênios ANTES de gerar coordenadas
           mol.addImplicitHydrogens?.();
+          
+          // Força geração de coordenadas 2D limpas
+          if (mol.getAllAtoms() > 0) {
+            mol.inventCoordinates();
+          }
+          
           mol.ensureHelperArrays?.(OCL.Molecule?.cHelperNeighbours ?? 0);
         } catch (error) {
-          console.warn("Erro ao preparar molécula:", error);
+          console.warn("⚠️ Erro ao preparar molécula:", error);
         }
-
-        // ✅ CORREÇÃO: Verifica novamente se ainda está montado após operações async
-        if (!mountedRef.current) return;
 
         // Calcula dimensões do canvas
         const rect = host.getBoundingClientRect();
@@ -154,15 +152,31 @@ export function useViewer2DRenderer({
           Math.floor(rect.height || DEFAULT_CANVAS_HEIGHT)
         );
 
-        // Gera SVG da molécula
+        // Gera SVG com opções balanceadas: cunhas visuais SIM, labels de texto NÃO
         const rawSvg = (
           mol as unknown as {
             toSVG: (w: number, h: number, opts?: unknown) => string;
           }
-        ).toSVG(w, h, { autoCrop: true, margin: SVG_MARGIN });
+        ).toSVG(w, h, {
+          autoCrop: true,
+          autoCropMargin: SVG_MARGIN,
+          suppressChiralText: true, // Remove textos R/S (mantém cunhas visuais)
+          suppressESR: true, // Remove labels "abs", "rac", "and", "or"
+          suppressCIPParity: true, // Remove paridade CIP em texto
+          fontWeight: "normal",
+          strokeWidth: 1.5,
+          noStereoProblem: true, // Não marca problemas de estereoquímica
+          showSymmetrySimple: true,
+          noImplicitAtomLabelColors: false,
+          showAtomNumber: false,
+          showBondNumber: false,
+        });
 
-        // Remove labels CIP e nomes
-        const svgWithoutCIP = removeCIPLabelsAndNames(rawSvg);
+        // Normaliza o SVG antes de processar
+        const normalizedSvg = normalizeMoleculeSVG(rawSvg);
+
+        // Remove labels CIP e nomes remanescentes
+        const svgWithoutCIP = removeCIPLabelsAndNames(normalizedSvg);
 
         // Aplica enquadramento inicial
         const initialFramed = tightenViewBox(
@@ -179,9 +193,6 @@ export function useViewer2DRenderer({
             '<svg style="width:100%;height:100%;display:block;cursor:grab;touch-action:none;"'
           );
 
-        // ✅ CORREÇÃO: Só atualiza DOM se ainda estiver montado
-        if (!mountedRef.current) return;
-
         // Insere SVG no container
         host.innerHTML = svgWithStyle;
 
@@ -192,12 +203,13 @@ export function useViewer2DRenderer({
         // Aplica tema atual
         const mode: "dark" | "light" =
           document.documentElement.classList.contains("dark") ? "dark" : "light";
-        if (svgEl && mountedRef.current) {
+        if (svgEl) {
           applyThemeToSVG(svgEl, mode);
+          cleanStereochemistryLabels(svgEl); // 🔥 NOVA LINHA: Limpeza pós-renderização
         }
 
-        // 🔹 Centraliza molécula automaticamente
-        if (svgEl && mountedRef.current) {
+        // Centraliza molécula automaticamente
+        if (svgEl) {
           const bounds = getContentBounds(svgEl);
           if (bounds) {
             contentBoundsRef.current = bounds;
@@ -215,9 +227,7 @@ export function useViewer2DRenderer({
           }
         }
       } catch (error) {
-        if (mountedRef.current) {
-          console.error("Erro durante a renderização:", error);
-        }
+        console.error("❌ Erro durante a renderização:", error);
       }
     }
 
@@ -233,32 +243,26 @@ export function useViewer2DRenderer({
     vbRef,
   ]);
 
-  // ✅ CORREÇÃO: MutationObserver com cleanup forçado
+  // Observa mudanças de tema e reaplica estilos
   useEffect(() => {
-    if (!ready || !mountedRef.current) return;
+    if (!ready) return;
 
     const html = document.documentElement;
     const updateTheme = () => {
-      // ✅ CORREÇÃO: Verifica se ainda está montado antes de executar
-      if (!mountedRef.current) return;
-      
       const svgEl = svgElRef.current;
       if (!svgEl) return;
       
       const mode: "dark" | "light" = html.classList.contains("dark") ? "dark" : "light";
       applyThemeToSVG(svgEl, mode);
+      cleanStereochemistryLabels(svgEl); // 🔥 NOVA LINHA: Limpeza pós-renderização
     };
 
-    // Aplica tema inicial
     updateTheme();
 
-    // Observa mudanças na classe 'dark' do elemento html
     const observer = new MutationObserver(updateTheme);
     observer.observe(html, { attributes: true, attributeFilter: ["class"] });
     
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [ready, svgElRef]);
 
   return { ready };

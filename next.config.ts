@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   trailingSlash: false,
+  // ✅ Otimizações de CSS para evitar warnings de preload
+  experimental: {
+    optimizeCss: true,
+    cssChunking: 'strict',
+  },
   async headers() {
     return [
       {

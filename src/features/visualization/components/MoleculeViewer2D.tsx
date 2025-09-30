@@ -3,7 +3,6 @@
 
 import { useEffect, useRef } from "react";
 import { useVisualizationStore } from "../store/visualizationStore";
-import { useTranslations } from "next-intl";
 import { ViewBox } from "../types/viewer2d.types";
 import { useViewer2DRenderer } from "../hooks/useViewer2DRenderer";
 import { useViewer2DInteractions } from "../hooks/useViewer2DInteractions";
@@ -101,8 +100,6 @@ export function MoleculeViewer2D() {
     }
   }, [ready, smiles, sdf, getZoom2D, setCurrentMolKey]);
 
-  const t = useTranslations("visualization.controls");
-
   return (
     <div
       className="w-full h-full relative"
@@ -128,7 +125,6 @@ export function MoleculeViewer2D() {
           cursor: "grab",
           contain: "layout style paint",
         }}
-        title={t("tooltip")}
       />
       {!ready && (
         <p className="absolute bottom-2 left-3 text-sm text-zinc-500 dark:text-zinc-400 pointer-events-none">

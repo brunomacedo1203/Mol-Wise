@@ -28,6 +28,12 @@ async function getSmilesFromCid(cid: string): Promise<string | null> {
 export async function getSmiles(query: string): Promise<string> {
   const q = query.trim();
 
+  // CID (apenas dígitos) → via CID
+  if (/^\d+$/.test(q)) {
+    const smiles = await getSmilesFromCid(q);
+    if (smiles) return smiles;
+  }
+
   // Fórmula → via fórmula (NÃO trate como SMILES)
   if (isFormula(q)) {
     const cidTxt = await fetchTxt(`${PUBCHEM}/compound/fastformula/${encodeURIComponent(q)}/cids/TXT`);
