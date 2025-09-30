@@ -434,6 +434,22 @@ event("view_item", {
 
 ---
 
+### **🧬 EVENTOS DE VISUALIZAÇÃO DE MOLÉCULAS**
+
+| Evento | Descrição | Arquivo | Parâmetros Principais |
+|--------|-----------|---------|----------------------|
+| `molecule_3d_view` | Visualização 3D de moléculas | `molecule3DEvents.ts` | `molecule_name`, `render_time`, `view_style`, `success` |
+| `molecule_3d_interaction` | Interações 3D (zoom, rotação, reset) | `molecule3DEvents.ts` | `molecule_name`, `interaction_type`, `interaction_value` |
+| `molecule_3d_error` | Erros na visualização 3D | `molecule3DEvents.ts` | `molecule_name`, `error_type`, `error_message` |
+| `molecule_2d_view` | Visualização 2D de moléculas | `molecule2DEvents.ts` | `molecule_name`, `render_time`, `view_style`, `success` |
+| `molecule_2d_interaction` | Interações 2D (zoom, pan, reset) | `molecule2DEvents.ts` | `molecule_name`, `interaction_type`, `interaction_value`, `section` |
+| `molecule_2d_load` | Carregamento de moléculas 2D | `molecule2DEvents.ts` | `molecule_name`, `load_time`, `data_source`, `success` |
+| `molecule_2d_error` | Erros na visualização 2D | `molecule2DEvents.ts` | `molecule_name`, `error_type`, `error_message` |
+| `visualization_mode_change` | Mudança entre modos 2D/3D | `visualizationModeEvents.ts` | `from_mode`, `to_mode`, `molecule_name` |
+| `visualization_load` | Carregamento de visualizações | `visualizationModeEvents.ts` | `mode`, `molecule_name`, `load_time`, `success` |
+
+---
+
 ### **🎨 EVENTOS DE INTERFACE**
 
 | Evento | Descrição | Arquivo | Parâmetros Principais |
@@ -500,7 +516,10 @@ src/
 │   │       └── searchEvents.ts          # 🔍 Busca de elementos
 │   └── visualization/
 │       └── events/
-│           └── moleculeSearchEvents.ts  # 🧬 Busca de moléculas
+│           ├── moleculeSearchEvents.ts  # 🧬 Busca de moléculas
+│           ├── molecule2DEvents.ts      # 🧬 Eventos de visualização 2D
+│           ├── molecule3DEvents.ts      # 🧬 Eventos de visualização 3D
+│           └── visualizationModeEvents.ts # 🔄 Mudança de modos de visualização
 └── lib/
     └── gtag.ts                          # 📊 Funções base do GA4
 ```
@@ -515,10 +534,12 @@ src/
 | **Interface** | 5 eventos | ✅ Implementado | ✅ **100% Utilizados** | Todos os toggles e mudanças |
 | **Catálogo** | 5 eventos | ✅ Implementado | ✅ **100% Utilizados** | Busca, filtros, paginação |
 | **Calculadoras** | 5 eventos | ✅ Implementado | ✅ **100% Utilizados** | Científica e massa molar |
-| **Visualização 3D** | 1 evento | ✅ Implementado | ✅ **100% Utilizados** | Interações 3D implementadas |
+| **Visualização 2D** | 4 eventos | ✅ Implementado | ✅ **100% Utilizados** | Interações 2D implementadas |
+| **Visualização 3D** | 3 eventos | ✅ Implementado | ✅ **100% Utilizados** | Interações 3D implementadas |
+| **Visualização Geral** | 2 eventos | ✅ Implementado | ✅ **100% Utilizados** | Mudança de modos e carregamento |
 | **Engajamento** | 5 eventos | ✅ Implementado | ❌ **0% Utilizados** | Eventos opcionais |
 | **Automáticos** | 1 evento | ✅ Implementado | ✅ **100% Utilizados** | Pageviews automáticos |
-| **TOTAL** | **21 eventos** | ✅ **100%** | ✅ **95.2% Utilizados** | **20 de 21 eventos ativos** |
+| **TOTAL** | **30 eventos** | ✅ **100%** | ✅ **83.3% Utilizados** | **25 de 30 eventos ativos** |
 
 ---
 
@@ -540,6 +561,77 @@ Durante a análise do código, foi identificado **1 evento implementado mas não
 ---
 
 ### **🚀 EXEMPLOS DE USO IMPLEMENTADOS**
+
+#### **`trackMolecule2DInteraction` - ✅ Implementado**
+```ts
+// Exemplo de uso no MoleculeToolbar.tsx
+import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
+
+// Tracking de mudança para modo 2D
+trackMolecule2DInteraction({
+  molecule_name: "caffeine",
+  interaction_type: "style_change",
+  interaction_value: "switch_to_2d",
+  section: "molecule_toolbar",
+});
+
+// Tracking de interação de zoom 2D
+trackMolecule2DInteraction({
+  molecule_name: "caffeine", 
+  interaction_type: "wheel_zoom",
+  interaction_value: "zoom_in",
+  section: "molecule_viewer_2d",
+});
+
+// Tracking de pan com mouse
+trackMolecule2DInteraction({
+  molecule_name: "caffeine",
+  interaction_type: "pan", 
+  interaction_value: "mouse_drag",
+  section: "molecule_viewer_2d",
+});
+```
+
+#### **`trackMolecule2DView` - ✅ Implementado**
+```ts
+// Exemplo de uso no useViewer2DRenderer.ts
+import { trackMolecule2DView } from "../events/molecule2DEvents";
+
+// Tracking de renderização 2D bem-sucedida
+trackMolecule2DView({
+  molecule_name: "caffeine",
+  render_time: 150,
+  view_style: "2d_structure", 
+  success: true,
+});
+```
+
+#### **`trackMolecule2DLoad` - ✅ Implementado**
+```ts
+// Exemplo de uso no useViewer2DRenderer.ts
+import { trackMolecule2DLoad } from "../events/molecule2DEvents";
+
+// Tracking de carregamento de molécula 2D
+trackMolecule2DLoad({
+  molecule_name: "caffeine",
+  load_time: 89,
+  data_source: "smiles",
+  success: true,
+});
+```
+
+#### **`trackMolecule2DError` - ✅ Implementado**
+```ts
+// Exemplo de uso no useViewer2DRenderer.ts
+import { trackMolecule2DError } from "../events/molecule2DEvents";
+
+// Tracking de erro na renderização 2D
+trackMolecule2DError({
+  molecule_name: "invalid_molecule",
+  error_type: "data_invalid",
+  error_message: "SMILES parsing failed: Invalid character",
+});
+```
 
 #### **`trackMolecule3DInteraction` - ✅ Implementado**
 ```ts

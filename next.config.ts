@@ -1,6 +1,6 @@
 import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-import withBundleAnalyzer from "@next/bundle-analyzer"; // ✅ Novo
+import withBundleAnalyzer from "@next/bundle-analyzer"; 
 
 // ⚙️ Ativa o bundle analyzer se a variável de ambiente ANALYZE=true
 const withAnalyzer = withBundleAnalyzer({

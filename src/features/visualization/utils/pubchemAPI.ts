@@ -99,17 +99,56 @@ async function resolveCid(query: string): Promise<string> {
   throw new Error("Não foi possível resolver um CID na PubChem para esta entrada.");
 }
 
-/** SDF (3D com fallback) */
+/** SDF 2D apenas */
+async function getSdf2DByCid(cid: string): Promise<string> {
+  const url2d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF`;
+  const sdf2d = await fetchTxt(url2d);
+  if (sdf2d) {
+    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}`);
+    return sdf2d;
+  }
+
+  throw new Error(`Não foi possível obter SDF 2D na PubChem para o CID ${cid}.`);
+}
+
+/** SDF 3D apenas */
+async function getSdf3DByCid(cid: string): Promise<string> {
+  const url3d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF?record_type=3d`;
+  const sdf3d = await fetchTxt(url3d);
+  if (sdf3d) {
+    console.info(`Estrutura 3D obtida com sucesso para CID ${cid}`);
+    return sdf3d;
+  }
+
+  throw new Error(`Estrutura 3D não disponível para CID ${cid}. Tente o modo 2D.`);
+}
+
+/** SDF (3D com fallback para 2D) */
 async function getSdfByCid(cid: string): Promise<string> {
   const url3d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF?record_type=3d`;
   const sdf3d = await fetchTxt(url3d);
   if (sdf3d) return sdf3d;
 
+  console.info(`Estrutura 3D não disponível para CID ${cid}, tentando estrutura 2D...`);
+  
   const url2d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF`;
   const sdf2d = await fetchTxt(url2d);
-  if (sdf2d) return sdf2d;
+  if (sdf2d) {
+    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}`);
+    return sdf2d;
+  }
 
-  throw new Error("Não foi possível obter SDF (3D ou 2D) na PubChem.");
+  throw new Error(`Não foi possível obter SDF (3D ou 2D) na PubChem para o CID ${cid}.`);
+}
+
+export async function getSdf2D(query: string): Promise<string> {
+  const cid = await resolveCid(query);
+  return getSdf2DByCid(cid);
+}
+
+export async function getSdf3D(query: string): Promise<string> {
+  const cid = await resolveCid(query);
+  return getSdf3DByCid(cid);
 }
 
 export async function getSdf(query: string): Promise<string> {

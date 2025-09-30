@@ -10,6 +10,7 @@ import {
 } from "../constants/viewer2d.constants";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { getMoleculeKey } from "../utils/moleculeKey";
+import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
 
 interface UseViewer2DInteractionsProps {
   svgElRef: React.RefObject<SVGSVGElement | null>;
@@ -53,7 +54,15 @@ export function useViewer2DInteractions({
     vbRef.current = { ...init };
     writeViewBox(svg, init);
     saveVB(init); // persiste reset
-  }, [svgElRef, vbRef, vbInitialRef, saveVB]);
+    
+    // Track reset interaction
+    const moleculeName = getMoleculeKey(smiles, sdf);
+    trackMolecule2DInteraction({
+      molecule_name: moleculeName,
+      interaction_type: "reset_view",
+      section: "molecule_viewer_2d",
+    });
+  }, [svgElRef, vbRef, vbInitialRef, saveVB, smiles, sdf]);
 
   // Zoom (scroll)
   const handleWheel = useCallback(
@@ -92,8 +101,17 @@ export function useViewer2DInteractions({
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
       saveVB(clamped);
+      
+      // Track wheel zoom interaction
+      const moleculeName = getMoleculeKey(smiles, sdf);
+      trackMolecule2DInteraction({
+        molecule_name: moleculeName,
+        interaction_type: "wheel_zoom",
+        interaction_value: zoom > 1 ? "zoom_in" : "zoom_out",
+        section: "molecule_viewer_2d",
+      });
     },
-    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB]
+    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB, smiles, sdf]
   );
 
   // Pan com wheel (Shift)
@@ -118,8 +136,17 @@ export function useViewer2DInteractions({
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
       saveVB(clamped);
+      
+      // Track wheel pan interaction
+      const moleculeName = getMoleculeKey(smiles, sdf);
+      trackMolecule2DInteraction({
+        molecule_name: moleculeName,
+        interaction_type: "pan",
+        interaction_value: "wheel_pan",
+        section: "molecule_viewer_2d",
+      });
     },
-    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB]
+    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB, smiles, sdf]
   );
 
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -174,8 +201,19 @@ export function useViewer2DInteractions({
       const svg = svgHostRef.current.querySelector("svg");
       if (svg) svg.style.cursor = "grab";
     }
-    if (vbRef.current) saveVB(vbRef.current);
-  }, [svgHostRef, vbRef, saveVB]);
+    if (vbRef.current) {
+      saveVB(vbRef.current);
+      
+      // Track pan interaction on mouse up
+      const moleculeName = getMoleculeKey(smiles, sdf);
+      trackMolecule2DInteraction({
+        molecule_name: moleculeName,
+        interaction_type: "pan",
+        interaction_value: "mouse_drag",
+        section: "molecule_viewer_2d",
+      });
+    }
+  }, [svgHostRef, vbRef, saveVB, smiles, sdf]);
 
   // Touch
   const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
@@ -224,12 +262,32 @@ export function useViewer2DInteractions({
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
-    if (vbRef.current) saveVB(vbRef.current);
-  }, [saveVB, vbRef]);
+    if (vbRef.current) {
+      saveVB(vbRef.current);
+      
+      // Track pan interaction on touch end
+      const moleculeName = getMoleculeKey(smiles, sdf);
+      trackMolecule2DInteraction({
+        molecule_name: moleculeName,
+        interaction_type: "pan",
+        interaction_value: "touch_drag",
+        section: "molecule_viewer_2d",
+      });
+    }
+  }, [saveVB, vbRef, smiles, sdf]);
 
   const handleDoubleClick = useCallback(() => {
     resetViewBox();
-  }, [resetViewBox]);
+    
+    // Track double click interaction
+    const moleculeName = getMoleculeKey(smiles, sdf);
+    trackMolecule2DInteraction({
+      molecule_name: moleculeName,
+      interaction_type: "double_click",
+      interaction_value: "reset_view",
+      section: "molecule_viewer_2d",
+    });
+  }, [resetViewBox, smiles, sdf]);
 
   const onWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {

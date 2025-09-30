@@ -2,11 +2,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { getSmiles, getSdf } from "../utils/pubchemAPI";
+import { getSmiles, getSdf2D, getSdf3D } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
 import { trackMoleculeSearch } from "../events/moleculeSearchEvents";
 import { trackMolecule3DInteraction } from "../events/molecule3DEvents";
+import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
 import { useTranslations } from "next-intl";
 import { getMoleculeKey } from "../utils/moleculeKey";
 
@@ -67,9 +68,12 @@ export function MoleculeToolbar() {
     const searchType = detectSearchType(q);
 
     try {
+      // Escolhe a função SDF baseada no modo de visualização atual
+      const getSdfFunction = viewMode === "2D" ? getSdf2D : getSdf3D;
+      
       const [smilesRes, sdfRes] = await Promise.allSettled([
         getSmiles(q),
-        getSdf(q),
+        getSdfFunction(q),
       ]);
 
       const smiles = smilesRes.status === "fulfilled" ? smilesRes.value : null;
@@ -206,12 +210,20 @@ export function MoleculeToolbar() {
             setViewMode(newMode);
 
             // Tracking de mudança de modo de visualização
-            if (newMode === "3D" && (smiles || sdfData)) {
+            if (newMode === "3D" && (smiles?.trim() || sdfData?.trim())) {
               const moleculeName = getMoleculeKey(smiles, sdfData);
               trackMolecule3DInteraction({
                 molecule_name: moleculeName,
                 interaction_type: "style_change",
                 interaction_value: "switch_to_3d",
+              });
+            } else if (newMode === "2D" && (smiles?.trim() || sdfData?.trim())) {
+              const moleculeName = getMoleculeKey(smiles, sdfData);
+              trackMolecule2DInteraction({
+                molecule_name: moleculeName,
+                interaction_type: "style_change",
+                interaction_value: "switch_to_2d",
+                section: "molecule_toolbar",
               });
             }
           }}

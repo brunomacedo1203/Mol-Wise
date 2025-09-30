@@ -21,6 +21,8 @@ import {
   DEFAULT_CANVAS_HEIGHT,
   SVG_MARGIN,
 } from "../constants/viewer2d.constants";
+import { getMoleculeKey } from "../utils/moleculeKey";
+import { trackMolecule2DView, trackMolecule2DLoad, trackMolecule2DError } from "../events/molecule2DEvents";
 
 interface UseViewer2DRendererProps {
   svgHostRef: React.RefObject<HTMLDivElement | null>;
@@ -95,6 +97,10 @@ export function useViewer2DRenderer({
       const OCL = oclRef.current;
       if (!host || !OCL || !ready) return;
 
+      const startTime = performance.now();
+      const moleculeName = getMoleculeKey(smiles, sdf);
+      let dataSource: "smiles" | "sdf" | "molfile" | undefined;
+
       try {
         let mol: import("openchemlib").Molecule | null = null;
 
@@ -102,8 +108,14 @@ export function useViewer2DRenderer({
         if (sdf) {
           try {
             mol = OCL.Molecule.fromMolfile(sdf);
+            dataSource = "sdf";
           } catch (error) {
             console.error("❌ Erro ao processar SDF:", error);
+            trackMolecule2DError({
+              molecule_name: moleculeName,
+              error_type: "data_invalid",
+              error_message: `SDF parsing failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            });
           }
         }
 
@@ -111,8 +123,14 @@ export function useViewer2DRenderer({
         if (!mol && smiles) {
           try {
             mol = OCL.Molecule.fromSmiles(smiles);
+            dataSource = "smiles";
           } catch (error) {
             console.error("❌ Erro ao processar SMILES:", error);
+            trackMolecule2DError({
+              molecule_name: moleculeName,
+              error_type: "data_invalid",
+              error_message: `SMILES parsing failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            });
           }
         }
 
@@ -123,6 +141,12 @@ export function useViewer2DRenderer({
           vbRef.current = null;
           vbInitialRef.current = null;
           contentBoundsRef.current = null;
+          
+          trackMolecule2DLoad({
+            molecule_name: moleculeName,
+            success: false,
+            data_source: dataSource,
+          });
           return;
         }
 
@@ -226,12 +250,46 @@ export function useViewer2DRenderer({
             vbInitialRef.current = newViewBox;
           }
         }
+        
+        // Track successful render
+        const renderTime = performance.now() - startTime;
+        trackMolecule2DLoad({
+          molecule_name: moleculeName,
+          load_time: Math.round(renderTime),
+          data_source: dataSource,
+          success: true,
+        });
+        
+        trackMolecule2DView({
+          molecule_name: moleculeName,
+          render_time: Math.round(renderTime),
+          view_style: "2d_structure",
+          success: true,
+        });
+        
       } catch (error) {
         console.error("❌ Erro durante a renderização:", error);
+        
+        const renderTime = performance.now() - startTime;
+        trackMolecule2DError({
+          molecule_name: moleculeName,
+          error_type: "render_failed",
+          error_message: error instanceof Error ? error.message : 'Unknown render error',
+        });
+        
+        trackMolecule2DLoad({
+          molecule_name: moleculeName,
+          load_time: Math.round(renderTime),
+          data_source: dataSource,
+          success: false,
+        });
       }
     }
 
-    void render();
+    // Só executa render se houver dados válidos de molécula
+    if (sdf?.trim() || smiles?.trim()) {
+      void render();
+    }
   }, [
     sdf,
     smiles,
