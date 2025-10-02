@@ -17,7 +17,26 @@ export function VisualizationPageContent() {
 
       {/* Área principal sem restrições */}
       <div className="flex-1 min-h-0 p-0 relative overflow-hidden">
-        {viewMode === "2D" ? <MoleculeViewer2D /> : <MoleculeViewer3D />}
+        {/* Renderiza ambos, controla visibilidade via CSS */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-300 ${
+            viewMode === "2D"
+              ? "opacity-100 z-10"
+              : "opacity-0 z-0 pointer-events-none"
+          }`}
+        >
+          <MoleculeViewer2D />
+        </div>
+
+        <div
+          className={`absolute inset-0 transition-opacity duration-300 ${
+            viewMode === "3D"
+              ? "opacity-100 z-10"
+              : "opacity-0 z-0 pointer-events-none"
+          }`}
+        >
+          <MoleculeViewer3D />
+        </div>
       </div>
 
       {/* Dica quando nada é carregado */}

@@ -14,6 +14,7 @@ export interface ThreeDMolViewer {
   ) => void;
   zoomTo: () => void;
   render: () => void;
+  resize: () => void;
   zoom: (factor: number) => void;
   rotate: (angle: number, axis: [number, number, number]) => void;
   translate: (x: number, y: number, z: number) => void;

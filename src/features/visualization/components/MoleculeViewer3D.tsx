@@ -23,6 +23,7 @@ export function MoleculeViewer3D() {
 
   const sdfData = useVisualizationStore((s) => s.sdfData);
   const smiles = useVisualizationStore((s) => s.smilesData);
+  const viewMode = useVisualizationStore((s) => s.viewMode); // ✅ Adicionar viewMode
   const setCurrentMolKey = useVisualizationStore((s) => s.setCurrentMolKey);
   const getView3D = useVisualizationStore((s) => s.getView3D);
   const setView3D = useVisualizationStore((s) => s.setView3D);
@@ -162,6 +163,55 @@ export function MoleculeViewer3D() {
     };
   }, [containerReady]);
 
+  // Protege contra redimensionamento com dimensões inválidas
+  useEffect(() => {
+    const el = containerRef.current;
+    const viewer = viewerRef.current;
+    if (!el || !viewer || !libReady || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
+
+    let resizeTimeoutId: NodeJS.Timeout | null = null;
+
+    const handleResize = () => {
+      const rect = el.getBoundingClientRect();
+      const computedStyle = window.getComputedStyle(el);
+      const width = parseInt(computedStyle.width, 10) || rect.width;
+      const height = parseInt(computedStyle.height, 10) || rect.height;
+
+      // Se dimensões inválidas, não renderiza
+      if (width < 200 || height < 150) {
+        console.warn("⚠️ Dimensões inválidas durante resize, aguardando...");
+        return;
+      }
+
+      // Debounce para evitar renderizações excessivas
+      if (resizeTimeoutId) {
+        clearTimeout(resizeTimeoutId);
+      }
+
+      resizeTimeoutId = setTimeout(() => {
+        if (mountedRef.current && viewer && viewMode === "3D") {
+          // ✅ Verificar viewMode
+          try {
+            viewer.resize();
+            viewer.render();
+          } catch (e) {
+            console.warn("Erro ao redimensionar viewer 3D:", e);
+          }
+        }
+      }, 100);
+    };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(el);
+
+    return () => {
+      resizeObserver.disconnect();
+      if (resizeTimeoutId) {
+        clearTimeout(resizeTimeoutId);
+      }
+    };
+  }, [libReady, viewMode]); // ✅ Adicionar viewMode como dependência
+
   // Salva visão anterior
   const prevMoleculeRef = useRef<{
     smiles: string | null;
@@ -185,7 +235,7 @@ export function MoleculeViewer3D() {
 
   // Atualiza modelo
   useEffect(() => {
-    if (!mountedRef.current) return;
+    if (!mountedRef.current || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
 
     async function updateModel() {
       if (!viewerRef.current || !libReady || !sdfData || !mountedRef.current)
@@ -239,11 +289,11 @@ export function MoleculeViewer3D() {
     }
 
     void updateModel();
-  }, [sdfData, libReady, smiles, getView3D]);
+  }, [sdfData, libReady, smiles, getView3D, viewMode]); // ✅ Adicionar viewMode como dependência
 
   // Interações do usuário
   useEffect(() => {
-    if (!mountedRef.current) return;
+    if (!mountedRef.current || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
 
     const el = containerRef.current;
     const v = viewerRef.current;
@@ -311,11 +361,11 @@ export function MoleculeViewer3D() {
       el.removeEventListener("wheel", handleWheel, true);
       el.removeEventListener("touchend", handleTouchEnd, true);
     };
-  }, [smiles, sdfData, setView3D, libReady]);
+  }, [smiles, sdfData, setView3D, libReady, viewMode]); // ✅ Adicionar viewMode como dependência
 
   // Tema dinâmico
   useEffect(() => {
-    if (!libReady || !mountedRef.current) return;
+    if (!libReady || !mountedRef.current || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
 
     const html = document.documentElement;
     const updateTheme = () => {
@@ -325,8 +375,13 @@ export function MoleculeViewer3D() {
 
       const isDark = html.classList.contains("dark");
       const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
-      v.setBackgroundColor(bgColor);
-      v.render();
+
+      try {
+        v.setBackgroundColor(bgColor);
+        v.render();
+      } catch (e) {
+        console.warn("Erro ao atualizar tema 3D:", e);
+      }
     };
 
     updateTheme();
@@ -334,7 +389,7 @@ export function MoleculeViewer3D() {
     obs.observe(html, { attributes: true, attributeFilter: ["class"] });
 
     return () => obs.disconnect();
-  }, [libReady]);
+  }, [libReady, viewMode]); // ✅ Adicionar viewMode como dependência
 
   useEffect(() => {
     if (!mountedRef.current) return;
