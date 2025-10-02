@@ -22,7 +22,11 @@ import {
   SVG_MARGIN,
 } from "../constants/viewer2d.constants";
 import { getMoleculeKey } from "../utils/moleculeKey";
-import { trackMolecule2DView, trackMolecule2DLoad, trackMolecule2DError } from "../events/molecule2DEvents";
+import {
+  trackMolecule2DView,
+  trackMolecule2DLoad,
+  trackMolecule2DError,
+} from "../events/molecule2DEvents";
 
 interface UseViewer2DRendererProps {
   svgHostRef: React.RefObject<HTMLDivElement | null>;
@@ -34,22 +38,58 @@ interface UseViewer2DRendererProps {
   smiles: string | null;
 }
 
-// Função para normalizar SVG e remover labels de estereoquímica
+// 🔧 Corrige ligações duplas “cross” (E/Z indefinida) → duplas normais
+function clearUnknownDoubleBondStereo(
+  mol: import("openchemlib").Molecule,
+  OCL: OpenChemLibModule
+): number {
+  let patched = 0;
+  const bondCount = mol.getAllBonds();
+
+  for (let b = 0; b < bondCount; b++) {
+    if (mol.getBondOrder(b) !== 2) continue;
+
+    const isCross =
+      (typeof mol.getBondType === "function" &&
+        mol.getBondType(b) === OCL.Molecule.cBondTypeCross) ||
+      (typeof (mol as import("openchemlib").Molecule).isBondParityUnknownOrNone === "function" &&
+        (mol as import("openchemlib").Molecule).isBondParityUnknownOrNone(b));
+
+    if (isCross) {
+      mol.setBondParity?.(b, OCL.Molecule.cBondParityNone, false);
+      mol.setBondType?.(b, OCL.Molecule.cBondTypeDouble);
+      patched++;
+    }
+  }
+
+  return patched;
+}
+
+// Normalizador de SVG (ajustes visuais básicos)
 function normalizeMoleculeSVG(svgString: string): string {
   return svgString
     .replace(/stroke-width="[\d.]+"/g, 'stroke-width="1.5"')
     .replace(/font-size="[\d.]+"/g, 'font-size="16"')
-    .replace(/letter-spacing="[\d.-]+"/g, '')
+    .replace(/letter-spacing="[\d.-]+"/g, "")
     .replace(
-      '<svg',
+      "<svg",
       '<svg shape-rendering="geometricPrecision" text-rendering="geometricPrecision"'
     )
-    .replace(/font-family="[^"]*"/g, 'font-family="Arial, Helvetica, sans-serif"')
-    .replace(/<text([^>]*)>\s+/g, '<text$1>')
-    .replace(/\s+<\/text>/g, '</text>')
-    .replace(/<text[^>]*>\s*(abs|rac|and|or|AND|OR)\s*<\/text>/gi, '')
-    .replace(/<text[^>]*fill="#[fF]{2}0{4}"[^>]*>.*?<\/text>/g, '')
-    .replace(/<text[^>]*font-style="italic"[^>]*fill="#[fF]{2}0{4}"[^>]*>.*?<\/text>/g, '');
+    .replace(
+      /font-family="[^"]*"/g,
+      'font-family="Arial, Helvetica, sans-serif"'
+    )
+    .replace(/<text([^>]*)>\s+/g, "<text$1>")
+    .replace(/\s+<\/text>/g, "</text>")
+    .replace(/<text[^>]*>\s*(abs|rac|and|or|AND|OR)\s*<\/text>/gi, "")
+    .replace(
+      /<text[^>]*fill="#[fF]{2}0{4}"[^>]*>.*?<\/text>/g,
+      ""
+    )
+    .replace(
+      /<text[^>]*font-style="italic"[^>]*fill="#[fF]{2}0{4}"[^>]*>.*?<\/text>/g,
+      ""
+    );
 }
 
 export function useViewer2DRenderer({
@@ -91,23 +131,23 @@ export function useViewer2DRenderer({
   useEffect(() => {
     let isRendering = false;
     let isMounted = true;
-    
+
     async function render() {
       if (!isMounted) return;
-      
+
       const host = svgHostRef.current;
       const OCL = oclRef.current;
       if (!host || !OCL || !ready || isRendering) return;
-      
+
       const moleculeName = getMoleculeKey(smiles, sdf);
-      
+
       if (lastRenderedRef.current === moleculeName) {
         return;
       }
-      
+
       isRendering = true;
       lastRenderedRef.current = moleculeName;
-      
+
       const startTime = performance.now();
       let dataSource: "smiles" | "sdf" | "molfile" | undefined;
 
@@ -123,7 +163,9 @@ export function useViewer2DRenderer({
             trackMolecule2DError({
               molecule_name: moleculeName,
               error_type: "data_invalid",
-              error_message: `SDF parsing failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              error_message: `SDF parsing failed: ${
+                error instanceof Error ? error.message : "Unknown error"
+              }`,
             });
           }
         }
@@ -137,7 +179,9 @@ export function useViewer2DRenderer({
             trackMolecule2DError({
               molecule_name: moleculeName,
               error_type: "data_invalid",
-              error_message: `SMILES parsing failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              error_message: `SMILES parsing failed: ${
+                error instanceof Error ? error.message : "Unknown error"
+              }`,
             });
           }
         }
@@ -148,7 +192,7 @@ export function useViewer2DRenderer({
           vbRef.current = null;
           vbInitialRef.current = null;
           contentBoundsRef.current = null;
-          
+
           trackMolecule2DLoad({
             molecule_name: moleculeName,
             success: false,
@@ -158,13 +202,45 @@ export function useViewer2DRenderer({
         }
 
         try {
-          mol.addImplicitHydrogens?.();
-          
-          if (mol.getAllAtoms() > 0) {
+          // 🔧 Remove hidrogênios APENAS quando ligados a carbono
+          if (typeof mol.removeExplicitHydrogens === "function") {
+            const atomCount = mol.getAllAtoms();
+            for (let i = atomCount - 1; i >= 0; i--) {
+              const atomicNo = mol.getAtomicNo(i);
+              
+              // Se é hidrogênio (atomicNo === 1)
+              if (atomicNo === 1) {
+                const connAtoms = mol.getAllConnAtoms?.(i) ?? 0;
+                
+                // Se tem exatamente 1 ligação
+                if (connAtoms === 1) {
+                  const neighborIdx = mol.getConnAtom?.(i, 0);
+                  
+                  if (neighborIdx !== undefined) {
+                    const neighborAtomicNo = mol.getAtomicNo(neighborIdx);
+                    
+                    // Se o vizinho é carbono (atomicNo === 6), remove o H
+                    if (neighborAtomicNo === 6) {
+                      mol.deleteAtom?.(i);
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          if (!sdf && mol.getAllAtoms() > 0) {
             mol.inventCoordinates();
           }
-          
-          mol.ensureHelperArrays?.(OCL.Molecule?.cHelperNeighbours ?? 0);
+
+          mol.ensureHelperArrays?.(
+            OCL.Molecule.cHelperNeighbours |
+              OCL.Molecule.cHelperRings |
+              OCL.Molecule.cHelperParities
+          );
+
+          // 🔧 Corrige duplas com "X"
+          clearUnknownDoubleBondStereo(mol, OCL);
         } catch (error) {
           console.warn("⚠️ Erro ao preparar molécula:", error);
         }
@@ -196,8 +272,7 @@ export function useViewer2DRenderer({
           noImplicitAtomLabelColors: false,
           showAtomNumber: false,
           showBondNumber: false,
-            showAtomLabels: true,
-
+          showAtomLabels: true,
         });
 
         const normalizedSvg = normalizeMoleculeSVG(rawSvg);
@@ -220,8 +295,11 @@ export function useViewer2DRenderer({
         const svgEl = host.querySelector("svg") as SVGSVGElement | null;
         svgElRef.current = svgEl;
 
-        const mode: "dark" | "light" =
-          document.documentElement.classList.contains("dark") ? "dark" : "light";
+        const mode: "dark" | "light" = document.documentElement.classList.contains(
+          "dark"
+        )
+          ? "dark"
+          : "light";
         if (svgEl) {
           applyThemeToSVG(svgEl, mode);
           cleanStereochemistryLabels(svgEl);
@@ -244,7 +322,7 @@ export function useViewer2DRenderer({
             vbInitialRef.current = newViewBox;
           }
         }
-        
+
         const renderTime = performance.now() - startTime;
         trackMolecule2DLoad({
           molecule_name: moleculeName,
@@ -252,7 +330,7 @@ export function useViewer2DRenderer({
           data_source: dataSource,
           success: true,
         });
-        
+
         if (!hasTrackedViewRef.current.has(moleculeName)) {
           hasTrackedViewRef.current.add(moleculeName);
           trackMolecule2DView({
@@ -262,17 +340,17 @@ export function useViewer2DRenderer({
             success: true,
           });
         }
-        
       } catch (error) {
         console.error("❌ Erro durante a renderização:", error);
-        
+
         const renderTime = performance.now() - startTime;
         trackMolecule2DError({
           molecule_name: moleculeName,
           error_type: "render_failed",
-          error_message: error instanceof Error ? error.message : 'Unknown render error',
+          error_message:
+            error instanceof Error ? error.message : "Unknown render error",
         });
-        
+
         trackMolecule2DLoad({
           molecule_name: moleculeName,
           load_time: Math.round(renderTime),
@@ -287,17 +365,13 @@ export function useViewer2DRenderer({
     if (sdf?.trim() || smiles?.trim()) {
       void render();
     }
-    
+
     return () => {
       isMounted = false;
       isRendering = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    sdf,
-    smiles,
-    ready,
-  ]);
+  }, [sdf, smiles, ready]);
 
   useEffect(() => {
     if (!ready) return;
@@ -306,8 +380,10 @@ export function useViewer2DRenderer({
     const updateTheme = () => {
       const svgEl = svgElRef.current;
       if (!svgEl) return;
-      
-      const mode: "dark" | "light" = html.classList.contains("dark") ? "dark" : "light";
+
+      const mode: "dark" | "light" = html.classList.contains("dark")
+        ? "dark"
+        : "light";
       applyThemeToSVG(svgEl, mode);
       cleanStereochemistryLabels(svgEl);
     };
@@ -316,7 +392,7 @@ export function useViewer2DRenderer({
 
     const observer = new MutationObserver(updateTheme);
     observer.observe(html, { attributes: true, attributeFilter: ["class"] });
-    
+
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
