@@ -108,7 +108,7 @@ export function MoleculeViewer3D() {
         let attempts = 0;
         const maxAttempts = 5;
 
-        const validateAndCreateViewer = () => {
+        const validateAndCreateViewer = async () => {
           const rect = el.getBoundingClientRect();
           const computedStyle = window.getComputedStyle(el);
           const width = parseInt(computedStyle.width, 10) || rect.width;
@@ -135,6 +135,9 @@ export function MoleculeViewer3D() {
           // Clear any existing content before creating new viewer
           el.innerHTML = "";
 
+          // ✅ Aguarda um frame para garantir que o DOM esteja estável
+          await new Promise(resolve => requestAnimationFrame(resolve));
+
           viewerRef.current = $3Dmol.createViewer(el, {
             backgroundColor: bgColor,
             backgroundAlpha: 1,
@@ -143,7 +146,7 @@ export function MoleculeViewer3D() {
           if (mountedRef.current) setLibReady(true);
         };
 
-        validateAndCreateViewer();
+        await validateAndCreateViewer();
       } catch (e: unknown) {
         if (!mountedRef.current) return;
         setErr(e instanceof Error ? e.message : "Falha ao inicializar 3D");
@@ -265,6 +268,11 @@ export function MoleculeViewer3D() {
         }
 
         v.render();
+        
+        // ✅ Aguarda um frame antes de considerar renderização completa
+        // Isso evita o erro GL_INVALID_FRAMEBUFFER_OPERATION na primeira renderização
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        
         if (mountedRef.current) setErr(null);
 
         const renderTime = performance.now() - startTime;
