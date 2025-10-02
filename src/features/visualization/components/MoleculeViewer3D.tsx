@@ -17,6 +17,7 @@ export function MoleculeViewer3D() {
   const viewerRef = useRef<ThreeDMolViewer | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [libReady, setLibReady] = useState(false);
+  const [containerReady, setContainerReady] = useState(false);
 
   const mountedRef = useRef(true);
 
@@ -45,8 +46,54 @@ export function MoleculeViewer3D() {
     };
   }, []);
 
-  // Inicializa viewer
+  // Aguarda container ter dimensões válidas
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const checkDimensions = () => {
+      const rect = el.getBoundingClientRect();
+      const computedStyle = window.getComputedStyle(el);
+      const width = parseInt(computedStyle.width, 10) || rect.width;
+      const height = parseInt(computedStyle.height, 10) || rect.height;
+
+      // Ensure minimum dimensions for WebGL context
+      if (width >= 200 && height >= 150) {
+        setContainerReady(true);
+        return true;
+      }
+      return false;
+    };
+
+    // Tenta imediatamente
+    if (checkDimensions()) return;
+
+    // Se falhar, usa ResizeObserver
+    const observer = new ResizeObserver(() => {
+      if (checkDimensions()) {
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(el);
+
+    // Fallback timeout para casos onde ResizeObserver não funciona
+    const timeoutId = setTimeout(() => {
+      if (checkDimensions()) {
+        observer.disconnect();
+      }
+    }, 100);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  // Inicializa viewer (só quando container estiver pronto)
+  useEffect(() => {
+    if (!containerReady) return;
+
     let disposed = false;
     const el = containerRef.current;
 
@@ -56,15 +103,46 @@ export function MoleculeViewer3D() {
         const $3Dmol: ThreeDMolNamespace = await waitFor3Dmol();
         if (disposed || !el || !mountedRef.current) return;
 
-        const isDark = document.documentElement.classList.contains("dark");
-        const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
+        // Valida dimensões antes de criar viewer com retry
+        let attempts = 0;
+        const maxAttempts = 5;
 
-        viewerRef.current = $3Dmol.createViewer(el, {
-          backgroundColor: bgColor,
-          backgroundAlpha: 1,
-        });
+        const validateAndCreateViewer = () => {
+          const rect = el.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(el);
+          const width = parseInt(computedStyle.width, 10) || rect.width;
+          const height = parseInt(computedStyle.height, 10) || rect.height;
 
-        if (mountedRef.current) setLibReady(true);
+          if (width < 200 || height < 150) {
+            attempts++;
+            if (attempts < maxAttempts) {
+              setTimeout(validateAndCreateViewer, 50);
+              return;
+            } else {
+              console.warn(
+                "Container dimensions still invalid after retries, forcing minimum size"
+              );
+              // Force minimum dimensions on the container
+              el.style.minWidth = "200px";
+              el.style.minHeight = "150px";
+            }
+          }
+
+          const isDark = document.documentElement.classList.contains("dark");
+          const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
+
+          // Clear any existing content before creating new viewer
+          el.innerHTML = "";
+
+          viewerRef.current = $3Dmol.createViewer(el, {
+            backgroundColor: bgColor,
+            backgroundAlpha: 1,
+          });
+
+          if (mountedRef.current) setLibReady(true);
+        };
+
+        validateAndCreateViewer();
       } catch (e: unknown) {
         if (!mountedRef.current) return;
         setErr(e instanceof Error ? e.message : "Falha ao inicializar 3D");
@@ -82,7 +160,7 @@ export function MoleculeViewer3D() {
       if (el) el.innerHTML = "";
       viewerRef.current = null;
     };
-  }, []);
+  }, [containerReady]);
 
   // Salva visão anterior
   const prevMoleculeRef = useRef<{
@@ -118,6 +196,7 @@ export function MoleculeViewer3D() {
 
       try {
         const v = viewerRef.current;
+
         v.clear();
         v.addModel(sdfData, "sdf");
         v.setStyle({}, { stick: { radius: 0.15 }, sphere: { radius: 0.4 } });
@@ -162,7 +241,7 @@ export function MoleculeViewer3D() {
     void updateModel();
   }, [sdfData, libReady, smiles, getView3D]);
 
-  // 🔥 Interações do usuário (agora com interaction_value)
+  // Interações do usuário
   useEffect(() => {
     if (!mountedRef.current) return;
 
@@ -243,6 +322,7 @@ export function MoleculeViewer3D() {
       if (!mountedRef.current) return;
       const v = viewerRef.current;
       if (!v) return;
+
       const isDark = html.classList.contains("dark");
       const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
       v.setBackgroundColor(bgColor);
@@ -266,7 +346,7 @@ export function MoleculeViewer3D() {
       <div
         ref={containerRef}
         className="w-full h-full"
-        style={{ position: "relative", overflow: "hidden" }}
+        style={{ position: "relative", overflow: "hidden", minHeight: "200px" }}
       />
       {!libReady && !err && (
         <p className="absolute bottom-2 left-3 text-sm text-zinc-500 dark:text-zinc-400 pointer-events-none">

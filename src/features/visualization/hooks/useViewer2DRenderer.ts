@@ -17,8 +17,6 @@ import { centerViewBox } from "../utils/viewBoxUtils";
 import {
   MIN_CANVAS_WIDTH,
   MIN_CANVAS_HEIGHT,
-  DEFAULT_CANVAS_WIDTH,
-  DEFAULT_CANVAS_HEIGHT,
   SVG_MARGIN,
 } from "../constants/viewer2d.constants";
 import { getMoleculeKey } from "../utils/moleculeKey";
@@ -38,7 +36,7 @@ interface UseViewer2DRendererProps {
   smiles: string | null;
 }
 
-// 🔧 Corrige ligações duplas “cross” (E/Z indefinida) → duplas normais
+// 🔧 Corrige ligações duplas "cross" (E/Z indefinida) → duplas normais
 function clearUnknownDoubleBondStereo(
   mol: import("openchemlib").Molecule,
   OCL: OpenChemLibModule
@@ -131,6 +129,7 @@ export function useViewer2DRenderer({
   useEffect(() => {
     let isRendering = false;
     let isMounted = true;
+    let resizeTimeoutId: NodeJS.Timeout | null = null;
 
     async function render() {
       if (!isMounted) return;
@@ -229,7 +228,7 @@ export function useViewer2DRenderer({
             }
           }
 
-          if (!sdf && mol.getAllAtoms() > 0) {
+          if (mol.getAllAtoms() > 0) {
             mol.inventCoordinates();
           }
 
@@ -246,14 +245,32 @@ export function useViewer2DRenderer({
         }
 
         const rect = host.getBoundingClientRect();
-        const w = Math.max(
-          MIN_CANVAS_WIDTH,
-          Math.floor(rect.width || DEFAULT_CANVAS_WIDTH)
-        );
-        const h = Math.max(
-          MIN_CANVAS_HEIGHT,
-          Math.floor(rect.height || DEFAULT_CANVAS_HEIGHT)
-        );
+        const computedStyle = window.getComputedStyle(host);
+        const rectWidth = parseInt(computedStyle.width, 10) || rect.width;
+        const rectHeight = parseInt(computedStyle.height, 10) || rect.height;
+        
+        // ✅ CRITICAL: Se dimensões são inválidas, aguarda estabilização
+        if (rectWidth < MIN_CANVAS_WIDTH || rectHeight < MIN_CANVAS_HEIGHT) {
+          console.warn("⚠️ Container dimensions invalid, waiting...");
+          
+          // Agenda nova tentativa após o container estabilizar
+          if (resizeTimeoutId) {
+            clearTimeout(resizeTimeoutId);
+          }
+          
+          resizeTimeoutId = setTimeout(() => {
+            if (isMounted) {
+              lastRenderedRef.current = null; // Force re-render
+              void render();
+            }
+          }, 100); // Aguarda 100ms para estabilização
+          
+          isRendering = false;
+          return;
+        }
+        
+        const w = Math.floor(rectWidth);
+        const h = Math.floor(rectHeight);
 
         const rawSvg = (
           mol as unknown as {
@@ -369,6 +386,12 @@ export function useViewer2DRenderer({
     return () => {
       isMounted = false;
       isRendering = false;
+      
+      // ✅ Limpa timeout de redimensionamento se existir
+      if (resizeTimeoutId) {
+        clearTimeout(resizeTimeoutId);
+        resizeTimeoutId = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sdf, smiles, ready]);
