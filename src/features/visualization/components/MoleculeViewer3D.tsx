@@ -18,7 +18,6 @@ export function MoleculeViewer3D() {
   const [err, setErr] = useState<string | null>(null);
   const [libReady, setLibReady] = useState(false);
 
-  // ✅ CORREÇÃO: Ref para rastrear se o componente foi desmontado
   const mountedRef = useRef(true);
 
   const sdfData = useVisualizationStore((s) => s.sdfData);
@@ -27,16 +26,13 @@ export function MoleculeViewer3D() {
   const getView3D = useVisualizationStore((s) => s.getView3D);
   const setView3D = useVisualizationStore((s) => s.setView3D);
 
-  // ✅ CORREÇÃO: Cleanup ao desmontar componente
+  // Cleanup ao desmontar
   useEffect(() => {
     mountedRef.current = true;
-
-    // Captura a referência atual para usar no cleanup
     const containerElement = containerRef.current;
 
     return () => {
       mountedRef.current = false;
-      // Força limpeza do viewer
       if (viewerRef.current) {
         try {
           viewerRef.current.clear?.();
@@ -45,15 +41,11 @@ export function MoleculeViewer3D() {
           console.warn("Erro ao limpar viewer 3D:", e);
         }
       }
-
-      // Limpa container usando a variável capturada
-      if (containerElement) {
-        containerElement.innerHTML = "";
-      }
+      if (containerElement) containerElement.innerHTML = "";
     };
   }, []);
 
-  // 🟢 Inicializa visualizador apenas uma vez
+  // Inicializa viewer
   useEffect(() => {
     let disposed = false;
     const el = containerRef.current;
@@ -62,8 +54,6 @@ export function MoleculeViewer3D() {
       setErr(null);
       try {
         const $3Dmol: ThreeDMolNamespace = await waitFor3Dmol();
-
-        // ✅ CORREÇÃO: Verifica se ainda está montado
         if (disposed || !el || !mountedRef.current) return;
 
         const isDark = document.documentElement.classList.contains("dark");
@@ -74,29 +64,19 @@ export function MoleculeViewer3D() {
           backgroundAlpha: 1,
         });
 
-        // ✅ CORREÇÃO: Só marca como ready se ainda estiver montado
-        if (mountedRef.current) {
-          setLibReady(true);
-        }
+        if (mountedRef.current) setLibReady(true);
       } catch (e: unknown) {
-        if (!mountedRef.current) return; // Ignora erros se desmontado
-
-        setErr(
-          e instanceof Error
-            ? e.message
-            : "Falha ao inicializar o visualizador 3D."
-        );
-
+        if (!mountedRef.current) return;
+        setErr(e instanceof Error ? e.message : "Falha ao inicializar 3D");
         trackMolecule3DError({
           error_type: "library_load_failed",
           error_message:
-            e instanceof Error ? e.message : "Failed to initialize 3D viewer",
+            e instanceof Error ? e.message : "Failed to init 3D viewer",
         });
       }
     }
 
     void init();
-
     return () => {
       disposed = true;
       if (el) el.innerHTML = "";
@@ -104,16 +84,14 @@ export function MoleculeViewer3D() {
     };
   }, []);
 
-  // 🟢 Salva visão da molécula anterior antes de trocar
+  // Salva visão anterior
   const prevMoleculeRef = useRef<{
     smiles: string | null;
     sdfData: string | null;
   } | null>(null);
 
   useEffect(() => {
-    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
-
-    // Salva visão da molécula anterior
+    if (!mountedRef.current) return;
     if (prevMoleculeRef.current && viewerRef.current) {
       const prevKey = getMoleculeKey(
         prevMoleculeRef.current.smiles,
@@ -122,18 +100,14 @@ export function MoleculeViewer3D() {
       try {
         const view = viewerRef.current.getView?.();
         if (view) setView3D(prevKey, view);
-      } catch {
-        // ignora
-      }
+      } catch {}
     }
-
-    // Atualiza referência da molécula atual
     prevMoleculeRef.current = { smiles, sdfData };
   }, [smiles, sdfData, setView3D]);
 
-  // Atualiza modelo quando dados mudam
+  // Atualiza modelo
   useEffect(() => {
-    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
+    if (!mountedRef.current) return;
 
     async function updateModel() {
       if (!viewerRef.current || !libReady || !sdfData || !mountedRef.current)
@@ -162,11 +136,7 @@ export function MoleculeViewer3D() {
         }
 
         v.render();
-
-        // ✅ CORREÇÃO: Só limpa erro se ainda estiver montado
-        if (mountedRef.current) {
-          setErr(null);
-        }
+        if (mountedRef.current) setErr(null);
 
         const renderTime = performance.now() - startTime;
         trackMolecule3DView({
@@ -177,12 +147,8 @@ export function MoleculeViewer3D() {
         });
       } catch (e) {
         console.error("Erro ao renderizar modelo 3D:", e);
-
         if (mountedRef.current) {
-          const errorMessage =
-            "Não foi possível renderizar o modelo 3D (SDF inválido?).";
-          setErr(errorMessage);
-
+          setErr("Não foi possível renderizar o modelo 3D (SDF inválido?).");
           trackMolecule3DError({
             molecule_name: moleculeName,
             error_type: "render_failed",
@@ -196,49 +162,62 @@ export function MoleculeViewer3D() {
     void updateModel();
   }, [sdfData, libReady, smiles, getView3D]);
 
-  // 🟠 Salva visão após interações do usuário
+  // 🔥 Interações do usuário (agora com interaction_value)
   useEffect(() => {
-    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
+    if (!mountedRef.current) return;
 
     const el = containerRef.current;
     const v = viewerRef.current;
     if (!el || !v || !libReady) return;
 
     const save = () => {
-      if (!mountedRef.current) return; // ✅ CORREÇÃO: Verifica antes de salvar
-
+      if (!mountedRef.current) return;
       const key = getMoleculeKey(smiles ?? null, sdfData ?? null);
       try {
         const view = v.getView?.();
         if (view) setView3D(key, view);
-      } catch {
-        // ignora
-      }
+      } catch {}
     };
 
-    const trackInteraction = (interactionType: "zoom" | "rotate") => {
-      if (!mountedRef.current) return; // ✅ CORREÇÃO: Verifica antes de trackear
-
+    const trackInteraction = (
+      interactionType: "zoom" | "rotate",
+      source: "mouse" | "touch" | "wheel" = "mouse"
+    ) => {
+      if (!mountedRef.current) return;
       const moleculeName = getMoleculeKey(smiles ?? null, sdfData ?? null);
+
+      let interactionValue: string | undefined;
+      switch (interactionType) {
+        case "zoom":
+          interactionValue = source === "wheel" ? "wheel_scroll" : "pinch_zoom";
+          break;
+        case "rotate":
+          interactionValue = source === "mouse" ? "mouse_drag" : "touch_rotate";
+          break;
+        default:
+          interactionValue = source;
+      }
+
       trackMolecule3DInteraction({
         molecule_name: moleculeName,
         interaction_type: interactionType,
+        interaction_value: interactionValue,
       });
     };
 
     const handleMouseUp = () => {
       save();
-      trackInteraction("rotate");
+      trackInteraction("rotate", "mouse");
     };
 
     const handleWheel = () => {
       save();
-      trackInteraction("zoom");
+      trackInteraction("zoom", "wheel");
     };
 
     const handleTouchEnd = () => {
       save();
-      trackInteraction("rotate");
+      trackInteraction("rotate", "touch");
     };
 
     el.addEventListener("mouseup", handleMouseUp, true);
@@ -249,25 +228,21 @@ export function MoleculeViewer3D() {
     el.addEventListener("touchend", handleTouchEnd, true);
 
     return () => {
-      // ✅ CORREÇÃO: Sempre remove listeners no cleanup
       el.removeEventListener("mouseup", handleMouseUp, true);
       el.removeEventListener("wheel", handleWheel, true);
       el.removeEventListener("touchend", handleTouchEnd, true);
     };
   }, [smiles, sdfData, setView3D, libReady]);
 
-  // ✅ CORREÇÃO: MutationObserver com cleanup forçado
+  // Tema dinâmico
   useEffect(() => {
     if (!libReady || !mountedRef.current) return;
 
     const html = document.documentElement;
     const updateTheme = () => {
-      // ✅ CORREÇÃO: Verifica se ainda está montado antes de executar
       if (!mountedRef.current) return;
-
       const v = viewerRef.current;
       if (!v) return;
-
       const isDark = html.classList.contains("dark");
       const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
       v.setBackgroundColor(bgColor);
@@ -275,19 +250,14 @@ export function MoleculeViewer3D() {
     };
 
     updateTheme();
-
     const obs = new MutationObserver(updateTheme);
     obs.observe(html, { attributes: true, attributeFilter: ["class"] });
 
-    return () => {
-      obs.disconnect();
-    };
+    return () => obs.disconnect();
   }, [libReady]);
 
-  // Atualiza chave atual da molécula
   useEffect(() => {
-    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
-
+    if (!mountedRef.current) return;
     setCurrentMolKey(getMoleculeKey(smiles ?? null, sdfData ?? null));
   }, [smiles, sdfData, setCurrentMolKey]);
 

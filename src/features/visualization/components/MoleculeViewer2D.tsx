@@ -1,4 +1,3 @@
-// src/features/visualization/components/MoleculeViewer2D.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -16,7 +15,6 @@ export function MoleculeViewer2D() {
   const vbInitialRef = useRef<ViewBox | null>(null);
   const contentBoundsRef = useRef<ViewBox | null>(null);
 
-  // ✅ CORREÇÃO: Ref para rastrear se o componente foi desmontado
   const mountedRef = useRef(true);
 
   const smiles = useVisualizationStore((s) => s.smilesData);
@@ -25,16 +23,13 @@ export function MoleculeViewer2D() {
   const setCurrentMolKey = useVisualizationStore((s) => s.setCurrentMolKey);
   const getZoom2D = useVisualizationStore((s) => s.getZoom2D);
 
-  // ✅ CORREÇÃO: Cleanup ao desmontar componente
   useEffect(() => {
     mountedRef.current = true;
 
-    // Captura a referência atual para usar no cleanup
     const hostElement = svgHostRef.current;
 
     return () => {
       mountedRef.current = false;
-      // Limpa referências usando a variável capturada
       if (hostElement) {
         hostElement.innerHTML = "";
       }
@@ -74,7 +69,7 @@ export function MoleculeViewer2D() {
   });
 
   useEffect(() => {
-    if (!mountedRef.current) return; // ✅ CORREÇÃO: Só executa se montado
+    if (!mountedRef.current) return;
 
     const key = getMoleculeKey(smiles, sdf);
     setCurrentMolKey(key);
@@ -98,7 +93,8 @@ export function MoleculeViewer2D() {
         vbInitialRef.current = newViewBox;
       }
     }
-  }, [ready, smiles, sdf, getZoom2D, setCurrentMolKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, smiles, sdf]);
 
   return (
     <div
