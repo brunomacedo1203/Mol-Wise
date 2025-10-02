@@ -96,7 +96,7 @@ export function useViewer2DInteractions({
       const relY = (e.clientY - rect.top) / rect.height;
 
       const vb = vbRef.current;
-      const zoom = Math.pow(1 + WHEEL_ZOOM_SENSITIVITY, e.deltaY);
+      const zoom = Math.pow(1 + WHEEL_ZOOM_SENSITIVITY, -e.deltaY);
       const newWidth = vb.width * zoom;
 
       const init = vbInitialRef.current;
