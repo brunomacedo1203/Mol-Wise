@@ -196,6 +196,8 @@ export function useViewer2DRenderer({
           noImplicitAtomLabelColors: false,
           showAtomNumber: false,
           showBondNumber: false,
+            showAtomLabels: true,
+
         });
 
         const normalizedSvg = normalizeMoleculeSVG(rawSvg);

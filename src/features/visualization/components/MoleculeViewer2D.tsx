@@ -1,3 +1,4 @@
+// src/features/visualization/components/MoleculeViewer2D.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -68,6 +69,23 @@ export function MoleculeViewer2D() {
     contentBoundsRef,
   });
 
+  // ✅ Corrige passive: true do wheel
+  useEffect(() => {
+    const el = svgHostRef.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault(); // agora permitido
+      onWheel(e as unknown as React.WheelEvent<HTMLDivElement>);
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+    };
+  }, [onWheel]);
+
   useEffect(() => {
     if (!mountedRef.current) return;
 
@@ -103,7 +121,6 @@ export function MoleculeViewer2D() {
     >
       <div
         ref={svgHostRef}
-        onWheel={onWheel}
         onDoubleClick={handleDoubleClick}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}

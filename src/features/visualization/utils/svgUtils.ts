@@ -1,12 +1,84 @@
 import { ViewBox } from "../types/viewer2d.types";
 
-/** Aperta o viewBox e aplica offset vertical */
+/** -------------------- Helpers de cor -------------------- */
+function isBlackColor(v?: string | null): boolean {
+  if (!v) return false; // NÃO trate vazio como preto
+  const normalized = v.toLowerCase().trim();
+  return (
+    normalized === "black" ||
+    normalized === "#000000" ||
+    normalized === "#000" ||
+    normalized === "rgb(0,0,0)" ||
+    normalized === "rgb(0, 0, 0)"
+  );
+}
+
+function isRedColor(v?: string | null): boolean {
+  if (!v) return false;
+  const normalized = v.toLowerCase().trim();
+
+  // hex #ff0000, #f00000, #c00000, #a00000 etc.
+  if (/^#[a-f0-9]{2}0000$/i.test(normalized)) return true;
+  if (normalized === "#f00") return true;
+
+  // rgb(r,0,0) onde r >= ~128
+  const m = normalized.match(/^rgb\(\s*(\d+)\s*,\s*0\s*,\s*0\s*\)$/);
+  if (m) {
+    const r = parseInt(m[1], 10);
+    return r >= 128; // cobre 160, 192, 255...
+  }
+  return false;
+}
+
+/** Heurística: é PROVÁVEL que seja label de estereoquímica (CIP)? */
+function isLikelyStereoText(textEl: Element): boolean {
+  const raw = textEl.textContent?.trim() ?? "";
+  if (!raw) return false;
+
+  const low = raw.toLowerCase();
+
+  // Palavras CIP sempre removidas
+  if (low === "abs" || low === "rac" || low === "and" || low === "or") return true;
+
+  // (R), (S), (E), (Z) → comum em alguns renderizadores
+  if (/^\((r|s|e|z)\)$/i.test(raw)) return true;
+
+  // Rótulos soltos R/S/E/Z: só remover se tiver sinais visuais de "label CIP"
+  if (/^[rsez]$/i.test(raw)) {
+    const fill = textEl.getAttribute("fill");
+    const italic = (textEl.getAttribute("font-style") || "").toLowerCase() === "italic";
+    const fs = parseFloat(textEl.getAttribute("font-size") || "0");
+    const small = fs > 0 && fs < 12; // muitos CIP vêm minúsculos
+
+    // Se for vermelho, itálico ou muito pequeno → provavelmente CIP
+    if (isRedColor(fill) || italic || small) return true;
+  }
+
+  return false;
+}
+
+/** Wedges vermelhos do OCL */
+export function isRedWedge(color?: string | null): boolean {
+  if (!color) return false;
+  const normalized = color.toLowerCase().trim();
+  return (
+    normalized === "#a00000" ||
+    normalized === "#c00000" ||
+    normalized === "rgb(160,0,0)" ||
+    normalized === "rgb(160, 0, 0)" ||
+    normalized === "rgb(192,0,0)" ||
+    normalized === "rgb(192, 0, 0)" ||
+    normalized.match(/^#[a-f0-9]{2}0000$/i) !== null
+  );
+}
+
+/** -------------------- ViewBox -------------------- */
 export function tightenViewBox(
   svg: string,
   scaleFactor = 1.15,
   verticalOffsetPx = 0
 ): string {
-  const m = svg.match(/viewBox="([\d.\-\s]+)"/); 
+  const m = svg.match(/viewBox="([\d.\-\s]+)"/);
   if (!m) return svg;
   const [minX, minY, width, height] = m[1].trim().split(/\s+/).map(Number) as [
     number,
@@ -28,40 +100,32 @@ export function tightenViewBox(
   );
 }
 
-/** Remove TODOS os labels estereoquímicos de forma agressiva */
+/** -------------------- Limpeza de textos (pré-DOM) -------------------- */
 export function removeCIPLabelsAndNames(svgString: string): string {
   const parser = new DOMParser();
   const doc = parser.parseFromString(svgString, "image/svg+xml");
   const svg = doc.documentElement;
 
-  const textElements = svg.querySelectorAll("text");
-  const stereoLabels = ["R", "S", "E", "Z", "abs", "rac", "and", "or", "AND", "OR"];
-  
+  const textElements = Array.from(svg.querySelectorAll("text"));
+
   textElements.forEach((textEl) => {
     const content = textEl.textContent?.trim();
     if (!content) return;
 
-    // Remove labels estereoquímicos
-    if (stereoLabels.includes(content)) {
+    // 1) Remove rótulos CIP óbvios
+    if (isLikelyStereoText(textEl)) {
       textEl.remove();
       return;
     }
 
-    // Remove textos vermelhos (estereoquímica)
+    // 2) Remove textos explicitamente em vermelho (geralmente marcas de estereoquímica)
     const fill = textEl.getAttribute("fill");
-    if (fill && fill.toLowerCase().match(/#f{2}0{4}|rgb\(25[0-5],\s*0,\s*0\)/)) {
+    if (isRedColor(fill)) {
       textEl.remove();
       return;
     }
 
-    // Remove textos italic vermelhos
-    const style = textEl.getAttribute("font-style");
-    if (style === "italic" && fill && fill.toLowerCase().includes("f")) {
-      textEl.remove();
-      return;
-    }
-
-    // Remove nomes de compostos (preserva elementos químicos)
+    // 3) Remove nomes longos (preserva símbolos químicos e radicais curtos)
     if (content.length > 3) {
       const preservedLabels = [
         "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne",
@@ -94,33 +158,27 @@ export function removeCIPLabelsAndNames(svgString: string): string {
   return serializer.serializeToString(svg);
 }
 
-/** Limpa labels estereoquímicos diretamente do DOM (pós-renderização) */
+/** -------------------- Limpeza de textos (pós-DOM) -------------------- */
 export function cleanStereochemistryLabels(svg: SVGSVGElement): void {
   if (!svg) return;
 
-  const stereoLabels = ["abs", "rac", "and", "or", "AND", "OR", "R", "S", "E", "Z"];
-  
   svg.querySelectorAll("text").forEach((textEl) => {
     const content = textEl.textContent?.trim();
     if (!content) return;
 
-    // Remove se for label estereoquímico
-    if (stereoLabels.includes(content)) {
+    if (isLikelyStereoText(textEl)) {
       textEl.remove();
       return;
     }
 
-    // Remove textos vermelhos
+    // Vermelhos residuais
     const fill = textEl.getAttribute("fill");
-    if (fill && (
-      fill.toLowerCase().match(/#f{2}0{4}/) ||
-      fill.toLowerCase().match(/rgb\(25[0-5],\s*0,\s*0\)/)
-    )) {
+    if (isRedColor(fill)) {
       textEl.remove();
       return;
     }
 
-    // Remove textos muito pequenos (< 10px) que geralmente são labels indesejados
+    // Textos muito pequenos (< 10px) geralmente são marcações auxiliares
     const fontSize = textEl.getAttribute("font-size");
     if (fontSize && parseFloat(fontSize) < 10) {
       textEl.remove();
@@ -128,7 +186,7 @@ export function cleanStereochemistryLabels(svg: SVGSVGElement): void {
   });
 }
 
-/** Calcula o bounding box real da molécula */
+/** -------------------- Bounds -------------------- */
 export function getContentBounds(svg: SVGSVGElement): ViewBox | null {
   try {
     const graphicElements = svg.querySelectorAll(
@@ -152,6 +210,7 @@ export function getContentBounds(svg: SVGSVGElement): ViewBox | null {
           maxY = Math.max(maxY, bbox.y + bbox.height);
         }
       } catch (error) {
+        // alguns elementos podem não ter bbox válido
         console.error(error);
       }
     });
@@ -172,7 +231,7 @@ export function getContentBounds(svg: SVGSVGElement): ViewBox | null {
   }
 }
 
-/** Theming: Preserva cores de estereoquímica */
+/** -------------------- Theming -------------------- */
 export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
   if (!svg) return;
 
@@ -187,7 +246,7 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
       const s = el.getAttribute("stroke");
       if (s != null) {
         const normalizedStroke = isRedWedge(s) ? "rgb(0,0,0)" : s;
-        el.setAttribute("data-stroke-original", normalizedStroke);
+        el.setAttribute("data-stroke-original", normalizedStroke ?? "");
       }
     });
 
@@ -197,7 +256,7 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
         const parentTag = el.tagName.toLowerCase();
         const isWedge = parentTag === "polygon" || parentTag === "line";
         const normalizedFill = (isWedge && isRedWedge(f)) ? "rgb(0,0,0)" : f;
-        el.setAttribute("data-fill-original", normalizedFill);
+        el.setAttribute("data-fill-original", normalizedFill ?? "");
       }
     });
 
@@ -209,7 +268,7 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
 
   svg.querySelectorAll<SVGElement>("[stroke]").forEach((el) => {
     const orig = el.getAttribute("data-stroke-original");
-    const wasBlack = isBlackColor(orig);
+    const wasBlack = isBlackColor(orig ?? undefined);
     if (isDark) {
       el.setAttribute("stroke", wasBlack ? baseStroke : orig ?? baseStroke);
     } else {
@@ -219,7 +278,7 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
 
   svg.querySelectorAll<SVGElement>("[fill]").forEach((el) => {
     const orig = el.getAttribute("data-fill-original");
-    const wasBlack = isBlackColor(orig);
+    const wasBlack = isBlackColor(orig ?? undefined);
     if (isDark) {
       el.setAttribute("fill", wasBlack ? baseFill : orig ?? baseFill);
     } else {
@@ -227,13 +286,21 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
     }
   });
 
+  // 🔑 Corrige labels sem fill (como o "S") no modo claro
   svg.querySelectorAll<SVGElement>("text").forEach((t) => {
-    const orig = t.getAttribute("data-fill-original") ?? t.getAttribute("fill") ?? "";
-    const wasBlack = isBlackColor(orig);
+    const orig = t.getAttribute("data-fill-original") ?? t.getAttribute("fill");
+    const wasBlack = isBlackColor(orig ?? undefined);
+
     if (isDark) {
-      t.setAttribute("fill", wasBlack ? baseFill : orig);
+      const color = !orig || wasBlack ? baseFill : orig;
+      t.setAttribute("fill", color);
     } else {
-      t.setAttribute("fill", orig);
+      if (orig) {
+        t.setAttribute("fill", orig);
+      } else {
+        // sem fill explícito → deixa o default do browser (preto)
+        t.removeAttribute("fill");
+      }
     }
   });
 
@@ -244,30 +311,4 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
     if (Number.isNaN(n)) return;
     el.setAttribute("stroke-width", isDark ? String(n * 1.15) : orig);
   });
-}
-
-function isBlackColor(v?: string | null): boolean {
-  if (!v) return true;
-  const normalized = v.toLowerCase().trim();
-  return (
-    normalized === "black" ||
-    normalized === "#000000" ||
-    normalized === "#000" ||
-    normalized === "rgb(0,0,0)" ||
-    normalized === "rgb(0, 0, 0)"
-  );
-}
-
-export function isRedWedge(color?: string | null): boolean {
-  if (!color) return false;
-  const normalized = color.toLowerCase().trim();
-  return (
-    normalized === "#a00000" ||
-    normalized === "#c00000" ||
-    normalized === "rgb(160,0,0)" ||
-    normalized === "rgb(160, 0, 0)" ||
-    normalized === "rgb(192,0,0)" ||
-    normalized === "rgb(192, 0, 0)" ||
-    normalized.match(/^#[a-f0-9]{2}0000$/i) !== null
-  );
 }

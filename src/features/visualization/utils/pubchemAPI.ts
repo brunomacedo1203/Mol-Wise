@@ -77,6 +77,17 @@ async function getCidFromFormula(formula: string): Promise<string | null> {
   return fetchTxt(url);
 }
 
+/** Obter nome do composto a partir do CID */
+async function getCompoundNameFromCid(cid: string): Promise<string | null> {
+  const url = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/property/IUPACName/TXT`;
+  const iupacName = await fetchTxt(url);
+  if (iupacName) return iupacName;
+  
+  // Fallback para título se IUPAC não estiver disponível
+  const titleUrl = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/property/Title/TXT`;
+  return fetchTxt(titleUrl);
+}
+
 async function resolveCid(query: string): Promise<string> {
   const q = query.trim();
   if (/^\d+$/.test(q)) return q;            // já é CID
@@ -104,7 +115,9 @@ async function getSdf2DByCid(cid: string): Promise<string> {
   const url2d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF`;
   const sdf2d = await fetchTxt(url2d);
   if (sdf2d) {
-    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}`);
+    const compoundName = await getCompoundNameFromCid(cid);
+    const nameInfo = compoundName ? ` (${compoundName})` : '';
+    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}${nameInfo}`);
     return sdf2d;
   }
 
@@ -116,7 +129,9 @@ async function getSdf3DByCid(cid: string): Promise<string> {
   const url3d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF?record_type=3d`;
   const sdf3d = await fetchTxt(url3d);
   if (sdf3d) {
-    console.info(`Estrutura 3D obtida com sucesso para CID ${cid}`);
+    const compoundName = await getCompoundNameFromCid(cid);
+    const nameInfo = compoundName ? ` (${compoundName})` : '';
+    console.info(`Estrutura 3D obtida com sucesso para CID ${cid}${nameInfo}`);
     return sdf3d;
   }
 
@@ -129,12 +144,14 @@ async function getSdfByCid(cid: string): Promise<string> {
   const sdf3d = await fetchTxt(url3d);
   if (sdf3d) return sdf3d;
 
-  console.info(`Estrutura 3D não disponível para CID ${cid}, tentando estrutura 2D...`);
+  const compoundName = await getCompoundNameFromCid(cid);
+  const nameInfo = compoundName ? ` (${compoundName})` : '';
+  console.info(`Estrutura 3D não disponível para CID ${cid}${nameInfo}, tentando estrutura 2D...`);
   
   const url2d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF`;
   const sdf2d = await fetchTxt(url2d);
   if (sdf2d) {
-    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}`);
+    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}${nameInfo}`);
     return sdf2d;
   }
 
