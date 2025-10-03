@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { getSmiles, getSdf2D, getSdf3D } from "../utils/pubchemAPI";
+import { getSmiles, getSdf2D, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
 import { trackMoleculeSearch } from "../events/moleculeSearchEvents";
@@ -69,7 +69,8 @@ export function MoleculeToolbar() {
 
     try {
       // Escolhe a função SDF baseada no modo de visualização atual
-      const getSdfFunction = viewMode === "2D" ? getSdf2D : getSdf3D;
+      // Em 3D usamos getSdf (fallback para 2D quando 3D não existir)
+      const getSdfFunction = viewMode === "2D" ? getSdf2D : getSdf;
       
       const [smilesRes, sdfRes] = await Promise.allSettled([
         getSmiles(q),

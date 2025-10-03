@@ -6,7 +6,7 @@ import { MoleculeViewer3D } from "./MoleculeViewer3D";
 import { MoleculeToolbar } from "./MoleculeToolbar";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { useTranslations } from "next-intl";
-import { getSdf3D } from "../utils/pubchemAPI";
+import { getSdf } from "../utils/pubchemAPI";
 
 export function VisualizationPageContent() {
   const t = useTranslations("visualization");
@@ -24,7 +24,7 @@ export function VisualizationPageContent() {
     // Carrega cafeína somente se não há dados e não há molécula atual
     if (!hasInitialized && !smilesData && !sdfData && !currentMolKey) {
       const loadCaffeine = async () => {
-        const caffeine = await getSdf3D("caffeine");
+        const caffeine = await getSdf("caffeine");
         if (caffeine) setSdfData(caffeine);
       };
       loadCaffeine();
