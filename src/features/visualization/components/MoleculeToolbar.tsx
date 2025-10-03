@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getSmiles, getSdf2D, getSdf } from "../utils/pubchemAPI";
 import { useVisualizationStore } from "../store/visualizationStore";
-import { Search, Loader2 } from "lucide-react"; // 🔁 Removidos ZoomIn, ZoomOut, Trash2, Download
+import { Search, Loader2 } from "lucide-react";
 import { trackMoleculeSearch } from "../events/moleculeSearchEvents";
 import { trackMolecule3DInteraction } from "../events/molecule3DEvents";
 import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
@@ -71,7 +71,7 @@ export function MoleculeToolbar() {
       // Escolhe a função SDF baseada no modo de visualização atual
       // Em 3D usamos getSdf (fallback para 2D quando 3D não existir)
       const getSdfFunction = viewMode === "2D" ? getSdf2D : getSdf;
-      
+
       const [smilesRes, sdfRes] = await Promise.allSettled([
         getSmiles(q),
         getSdfFunction(q),
@@ -218,7 +218,10 @@ export function MoleculeToolbar() {
                 interaction_type: "style_change",
                 interaction_value: "switch_to_3d",
               });
-            } else if (newMode === "2D" && (smiles?.trim() || sdfData?.trim())) {
+            } else if (
+              newMode === "2D" &&
+              (smiles?.trim() || sdfData?.trim())
+            ) {
               const moleculeName = getMoleculeKey(smiles, sdfData);
               trackMolecule2DInteraction({
                 molecule_name: moleculeName,

@@ -6,8 +6,9 @@ import { useVisualizationStore } from "../store/visualizationStore";
 import { ViewBox } from "../types/viewer2d.types";
 import { useViewer2DRenderer } from "../hooks/useViewer2DRenderer";
 import { useViewer2DInteractions } from "../hooks/useViewer2DInteractions";
-import { writeViewBox, centerViewBox } from "../utils/viewBoxUtils";
-import { getMoleculeKey } from "../utils/moleculeKey";
+import { useWheelListener } from "../hooks/useWheelListener";
+import { useInitialViewBox } from "../hooks/useInitialViewBox";
+import { MIN_CANVAS_WIDTH, MIN_CANVAS_HEIGHT } from "../constants/viewer2d.constants";
 
 export function MoleculeViewer2D() {
   const svgHostRef = useRef<HTMLDivElement | null>(null);
@@ -69,55 +70,33 @@ export function MoleculeViewer2D() {
     contentBoundsRef,
   });
 
-  // ✅ Corrige passive: true do wheel
-  useEffect(() => {
-    const el = svgHostRef.current;
-    if (!el) return;
+  // Listener de wheel extraído para hook dedicado
+  useWheelListener(svgHostRef, onWheel);
 
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault(); // agora permitido
-      onWheel(e as unknown as React.WheelEvent<HTMLDivElement>);
-    };
-
-    el.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      el.removeEventListener("wheel", handleWheel);
-    };
-  }, [onWheel]);
-
-  useEffect(() => {
-    if (!mountedRef.current) return;
-
-    const key = getMoleculeKey(smiles, sdf);
-    setCurrentMolKey(key);
-
-    if (ready && svgElRef.current && mountedRef.current) {
-      const saved = getZoom2D(key);
-
-      if (saved) {
-        writeViewBox(svgElRef.current, saved);
-        vbRef.current = saved;
-      } else if (contentBoundsRef.current && svgHostRef.current) {
-        const containerRect = svgHostRef.current.getBoundingClientRect();
-        const newViewBox = centerViewBox(
-          svgElRef.current,
-          contentBoundsRef.current,
-          containerRect.width,
-          containerRect.height
-        );
-
-        vbRef.current = newViewBox;
-        vbInitialRef.current = newViewBox;
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, smiles, sdf]);
+  // Restauração/centralização do ViewBox via hook dedicado
+  useInitialViewBox({
+    ready,
+    svgElRef,
+    svgHostRef,
+    vbRef,
+    vbInitialRef,
+    contentBoundsRef,
+    smiles,
+    sdf,
+    getZoom2D,
+    setCurrentMolKey,
+    mountedRef,
+  });
 
   return (
     <div
       className="w-full h-full relative"
-      style={{ contain: "layout style paint", overflow: "hidden" }}
+      style={{
+        contain: "layout style paint",
+        overflow: "hidden",
+        minWidth: MIN_CANVAS_WIDTH,
+        minHeight: MIN_CANVAS_HEIGHT,
+      }}
     >
       <div
         ref={svgHostRef}
@@ -137,6 +116,8 @@ export function MoleculeViewer2D() {
           overflow: "hidden",
           cursor: "grab",
           contain: "layout style paint",
+          minWidth: MIN_CANVAS_WIDTH,
+          minHeight: MIN_CANVAS_HEIGHT,
         }}
       />
       {!ready && (

@@ -3,14 +3,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useVisualizationStore } from "../store/visualizationStore";
-import { waitFor3Dmol } from "../utils/waitFor3Dmol";
-import type { ThreeDMolViewer, ThreeDMolNamespace } from "../types/3dmol";
+import type { ThreeDMolViewer } from "../types/3dmol";
 import { getMoleculeKey } from "../utils/moleculeKey";
-import {
-  trackMolecule3DView,
-  trackMolecule3DError,
-  trackMolecule3DInteraction,
-} from "../events/molecule3DEvents";
+import { useViewer3DTheme } from "../hooks/useViewer3DTheme";
+import { useViewer3DContainerReady } from "../hooks/useViewer3DContainerReady";
+import { useViewer3DResize } from "../hooks/useViewer3DResize";
+import { useViewer3DInit } from "../hooks/useViewer3DInit";
+import { useViewer3DModel } from "../hooks/useViewer3DModel";
+import { useViewer3DInteractions } from "../hooks/useViewer3DInteractions";
+import { MIN_CANVAS_WIDTH, MIN_CANVAS_HEIGHT } from "../constants/viewer3d.constants";
 
 export function MoleculeViewer3D() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -23,7 +24,7 @@ export function MoleculeViewer3D() {
 
   const sdfData = useVisualizationStore((s) => s.sdfData);
   const smiles = useVisualizationStore((s) => s.smilesData);
-  const viewMode = useVisualizationStore((s) => s.viewMode); // ✅ Adicionar viewMode
+  const viewMode = useVisualizationStore((s) => s.viewMode);
   const setCurrentMolKey = useVisualizationStore((s) => s.setCurrentMolKey);
   const getView3D = useVisualizationStore((s) => s.getView3D);
   const setView3D = useVisualizationStore((s) => s.setView3D);
@@ -47,173 +48,24 @@ export function MoleculeViewer3D() {
     };
   }, []);
 
-  // Aguarda container ter dimensões válidas
+  // Aguarda container ter dimensões válidas (extraído para hook)
+  const containerIsReady = useViewer3DContainerReady(containerRef);
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+    if (containerIsReady) setContainerReady(true);
+  }, [containerIsReady]);
 
-    const checkDimensions = () => {
-      const rect = el.getBoundingClientRect();
-      const computedStyle = window.getComputedStyle(el);
-      const width = parseInt(computedStyle.width, 10) || rect.width;
-      const height = parseInt(computedStyle.height, 10) || rect.height;
+  // Inicialização do viewer 3D (extraído)
+  useViewer3DInit({
+    containerRef,
+    viewerRef,
+    containerReady,
+    setLibReady,
+    setErr,
+    mountedRef,
+  });
 
-      // Ensure minimum dimensions for WebGL context
-      if (width >= 200 && height >= 150) {
-        setContainerReady(true);
-        return true;
-      }
-      return false;
-    };
-
-    // Tenta imediatamente
-    if (checkDimensions()) return;
-
-    // Se falhar, usa ResizeObserver
-    const observer = new ResizeObserver(() => {
-      if (checkDimensions()) {
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(el);
-
-    // Fallback timeout para casos onde ResizeObserver não funciona
-    const timeoutId = setTimeout(() => {
-      if (checkDimensions()) {
-        observer.disconnect();
-      }
-    }, 100);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(timeoutId);
-    };
-  }, []);
-
-  // Inicializa viewer (só quando container estiver pronto)
-  useEffect(() => {
-    if (!containerReady) return;
-
-    let disposed = false;
-    const el = containerRef.current;
-
-    async function init() {
-      setErr(null);
-      try {
-        const $3Dmol: ThreeDMolNamespace = await waitFor3Dmol();
-        if (disposed || !el || !mountedRef.current) return;
-
-        // Valida dimensões antes de criar viewer com retry
-        let attempts = 0;
-        const maxAttempts = 5;
-
-        const validateAndCreateViewer = async () => {
-          const rect = el.getBoundingClientRect();
-          const computedStyle = window.getComputedStyle(el);
-          const width = parseInt(computedStyle.width, 10) || rect.width;
-          const height = parseInt(computedStyle.height, 10) || rect.height;
-
-          if (width < 200 || height < 150) {
-            attempts++;
-            if (attempts < maxAttempts) {
-              setTimeout(validateAndCreateViewer, 50);
-              return;
-            } else {
-              console.warn(
-                "Container dimensions still invalid after retries, forcing minimum size"
-              );
-              // Force minimum dimensions on the container
-              el.style.minWidth = "200px";
-              el.style.minHeight = "150px";
-            }
-          }
-
-          const isDark = document.documentElement.classList.contains("dark");
-          const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
-
-          // Clear any existing content before creating new viewer
-          el.innerHTML = "";
-
-          // ✅ Aguarda um frame para garantir que o DOM esteja estável
-          await new Promise(resolve => requestAnimationFrame(resolve));
-
-          viewerRef.current = $3Dmol.createViewer(el, {
-            backgroundColor: bgColor,
-            backgroundAlpha: 1,
-          });
-
-          if (mountedRef.current) setLibReady(true);
-        };
-
-        await validateAndCreateViewer();
-      } catch (e: unknown) {
-        if (!mountedRef.current) return;
-        setErr(e instanceof Error ? e.message : "Falha ao inicializar 3D");
-        trackMolecule3DError({
-          error_type: "library_load_failed",
-          error_message:
-            e instanceof Error ? e.message : "Failed to init 3D viewer",
-        });
-      }
-    }
-
-    void init();
-    return () => {
-      disposed = true;
-      if (el) el.innerHTML = "";
-      viewerRef.current = null;
-    };
-  }, [containerReady]);
-
-  // Protege contra redimensionamento com dimensões inválidas
-  useEffect(() => {
-    const el = containerRef.current;
-    const viewer = viewerRef.current;
-    if (!el || !viewer || !libReady || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
-
-    let resizeTimeoutId: NodeJS.Timeout | null = null;
-
-    const handleResize = () => {
-      const rect = el.getBoundingClientRect();
-      const computedStyle = window.getComputedStyle(el);
-      const width = parseInt(computedStyle.width, 10) || rect.width;
-      const height = parseInt(computedStyle.height, 10) || rect.height;
-
-      // Se dimensões inválidas, não renderiza
-      if (width < 200 || height < 150) {
-        console.warn("⚠️ Dimensões inválidas durante resize, aguardando...");
-        return;
-      }
-
-      // Debounce para evitar renderizações excessivas
-      if (resizeTimeoutId) {
-        clearTimeout(resizeTimeoutId);
-      }
-
-      resizeTimeoutId = setTimeout(() => {
-        if (mountedRef.current && viewer && viewMode === "3D") {
-          // ✅ Verificar viewMode
-          try {
-            viewer.resize();
-            viewer.render();
-          } catch (e) {
-            console.warn("Erro ao redimensionar viewer 3D:", e);
-          }
-        }
-      }, 100);
-    };
-
-    const resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(el);
-
-    return () => {
-      resizeObserver.disconnect();
-      if (resizeTimeoutId) {
-        clearTimeout(resizeTimeoutId);
-      }
-    };
-  }, [libReady, viewMode]); // ✅ Adicionar viewMode como dependência
+  // Redimensionamento do viewer (extraído para hook)
+  useViewer3DResize({ containerRef, viewerRef, libReady, viewMode });
 
   // Salva visão anterior
   const prevMoleculeRef = useRef<{
@@ -236,168 +88,30 @@ export function MoleculeViewer3D() {
     prevMoleculeRef.current = { smiles, sdfData };
   }, [smiles, sdfData, setView3D]);
 
-  // Atualiza modelo
-  useEffect(() => {
-    if (!mountedRef.current || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
+  // Atualização do modelo (extraído)
+  useViewer3DModel({
+    viewerRef,
+    libReady,
+    sdfData,
+    smiles,
+    getView3D,
+    viewMode,
+    setErr,
+  });
 
-    async function updateModel() {
-      if (!viewerRef.current || !libReady || !sdfData || !mountedRef.current)
-        return;
-
-      const startTime = performance.now();
-      const moleculeName = getMoleculeKey(smiles ?? null, sdfData ?? null);
-
-      try {
-        const v = viewerRef.current;
-
-        v.clear();
-        v.addModel(sdfData, "sdf");
-        v.setStyle({}, { stick: { radius: 0.15 }, sphere: { radius: 0.4 } });
-
-        const key = getMoleculeKey(smiles ?? null, sdfData ?? null);
-        const saved = getView3D(key);
-        if (saved) {
-          v.setView(saved);
-        } else {
-          v.zoomTo();
-          trackMolecule3DInteraction({
-            molecule_name: moleculeName,
-            interaction_type: "reset_view",
-            interaction_value: "auto_zoom",
-          });
-        }
-
-        v.render();
-        
-        // ✅ Aguarda um frame antes de considerar renderização completa
-        // Isso evita o erro GL_INVALID_FRAMEBUFFER_OPERATION na primeira renderização
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        
-        if (mountedRef.current) setErr(null);
-
-        const renderTime = performance.now() - startTime;
-        trackMolecule3DView({
-          molecule_name: moleculeName,
-          render_time: Math.round(renderTime),
-          view_style: "stick_sphere",
-          success: true,
-        });
-      } catch (e) {
-        console.error("Erro ao renderizar modelo 3D:", e);
-        if (mountedRef.current) {
-          setErr("Não foi possível renderizar o modelo 3D (SDF inválido?).");
-          trackMolecule3DError({
-            molecule_name: moleculeName,
-            error_type: "render_failed",
-            error_message:
-              e instanceof Error ? e.message : "Unknown render error",
-          });
-        }
-      }
-    }
-
-    void updateModel();
-  }, [sdfData, libReady, smiles, getView3D, viewMode]); // ✅ Adicionar viewMode como dependência
-
-  // Interações do usuário
-  useEffect(() => {
-    if (!mountedRef.current || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
-
-    const el = containerRef.current;
-    const v = viewerRef.current;
-    if (!el || !v || !libReady) return;
-
-    const save = () => {
-      if (!mountedRef.current) return;
-      const key = getMoleculeKey(smiles ?? null, sdfData ?? null);
-      try {
-        const view = v.getView?.();
-        if (view) setView3D(key, view);
-      } catch {}
-    };
-
-    const trackInteraction = (
-      interactionType: "zoom" | "rotate",
-      source: "mouse" | "touch" | "wheel" = "mouse"
-    ) => {
-      if (!mountedRef.current) return;
-      const moleculeName = getMoleculeKey(smiles ?? null, sdfData ?? null);
-
-      let interactionValue: string | undefined;
-      switch (interactionType) {
-        case "zoom":
-          interactionValue = source === "wheel" ? "wheel_scroll" : "pinch_zoom";
-          break;
-        case "rotate":
-          interactionValue = source === "mouse" ? "mouse_drag" : "touch_rotate";
-          break;
-        default:
-          interactionValue = source;
-      }
-
-      trackMolecule3DInteraction({
-        molecule_name: moleculeName,
-        interaction_type: interactionType,
-        interaction_value: interactionValue,
-      });
-    };
-
-    const handleMouseUp = () => {
-      save();
-      trackInteraction("rotate", "mouse");
-    };
-
-    const handleWheel = () => {
-      save();
-      trackInteraction("zoom", "wheel");
-    };
-
-    const handleTouchEnd = () => {
-      save();
-      trackInteraction("rotate", "touch");
-    };
-
-    el.addEventListener("mouseup", handleMouseUp, true);
-    el.addEventListener("wheel", handleWheel, {
-      capture: true,
-      passive: true,
-    } as unknown as AddEventListenerOptions);
-    el.addEventListener("touchend", handleTouchEnd, true);
-
-    return () => {
-      el.removeEventListener("mouseup", handleMouseUp, true);
-      el.removeEventListener("wheel", handleWheel, true);
-      el.removeEventListener("touchend", handleTouchEnd, true);
-    };
-  }, [smiles, sdfData, setView3D, libReady, viewMode]); // ✅ Adicionar viewMode como dependência
+  // Interações do usuário (extraído)
+  useViewer3DInteractions({
+    containerRef,
+    viewerRef,
+    libReady,
+    viewMode,
+    smiles,
+    sdfData,
+    setView3D,
+  });
 
   // Tema dinâmico
-  useEffect(() => {
-    if (!libReady || !mountedRef.current || viewMode !== "3D") return; // ✅ Adicionar verificação do viewMode
-
-    const html = document.documentElement;
-    const updateTheme = () => {
-      if (!mountedRef.current) return;
-      const v = viewerRef.current;
-      if (!v) return;
-
-      const isDark = html.classList.contains("dark");
-      const bgColor = isDark ? "#0a0a0a" : "#f4f4f5";
-
-      try {
-        v.setBackgroundColor(bgColor);
-        v.render();
-      } catch (e) {
-        console.warn("Erro ao atualizar tema 3D:", e);
-      }
-    };
-
-    updateTheme();
-    const obs = new MutationObserver(updateTheme);
-    obs.observe(html, { attributes: true, attributeFilter: ["class"] });
-
-    return () => obs.disconnect();
-  }, [libReady, viewMode]); // ✅ Adicionar viewMode como dependência
+  useViewer3DTheme({ viewerRef, libReady, viewMode });
 
   useEffect(() => {
     if (!mountedRef.current) return;
@@ -409,7 +123,12 @@ export function MoleculeViewer3D() {
       <div
         ref={containerRef}
         className="w-full h-full"
-        style={{ position: "relative", overflow: "hidden", minHeight: "200px" }}
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          minWidth: MIN_CANVAS_WIDTH,
+          minHeight: MIN_CANVAS_HEIGHT,
+        }}
       />
       {!libReady && !err && (
         <p className="absolute bottom-2 left-3 text-sm text-zinc-500 dark:text-zinc-400 pointer-events-none">

@@ -12,11 +12,29 @@ function isSmiles(input: string): boolean {
   return !hasWhitespaceOrComma && !isOnlyDigits && hasSmilesChars;
 }
 
-async function fetchTxt(url: string): Promise<string | null> {
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) return null;
-  const txt = (await res.text()).trim();
-  return txt || null;
+// ✅ CORRIGIDO: Suprime erro 404 no console (é esperado para fallback)
+async function fetchTxt(url: string, silent404 = false): Promise<string | null> {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    
+    // Se for 404 e silent404 estiver ativo, retorna null sem logar erro
+    if (!res.ok) {
+      if (res.status === 404 && silent404) {
+        return null;
+      }
+      // Outros erros ainda serão logados normalmente
+      return null;
+    }
+    
+    const txt = (await res.text()).trim();
+    return txt || null;
+  } catch (error) {
+    // Apenas loga erros de rede ou outros problemas reais
+    if (!silent404) {
+      console.error(`Erro ao buscar ${url}:`, error);
+    }
+    return null;
+  }
 }
 
 /** SMILES */
@@ -117,7 +135,7 @@ async function getSdf2DByCid(cid: string): Promise<string> {
   if (sdf2d) {
     const compoundName = await getCompoundNameFromCid(cid);
     const nameInfo = compoundName ? ` (${compoundName})` : '';
-    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}${nameInfo}`);
+    console.info(`✅ Estrutura 2D obtida com sucesso para CID ${cid}${nameInfo}`);
     return sdf2d;
   }
 
@@ -131,7 +149,7 @@ async function getSdf3DByCid(cid: string): Promise<string> {
   if (sdf3d) {
     const compoundName = await getCompoundNameFromCid(cid);
     const nameInfo = compoundName ? ` (${compoundName})` : '';
-    console.info(`Estrutura 3D obtida com sucesso para CID ${cid}${nameInfo}`);
+    console.info(`✅ Estrutura 3D obtida com sucesso para CID ${cid}${nameInfo}`);
     return sdf3d;
   }
 
@@ -140,18 +158,26 @@ async function getSdf3DByCid(cid: string): Promise<string> {
 
 /** SDF (3D com fallback para 2D) */
 async function getSdfByCid(cid: string): Promise<string> {
+  // ✅ CORRIGIDO: Usa silent404=true para não mostrar erro no console
   const url3d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF?record_type=3d`;
-  const sdf3d = await fetchTxt(url3d);
-  if (sdf3d) return sdf3d;
+  const sdf3d = await fetchTxt(url3d, true); // 👈 Suprime o erro 404
+  
+  if (sdf3d) {
+    const compoundName = await getCompoundNameFromCid(cid);
+    const nameInfo = compoundName ? ` (${compoundName})` : '';
+    console.info(`✅ Estrutura 3D obtida com sucesso para CID ${cid}${nameInfo}`);
+    return sdf3d;
+  }
 
+  // Fallback para 2D (404 em 3D é esperado)
   const compoundName = await getCompoundNameFromCid(cid);
   const nameInfo = compoundName ? ` (${compoundName})` : '';
-  console.info(`Estrutura 3D não disponível para CID ${cid}${nameInfo}, tentando estrutura 2D...`);
+  console.info(`ℹ️  Estrutura 3D não disponível para CID ${cid}${nameInfo}, usando estrutura 2D...`);
   
   const url2d = `${PUBCHEM}/compound/cid/${encodeURIComponent(cid)}/SDF`;
   const sdf2d = await fetchTxt(url2d);
   if (sdf2d) {
-    console.info(`Estrutura 2D obtida com sucesso para CID ${cid}${nameInfo}`);
+    console.info(`✅ Estrutura 2D obtida com sucesso para CID ${cid}${nameInfo}`);
     return sdf2d;
   }
 

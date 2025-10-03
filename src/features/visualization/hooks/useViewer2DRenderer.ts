@@ -13,7 +13,9 @@ import {
   applyThemeToSVG,
   cleanStereochemistryLabels,
 } from "../utils/svgUtils";
+import { normalizeMolecule } from "../utils/moleculeNormalization";
 import { centerViewBox } from "../utils/viewBoxUtils";
+import { getElementSize } from "../utils/elementSize";
 import {
   MIN_CANVAS_WIDTH,
   MIN_CANVAS_HEIGHT,
@@ -36,32 +38,6 @@ interface UseViewer2DRendererProps {
   smiles: string | null;
 }
 
-// 🔧 Corrige ligações duplas "cross" (E/Z indefinida) → duplas normais
-function clearUnknownDoubleBondStereo(
-  mol: import("openchemlib").Molecule,
-  OCL: OpenChemLibModule
-): number {
-  let patched = 0;
-  const bondCount = mol.getAllBonds();
-
-  for (let b = 0; b < bondCount; b++) {
-    if (mol.getBondOrder(b) !== 2) continue;
-
-    const isCross =
-      (typeof mol.getBondType === "function" &&
-        mol.getBondType(b) === OCL.Molecule.cBondTypeCross) ||
-      (typeof (mol as import("openchemlib").Molecule).isBondParityUnknownOrNone === "function" &&
-        (mol as import("openchemlib").Molecule).isBondParityUnknownOrNone(b));
-
-    if (isCross) {
-      mol.setBondParity?.(b, OCL.Molecule.cBondParityNone, false);
-      mol.setBondType?.(b, OCL.Molecule.cBondTypeDouble);
-      patched++;
-    }
-  }
-
-  return patched;
-}
 
 // Normalizador de SVG (ajustes visuais básicos)
 function normalizeMoleculeSVG(svgString: string): string {
@@ -103,6 +79,7 @@ export function useViewer2DRenderer({
   const oclRef = useRef<OpenChemLibModule | null>(null);
   const lastRenderedRef = useRef<string | null>(null);
   const hasTrackedViewRef = useRef<Set<string>>(new Set());
+  const retryCountRef = useRef(0);
 
   useEffect(() => {
     let disposed = false;
@@ -200,73 +177,20 @@ export function useViewer2DRenderer({
           return;
         }
 
-        try {
-          // 🔧 Remove hidrogênios APENAS quando ligados a carbono
-          if (typeof mol.removeExplicitHydrogens === "function") {
-            const atomCount = mol.getAllAtoms();
-            for (let i = atomCount - 1; i >= 0; i--) {
-              const atomicNo = mol.getAtomicNo(i);
-              
-              // Se é hidrogênio (atomicNo === 1)
-              if (atomicNo === 1) {
-                const connAtoms = mol.getAllConnAtoms?.(i) ?? 0;
-                
-                // Se tem exatamente 1 ligação
-                if (connAtoms === 1) {
-                  const neighborIdx = mol.getConnAtom?.(i, 0);
-                  
-                  if (neighborIdx !== undefined) {
-                    const neighborAtomicNo = mol.getAtomicNo(neighborIdx);
-                    
-                    // Se o vizinho é carbono (atomicNo === 6), remove o H
-                    if (neighborAtomicNo === 6) {
-                      mol.deleteAtom?.(i);
-                    }
-                  }
-                }
-              }
-            }
-          }
+        normalizeMolecule(mol, OCL);
 
-          if (mol.getAllAtoms() > 0) {
-            mol.inventCoordinates();
-          }
-
-          mol.ensureHelperArrays?.(
-            OCL.Molecule.cHelperNeighbours |
-              OCL.Molecule.cHelperRings |
-              OCL.Molecule.cHelperParities
-          );
-
-          // 🔧 Corrige duplas com "X"
-          clearUnknownDoubleBondStereo(mol, OCL);
-        } catch (error) {
-          console.warn("⚠️ Erro ao preparar molécula:", error);
-        }
-
-        const rect = host.getBoundingClientRect();
-        const computedStyle = window.getComputedStyle(host);
-        const rectWidth = parseInt(computedStyle.width, 10) || rect.width;
-        const rectHeight = parseInt(computedStyle.height, 10) || rect.height;
+        let { width: rectWidth, height: rectHeight } = getElementSize(host);
+        const prevWidthStyle = host.style.width;
+        const prevHeightStyle = host.style.height;
         
         // ✅ CRITICAL: Se dimensões são inválidas, aguarda estabilização
         if (rectWidth < MIN_CANVAS_WIDTH || rectHeight < MIN_CANVAS_HEIGHT) {
-          console.warn("⚠️ Container dimensions invalid, waiting...");
-          
-          // Agenda nova tentativa após o container estabilizar
-          if (resizeTimeoutId) {
-            clearTimeout(resizeTimeoutId);
-          }
-          
-          resizeTimeoutId = setTimeout(() => {
-            if (isMounted) {
-              lastRenderedRef.current = null; // Force re-render
-              void render();
-            }
-          }, 100); // Aguarda 100ms para estabilização
-          
-          isRendering = false;
-          return;
+          // Força dimensões mínimas e usa fallback imediatamente
+          host.style.minWidth = `${MIN_CANVAS_WIDTH}px`;
+          host.style.minHeight = `${MIN_CANVAS_HEIGHT}px`;
+          rectWidth = Math.max(rectWidth, MIN_CANVAS_WIDTH);
+          rectHeight = Math.max(rectHeight, MIN_CANVAS_HEIGHT);
+          retryCountRef.current = 0;
         }
         
         const w = Math.floor(rectWidth);
@@ -307,6 +231,9 @@ export function useViewer2DRenderer({
             '<svg style="width:100%;height:100%;display:block;cursor:grab;touch-action:none;"'
           );
 
+        // Durante render, garante que o host tenha dimensões explícitas
+        host.style.width = `${w}px`;
+        host.style.height = `${h}px`;
         host.innerHTML = svgWithStyle;
 
         const svgEl = host.querySelector("svg") as SVGSVGElement | null;
@@ -327,12 +254,11 @@ export function useViewer2DRenderer({
           if (bounds) {
             contentBoundsRef.current = bounds;
 
-            const containerRect = host.getBoundingClientRect();
             const newViewBox = centerViewBox(
               svgEl,
               bounds,
-              containerRect.width,
-              containerRect.height
+              w,
+              h
             );
 
             vbRef.current = newViewBox;
@@ -347,6 +273,10 @@ export function useViewer2DRenderer({
           data_source: dataSource,
           success: true,
         });
+        // Reset contagem e limpa estilos temporários
+        retryCountRef.current = 0;
+        host.style.width = prevWidthStyle;
+        host.style.height = prevHeightStyle;
 
         if (!hasTrackedViewRef.current.has(moleculeName)) {
           hasTrackedViewRef.current.add(moleculeName);

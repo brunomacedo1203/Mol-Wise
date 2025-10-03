@@ -1,3 +1,4 @@
+// src/features/visualization/components/VisualizationPageContent.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,18 +11,12 @@ import { getSdf } from "../utils/pubchemAPI";
 
 export function VisualizationPageContent() {
   const t = useTranslations("visualization");
-  const {
-    viewMode,
-    smilesData,
-    sdfData,
-    currentMolKey,
-    setSdfData,
-  } = useVisualizationStore();
+  const { viewMode, smilesData, sdfData, currentMolKey, setSdfData } =
+    useVisualizationStore();
 
   const [hasInitialized, setHasInitialized] = useState(false);
 
   useEffect(() => {
-    // Carrega cafeína somente se não há dados e não há molécula atual
     if (!hasInitialized && !smilesData && !sdfData && !currentMolKey) {
       const loadCaffeine = async () => {
         const caffeine = await getSdf("caffeine");
@@ -34,34 +29,37 @@ export function VisualizationPageContent() {
 
   return (
     <div className="flex flex-col w-full h-full">
-      {/* Toolbar horizontal */}
+      {/* Toolbar */}
       <MoleculeToolbar />
 
-      {/* Área principal sem restrições */}
-      <div className="flex-1 min-h-0 p-0 relative overflow-hidden">
-        {/* Renderiza ambos, controla visibilidade via CSS */}
-        <div
-          className={`absolute inset-0 transition-opacity duration-300 ${
-            viewMode === "2D"
-              ? "opacity-100 z-10"
-              : "opacity-0 z-0 pointer-events-none"
-          }`}
-        >
-          <MoleculeViewer2D />
-        </div>
+      {/* Área principal sem padding lateral */}
+      <div className="flex-1 min-h-[300px] p-2 md:p-4 relative">
+        <div className="relative w-full h-full min-h-[300px]">
+          {/* Viewer 2D */}
+          <div
+            className={`absolute inset-0 transition-opacity duration-300 ${
+              viewMode === "2D"
+                ? "opacity-100 z-10"
+                : "opacity-0 z-0 pointer-events-none"
+            }`}
+          >
+            <MoleculeViewer2D />
+          </div>
 
-        <div
-          className={`absolute inset-0 transition-opacity duration-300 ${
-            viewMode === "3D"
-              ? "opacity-100 z-10"
-              : "opacity-0 z-0 pointer-events-none"
-          }`}
-        >
-          <MoleculeViewer3D />
+          {/* Viewer 3D */}
+          <div
+            className={`absolute inset-0 transition-opacity duration-300 ${
+              viewMode === "3D"
+                ? "opacity-100 z-10"
+                : "opacity-0 z-0 pointer-events-none"
+            }`}
+          >
+            <MoleculeViewer3D />
+          </div>
         </div>
       </div>
 
-      {/* Dica quando nada é carregado */}
+      {/* Dica para o usuário */}
       {!smilesData && !sdfData && (
         <div className="text-center py-6">
           <p className="text-sm text-zinc-500 dark:text-zinc-400">

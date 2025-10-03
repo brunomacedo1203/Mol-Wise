@@ -19,8 +19,8 @@ export const TOUCH_TIMEOUT = 300; // ms para detectar toque duplo
 export const DEBOUNCE_DELAY = 16; // ms para debounce de eventos (60fps)
 
 // Dimensões mínimas e padrão do canvas
-export const MIN_CANVAS_WIDTH = 200;
-export const MIN_CANVAS_HEIGHT = 150;
+export const MIN_CANVAS_WIDTH = 320;
+export const MIN_CANVAS_HEIGHT = 240;
 export const DEFAULT_CANVAS_WIDTH = 400;
 export const DEFAULT_CANVAS_HEIGHT = 300;
 
