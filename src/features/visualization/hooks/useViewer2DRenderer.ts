@@ -179,6 +179,27 @@ export function useViewer2DRenderer({
 
         normalizeMolecule(mol, OCL);
 
+        // ✅ FORÇA exibição de hidrogênios explícitos APENAS para moléculas muito pequenas
+        mol.ensureHelperArrays(OCL.Molecule.cHelperNeighbours);
+        
+        // Conta átomos pesados (não-hidrogênio)
+        let heavyAtomCount = 0;
+        for (let i = 0; i < mol.getAllAtoms(); i++) {
+          if (mol.getAtomicNo(i) > 1) {
+            heavyAtomCount++;
+          }
+        }
+        
+        // Só adiciona hidrogênios explícitos se a molécula tiver 4 ou menos átomos pesados
+        // Isso cobre H2O (1), NH3 (1), CH4 (1), C2H6 (2), etc.
+        if (heavyAtomCount <= 4) {
+          try {
+            mol.addImplicitHydrogens();
+          } catch (e) {
+            console.warn("Não foi possível adicionar hidrogênios implícitos", e);
+          }
+        }
+
         let { width: rectWidth, height: rectHeight } = getElementSize(host);
         const prevWidthStyle = host.style.width;
         const prevHeightStyle = host.style.height;
@@ -209,11 +230,17 @@ export function useViewer2DRenderer({
           fontWeight: "normal",
           strokeWidth: 1.5,
           noStereoProblem: true,
-          showSymmetrySimple: true,
-          noImplicitAtomLabelColors: false,
+          showSymmetrySimple: false,
+          noImplicitAtomLabelColors: true,
           showAtomNumber: false,
           showBondNumber: false,
           showAtomLabels: true,
+          showAtomMappingNo: false,
+          showAtomMass: false,
+          showAtomCharge: true,
+          showBonds: true,
+          inflateToMaxAVBL: 2,
+          noImplicitHydrogen: false,
         });
 
         const normalizedSvg = normalizeMoleculeSVG(rawSvg);

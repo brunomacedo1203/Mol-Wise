@@ -10,6 +10,9 @@ import { trackMolecule3DInteraction } from "../events/molecule3DEvents";
 import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
 import { useTranslations } from "next-intl";
 import { getMoleculeKey } from "../utils/moleculeKey";
+import { loadLocalMolecule } from "../utils/localMoleculeLoader";
+import { detectSearchType } from "../utils/searchUtils";
+import { normalizeLocalKey } from "../utils/localKey";
 
 export function MoleculeToolbar() {
   const t = useTranslations("visualization");
@@ -17,7 +20,6 @@ export function MoleculeToolbar() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
-  // ✅ CORREÇÃO: Use useRef ao invés de useState para o timer
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const setSmiles = useVisualizationStore((s) => s.setSmilesData);
@@ -27,35 +29,6 @@ export function MoleculeToolbar() {
   const smiles = useVisualizationStore((s) => s.smilesData);
   const sdfData = useVisualizationStore((s) => s.sdfData);
 
-  // Função para detectar o tipo de busca
-  const detectSearchType = (
-    query: string
-  ): "name" | "formula" | "smiles" | "cid" | "unknown" => {
-    const trimmed = query.trim();
-
-    // Se é apenas números, provavelmente é um CID
-    if (/^\d+$/.test(trimmed)) {
-      return "cid";
-    }
-
-    // Se contém caracteres típicos de SMILES (brackets, parênteses, etc.)
-    if (/[\[\]()=#@\\\/]/.test(trimmed)) {
-      return "smiles";
-    }
-
-    // Se contém apenas letras e números (possível fórmula química)
-    if (/^[A-Za-z0-9]+$/.test(trimmed)) {
-      return "formula";
-    }
-
-    // Se contém espaços ou caracteres especiais, provavelmente é nome
-    if (/\s/.test(trimmed) || /[^A-Za-z0-9]/.test(trimmed)) {
-      return "name";
-    }
-
-    return "unknown";
-  };
-
   async function handleSearch(e?: React.FormEvent) {
     e?.preventDefault();
     const q = input.trim();
@@ -64,12 +37,31 @@ export function MoleculeToolbar() {
     setErr(null);
     setLoading(true);
 
-    // Detecta o tipo de busca para analytics
     const searchType = detectSearchType(q);
 
     try {
-      // Escolhe a função SDF baseada no modo de visualização atual
-      // Em 3D usamos getSdf (fallback para 2D quando 3D não existir)
+      const localKey = normalizeLocalKey(q);
+
+      // 🔹 1️⃣ Tenta carregar localmente primeiro
+      const localMol = await loadLocalMolecule(localKey);
+      if (localMol) {
+        setSmiles(localMol.smiles);
+        setSdf(localMol.sdf);
+
+        trackMoleculeSearch({
+          search_term: q,
+          search_type: "formula",
+          success: true,
+        });
+
+        console.info(
+          `✅ Molécula "${q}" carregada localmente como "${localKey}".`
+        );
+        setLoading(false);
+        return;
+      }
+
+      // 🔹 2️⃣ Caso não exista localmente, busca no PubChem
       const getSdfFunction = viewMode === "2D" ? getSdf2D : getSdf;
 
       const [smilesRes, sdfRes] = await Promise.allSettled([
@@ -87,7 +79,6 @@ export function MoleculeToolbar() {
         throw new Error(t("notFound"));
       }
 
-      // Tracking de busca bem-sucedida
       trackMoleculeSearch({
         search_term: q,
         search_type: searchType,
@@ -99,7 +90,6 @@ export function MoleculeToolbar() {
       setSmiles(null);
       setSdf(null);
 
-      // Tracking de busca falhada
       trackMoleculeSearch({
         search_term: q,
         search_type: searchType,
@@ -110,38 +100,27 @@ export function MoleculeToolbar() {
     }
   }
 
-  // Função para limpar o erro quando o usuário interage com o input
   const clearError = () => {
-    if (err) {
-      setErr(null);
-    }
+    if (err) setErr(null);
   };
 
-  // ✅ CORREÇÃO: Debounce corrigido usando useRef
   useEffect(() => {
-    // Limpa o timer anterior se existir
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 
     if (input.trim() !== "") {
       debounceTimerRef.current = setTimeout(() => {
-        // Tracking de interação com o campo (sem envio da busca)
         trackMoleculeSearch({
           search_term: input.trim(),
           search_type: detectSearchType(input),
-          success: false, // Apenas interação, não busca efetiva
+          success: false,
         });
-      }, 1000); // 1 segundo de debounce para interação
+      }, 1000);
     }
 
-    // Cleanup function
     return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     };
-  }, [input]); // ✅ CORREÇÃO: Apenas 'input' como dependência
+  }, [input]);
 
   return (
     <div
@@ -151,24 +130,10 @@ export function MoleculeToolbar() {
         shadow-lg ring-1 ring-zinc-200 dark:ring-zinc-800 
         transition-shadow"
     >
-      {/* ⛔️ HIDDEN: Zoom Buttons (ZoomOut/ZoomIn) — keep commented until implemented */}
-      {/*
-      <div className="flex items-center gap-2">
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <ZoomOut className="w-5 h-5" />
-        </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          <ZoomIn className="w-5 h-5" />
-        </button>
-      </div>
-      */}
-
-      {/* 🔎 Search + ViewMode (mantidos) */}
       <form
         onSubmit={handleSearch}
         className="flex items-center gap-2 flex-1 max-w-md"
       >
-        {/* 🔎 Input com tratamento correto do erro */}
         <div className="relative w-full">
           <input
             value={input}
@@ -203,14 +168,12 @@ export function MoleculeToolbar() {
           </button>
         </div>
 
-        {/* 🎛️ Toggle 2D / 3D */}
         <button
           type="button"
           onClick={() => {
             const newMode = viewMode === "2D" ? "3D" : "2D";
             setViewMode(newMode);
 
-            // Tracking de mudança de modo de visualização
             if (newMode === "3D" && (smiles?.trim() || sdfData?.trim())) {
               const moleculeName = getMoleculeKey(smiles, sdfData);
               trackMolecule3DInteraction({
@@ -254,23 +217,8 @@ export function MoleculeToolbar() {
             <span className="text-sm font-bold">{viewMode}</span>
           </div>
         </button>
-
-        {/* ⛔️ HIDDEN: CH button — keep commented until implemented */}
-        {/*
-        <button
-          className="h-10 w-10 rounded-full flex items-center justify-center text-base font-semibold
-            dark:from-zinc-900 dark:to-zinc-800
-            shadow-inner dark:shadow-none
-            hover:shadow-md hover:bg-zinc-200 dark:hover:bg-zinc-700
-            text-zinc-700 dark:text-zinc-300 transition-all"
-          title="Toggle CH mode"
-        >
-          CH
-        </button>
-        */}
       </form>
 
-      {/* 🚨 Mensagem de erro fora do input */}
       {err && (
         <div
           className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-2 
@@ -280,18 +228,6 @@ export function MoleculeToolbar() {
           {err}
         </div>
       )}
-
-      {/* ⛔️ HIDDEN: Trash & Download — keep commented until implemented */}
-      {/*
-      <div className="flex items-center gap-2">
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800" title="Clear">
-          <Trash2 className="w-5 h-5" />
-        </button>
-        <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-zinc-100 dark:hover:bg-zinc-800" title="Download">
-          <Download className="w-5 h-5" />
-        </button>
-      </div>
-      */}
     </div>
   );
 }
