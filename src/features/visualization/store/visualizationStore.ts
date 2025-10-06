@@ -31,7 +31,7 @@ interface VisualizationState {
 export const useVisualizationStore = create<VisualizationState>()(
   persist(
     (set, get) => ({
-      viewMode: "2D",
+      viewMode: "3D",
       smilesData: null,
       sdfData: null,
 

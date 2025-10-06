@@ -45,10 +45,10 @@ export const event = (name: string, params: Gtag.EventParams = {}) => {
     debug_mode: process.env.NODE_ENV !== "production",
   };
 
-  // 🔍 Log útil apenas em desenvolvimento
-  if (process.env.NODE_ENV !== "production") {
-    console.log("[GA EVENT]", name, payload);
-  }
+  // Log removido para limpar o console em desenvolvimento
+  // if (process.env.NODE_ENV !== "production") {
+  //   console.log("[GA EVENT]", name, payload);
+  // }
 
   window.gtag("event", name, payload);
 };

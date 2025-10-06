@@ -13,13 +13,7 @@ export const trackMoleculeSearch = ({
   search_type?: "name" | "formula" | "smiles" | "cid" | "unknown";
   success?: boolean;
 }): void => {
-  console.log("[MOLECULE_SEARCH_EVENTS] Disparando trackMoleculeSearch:", {
-    search_term,
-    section,
-    search_type,
-    success,
-  });
-
+  // Removido console.log para limpar o console
   event("search", {
     search_term,
     section,

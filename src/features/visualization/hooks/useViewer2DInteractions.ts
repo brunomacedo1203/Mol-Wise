@@ -1,4 +1,3 @@
-// src/features/visualization/hooks/useViewer2DInteractions.ts
 import { useCallback, useRef, useState } from "react";
 import { ViewBox } from "../types/viewer2d.types";
 import { writeViewBox, clampViewBox } from "../utils/viewBoxUtils";
@@ -10,6 +9,7 @@ import {
 } from "../constants/viewer2d.constants";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { getMoleculeKey } from "../utils/moleculeKey";
+import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
 
 interface UseViewer2DInteractionsProps {
   svgElRef: React.RefObject<SVGSVGElement | null>;
@@ -33,7 +33,13 @@ export function useViewer2DInteractions({
     vb: null,
   });
 
-  // acesso à store p/ persistir zoom
+  const lastInteractionRef = useRef<{
+    type: string;
+    timestamp: number;
+  }>({ type: "", timestamp: 0 });
+  
+  const interactionDebounceMs = 1000;
+
   const smiles = useVisualizationStore((s) => s.smilesData);
   const sdf = useVisualizationStore((s) => s.sdfData);
   const setZoom2D = useVisualizationStore((s) => s.setZoom2D);
@@ -46,16 +52,39 @@ export function useViewer2DInteractions({
     [smiles, sdf, setZoom2D]
   );
 
+  const trackInteraction = useCallback(
+    (type: "zoom" | "pan" | "reset_view" | "double_click" | "wheel_zoom" | "style_change", value?: string) => {
+      const now = Date.now();
+      const last = lastInteractionRef.current;
+      
+      if (last.type === type && now - last.timestamp < interactionDebounceMs) {
+        return;
+      }
+      
+      lastInteractionRef.current = { type, timestamp: now };
+      
+      const moleculeName = getMoleculeKey(smiles, sdf);
+      trackMolecule2DInteraction({
+        molecule_name: moleculeName,
+        interaction_type: type,
+        interaction_value: value,
+        section: "molecule_viewer_2d",
+      });
+    },
+    [smiles, sdf]
+  );
+
   const resetViewBox = useCallback(() => {
     const svg = svgElRef.current;
     if (!svg || !vbRef.current || !vbInitialRef.current) return;
     const init = vbInitialRef.current;
     vbRef.current = { ...init };
     writeViewBox(svg, init);
-    saveVB(init); // persiste reset
-  }, [svgElRef, vbRef, vbInitialRef, saveVB]);
+    saveVB(init);
+    
+    trackInteraction("reset_view");
+  }, [svgElRef, vbRef, vbInitialRef, saveVB, trackInteraction]);
 
-  // Zoom (scroll)
   const handleWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
       const svg = svgElRef.current;
@@ -67,7 +96,7 @@ export function useViewer2DInteractions({
       const relY = (e.clientY - rect.top) / rect.height;
 
       const vb = vbRef.current;
-      const zoom = Math.pow(1 + WHEEL_ZOOM_SENSITIVITY, e.deltaY);
+      const zoom = Math.pow(1 + WHEEL_ZOOM_SENSITIVITY, -e.deltaY);
       const newWidth = vb.width * zoom;
 
       const init = vbInitialRef.current;
@@ -92,11 +121,12 @@ export function useViewer2DInteractions({
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
       saveVB(clamped);
+      
+      trackInteraction("zoom", zoom > 1 ? "zoom_in" : "zoom_out");
     },
-    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB]
+    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB, trackInteraction]
   );
 
-  // Pan com wheel (Shift)
   const handleWheelPan = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
       const svg = svgElRef.current;
@@ -118,8 +148,10 @@ export function useViewer2DInteractions({
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
       saveVB(clamped);
+      
+      trackInteraction("pan", "wheel_pan");
     },
-    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB]
+    [svgElRef, vbRef, vbInitialRef, contentBoundsRef, saveVB, trackInteraction]
   );
 
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -134,7 +166,8 @@ export function useViewer2DInteractions({
       const svg = svgHostRef.current.querySelector("svg");
       if (svg) svg.style.cursor = "grabbing";
     }
-  }, [vbRef, svgHostRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -163,21 +196,27 @@ export function useViewer2DInteractions({
       const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
-      // não salva a cada move para não sobrecarregar; salvamos no mouseUp
     },
     [isDragging, svgElRef, vbRef, vbInitialRef, contentBoundsRef]
   );
 
   const handleMouseUp = useCallback(() => {
+    const wasDragging = isDragging;
     setIsDragging(false);
     if (svgHostRef.current) {
       const svg = svgHostRef.current.querySelector("svg");
       if (svg) svg.style.cursor = "grab";
     }
-    if (vbRef.current) saveVB(vbRef.current);
-  }, [svgHostRef, vbRef, saveVB]);
+    if (vbRef.current) {
+      saveVB(vbRef.current);
+      
+      if (wasDragging) {
+        trackInteraction("pan", "mouse_drag");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDragging]);
 
-  // Touch
   const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     if (!vbRef.current) return;
     setIsDragging(true);
@@ -187,7 +226,8 @@ export function useViewer2DInteractions({
       y: t.clientY,
       vb: { ...vbRef.current },
     };
-  }, [vbRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
@@ -217,19 +257,27 @@ export function useViewer2DInteractions({
       const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
       vbRef.current = clamped;
       writeViewBox(svg, clamped);
-      // salvar apenas no touchEnd
     },
     [isDragging, svgElRef, vbRef, vbInitialRef, contentBoundsRef]
   );
 
   const handleTouchEnd = useCallback(() => {
+    const wasDragging = isDragging;
     setIsDragging(false);
-    if (vbRef.current) saveVB(vbRef.current);
-  }, [saveVB, vbRef]);
+    if (vbRef.current) {
+      saveVB(vbRef.current);
+      
+      if (wasDragging) {
+        trackInteraction("pan", "touch_drag");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDragging]);
 
   const handleDoubleClick = useCallback(() => {
     resetViewBox();
-  }, [resetViewBox]);
+    trackInteraction("double_click", "reset_view");
+  }, [resetViewBox, trackInteraction]);
 
   const onWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {

@@ -1,12 +1,84 @@
 import { ViewBox } from "../types/viewer2d.types";
 
-/** Aperta o viewBox e aplica offset vertical */
+/** -------------------- Helpers de cor -------------------- */
+function isBlackColor(v?: string | null): boolean {
+  if (!v) return false; // NÃO trate vazio como preto
+  const normalized = v.toLowerCase().trim();
+  return (
+    normalized === "black" ||
+    normalized === "#000000" ||
+    normalized === "#000" ||
+    normalized === "rgb(0,0,0)" ||
+    normalized === "rgb(0, 0, 0)"
+  );
+}
+
+function isRedColor(v?: string | null): boolean {
+  if (!v) return false;
+  const normalized = v.toLowerCase().trim();
+
+  // hex #ff0000, #f00000, #c00000, #a00000 etc.
+  if (/^#[a-f0-9]{2}0000$/i.test(normalized)) return true;
+  if (normalized === "#f00") return true;
+
+  // rgb(r,0,0) onde r >= ~128
+  const m = normalized.match(/^rgb\(\s*(\d+)\s*,\s*0\s*,\s*0\s*\)$/);
+  if (m) {
+    const r = parseInt(m[1], 10);
+    return r >= 128; // cobre 160, 192, 255...
+  }
+  return false;
+}
+
+/** Heurística: é PROVÁVEL que seja label de estereoquímica (CIP)? */
+function isLikelyStereoText(textEl: Element): boolean {
+  const raw = textEl.textContent?.trim() ?? "";
+  if (!raw) return false;
+
+  const low = raw.toLowerCase();
+
+  // Palavras CIP sempre removidas
+  if (low === "abs" || low === "rac" || low === "and" || low === "or") return true;
+
+  // (R), (S), (E), (Z) → comum em alguns renderizadores
+  if (/^\((r|s|e|z)\)$/i.test(raw)) return true;
+
+  // Rótulos soltos R/S/E/Z: só remover se tiver sinais visuais de "label CIP"
+  if (/^[rsez]$/i.test(raw)) {
+    const fill = textEl.getAttribute("fill");
+    const italic = (textEl.getAttribute("font-style") || "").toLowerCase() === "italic";
+    const fs = parseFloat(textEl.getAttribute("font-size") || "0");
+    const small = fs > 0 && fs < 12; // muitos CIP vêm minúsculos
+
+    // Se for vermelho, itálico ou muito pequeno → provavelmente CIP
+    if (isRedColor(fill) || italic || small) return true;
+  }
+
+  return false;
+}
+
+/** Wedges vermelhos do OCL */
+export function isRedWedge(color?: string | null): boolean {
+  if (!color) return false;
+  const normalized = color.toLowerCase().trim();
+  return (
+    normalized === "#a00000" ||
+    normalized === "#c00000" ||
+    normalized === "rgb(160,0,0)" ||
+    normalized === "rgb(160, 0, 0)" ||
+    normalized === "rgb(192,0,0)" ||
+    normalized === "rgb(192, 0, 0)" ||
+    normalized.match(/^#[a-f0-9]{2}0000$/i) !== null
+  );
+}
+
+/** -------------------- ViewBox -------------------- */
 export function tightenViewBox(
   svg: string,
   scaleFactor = 1.15,
   verticalOffsetPx = 0
 ): string {
-  const m = svg.match(/viewBox="([\d.\-\s]+)"/); 
+  const m = svg.match(/viewBox="([\d.\-\s]+)"/);
   if (!m) return svg;
   const [minX, minY, width, height] = m[1].trim().split(/\s+/).map(Number) as [
     number,
@@ -28,174 +100,50 @@ export function tightenViewBox(
   );
 }
 
-/** ======= Remove rótulos CIP (R/S) e nomes de compostos do SVG ======= */
+/** -------------------- Limpeza de textos (pré-DOM) -------------------- */
 export function removeCIPLabelsAndNames(svgString: string): string {
-  // Cria um parser temporário para processar o SVG
   const parser = new DOMParser();
   const doc = parser.parseFromString(svgString, "image/svg+xml");
   const svg = doc.documentElement;
 
-  // Remove todos os elementos <text> que contêm apenas "R" ou "S"
-  const textElements = svg.querySelectorAll("text");
+  const textElements = Array.from(svg.querySelectorAll("text"));
+
   textElements.forEach((textEl) => {
     const content = textEl.textContent?.trim();
+    if (!content) return;
 
-    // Remove rótulos CIP (R/S)
-    if (content === "R" || content === "S") {
+    // 1) Remove rótulos CIP óbvios
+    if (isLikelyStereoText(textEl)) {
       textEl.remove();
       return;
     }
 
-    // Remove nomes de compostos (texto longo que não são rótulos de átomos)
-    // Heurística: se o texto tem mais de 3 caracteres e não é um elemento químico comum
-    if (content && content.length > 3) {
-      // Lista de elementos químicos e rótulos comuns que devemos preservar
+    // 2) Remove textos explicitamente em vermelho (geralmente marcas de estereoquímica)
+    const fill = textEl.getAttribute("fill");
+    if (isRedColor(fill)) {
+      textEl.remove();
+      return;
+    }
+
+    // 3) Remove nomes longos (preserva símbolos químicos e radicais curtos)
+    if (content.length > 3) {
       const preservedLabels = [
-        // Elementos químicos comuns
-        "H",
-        "He",
-        "Li",
-        "Be",
-        "B",
-        "C",
-        "N",
-        "O",
-        "F",
-        "Ne",
-        "Na",
-        "Mg",
-        "Al",
-        "Si",
-        "P",
-        "S",
-        "Cl",
-        "Ar",
-        "K",
-        "Ca",
-        "Sc",
-        "Ti",
-        "V",
-        "Cr",
-        "Mn",
-        "Fe",
-        "Co",
-        "Ni",
-        "Cu",
-        "Zn",
-        "Ga",
-        "Ge",
-        "As",
-        "Se",
-        "Br",
-        "Kr",
-        "Rb",
-        "Sr",
-        "Y",
-        "Zr",
-        "Nb",
-        "Mo",
-        "Tc",
-        "Ru",
-        "Rh",
-        "Pd",
-        "Ag",
-        "Cd",
-        "In",
-        "Sn",
-        "Sb",
-        "Te",
-        "I",
-        "Xe",
-        "Cs",
-        "Ba",
-        "La",
-        "Ce",
-        "Pr",
-        "Nd",
-        "Pm",
-        "Sm",
-        "Eu",
-        "Gd",
-        "Tb",
-        "Dy",
-        "Ho",
-        "Er",
-        "Tm",
-        "Yb",
-        "Lu",
-        "Hf",
-        "Ta",
-        "W",
-        "Re",
-        "Os",
-        "Ir",
-        "Pt",
-        "Au",
-        "Hg",
-        "Tl",
-        "Pb",
-        "Bi",
-        "Po",
-        "At",
-        "Rn",
-        "Fr",
-        "Ra",
-        "Ac",
-        "Th",
-        "Pa",
-        "U",
-        "Np",
-        "Pu",
-        "Am",
-        "Cm",
-        "Bk",
-        "Cf",
-        "Es",
-        "Fm",
-        "Md",
-        "No",
-        "Lr",
-        "Rf",
-        "Db",
-        "Sg",
-        "Bh",
-        "Hs",
-        "Mt",
-        "Ds",
-        "Rg",
-        "Cn",
-        "Nh",
-        "Fl",
-        "Mc",
-        "Lv",
-        "Ts",
-        "Og",
-        // Números e cargas
-        "+",
-        "-",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "0",
-        // Combinações comuns
-        "NH",
-        "OH",
-        "CH",
-        "NH2",
-        "NH3",
-        "CH2",
-        "CH3",
-        "COOH",
-        "COO",
+        "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+        "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca",
+        "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
+        "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr",
+        "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn",
+        "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd",
+        "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb",
+        "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg",
+        "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th",
+        "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm",
+        "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds",
+        "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og",
+        "+", "-", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+        "NH", "OH", "CH", "NH2", "NH3", "CH2", "CH3", "COOH", "COO",
       ];
 
-      // Se não é um rótulo preservado e tem mais de 3 caracteres, provavelmente é um nome
       const isPreserved = preservedLabels.some(
         (label) => content === label || content.startsWith(label)
       );
@@ -206,15 +154,41 @@ export function removeCIPLabelsAndNames(svgString: string): string {
     }
   });
 
-  // Serializa o SVG de volta para string
   const serializer = new XMLSerializer();
   return serializer.serializeToString(svg);
 }
 
-/** ======= Nova função para calcular o bounding box real da molécula ======= */
+/** -------------------- Limpeza de textos (pós-DOM) -------------------- */
+export function cleanStereochemistryLabels(svg: SVGSVGElement): void {
+  if (!svg) return;
+
+  svg.querySelectorAll("text").forEach((textEl) => {
+    const content = textEl.textContent?.trim();
+    if (!content) return;
+
+    if (isLikelyStereoText(textEl)) {
+      textEl.remove();
+      return;
+    }
+
+    // Vermelhos residuais
+    const fill = textEl.getAttribute("fill");
+    if (isRedColor(fill)) {
+      textEl.remove();
+      return;
+    }
+
+    // Textos muito pequenos (< 10px) geralmente são marcações auxiliares
+    const fontSize = textEl.getAttribute("font-size");
+    if (fontSize && parseFloat(fontSize) < 10) {
+      textEl.remove();
+    }
+  });
+}
+
+/** -------------------- Bounds -------------------- */
 export function getContentBounds(svg: SVGSVGElement): ViewBox | null {
   try {
-    // Seleciona todos os elementos gráficos que fazem parte da molécula
     const graphicElements = svg.querySelectorAll(
       "line, circle, ellipse, path, polygon, polyline, text"
     );
@@ -236,13 +210,13 @@ export function getContentBounds(svg: SVGSVGElement): ViewBox | null {
           maxY = Math.max(maxY, bbox.y + bbox.height);
         }
       } catch (error) {
+        // alguns elementos podem não ter bbox válido
         console.error(error);
       }
     });
 
     if (minX === Infinity || minY === Infinity) return null;
 
-    // Adiciona uma pequena margem para evitar cortes nas bordas
     const margin = Math.max((maxX - minX) * 0.05, (maxY - minY) * 0.05, 5);
 
     return {
@@ -257,28 +231,33 @@ export function getContentBounds(svg: SVGSVGElement): ViewBox | null {
   }
 }
 
-/** ======= Theming robusto (salva originais e reaplica no toggle) ======= */
+/** -------------------- Theming -------------------- */
 export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
   if (!svg) return;
 
   const isDark = mode === "dark";
-  const baseStroke = isDark
-    ? "#e5e7eb" /* zinc-200 */
-    : "#111827"; /* gray-900 */
+  const baseStroke = isDark ? "#e5e7eb" : "#111827";
   const baseFill = baseStroke;
 
-  // Salva originais 1x
   if (!svg.hasAttribute("data-themed-init")) {
     svg.setAttribute("data-themed-init", "true");
 
     svg.querySelectorAll<SVGElement>("[stroke]").forEach((el) => {
       const s = el.getAttribute("stroke");
-      if (s != null) el.setAttribute("data-stroke-original", s);
+      if (s != null) {
+        const normalizedStroke = isRedWedge(s) ? "rgb(0,0,0)" : s;
+        el.setAttribute("data-stroke-original", normalizedStroke ?? "");
+      }
     });
 
     svg.querySelectorAll<SVGElement>("[fill]").forEach((el) => {
       const f = el.getAttribute("fill");
-      if (f != null) el.setAttribute("data-fill-original", f);
+      if (f != null) {
+        const parentTag = el.tagName.toLowerCase();
+        const isWedge = parentTag === "polygon" || parentTag === "line";
+        const normalizedFill = (isWedge && isRedWedge(f)) ? "rgb(0,0,0)" : f;
+        el.setAttribute("data-fill-original", normalizedFill ?? "");
+      }
     });
 
     svg.querySelectorAll<SVGElement>("[stroke-width]").forEach((el) => {
@@ -287,17 +266,9 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
     });
   }
 
-  // Utilitário
-  const isBlack = (v?: string | null) =>
-    !v ||
-    /^#?000000$/i.test(v) ||
-    v.toLowerCase() === "black" ||
-    v.toLowerCase() === "rgb(0,0,0)";
-
-  // Stroke
   svg.querySelectorAll<SVGElement>("[stroke]").forEach((el) => {
     const orig = el.getAttribute("data-stroke-original");
-    const wasBlack = isBlack(orig);
+    const wasBlack = isBlackColor(orig ?? undefined);
     if (isDark) {
       el.setAttribute("stroke", wasBlack ? baseStroke : orig ?? baseStroke);
     } else {
@@ -305,10 +276,9 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
     }
   });
 
-  // Fill
   svg.querySelectorAll<SVGElement>("[fill]").forEach((el) => {
     const orig = el.getAttribute("data-fill-original");
-    const wasBlack = isBlack(orig);
+    const wasBlack = isBlackColor(orig ?? undefined);
     if (isDark) {
       el.setAttribute("fill", wasBlack ? baseFill : orig ?? baseFill);
     } else {
@@ -316,29 +286,29 @@ export function applyThemeToSVG(svg: SVGSVGElement, mode: "dark" | "light") {
     }
   });
 
-  // Textos
+  // 🔑 Corrige labels sem fill (como o "S") no modo claro
   svg.querySelectorAll<SVGElement>("text").forEach((t) => {
-    const orig =
-      t.getAttribute("data-fill-original") ?? t.getAttribute("fill") ?? "";
-    const wasBlack = isBlack(orig);
+    const orig = t.getAttribute("data-fill-original") ?? t.getAttribute("fill");
+    const wasBlack = isBlackColor(orig ?? undefined);
+
     if (isDark) {
-      t.setAttribute(
-        "fill",
-        wasBlack ? baseFill : t.getAttribute("data-fill-original") ?? orig
-      );
+      const color = !orig || wasBlack ? baseFill : orig;
+      t.setAttribute("fill", color);
     } else {
-      t.setAttribute("fill", t.getAttribute("data-fill-original") ?? orig);
+      if (orig) {
+        t.setAttribute("fill", orig);
+      } else {
+        // sem fill explícito → deixa o default do browser (preto)
+        t.removeAttribute("fill");
+      }
     }
   });
 
-  // Espessura (boost no dark, restore no light)
-  svg
-    .querySelectorAll<SVGElement>("[data-stroke-width-original]")
-    .forEach((el) => {
-      const orig = el.getAttribute("data-stroke-width-original");
-      if (!orig) return;
-      const n = parseFloat(orig);
-      if (Number.isNaN(n)) return;
-      el.setAttribute("stroke-width", isDark ? String(n * 1.15) : orig);
-    });
+  svg.querySelectorAll<SVGElement>("[data-stroke-width-original]").forEach((el) => {
+    const orig = el.getAttribute("data-stroke-width-original");
+    if (!orig) return;
+    const n = parseFloat(orig);
+    if (Number.isNaN(n)) return;
+    el.setAttribute("stroke-width", isDark ? String(n * 1.15) : orig);
+  });
 }

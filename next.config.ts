@@ -1,6 +1,6 @@
 import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-import withBundleAnalyzer from "@next/bundle-analyzer"; // ✅ Novo
+import withBundleAnalyzer from "@next/bundle-analyzer"; 
 
 // ⚙️ Ativa o bundle analyzer se a variável de ambiente ANALYZE=true
 const withAnalyzer = withBundleAnalyzer({
@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   trailingSlash: false,
+  // ✅ Otimizações de CSS para evitar warnings de preload
+  experimental: {
+    optimizeCss: true,
+    cssChunking: 'strict',
+  },
   async headers() {
     return [
       {
