@@ -178,7 +178,37 @@ export function useViewer2DRenderer({
         }
 
         normalizeMolecule(mol, OCL);
+
+        // ✅ FORÇA exibição de hidrogênios explícitos APENAS para moléculas muito pequenas
+        mol.ensureHelperArrays(OCL.Molecule.cHelperNeighbours);
         
+        // Conta átomos pesados (não-hidrogênio)
+        let heavyAtomCount = 0;
+        for (let i = 0; i < mol.getAllAtoms(); i++) {
+          if (mol.getAtomicNo(i) > 1) {
+            heavyAtomCount++;
+          }
+        }
+        
+        // 🔧 Corrige geometria 2D para moléculas pequenas
+        // Só adiciona hidrogênios explícitos se a molécula tiver 4 ou menos átomos pesados
+        // Isso cobre H2O, NH3, CH4, etc.
+        if (heavyAtomCount <= 4) {
+          try {
+            mol.addImplicitHydrogens();
+            const molOps = mol as unknown as {
+              addMissingChirality?: () => void;
+              clean?: (mode: number, coords: null) => void;
+            };
+            molOps.addMissingChirality?.();
+            molOps.clean?.(2, null); // reorganiza coordenadas
+          } catch (e) {
+            console.warn("Ajuste de geometria falhou:", e);
+          }
+        }
+
+        // Determina se a molécula deve receber ajustes específicos
+        const isSmallMolecule = heavyAtomCount <= 4;
 
         let { width: rectWidth, height: rectHeight } = getElementSize(host);
         const prevWidthStyle = host.style.width;
@@ -202,19 +232,25 @@ export function useViewer2DRenderer({
             toSVG: (w: number, h: number, opts?: unknown) => string;
           }
         ).toSVG(w, h, {
-          autoCrop: true,
-          autoCropMargin: SVG_MARGIN,
+          autoCrop: !isSmallMolecule, // ❌ desativa crop para pequenas
+          autoCropMargin: isSmallMolecule ? 0 : SVG_MARGIN,
           suppressChiralText: true,
           suppressESR: true,
           suppressCIPParity: true,
           fontWeight: "normal",
           strokeWidth: 1.5,
           noStereoProblem: true,
-          showSymmetrySimple: true,
-          noImplicitAtomLabelColors: false,
+          showSymmetrySimple: false,
+          noImplicitAtomLabelColors: true,
           showAtomNumber: false,
           showBondNumber: false,
           showAtomLabels: true,
+          showAtomMappingNo: false,
+          showAtomMass: false,
+          showAtomCharge: true,
+          showBonds: true,
+          inflateToMaxAVBL: isSmallMolecule ? 3.0 : 2.0, // ✅ maior espaçamento para evitar sobreposição
+          noImplicitHydrogen: false,
         });
 
         const normalizedSvg = normalizeMoleculeSVG(rawSvg);
