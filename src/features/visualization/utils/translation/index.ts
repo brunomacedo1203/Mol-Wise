@@ -99,21 +99,28 @@ export async function translateNameToEnglish(name: string): Promise<string> {
     postProcessChemicalTranslation(translatedTry || name)
   );
 
-// PubChem + variantes
-let finalOut = translated;
-const ok = await pubchemHasName(finalOut);
-if (!ok) {
-  const variants = generateNameVariants(finalOut);
-  for (const v of variants) {
-    if (await pubchemHasName(v)) {
-      finalOut = v;
-      break;
+  // PubChem + variantes
+  let finalOut = translated;
+  let validated = await pubchemHasName(finalOut);
+  if (!validated) {
+    const variants = generateNameVariants(finalOut);
+    for (const v of variants) {
+      if (await pubchemHasName(v)) {
+        dbg("✅ Smart variant encontrada:", v);
+        finalOut = v;
+        validated = true;
+        break;
+      }
     }
   }
-}
 
-  cache[normalized] = { translated: finalOut, timestamp: Date.now() };
-  saveCache(cache);
+  // Cache apenas resultados validados
+  if (validated) {
+    cache[normalized] = { translated: finalOut, timestamp: Date.now() };
+    saveCache(cache);
+  } else {
+    dbg("⚠️ Não validado no PubChem; não cacheado:", finalOut);
+  }
 
   if (isDebug()) console.groupEnd();
   return finalOut;

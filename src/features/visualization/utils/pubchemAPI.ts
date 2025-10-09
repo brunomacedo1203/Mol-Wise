@@ -50,30 +50,39 @@ async function fetchTxt(url: string, _silent404 = false): Promise<string | null>
 }
 
 /**
- * Deduplicação de URLs e miss cache para nomes
+ * Miss cache para nomes (evita bombardear a API após falhas)
  */
-const triedUrls = new Set<string>();
 const MISS_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos
-const missCache = new Map<string, number>();
+// Miss caches separados por tipo para evitar interferência entre pipelines
+const missCacheSmiles = new Map<string, number>();
+const missCacheCid = new Map<string, number>();
 
-function alreadyTried(url: string): boolean {
-  if (triedUrls.has(url)) return true;
-  triedUrls.add(url);
-  return false;
-}
-
-function recentlyMissed(name: string): boolean {
+function recentlyMissedSmiles(name: string): boolean {
   const key = name.toLowerCase().trim();
-  const ts = missCache.get(key);
+  const ts = missCacheSmiles.get(key);
   if (!ts) return false;
   if (Date.now() - ts < MISS_CACHE_TTL_MS) return true;
-  missCache.delete(key);
+  missCacheSmiles.delete(key);
   return false;
 }
 
-function markMiss(name: string): void {
+function markMissSmiles(name: string): void {
   const key = name.toLowerCase().trim();
-  missCache.set(key, Date.now());
+  missCacheSmiles.set(key, Date.now());
+}
+
+function recentlyMissedCid(name: string): boolean {
+  const key = name.toLowerCase().trim();
+  const ts = missCacheCid.get(key);
+  if (!ts) return false;
+  if (Date.now() - ts < MISS_CACHE_TTL_MS) return true;
+  missCacheCid.delete(key);
+  return false;
+}
+
+function markMissCid(name: string): void {
+  const key = name.toLowerCase().trim();
+  missCacheCid.set(key, Date.now());
 }
 
 /** SMILES */
@@ -85,8 +94,15 @@ async function getSmilesFromCid(cid: string): Promise<string | null> {
 /** 🔥 Tradução automática + múltiplas estratégias de codificação */
 async function getSmilesByNameWithTranslation(name: string): Promise<string | null> {
   console.group(`[getSmilesByNameWithTranslation] Processando: "${name}"`);
+  // Deduplicação local por chamada: evita repetir a mesma URL dentro desta execução
+  const triedUrls = new Set<string>();
+  const alreadyTried = (url: string) => {
+    if (triedUrls.has(url)) return true;
+    triedUrls.add(url);
+    return false;
+  };
   
-  if (recentlyMissed(name)) {
+  if (recentlyMissedSmiles(name)) {
     if (isDebug?.()) console.debug("⏭️ pulando (recent miss cache)");
     console.groupEnd();
     return null;
@@ -141,7 +157,7 @@ async function getSmilesByNameWithTranslation(name: string): Promise<string | nu
   }
 
   // marca como "miss" por um tempo
-  markMiss(name);
+  markMissSmiles(name);
   console.groupEnd();
   return null;
 }
@@ -201,8 +217,15 @@ async function getCidFromSmiles(smiles: string): Promise<string | null> {
 
 async function getCidFromName(name: string): Promise<string | null> {
   console.groupCollapsed(`[getCidFromName] Nome: "${name}"`);
+  // Deduplicação local por chamada
+  const triedUrls = new Set<string>();
+  const alreadyTried = (url: string) => {
+    if (triedUrls.has(url)) return true;
+    triedUrls.add(url);
+    return false;
+  };
   
-  if (recentlyMissed(name)) {
+  if (recentlyMissedCid(name)) {
     if (isDebug?.()) console.debug("⏭️ pulando (recent miss cache)");
     console.groupEnd();
     return null;
@@ -273,7 +296,7 @@ async function getCidFromName(name: string): Promise<string | null> {
     }
   }
 
-  markMiss(name);
+  markMissCid(name);
   console.groupEnd();
   return null;
 }
