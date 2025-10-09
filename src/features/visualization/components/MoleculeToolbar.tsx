@@ -124,11 +124,13 @@ export function MoleculeToolbar() {
 
   return (
     <div
-      className="relative flex items-center justify-center mt-4 gap-2 max-w-4xl mx-auto px-4 py-2 
+      className={`relative flex items-center justify-center mt-4 ${
+        err ? "mb-10" : "mb-4"
+      } gap-2 max-w-4xl mx-auto px-4 py-2 
         rounded-full border border-zinc-300 dark:border-zinc-600 
         bg-white dark:bg-zinc-900 
         shadow-lg ring-1 ring-zinc-200 dark:ring-zinc-800 
-        transition-shadow"
+        transition-shadow z-30`}
     >
       <form
         onSubmit={handleSearch}
@@ -223,7 +225,7 @@ export function MoleculeToolbar() {
         <div
           className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-2 
           bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-sm rounded-lg
-          border border-red-300 dark:border-red-700 shadow-sm z-10 min-w-58 text-center"
+          border border-red-300 dark:border-red-700 shadow-sm z-50 min-w-58 text-center"
         >
           {err}
         </div>
