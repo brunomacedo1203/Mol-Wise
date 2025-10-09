@@ -1,4 +1,6 @@
-import { translateNameToEnglish } from "./translateName";
+import { translateNameToEnglish } from "./translation";
+import { isDebug, fetchJsonWithRetry } from "./translation/translationHelpers";
+import { generateNameVariants } from "./translation/translationPubChem";
 
 const PUBCHEM = "https://pubchem.ncbi.nlm.nih.gov/rest/pug";
 
@@ -25,26 +27,53 @@ function isSmiles(input: string): boolean {
   return !hasWhitespaceOrComma && !isOnlyDigits && hasSmilesChars;
 }
 
-async function fetchTxt(url: string, silent404 = false): Promise<string | null> {
+async function fetchTxt(url: string, _silent404 = false): Promise<string | null> {
   try {
-    console.debug(`[fetchTxt] Tentando: ${url}`);
+    if (isDebug?.()) console.debug(`[fetchTxt] ${url}`);
     const res = await fetch(url, { cache: "no-store" });
+
     if (!res.ok) {
-      if (!silent404) {
-        console.warn(`[fetchTxt] ❌ ${res.status} ${res.statusText} - ${url}`);
+      // Ignora 404 e 503 silenciosamente, evita spam no console
+      if (res.status === 404 || res.status === 503) {
+        if (isDebug?.()) console.debug(`[fetchTxt] ${res.status} ignorado: ${url}`);
+        return null;
       }
-      if (res.status === 404 && silent404) return null;
       return null;
     }
+
     const txt = (await res.text()).trim();
-    if (txt) {
-      console.debug(`[fetchTxt] ✅ Sucesso: ${url}`);
-    }
     return txt || null;
-  } catch (error) {
-    if (!silent404) console.error(`[fetchTxt] Erro ao buscar ${url}:`, error);
+  } catch (err) {
+    if (isDebug?.()) console.debug(`[fetchTxt] erro: ${(err as Error).message}`);
     return null;
   }
+}
+
+/**
+ * Deduplicação de URLs e miss cache para nomes
+ */
+const triedUrls = new Set<string>();
+const MISS_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos
+const missCache = new Map<string, number>();
+
+function alreadyTried(url: string): boolean {
+  if (triedUrls.has(url)) return true;
+  triedUrls.add(url);
+  return false;
+}
+
+function recentlyMissed(name: string): boolean {
+  const key = name.toLowerCase().trim();
+  const ts = missCache.get(key);
+  if (!ts) return false;
+  if (Date.now() - ts < MISS_CACHE_TTL_MS) return true;
+  missCache.delete(key);
+  return false;
+}
+
+function markMiss(name: string): void {
+  const key = name.toLowerCase().trim();
+  missCache.set(key, Date.now());
 }
 
 /** SMILES */
@@ -57,47 +86,64 @@ async function getSmilesFromCid(cid: string): Promise<string | null> {
 async function getSmilesByNameWithTranslation(name: string): Promise<string | null> {
   console.group(`[getSmilesByNameWithTranslation] Processando: "${name}"`);
   
+  if (recentlyMissed(name)) {
+    if (isDebug?.()) console.debug("⏭️ pulando (recent miss cache)");
+    console.groupEnd();
+    return null;
+  }
+
   console.log("🔄 Etapa 1: Tradução");
   const translated = await translateNameToEnglish(name);
   console.log(`   Traduzido: "${translated}"`);
-  
-  console.log("🔄 Etapa 2: Verificando se precisa normalizar");
-  console.log(`   Contém caracteres não-ASCII: ${/[^\x00-\x7F]/.test(translated)}`);
-  
-  // IMPORTANTE: Só normaliza se realmente tiver caracteres não-ASCII
-  const normalized = /[^\x00-\x7F]/.test(translated) 
-    ? normalizeToASCII(translated) 
-    : translated;
-  console.log(`   Normalizado: "${normalized}"`);
-  
+
+  const normalized = /[^\x00-\x7F]/.test(translated) ? normalizeToASCII(translated) : translated;
   const trimmed = normalized.trim();
 
-  // 🔍 Estratégias de codificação
-  const strategies = [
+  const encodes = [
     { name: "encodeURIComponent", value: encodeURIComponent(trimmed) },
     { name: "manual %20", value: trimmed.replace(/ /g, "%20") },
     { name: "plus sign", value: trimmed.replace(/ /g, "+") },
   ];
 
   console.log("🔄 Etapa 3: Tentando estratégias de codificação");
-  for (const strategy of strategies) {
-    const url = `${PUBCHEM}/compound/name/${strategy.value}/property/IsomericSMILES/TXT`;
-    console.log(`   Tentando ${strategy.name}: ${strategy.value}`);
+  for (const enc of encodes) {
+    const url = `${PUBCHEM}/compound/name/${enc.value}/property/IsomericSMILES/TXT`;
+    if (alreadyTried(url)) continue;
     const smiles = await fetchTxt(url, true);
     if (smiles) {
-      console.log(`   ✅ SUCESSO com ${strategy.name}!`);
+      console.log(`   ✅ SUCESSO com ${enc.name}!`);
       console.groupEnd();
       return smiles;
     }
   }
 
-  // fallback para o original
-  console.log("🔄 Etapa 4: Fallback com nome original");
+  // tenta variantes comuns (ex.: ammonia)
+  const variants = generateNameVariants(trimmed);
+  for (const v of variants) {
+    const url = `${PUBCHEM}/compound/name/${encodeURIComponent(v)}/property/IsomericSMILES/TXT`;
+    if (alreadyTried(url)) continue;
+    const smiles = await fetchTxt(url, true);
+    if (smiles) {
+      console.log(`   ✅ SUCESSO com variante "${v}"`);
+      console.groupEnd();
+      return smiles;
+    }
+  }
+
+  // fallback com nome original (ainda assim silenciado)
   const fallbackUrl = `${PUBCHEM}/compound/name/${encodeURIComponent(name.trim())}/property/IsomericSMILES/TXT`;
-  const result = await fetchTxt(fallbackUrl, true);
-  
+  if (!alreadyTried(fallbackUrl)) {
+    const result = await fetchTxt(fallbackUrl, true);
+    if (result) {
+      console.groupEnd();
+      return result;
+    }
+  }
+
+  // marca como "miss" por um tempo
+  markMiss(name);
   console.groupEnd();
-  return result;
+  return null;
 }
 
 export async function getSmiles(query: string): Promise<string> {
@@ -154,62 +200,80 @@ async function getCidFromSmiles(smiles: string): Promise<string | null> {
 }
 
 async function getCidFromName(name: string): Promise<string | null> {
-  console.group(`[getCidFromName] Nome: "${name}"`);
+  console.groupCollapsed(`[getCidFromName] Nome: "${name}"`);
   
+  if (recentlyMissed(name)) {
+    if (isDebug?.()) console.debug("⏭️ pulando (recent miss cache)");
+    console.groupEnd();
+    return null;
+  }
+
   const translated = await translateNameToEnglish(name);
-  console.log(`Traduzido: "${translated}"`);
-  
-  const normalized = normalizeToASCII(translated);
-  console.log(`Normalizado: "${normalized}"`);
-  
-  const trimmed = normalized.trim();
+  const normalized = normalizeToASCII(translated).trim();
 
   const strategies = [
-    encodeURIComponent(trimmed),
-    trimmed.replace(/ /g, "%20"),
-    trimmed.replace(/ /g, "+"),
+    encodeURIComponent(normalized),
+    normalized.replace(/ /g, "%20"),
+    normalized.replace(/ /g, "+"),
   ];
 
-  for (const encoded of strategies) {
-    try {
-      // 1️⃣ Tenta via descrição JSON (mais confiável)
-      const descUrl = `${PUBCHEM}/compound/name/${encoded}/description/JSON`;
-      const descRes = await fetch(descUrl, { cache: "no-store" });
-      if (descRes.ok) {
-        const json = await descRes.json();
-        const cid = json?.InformationList?.Information?.[0]?.CID;
-        if (cid) {
-          console.log(`✅ CID ${cid} encontrado via descrição`);
-          console.groupEnd();
-          return String(cid);
-        }
-      }
-
-      // 2️⃣ Tenta via propriedade (antiga)
-      const smilesUrl = `${PUBCHEM}/compound/name/${encoded}/property/IsomericSMILES/TXT`;
-      const smilesTxt = await fetchTxt(smilesUrl, true);
-      if (smilesTxt) {
-        const cidFromSmiles = await getCidFromSmiles(smilesTxt);
-        if (cidFromSmiles) {
-          console.log(`✅ CID encontrado via SMILES`);
-          console.groupEnd();
-          return cidFromSmiles;
-        }
-      }
-
-      // 3️⃣ Fallback clássico
-      const cidUrl = `${PUBCHEM}/compound/name/${encoded}/cids/TXT`;
-      const cid = await fetchTxt(cidUrl, true);
-      if (cid) {
-        console.log(`✅ CID encontrado via fallback`);
-        console.groupEnd();
-        return cid;
-      }
-    } catch (err) {
-      console.warn(`Falha com encoding ${encoded}:`, err);
+  // 1) descrição JSON com retry leve
+  for (const enc of strategies) {
+    const descUrl = `${PUBCHEM}/compound/name/${enc}/description/JSON`;
+    if (alreadyTried(descUrl)) continue;
+    const json = await fetchJsonWithRetry<{ InformationList?: { Information?: Array<{ CID?: number | string }> } }>(
+      descUrl,
+      { retries: 1, backoffMs: 300 }
+    );
+    const cid = json?.InformationList?.Information?.[0]?.CID;
+    if (cid) {
+      console.log(`✅ CID ${cid} via descrição`);
+      console.groupEnd();
+      return String(cid);
     }
   }
 
+  // 2) propriedade → SMILES → CID
+  for (const enc of strategies) {
+    const smilesUrl = `${PUBCHEM}/compound/name/${enc}/property/IsomericSMILES/TXT`;
+    if (alreadyTried(smilesUrl)) continue;
+    const smilesTxt = await fetchTxt(smilesUrl, true);
+    if (smilesTxt) {
+      const cidFromSmiles = await getCidFromSmiles(smilesTxt);
+      if (cidFromSmiles) {
+        console.log(`✅ CID via SMILES`);
+        console.groupEnd();
+        return cidFromSmiles.split(/\s+/)[0];
+      }
+    }
+  }
+
+  // 3) fallback clássico cids/TXT
+  for (const enc of strategies) {
+    const cidUrl = `${PUBCHEM}/compound/name/${enc}/cids/TXT`;
+    if (alreadyTried(cidUrl)) continue;
+    const cid = await fetchTxt(cidUrl, true);
+    if (cid) {
+      console.log(`✅ CID via fallback`);
+      console.groupEnd();
+      return cid.split(/\s+/)[0];
+    }
+  }
+
+  // variantes (ex.: ammonia)
+  const vars = generateNameVariants(normalized);
+  for (const v of vars) {
+    const cidUrl = `${PUBCHEM}/compound/name/${encodeURIComponent(v)}/cids/TXT`;
+    if (alreadyTried(cidUrl)) continue;
+    const cid = await fetchTxt(cidUrl, true);
+    if (cid) {
+      console.log(`✅ CID via variante "${v}"`);
+      console.groupEnd();
+      return cid.split(/\s+/)[0];
+    }
+  }
+
+  markMiss(name);
   console.groupEnd();
   return null;
 }
