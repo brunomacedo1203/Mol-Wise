@@ -13,28 +13,25 @@ export interface PageProps {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
-  calculatorType?: "standard" | "scientific";
   className?: string;
-  [key: string]: string | boolean | number | React.ReactNode | undefined;
 }
 
-export default function Page({ title, children, ...rest }: PageProps) {
+export default function Page({ title, children }: PageProps) {
   const sectionTitle = useSectionTitle();
-  const collapsed = useSidebarStore((state) => state.collapsed);
-  const toggleCollapsed = useSidebarStore((state) => state.toggleCollapsed);
+  const { collapsed, mobileOpen } = useSidebarStore();
+
+  // ✅ Se o menu mobile estiver aberto, força o modo expandido
+  const effectiveCollapsed = mobileOpen ? false : collapsed;
 
   return (
-    <div className="flex h-screen bg-zinc-100">
-      <SideArea collapsed={collapsed} onToggleCollapsed={toggleCollapsed}>
-        <Menu collapsed={collapsed} />
+    <div className="flex flex-col md:flex-row h-screen bg-zinc-100 dark:bg-neutral-950">
+      <SideArea>
+        <Menu collapsed={effectiveCollapsed} />
       </SideArea>
+
       <div className="flex flex-col flex-1 min-w-0">
-        <Header title={sectionTitle} className="h-16 bg-zinc-100" />
-        <Content title={title}>
-          {React.isValidElement(children)
-            ? React.cloneElement(children, rest)
-            : children}
-        </Content>
+        <Header title={sectionTitle} className="h-16" />
+        <Content title={title}>{children}</Content>
         <Footer />
       </div>
     </div>

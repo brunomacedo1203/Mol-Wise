@@ -55,7 +55,7 @@ export default function Menu({ collapsed }: MenuProps) {
 
             {/* Depois as seções com submenu */}
             {menuSections.map((section) => (
-              <MenuAccordion key={section.id} section={section} />
+              <MenuAccordion key={section.id} section={section} isCollapsed={collapsed} />
             ))}
           </ul>
         </ScrollArea>

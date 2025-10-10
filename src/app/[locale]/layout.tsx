@@ -10,6 +10,7 @@ import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
 import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
 import AnalyticsManager from "@/shared/components/analytics/AnalyticsManager";
+import type { Viewport } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -90,3 +91,9 @@ export default async function LocaleLayout({
     </html>
   );
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};

@@ -11,8 +11,8 @@ import { Submenu } from "./Submenu";
 
 export const MenuAccordion = memo(function MenuAccordion({
   section,
+  isCollapsed,
 }: MenuAccordionProps) {
-  const isCollapsed = useSidebarStore((state) => state.collapsed);
   const isOpen = useSidebarStore((state) => state.openSections[section.id]);
   const toggleSection = useSidebarStore((state) => state.toggleSection);
 

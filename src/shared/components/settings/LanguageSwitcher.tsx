@@ -93,14 +93,15 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
           {LOCALES.map(({ code, flag }) => (
             <SelectItem key={code} value={code}>
               <span className="flex items-center gap-2">
-                <Image
-                  src={flag}
-                  alt={`Bandeira de ${t(code)}`}
-                  width={20}
-                  height={15}
-                  className="rounded-sm shadow-sm"
-                  style={{ width: "auto", height: "auto" }}
-                />
+                <div className="relative w-5 h-[15px]">
+                  <Image
+                    src={flag}
+                    alt={`Bandeira de ${t(code)}`}
+                    width={20}
+                    height={15}
+                    className="rounded-sm object-contain shadow-sm"
+                  />
+                </div>
                 <span>{t(code)}</span>
               </span>
             </SelectItem>

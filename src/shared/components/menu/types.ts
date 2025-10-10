@@ -54,6 +54,7 @@ export interface MenuProps {
 // Tipo para as props do MenuAccordion
 export interface MenuAccordionProps {
   section: MenuSection;
+  isCollapsed: boolean;
 }
 
 // Tipo para as props do Submenu
@@ -61,4 +62,4 @@ export interface SubmenuProps {
   isOpen: boolean;
   items: MenuItemProps[];
   isCollapsed: boolean;
-} 
+}
