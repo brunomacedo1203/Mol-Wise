@@ -5,16 +5,16 @@ import { getMoleculeKey } from "../utils/moleculeKey";
 
 interface UseInitialViewBoxParams {
   ready: boolean;
-  svgElRef: React.RefObject<SVGSVGElement | null>;
-  svgHostRef: React.RefObject<HTMLDivElement | null>;
-  vbRef: React.RefObject<ViewBox | null>;
-  vbInitialRef: React.RefObject<ViewBox | null>;
-  contentBoundsRef: React.RefObject<ViewBox | null>;
+  svgElRef: React.MutableRefObject<SVGSVGElement | null>;
+  svgHostRef: React.MutableRefObject<HTMLDivElement | null>;
+  vbRef: React.MutableRefObject<ViewBox | null>;
+  vbInitialRef: React.MutableRefObject<ViewBox | null>;
+  contentBoundsRef: React.MutableRefObject<ViewBox | null>;
   smiles: string | null;
   sdf: string | null;
   getZoom2D: (key: string) => ViewBox | null;
   setCurrentMolKey: (key: string) => void;
-  mountedRef: React.RefObject<boolean>;
+  mountedRef: React.MutableRefObject<boolean>;
 }
 
 export function useInitialViewBox({

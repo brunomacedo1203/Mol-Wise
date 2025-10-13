@@ -12,11 +12,11 @@ import { getMoleculeKey } from "../utils/moleculeKey";
 import { trackMolecule2DInteraction } from "../events/molecule2DEvents";
 
 interface UseViewer2DInteractionsProps {
-  svgElRef: React.RefObject<SVGSVGElement | null>;
-  svgHostRef: React.RefObject<HTMLDivElement | null>;
-  vbRef: React.RefObject<ViewBox | null>;
-  vbInitialRef: React.RefObject<ViewBox | null>;
-  contentBoundsRef: React.RefObject<ViewBox | null>;
+  svgElRef: React.MutableRefObject<SVGSVGElement | null>;
+  svgHostRef: React.MutableRefObject<HTMLDivElement | null>;
+  vbRef: React.MutableRefObject<ViewBox | null>;
+  vbInitialRef: React.MutableRefObject<ViewBox | null>;
+  contentBoundsRef: React.MutableRefObject<ViewBox | null>;
 }
 
 export function useViewer2DInteractions({

@@ -7,7 +7,7 @@ export { PeriodicTableHeader } from './components/common/PeriodicTableHeader';
 export { PeriodicTableLegend } from './components/common/PeriodicTableLegend';
 export { ElementCard } from './components/specific/cards/ElementCard';
 export { ElementCardsGrid } from './components/specific/cards/ElementCardsGrid';
-export { ElementDetailsPanel } from './components/specific/details/ElementDetailsPanel';
+export { default as ElementDetailsPanel } from './components/ElementDetailsPanel';
 
 // Hooks
 export { usePeriodicTable } from './hooks/usePeriodicTable';
@@ -23,6 +23,3 @@ export type {
   ElementDetailsPanelProps,
   PeriodicTableHeaderProps,
 } from './domain/types/table';
-
-// Contexto
-export { PeriodicTableProvider } from './contexts/PeriodicTableContext';
