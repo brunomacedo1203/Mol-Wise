@@ -1,5 +1,6 @@
 // features/layout/Header.tsx
 "use client";
+
 import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import LanguageSwitcher from "@/shared/components/settings/LanguageSwitcher";
@@ -18,34 +19,51 @@ export default function Header({
 
   return (
     <header
-      className={`${className} flex items-center justify-between px-4 
-     border-b border-zinc-400 dark:border-white/10
-        shadow-md bg-white dark:bg-neutral-900 dark:backdrop-blur-sm
-        h-16 bg-zinc-100
-  `}
+      className={`${className} flex items-center justify-between 
+        px-5 md:px-8 py-3
+        border-b border-zinc-400 dark:border-white/10
+        bg-zinc-100 dark:bg-neutral-900
+        shadow-sm backdrop-blur-sm
+        transition-all duration-200
+        h-16
+      `}
     >
-      {/* Esquerda */}
-      <div className="flex flex-col">
-        <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+      {/* ===== Esquerda (Título + Subtítulo) ===== */}
+      <div className="flex flex-col max-w-[88%] md:max-w-[80%]">
+        <h1
+          className="
+            text-[15px] sm:text-base md:text-lg 
+            font-bold text-zinc-900 dark:text-zinc-100 
+            leading-tight truncate
+          "
+        >
           {title}
         </h1>
+
         {subtitle && (
-          <span className="text-sm text-zinc-500 dark:text-zinc-400">
+          <span
+            className="
+              text-[11px] sm:text-[12px] md:text-xs 
+              text-zinc-500 dark:text-zinc-400 
+              leading-snug truncate
+            "
+          >
             {subtitle}
           </span>
         )}
       </div>
 
-      {/* Direita */}
+      {/* ===== Direita (Controles + Botão Menu) ===== */}
       <div className="flex items-center gap-2">
+        {/* Controles Desktop */}
         <div className="hidden md:flex items-center gap-2">
           <LanguageSwitcher />
           <ThemeToggle />
         </div>
 
-        {/* Botão mobile */}
+        {/* Botão Mobile */}
         <button
-          className="md:hidden p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-800"
+          className="md:hidden p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
           aria-label="Abrir menu"
           onClick={() => setMobileOpen(true)}
         >
