@@ -30,13 +30,14 @@ export default function Footer() {
 
   return (
     <footer
-      className={`
-        flex flex-col sm:flex-row justify-between items-center gap-3
-        py-3 px-4 sm:px-8 text-sm sm:text-base
-        bg-zinc-100 border-t border-zinc-300 dark:border-white/10
-        text-zinc-600 dark:bg-neutral-900 dark:text-zinc-400
-      `}
-    >
+  className={`
+    hidden sm:flex flex-col sm:flex-row justify-between items-center gap-3
+    py-3 px-4 sm:px-8 text-sm sm:text-base
+    bg-zinc-100 border-t border-zinc-300 dark:border-white/10
+    text-zinc-600 dark:bg-neutral-900 dark:text-zinc-400
+  `}
+>
+
       <div className="flex items-center gap-3">
         <span>{t("footer.contact")}</span>
         <TooltipProvider>

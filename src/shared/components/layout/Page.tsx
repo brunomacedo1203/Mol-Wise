@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
@@ -19,13 +19,31 @@ export interface PageProps {
 
 export default function Page({ title, children }: PageProps) {
   const sectionTitle = useSectionTitle();
-  const { collapsed, mobileOpen, setMobileOpen } = useSidebarStore();
+  const { collapsed, mobileOpen, setMobileOpen, showSettings } = useSidebarStore();
   const pathname = usePathname();
+  const prevPathnameRef = useRef(pathname);
 
-  // ✅ Close drawer on route change (including Home)
+  // ✅ Fecha o drawer apenas quando muda de PÁGINA (não de idioma)
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname, setMobileOpen]);
+    const prevPathname = prevPathnameRef.current;
+    
+    // Remove o locale prefix para comparar apenas o path real
+    const getCurrentPath = (path: string) => {
+      // Remove "/pt", "/en", "/fr", etc. do início
+      return path.replace(/^\/[a-z]{2}(\/|$)/, '/');
+    };
+    
+    const prevPath = getCurrentPath(prevPathname);
+    const currentPath = getCurrentPath(pathname);
+    
+    // Fecha o menu APENAS se o path real mudou (não apenas o idioma)
+    // E NÃO fecha se estiver no painel de settings
+    if (prevPath !== currentPath && !showSettings) {
+      setMobileOpen(false);
+    }
+    
+    prevPathnameRef.current = pathname;
+  }, [pathname, setMobileOpen, showSettings]);
 
   const effectiveCollapsed = mobileOpen ? false : collapsed;
 

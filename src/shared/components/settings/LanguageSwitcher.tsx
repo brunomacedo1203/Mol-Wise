@@ -40,7 +40,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const router = useRouter();
   const currentLocale = useLocale();
 
-  // keep NEXT_LOCALE cookie synced
+  // mantém o cookie sincronizado
   useEffect(() => {
     if (currentLocale) {
       document.cookie = `NEXT_LOCALE=${currentLocale}; path=/; max-age=31536000; SameSite=Lax`;
@@ -50,16 +50,19 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const handleChange = (nextLocale: string) => {
     if (!nextLocale || nextLocale === currentLocale) return;
 
-    // analytics
+    // registra evento analítico
     trackLanguageChange({
       from_language: currentLocale,
       to_language: nextLocale,
       trigger_method: "manual",
-      section: "header",
+      section: "settings-panel",
     });
 
-    // update cookie before navigation
+    // atualiza cookie
     document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
+
+    // Navegação imediata - o dropdown fecha automaticamente
+    // O menu de settings permanece aberto via gerenciamento de estado do SideArea
     router.replace(pathname, { locale: nextLocale });
   };
 
@@ -73,14 +76,13 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
           className="w-[150px] h-9 border border-zinc-400 dark:border-zinc-600 rounded-full px-4 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors"
         >
           <div className="flex items-center gap-2">
-            <div className="relative w-5 h-[15px]">
+            <div className="relative flex items-center justify-center" style={{ width: '20px', height: '15px' }}>
               <Image
                 src={current.flag}
                 alt={`Flag of ${t(current.code)}`}
-                width={24}
-                height={16}
+                fill
                 className="rounded-sm object-contain shadow-sm"
-                style={{ width: "auto", height: "auto" }}
+                sizes="20px"
               />
             </div>
             <SelectValue>
@@ -89,15 +91,14 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
           </div>
         </SelectTrigger>
 
-        {/* ✅ Dropdown rendered in a Portal (fixes clipping in mobile drawer) */}
         <Portal>
           <SelectContent
             align="end"
             position="popper"
             sideOffset={6}
+            onClick={(e) => e.stopPropagation()} // impede fechamento do menu
             className={cn(
               "z-[9999] bg-zinc-100 dark:bg-neutral-800 border border-zinc-300 dark:border-zinc-700 shadow-xl rounded-lg py-2 w-[150px]",
-              // ✨ smooth fade + scale animation
               "data-[state=open]:animate-in data-[state=closed]:animate-out",
               "data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
               "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
@@ -110,14 +111,13 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                 className="cursor-pointer focus:bg-zinc-200 dark:focus:bg-zinc-700 px-3 py-2 rounded-md transition-colors"
               >
                 <span className="flex items-center gap-2">
-                  <div className="relative w-6 h-4">
+                  <div className="relative flex items-center justify-center" style={{ width: '24px', height: '16px' }}>
                     <Image
                       src={flag}
                       alt={`Flag of ${t(code)}`}
-                      width={24}
-                      height={16}
+                      fill
                       className="rounded-sm object-contain shadow-sm"
-                      style={{ width: "auto", height: "auto" }}
+                      sizes="24px"
                     />
                   </div>
                   <span className="text-sm font-medium">{t(code)}</span>
