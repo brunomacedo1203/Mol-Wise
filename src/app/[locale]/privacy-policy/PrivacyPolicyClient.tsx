@@ -24,7 +24,7 @@ export default function PrivacyPolicyClient() {
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
             {t("title")}
           </h1>
-          <p className="text-2xl text-gray-600 dark:text-gray-400">
+          <p className="text-xl text-gray-600 dark:text-gray-400">
             {t("lastUpdated", { date: lastUpdateDate })}
           </p>
         </div>

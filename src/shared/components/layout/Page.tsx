@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
@@ -8,6 +8,7 @@ import SideArea from "./SideArea";
 import Menu from "../menu/Menu";
 import { useSectionTitle } from "@/shared/hooks/useSectionTitle";
 import { useSidebarStore } from "@/shared/store/sidebarStore";
+import { usePathname } from "next/navigation";
 
 export interface PageProps {
   title: string;
@@ -18,22 +19,40 @@ export interface PageProps {
 
 export default function Page({ title, children }: PageProps) {
   const sectionTitle = useSectionTitle();
-  const { collapsed, mobileOpen } = useSidebarStore();
+  const { collapsed, mobileOpen, setMobileOpen } = useSidebarStore();
+  const pathname = usePathname();
+
+  // ✅ Close drawer on route change (including Home)
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname, setMobileOpen]);
 
   const effectiveCollapsed = mobileOpen ? false : collapsed;
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-zinc-100 dark:bg-neutral-950">
+    <div className="flex h-screen bg-zinc-100 dark:bg-neutral-950 md:flex-row">
+      {/* ===== Sidebar ===== */}
       <SideArea>
         <Menu collapsed={effectiveCollapsed} />
       </SideArea>
 
-      <div className="flex flex-col flex-1 min-w-0">
-        <Header title={sectionTitle} className="h-16" />
-      <div className="pt-16 flex-1">
-        <Content title={title}>{children}</Content>
+      {/* ===== Main Content ===== */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Scrollable Area */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="flex min-h-full flex-col">
+            {/* Sticky Header */}
+            <Header title={sectionTitle} />
+
+            {/* Page Content */}
+            <div className="flex-1">
+              <Content title={title}>{children}</Content>
+            </div>
+
+            {/* Footer pinned if content is short */}
+            <Footer />
+          </div>
         </div>
-        <Footer />
       </div>
     </div>
   );
