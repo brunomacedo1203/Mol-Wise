@@ -6,7 +6,9 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
+import { Portal } from "@radix-ui/react-select";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { trackLanguageChange } from "@/shared/events/interfaceEvents";
@@ -36,14 +38,11 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const t = useTranslations("languages");
   const pathname = usePathname();
   const router = useRouter();
-
-  // Use o hook useLocale do next-intl para obter o locale atual
   const currentLocale = useLocale();
 
-  // Garante que o cookie está sempre atualizado com o locale atual
+  // keep NEXT_LOCALE cookie synced
   useEffect(() => {
     if (currentLocale) {
-      // Define o cookie que o middleware vai verificar
       document.cookie = `NEXT_LOCALE=${currentLocale}; path=/; max-age=31536000; SameSite=Lax`;
     }
   }, [currentLocale]);
@@ -51,7 +50,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const handleChange = (nextLocale: string) => {
     if (!nextLocale || nextLocale === currentLocale) return;
 
-    // Rastrear mudança de idioma
+    // analytics
     trackLanguageChange({
       from_language: currentLocale,
       to_language: nextLocale,
@@ -59,10 +58,8 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       section: "header",
     });
 
-    // Definir o cookie antes de navegar
+    // update cookie before navigation
     document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
-
-    // Sempre usa router.replace para manter consistência na navegação
     router.replace(pathname, { locale: nextLocale });
   };
 
@@ -73,40 +70,62 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       <Select value={currentLocale} onValueChange={handleChange}>
         <SelectTrigger
           aria-label={t("Select language")}
-          className="w-[140px] h-9 border border-zinc-400 dark:border-zinc-400 rounded-full px-4 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+          className="w-[150px] h-9 border border-zinc-400 dark:border-zinc-600 rounded-full px-4 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors"
         >
           <div className="flex items-center gap-2">
             <div className="relative w-5 h-[15px]">
               <Image
                 src={current.flag}
-                alt={`Bandeira de ${t(current.code)}`}
-                width={20}
-                height={15}
+                alt={`Flag of ${t(current.code)}`}
+                width={24}
+                height={16}
                 className="rounded-sm object-contain shadow-sm"
+                style={{ width: "auto", height: "auto" }}
               />
             </div>
-            <span className="leading-none">{t(current.code)}</span>
+            <SelectValue>
+              <span className="leading-none text-sm">{t(current.code)}</span>
+            </SelectValue>
           </div>
         </SelectTrigger>
 
-        <SelectContent align="end">
-          {LOCALES.map(({ code, flag }) => (
-            <SelectItem key={code} value={code}>
-              <span className="flex items-center gap-2">
-                <div className="relative w-5 h-[15px]">
-                  <Image
-                    src={flag}
-                    alt={`Bandeira de ${t(code)}`}
-                    width={20}
-                    height={15}
-                    className="rounded-sm object-contain shadow-sm"
-                  />
-                </div>
-                <span>{t(code)}</span>
-              </span>
-            </SelectItem>
-          ))}
-        </SelectContent>
+        {/* ✅ Dropdown rendered in a Portal (fixes clipping in mobile drawer) */}
+        <Portal>
+          <SelectContent
+            align="end"
+            position="popper"
+            sideOffset={6}
+            className={cn(
+              "z-[9999] bg-zinc-100 dark:bg-neutral-800 border border-zinc-300 dark:border-zinc-700 shadow-xl rounded-lg py-2 w-[150px]",
+              // ✨ smooth fade + scale animation
+              "data-[state=open]:animate-in data-[state=closed]:animate-out",
+              "data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+              "data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
+            )}
+          >
+            {LOCALES.map(({ code, flag }) => (
+              <SelectItem
+                key={code}
+                value={code}
+                className="cursor-pointer focus:bg-zinc-200 dark:focus:bg-zinc-700 px-3 py-2 rounded-md transition-colors"
+              >
+                <span className="flex items-center gap-2">
+                  <div className="relative w-6 h-4">
+                    <Image
+                      src={flag}
+                      alt={`Flag of ${t(code)}`}
+                      width={24}
+                      height={16}
+                      className="rounded-sm object-contain shadow-sm"
+                      style={{ width: "auto", height: "auto" }}
+                    />
+                  </div>
+                  <span className="text-sm font-medium">{t(code)}</span>
+                </span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Portal>
       </Select>
     </div>
   );

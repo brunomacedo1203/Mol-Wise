@@ -20,7 +20,6 @@ export default function Page({ title, children }: PageProps) {
   const sectionTitle = useSectionTitle();
   const { collapsed, mobileOpen } = useSidebarStore();
 
-  // ✅ Se o menu mobile estiver aberto, força o modo expandido
   const effectiveCollapsed = mobileOpen ? false : collapsed;
 
   return (
@@ -31,7 +30,9 @@ export default function Page({ title, children }: PageProps) {
 
       <div className="flex flex-col flex-1 min-w-0">
         <Header title={sectionTitle} className="h-16" />
+      <div className="pt-16 flex-1">
         <Content title={title}>{children}</Content>
+        </div>
         <Footer />
       </div>
     </div>

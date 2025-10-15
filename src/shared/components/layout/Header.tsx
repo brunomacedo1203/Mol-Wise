@@ -18,16 +18,18 @@ export default function Header({
   const setMobileOpen = useSidebarStore((s) => s.setMobileOpen);
 
   return (
-    <header
-      className={`${className} flex items-center justify-between 
-        px-5 md:px-8 py-3
-        border-b border-zinc-400 dark:border-white/10
-        bg-zinc-100 dark:bg-neutral-900
-        shadow-sm backdrop-blur-sm
-        transition-all duration-200
-        h-16
-      `}
-    >
+  <header
+  className={`${className} 
+    sticky top-0 z-[60]
+    flex items-center justify-between 
+    px-5 md:px-8 py-3
+    border-b border-zinc-400 dark:border-white/10
+    bg-zinc-100/90 dark:bg-neutral-900/90
+    shadow-sm backdrop-blur-md
+    transition-all duration-200
+    h-16
+  `}
+>
       {/* ===== Esquerda (Título + Subtítulo) ===== */}
       <div className="flex flex-col max-w-[88%] md:max-w-[80%]">
         <h1
