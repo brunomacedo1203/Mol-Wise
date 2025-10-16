@@ -1,0 +1,12 @@
+{
+  "sidebar": {
+    "settings": "Settings",
+    "preferences": "Preferences",
+    "language": "Language",
+    "theme": "Theme",
+    "about": "About",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "back": "Back"
+  }
+}

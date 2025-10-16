@@ -6,6 +6,7 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconLayoutSidebarRightCollapse,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 interface DesktopSidebarProps {
   collapsed: boolean;
@@ -18,6 +19,7 @@ export default function DesktopSidebar({
   onToggleCollapse,
   children,
 }: DesktopSidebarProps) {
+  const tNav = useTranslations("navigation");
   return (
     <aside
       className={`
@@ -36,7 +38,7 @@ export default function DesktopSidebar({
         <button
           className="text-xl p-0 rounded-md"
           onClick={onToggleCollapse}
-          aria-label={collapsed ? "Expandir menu" : "Colapsar menu"}
+          aria-label={collapsed ? tNav("sidebar.expand") : tNav("sidebar.collapse")}
         >
           {collapsed ? (
             <IconLayoutSidebarRightCollapse

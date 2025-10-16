@@ -1,0 +1,12 @@
+{
+  "sidebar": {
+    "settings": "设置",
+    "preferences": "偏好",
+    "language": "语言",
+    "theme": "主题",
+    "about": "关于",
+    "privacyPolicy": "隐私政策",
+    "termsOfUse": "使用条款",
+    "back": "返回"
+  }
+}

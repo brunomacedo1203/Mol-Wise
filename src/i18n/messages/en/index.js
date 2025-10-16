@@ -13,6 +13,7 @@ import navigation from "./components/navigation.json";
 import multiselect from "./components/multiselect.json";
 import tableHeaders from "./components/table-headers.json";
 import compoundTable from "./components/compound-table.json";
+import sidebar from "./components/sidebar.json";
 
 // Traduções legais
 import privacy from "./legal/privacy.json";
@@ -42,6 +43,7 @@ const translations = {
   ...multiselect,
   ...tableHeaders,
   ...compoundTable,
+  ...sidebar,
 
   // Legal - usando spread operator para espalhar todas as chaves
   ...privacy,
@@ -69,6 +71,7 @@ export {
   multiselect,
   tableHeaders,
   compoundTable,
+  sidebar,
   privacy,
   cookies,
   terms,

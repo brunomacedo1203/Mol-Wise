@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import MobileDrawerHeader from "./MobileDrawerHeader";
 import SettingsPanel from "./SettingsPanel";
 
@@ -23,6 +24,7 @@ export default function MobileDrawer({
   onNavigate,
   children,
 }: MobileDrawerProps) {
+  const t = useTranslations("sidebar");
   return (
     <>
       <div
@@ -53,7 +55,7 @@ export default function MobileDrawer({
               >
                 {/* Ícone de engrenagem em texto para manter dependência leve */}
                 <span className="inline-block w-5 h-5">⚙️</span>
-                <span>Settings</span>
+                <span>{t("settings")}</span>
               </button>
             </div>
           </div>

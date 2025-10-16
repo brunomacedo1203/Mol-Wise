@@ -1,0 +1,12 @@
+{
+  "sidebar": {
+    "settings": "Pengaturan",
+    "preferences": "Preferensi",
+    "language": "Bahasa",
+    "theme": "Tema",
+    "about": "Tentang",
+    "privacyPolicy": "Kebijakan Privasi",
+    "termsOfUse": "Ketentuan Penggunaan",
+    "back": "Kembali"
+  }
+}
