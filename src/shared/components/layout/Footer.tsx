@@ -3,30 +3,11 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Mail } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import ContactButton from "@/shared/components/common/ContactButton";
 
 export default function Footer() {
   const t = useTranslations("common");
-
-  const handleEmailClick = () => {
-    window.location.href =
-      "mailto:" + "molclassapp" + "@gmail.com" + "?subject=Contato via MolWise";
-  };
-
-  const handleRightClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const email = "molclassapp" + "@gmail.com";
-    navigator.clipboard
-      .writeText(email)
-      .then(() => console.log("Email copiado"))
-      .catch(() => console.log("Falha ao copiar"));
-  };
+  const email = "molclassapp@gmail.com";
 
   return (
     <footer
@@ -40,26 +21,7 @@ export default function Footer() {
 
       <div className="flex items-center gap-3">
         <span>{t("footer.contact")}</span>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handleEmailClick}
-                onContextMenu={handleRightClick}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors"
-                aria-label="Enviar email"
-              >
-                <Mail className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{"molclassapp@gmail.com"}</p>
-              <p className="text-xs text-zinc-400 mt-1">
-                {t("footer.rightClickToCopy")}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <ContactButton email={email} />
       </div>
 
       <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-end">
