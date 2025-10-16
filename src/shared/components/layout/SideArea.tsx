@@ -8,9 +8,10 @@ import {
 } from "@tabler/icons-react";
 import { X, Settings, ArrowLeft } from "lucide-react";
 import { useSidebarStore } from "@/shared/store/sidebarStore";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
-import LanguageSwitcher from "@/shared/components/settings/LanguageSwitcher";
-import Link from "next/link";
+  import { ThemeToggle } from "@/components/ui/theme-toggle";
+  import LanguageSwitcher from "@/shared/components/settings/LanguageSwitcher";
+  import Link from "next/link";
+  import ContactButton from "@/shared/components/common/ContactButton";
 
 export default function SideArea({ children }: { children: React.ReactNode }) {
   const {
@@ -182,15 +183,10 @@ export default function SideArea({ children }: { children: React.ReactNode }) {
                   </span>
                 </Link>
 
-                <Link
-                  href="/contact"
-                  className="py-2 px-1 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors rounded hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <span className="underline-offset-2 hover:underline">
-                    Contact
-                  </span>
-                </Link>
+                <ContactButton className="flex justify-start items-center py-2 px-1"
+                  variant="list"
+                  onAfterClick={() => setMobileOpen(false)}
+                />
               </div>
             </div>       
        
