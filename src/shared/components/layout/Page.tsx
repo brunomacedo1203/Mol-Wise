@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
-import SideArea from "./SideArea";
+import SideArea from "./sidebar/SideArea";
 import Menu from "../menu/Menu";
 import { useSectionTitle } from "@/shared/hooks/useSectionTitle";
 import { useSidebarStore } from "@/shared/store/sidebarStore";
