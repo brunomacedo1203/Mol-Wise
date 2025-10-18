@@ -15,7 +15,7 @@ import LanthanidesLabelCard from "./cards/LanthanidesLabelCard";
 import ActinidesLabelCard from "./cards/ActinidesLabelCard";
 import ElementCardWrapper from "./cards/ElementCardWrapper";
 import elementsData from "../data/elementsData";
-import PeriodicTableFilterDropdown from "../components/common/PeriodicTableFilterDropdown";
+import PeriodicTableFilter from "./PeriodicTableFilter";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
 import { useTranslations } from "next-intl";
 import { getFilterOptions } from "../config/filterOptions";
@@ -59,19 +59,7 @@ export default function PeriodicTableCards() {
       >
         {/* Filtro no topo */}
         <div className="absolute top-1 left-4 z-50">
-          <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
-            <strong>{t("filterLabel")}</strong>
-          </label>
-          <PeriodicTableFilterDropdown
-            options={filterOptions}
-            values={
-              filters.length === filterOptions.length - 1
-                ? ["ALL", ...filters]
-                : filters
-            }
-            onChange={handleFilterChange}
-            placeholder={t("filterPlaceholder")}
-          />
+          <PeriodicTableFilter />
         </div>
 
         {/* Painel de Detalhes */}
