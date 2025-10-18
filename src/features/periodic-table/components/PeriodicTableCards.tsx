@@ -57,10 +57,7 @@ export default function PeriodicTableCards() {
           }
         }}
       >
-        {/* Filtro no topo */}
-        <div className="absolute top-1 left-4 z-50">
-          <PeriodicTableFilter />
-        </div>
+       
 
         {/* Painel de Detalhes */}
         <div className="h-[90px]" />
