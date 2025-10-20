@@ -125,11 +125,11 @@ export function AdvancedFiltersPanel({
         className={`px-4 py-2 ${isOpen ? "border-b border-zinc-400 dark:border-zinc-700" : ""} cursor-pointer`}
         role="button"
         tabIndex={0}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            setIsOpen(!isOpen);
+            onToggle();
           }
         }}
       >
@@ -150,7 +150,7 @@ export function AdvancedFiltersPanel({
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
-              setIsOpen(!isOpen);
+              onToggle();
             }}
           >
             {isOpen ? (
