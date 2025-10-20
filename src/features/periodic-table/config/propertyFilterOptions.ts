@@ -6,11 +6,19 @@ export type PeriodicPropertyId =
   | "electronAffinity"
   | "ionizationEnergy";
 
+export interface PeriodicPropertyColorConfig {
+  hue: number;
+  saturation: number;
+  lightRange: [number, number];
+  darkRange: [number, number];
+}
+
 export interface PeriodicPropertyOption {
   id: PeriodicPropertyId;
   labelKey: string;
   unitKey?: string;
   getValue: (element: Element) => number | null;
+  colorConfig?: PeriodicPropertyColorConfig;
 }
 
 function parseNumericValue(rawValue: string | number | undefined): number | null {
@@ -38,26 +46,57 @@ export const periodicPropertyOptions: PeriodicPropertyOption[] = [
     labelKey: "periodicProperties.options.atomicRadius",
     unitKey: "periodicProperties.units.picometers",
     getValue: (element) => parseNumericValue(element.atomicRadius),
+    colorConfig: {
+      hue: 210,
+      saturation: 45,
+      lightRange: [95, 45],
+      darkRange: [18, 60],
+    },
   },
   {
     id: "electronegativity",
     labelKey: "periodicProperties.options.electronegativity",
     getValue: (element) => parseNumericValue(element.electronegativity),
+    colorConfig: {
+      hue: 160,
+      saturation: 45,
+      lightRange: [96, 46],
+      darkRange: [16, 58],
+    },
   },
   {
     id: "electronAffinity",
     labelKey: "periodicProperties.options.electronAffinity",
     unitKey: "periodicProperties.units.electronvolt",
     getValue: (element) => parseNumericValue(element.electronAffinity),
+    colorConfig: {
+      hue: 285,
+      saturation: 50,
+      lightRange: [92, 42],
+      darkRange: [18, 60],
+    },
   },
   {
     id: "ionizationEnergy",
     labelKey: "periodicProperties.options.ionizationEnergy",
     unitKey: "periodicProperties.units.electronvolt",
     getValue: (element) => parseNumericValue(element.ionizationEnergy),
+    colorConfig: {
+      hue: 30,
+      saturation: 55,
+      lightRange: [94, 50],
+      darkRange: [22, 64],
+    },
   },
 ];
 
 export const periodicPropertyOptionsMap = Object.fromEntries(
   periodicPropertyOptions.map((option) => [option.id, option])
 ) as Record<PeriodicPropertyId, PeriodicPropertyOption>;
+
+export const DEFAULT_PROPERTY_COLOR_CONFIG: PeriodicPropertyColorConfig = {
+  hue: 0,
+  saturation: 0,
+  lightRange: [88, 48],
+  darkRange: [28, 58],
+};

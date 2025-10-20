@@ -69,7 +69,7 @@ export default function ElementCardWrapper({
       return undefined;
     }
 
-    const colors = getPropertyBackgroundColor(normalized);
+    const colors = getPropertyBackgroundColor(activePropertyFilter, normalized);
     return {
       "--property-card-bg-light": colors.light,
       "--property-card-bg-dark": colors.dark,

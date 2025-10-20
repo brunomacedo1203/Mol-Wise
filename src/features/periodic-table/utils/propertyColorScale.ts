@@ -2,6 +2,7 @@ import type { PeriodicPropertyId } from "../config/propertyFilterOptions";
 import {
   periodicPropertyOptions,
   periodicPropertyOptionsMap,
+  DEFAULT_PROPERTY_COLOR_CONFIG,
 } from "../config/propertyFilterOptions";
 import elementsData from "../data/elementsData";
 import type { Element } from "../domain/types/element";
@@ -61,13 +62,30 @@ export function getNormalizedPropertyValue(
   return Math.min(1, Math.max(0, normalized));
 }
 
-export function getPropertyBackgroundColor(normalizedValue: number) {
-  // Light theme: 88% -> 48% lightness | Dark theme: 28% -> 58% lightness
-  const lightThemeLightness = 88 - normalizedValue * 40;
-  const darkThemeLightness = 28 + normalizedValue * 30;
+function interpolate(start: number, end: number, factor: number) {
+  return start + (end - start) * factor;
+}
+
+export function getPropertyBackgroundColor(
+  propertyId: PeriodicPropertyId,
+  normalizedValue: number
+) {
+  const option = periodicPropertyOptionsMap[propertyId];
+  const config = option?.colorConfig ?? DEFAULT_PROPERTY_COLOR_CONFIG;
+
+  const lightL = interpolate(
+    config.lightRange[0],
+    config.lightRange[1],
+    normalizedValue
+  );
+  const darkL = interpolate(
+    config.darkRange[0],
+    config.darkRange[1],
+    normalizedValue
+  );
 
   return {
-    light: `hsl(0 0% ${lightThemeLightness}%)`,
-    dark: `hsl(0 0% ${darkThemeLightness}%)`,
+    light: `hsl(${config.hue} ${config.saturation}% ${lightL}%)`,
+    dark: `hsl(${config.hue} ${config.saturation}% ${darkL}%)`,
   };
 }
