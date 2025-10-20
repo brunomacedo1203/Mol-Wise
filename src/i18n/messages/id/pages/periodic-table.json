@@ -87,6 +87,21 @@
       "lanthanide": "Lantanida",
       "actinide": "Aktinida"
     },
-    "periodicClassification": "Klasifikasi Periodik"
+    "periodicClassification": "Klasifikasi Periodik",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
+    }
   }
 }

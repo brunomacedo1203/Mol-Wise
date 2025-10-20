@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 interface SingleCardPeriodicTableProps {
   atomicNumber: number;
   symbol: string;
@@ -5,6 +7,8 @@ interface SingleCardPeriodicTableProps {
   molarMass: number;
   showColummNumber?: number;
   highlightClass?: string;
+  customStyle?: CSSProperties;
+  usePropertyStyling?: boolean;
 }
 
 export default function SingleCardPeriodicTable({
@@ -14,22 +18,26 @@ export default function SingleCardPeriodicTable({
   molarMass,
   showColummNumber,
   highlightClass = "",
+  customStyle,
+  usePropertyStyling = false,
 }: SingleCardPeriodicTableProps) {
   const columnNumberClass = showColummNumber
     ? "before:content-[attr(data-columm-number)] before:absolute before:top-[-35px] before:w-full before:text-center before:text-cyan-600"
     : "";
 
-  // Monta a cor de fundo:
-  const bgColor =
-    highlightClass && highlightClass.length > 0
-      ? highlightClass
-      : "bg-gray-100 dark:bg-neutral-800/90";
+  const defaultBackgroundClass = "bg-gray-100 dark:bg-neutral-800/90";
+  const backgroundClass = usePropertyStyling
+    ? "property-card"
+    : highlightClass && highlightClass.length > 0
+    ? highlightClass
+    : defaultBackgroundClass;
 
   return (
     <div
       data-columm-number={showColummNumber}
+      style={customStyle}
       className={`${columnNumberClass} relative w-[80px] h-[80px] border-2 border-black
-        ${bgColor} dark:border-white/35
+        ${backgroundClass} dark:border-white/35
         flex flex-col items-center justify-center text-center overflow-hidden text-xs`}
     >
       <span className="absolute top-0.5 left-1 text-black dark:text-white text-xs font-bold">

@@ -18,6 +18,11 @@ import {
   OXYGEN_FAMILY_COLOR,
 } from "../../domain/types/elementCategories";
 import { trackElementClick } from "../../events/elementClickEvents";
+import type { PeriodicPropertyId } from "../../config/propertyFilterOptions";
+import {
+  getNormalizedPropertyValue,
+  getPropertyBackgroundColor,
+} from "../../utils/propertyColorScale";
 
 interface ElementCardWrapperProps {
   element: Element;
@@ -28,6 +33,7 @@ interface ElementCardWrapperProps {
   highlightedElement?: Element;
   highlightSource?: "hover" | "search" | "click" | null;
   highlightedCategories?: string[];
+  activePropertyFilter?: PeriodicPropertyId | null;
 }
 
 export default function ElementCardWrapper({
@@ -36,6 +42,7 @@ export default function ElementCardWrapper({
   highlightedElement,
   highlightSource,
   highlightedCategories = [],
+  activePropertyFilter = null,
 }: ElementCardWrapperProps) {
   const t = useTranslations("periodicTable");
   const tElements = useTranslations("elements");
@@ -51,24 +58,47 @@ export default function ElementCardWrapper({
   const nitrogenAtiva = highlightedCategories.includes(NITROGEN_FAMILY_LABEL);
   const oxygenAtiva = highlightedCategories.includes(OXYGEN_FAMILY_LABEL);
 
+  const propertyStyle = React.useMemo(() => {
+    if (!activePropertyFilter) {
+      return undefined;
+    }
+
+    const normalized = getNormalizedPropertyValue(activePropertyFilter, element);
+
+    if (normalized === null) {
+      return undefined;
+    }
+
+    const colors = getPropertyBackgroundColor(normalized);
+    return {
+      "--property-card-bg-light": colors.light,
+      "--property-card-bg-dark": colors.dark,
+    } as React.CSSProperties;
+  }, [activePropertyFilter, element]);
+
+  const isPropertyStylingActive = Boolean(propertyStyle);
+
   let highlightClass = "";
-  if (terrasRarasAtiva && isTerraRara) {
-    // 1) Terras Raras tem prioridade quando selecionado
-    highlightClass = RARE_EARTHS_COLOR;
 
-    // 2) Famílias novas usando os booleanos do elementsData (cada uma independente)
-  } else if (boronAtiva && element.isBoronFamily) {
-    highlightClass = BORON_FAMILY_COLOR;
-  } else if (carbonAtiva && element.isCarbonFamily) {
-    highlightClass = CARBON_FAMILY_COLOR;
-  } else if (nitrogenAtiva && element.isNitrogenFamily) {
-    highlightClass = NITROGEN_FAMILY_COLOR;
-  } else if (oxygenAtiva && element.isOxygenFamily) {
-    highlightClass = OXYGEN_FAMILY_COLOR;
+  if (!isPropertyStylingActive) {
+    if (terrasRarasAtiva && isTerraRara) {
+      // 1) Terras Raras tem prioridade quando selecionado
+      highlightClass = RARE_EARTHS_COLOR;
 
-    // 3) Fallback para as categorias padrão
-  } else if (highlightedCategories.includes(element.category)) {
-    highlightClass = CATEGORY_COLOR_MAP[element.category] || "";
+      // 2) Famílias novas usando os booleanos do elementsData (cada uma independente)
+    } else if (boronAtiva && element.isBoronFamily) {
+      highlightClass = BORON_FAMILY_COLOR;
+    } else if (carbonAtiva && element.isCarbonFamily) {
+      highlightClass = CARBON_FAMILY_COLOR;
+    } else if (nitrogenAtiva && element.isNitrogenFamily) {
+      highlightClass = NITROGEN_FAMILY_COLOR;
+    } else if (oxygenAtiva && element.isOxygenFamily) {
+      highlightClass = OXYGEN_FAMILY_COLOR;
+
+      // 3) Fallback para as categorias padrão
+    } else if (highlightedCategories.includes(element.category)) {
+      highlightClass = CATEGORY_COLOR_MAP[element.category] || "";
+    }
   }
 
   const isHighlighted =
@@ -141,6 +171,8 @@ export default function ElementCardWrapper({
         molarMass={element.molarMass}
         showColummNumber={element.showColumnNumber}
         highlightClass={highlightClass}
+        customStyle={propertyStyle}
+        usePropertyStyling={isPropertyStylingActive && Boolean(propertyStyle)}
       />
     </div>
   );

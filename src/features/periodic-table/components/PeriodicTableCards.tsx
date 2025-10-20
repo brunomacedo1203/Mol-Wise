@@ -15,11 +15,7 @@ import LanthanidesLabelCard from "./cards/LanthanidesLabelCard";
 import ActinidesLabelCard from "./cards/ActinidesLabelCard";
 import ElementCardWrapper from "./cards/ElementCardWrapper";
 import elementsData from "../data/elementsData";
-import PeriodicTableFilter from "./PeriodicTableFilter";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
-import { useTranslations } from "next-intl";
-import { getFilterOptions } from "../config/filterOptions";
-import { handleFilterChangeFactory } from "../utils/filterHandlers";
 
 // Elemento padrão: Hidrogênio
 const defaultElement = elementsData.find((e) => e.symbol === "H") as Element;
@@ -28,7 +24,9 @@ if (!defaultElement)
 
 export default function PeriodicTableCards() {
   const filters = usePeriodicTableStore((state) => state.filters);
-  const setFilters = usePeriodicTableStore((state) => state.setFilters);
+  const activePropertyFilter = usePeriodicTableStore(
+    (state) => state.activePropertyFilter
+  );
 
   const highlightedElement = usePeriodicTableStore(
     (state) => state.highlightedElement
@@ -38,14 +36,7 @@ export default function PeriodicTableCards() {
   );
   const setHighlight = usePeriodicTableStore((state) => state.setHighlight);
 
-  const t = useTranslations("periodicTable");
   const matrix = generatePeriodicTableMatrix();
-  const filterOptions = getFilterOptions(t);
-  const handleFilterChange = handleFilterChangeFactory(
-    filterOptions,
-    setFilters,
-    filters
-  );
 
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
@@ -105,6 +96,7 @@ export default function PeriodicTableCards() {
                   highlightSource={highlightSource}
                   highlightedElement={highlightedElement || undefined}
                   highlightedCategories={filters}
+                  activePropertyFilter={activePropertyFilter}
                 />
               ) : (
                 <div

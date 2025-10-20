@@ -87,6 +87,21 @@
       "lanthanide": "Lanthanide",
       "actinide": "Actinide"
     },
-    "periodicClassification": "Periodic Classification"
+    "periodicClassification": "Periodic Classification",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
+    }
   }
 }

@@ -87,6 +87,21 @@
       "lanthanide": "ল্যান্থানাইড",
       "actinide": "অ্যাক্টিনাইড"
     },
-    "periodicClassification": "আবর্ত শ্রেণীবিভাগ"
+    "periodicClassification": "আবর্ত শ্রেণীবিভাগ",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
+    }
   }
 }
