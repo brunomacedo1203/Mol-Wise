@@ -21,13 +21,13 @@ const KeyboardBtn = ({
   noDefaultHover = false,
 }: KeyboardBtnProps) => {
   const estilosBase = [
-    "min-w-[41px] min-h-[34px] px-2 py-2",
+    "min-w-[34px] min-h-[30px] px-1.5 py-1.5",
     "flex items-center justify-center",
-    "rounded-xl",
+    "rounded-lg",
     "border border-neutral-300 bg-white text-neutral-900",
     "dark:bg-transparent dark:border-white/20 dark:text-white",
     "shadow-none",
-    "text-base !font-normal",
+    "text-sm !font-medium",
     !noDefaultHover && "hover:bg-neutral-100 dark:hover:bg-white/5",
     "transition-colors duration-150 select-none",
     "active:translate-y-[1px] active:shadow-none",

@@ -18,12 +18,12 @@ export default function FormulasBtn({
   onFormulaClick?: (value: string) => void;
 }) {
   return (
-    <div className="flex gap-2 justify-center flex-wrap py-2">
+    <div className="flex gap-1.5 justify-center flex-wrap py-1.5">
       {formulas.map((f) => (
         <KeyboardBtn
           key={f.label}
           onClick={() => onFormulaClick?.(f.value)}
-          className="!w-14 !h-12 text-xl"
+          className="!w-12 !h-10 text-base"
         >
           {f.label}
         </KeyboardBtn>

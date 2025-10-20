@@ -20,7 +20,7 @@ export const useCalculatorInstancesStore = create<CalculatorInstancesState>()(
         const defaultPosition: PositionWithWidth = {
           x: 100,
           y: 100,
-          width: 500,
+          width: 460,
         };
         set((state) => {
           const nextId = state.calculators.length > 0

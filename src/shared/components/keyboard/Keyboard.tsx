@@ -18,21 +18,21 @@ export default function Keyboard({
 
   return (
     <div className="flex flex-col items-center bg-transparent p-0 rounded-xl">
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-1.5 mb-1.5">
         {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((key) => (
           <KeyboardBtn key={key} onClick={() => onKeyPress?.(key)}>
             {key}
           </KeyboardBtn>
         ))}
       </div>
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-1.5 mb-1.5">
         {lettersRow1.map((key) => (
           <KeyboardBtn key={key} onClick={() => onKeyPress?.(display(key))}>
             {display(key)}
           </KeyboardBtn>
         ))}
       </div>
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-1.5 mb-1.5">
         <KeyboardBtn onClick={() => setIsUpperCase((u) => !u)}>⇧</KeyboardBtn>
         {lettersRow2.map((key) => (
           <KeyboardBtn key={key} onClick={() => onKeyPress?.(display(key))}>
@@ -40,7 +40,7 @@ export default function Keyboard({
           </KeyboardBtn>
         ))}
       </div>
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-1.5 mb-1.5">
         {lettersRow3.map((key) => (
           <KeyboardBtn key={key} onClick={() => onKeyPress?.(display(key))}>
             {display(key)}

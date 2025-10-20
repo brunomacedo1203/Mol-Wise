@@ -36,7 +36,7 @@ export function ScientificButton({
     <KeyboardBtn
       onClick={() => onClick(button.value)}
       className={cn(
-        "text-lg font-semibold text-gray-900 dark:text-white",
+        "text-sm sm:text-base font-semibold text-gray-900 dark:text-white",
         className
       )}
     >

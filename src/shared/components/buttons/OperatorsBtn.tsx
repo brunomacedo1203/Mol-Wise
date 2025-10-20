@@ -21,36 +21,32 @@ export default function OperatorsBtn({
   const t = useTranslations();
 
   return (
-    <div className="flex gap-2 mt-1 items-center justify-center w-full">
-      <KeyboardBtn onClick={onClear} className="bg-white w-10 h-10">
-        <ReloadIcon size={24} />
+    <div className="flex gap-1.5 mt-1 items-center justify-center w-full">
+      <KeyboardBtn onClick={onClear} className="bg-white w-9 h-9">
+        <ReloadIcon size={20} />
       </KeyboardBtn>
       <KeyboardBtn
         onClick={() => onParenthesis?.("(")}
-        className="bg-white w-10 h-10"
+        className="bg-white w-9 h-9 text-base"
       >
         (
       </KeyboardBtn>
       <KeyboardBtn
         onClick={onCalculate}
         noDefaultHover
-        className="
-    !bg-teal-400 hover:!bg-teal-600 
-    dark:bg-teal-500 dark:hover:bg-teal-700
-    text-black font-semibold text-xl w-12 h-10 px-[62px]
-l  "
+        className="!bg-teal-400 hover:!bg-teal-600 dark:bg-teal-500 dark:hover:bg-teal-700 text-black font-semibold text-sm sm:text-base min-w-[110px] h-9 px-4"
       >
         {t("calculators.molarMass.keyboard.calculate")}
       </KeyboardBtn>
 
       <KeyboardBtn
         onClick={() => onParenthesis?.(")")}
-        className="bg-white w-10 h-10"
+        className="bg-white w-9 h-9 text-base"
       >
         )
       </KeyboardBtn>
-      <KeyboardBtn onClick={onBackspace} className="bg-white w-10 h-10">
-        <BackspaceIcon size={24} />
+      <KeyboardBtn onClick={onBackspace} className="bg-white w-9 h-9">
+        <BackspaceIcon size={20} />
       </KeyboardBtn>
     </div>
   );
