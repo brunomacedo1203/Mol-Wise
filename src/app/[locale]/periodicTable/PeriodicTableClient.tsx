@@ -5,7 +5,7 @@ import { useSubtitleStore } from "@/shared/store/subtitleStore";
 import Page from "@/shared/components/layout/Page";
 import { useTranslations } from "next-intl";
 import PeriodicTableCards from "@/features/periodic-table/components/PeriodicTableCards";
-import PeriodicTableFilter from "@/features/periodic-table/components/PeriodicTableFilter";
+import PeriodicTableFilters from "@/features/periodic-table/components/common/PeriodicTableAdvancedFiltersPanel";
 
 export default function PeriodicTableClient() {
   const t = useTranslations("periodicTable");
@@ -22,7 +22,7 @@ export default function PeriodicTableClient() {
       <div className="flex flex-col h-full w-full">   
 
         <div className="sticky top-0 z-50 bg-zinc-100 dark:bg-neutral-950">
-          <PeriodicTableFilter />
+          <PeriodicTableFilters />
         </div>
        
         <PeriodicTableCards />
