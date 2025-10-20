@@ -9,7 +9,7 @@ import PeriodicTablePropertyFilter from "../PeriodicTablePropertyFilter";
 
 export default function PeriodicTableFilters() {
   const t = useTranslations("periodicTable");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="mb-0 border border-zinc-400 dark:border-zinc-700 rounded-2xl bg-background dark:bg-zinc-900">
