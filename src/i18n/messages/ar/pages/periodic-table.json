@@ -4,7 +4,7 @@
     "subtitle": "أدخل اسمًا أو رمزًا لعرض التفاصيل",
     "description": "استكشف جميع العناصر الكيميائية ببيانات كاملة ومرشحات تفاعلية.",
     "filterPlaceholder": "اختر التصنيف",
-    "filterLabel": "التصنيف",
+    "filterLabel": "مرشحات",
     "filterOptions": {
       "TODOS": "الكل",
       "RARE_EARTHS": "عناصر الأرض النادرة",
@@ -86,6 +86,7 @@
     "groups": {
       "lanthanide": "لانثانيد",
       "actinide": "أكتينيد"
-    }
+    },
+    "periodicClassification": "التصنيف الدوري"
   }
 }

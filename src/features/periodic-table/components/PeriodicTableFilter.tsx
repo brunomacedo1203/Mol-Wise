@@ -22,7 +22,7 @@ export default function PeriodicTableFilter() {
   return (
     <div className="p-4">
       <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
-        <strong>{t("filterLabel")}</strong>
+        <strong>{t("periodicClassification")}</strong>
       </label>
       <PeriodicTableFilterDropdown
         options={filterOptions}

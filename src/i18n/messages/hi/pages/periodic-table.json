@@ -4,7 +4,7 @@
     "subtitle": "विवरण देखने के लिए नाम या प्रतीक दर्ज करें",
     "description": "सभी रासायनिक तत्वों का अन्वेषण करें, संपूर्ण डेटा और इंटरैक्टिव फ़िल्टरों के साथ।",
     "filterPlaceholder": "वर्गीकरण चुनें",
-    "filterLabel": "वर्गीकरण",
+    "filterLabel": "फ़िल्टर",
     "filterOptions": {
       "TODOS": "सभी",
       "RARE_EARTHS": "दुर्लभ पृथ्वी तत्व",
@@ -86,6 +86,7 @@
     "groups": {
       "lanthanide": "लैंथेनाइड",
       "actinide": "ऐक्टिनाइड"
-    }
+    },
+    "periodicClassification": "आवर्त वर्गीकरण"
   }
 }

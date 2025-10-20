@@ -4,7 +4,7 @@
     "subtitle": "Geben Sie einen Namen oder ein Symbol ein, um Details anzuzeigen",
     "description": "Erkunden Sie alle chemischen Elemente mit vollständigen Daten und interaktiven Filtern.",
     "filterPlaceholder": "Klassifikation(en) auswählen",
-    "filterLabel": "Klassifikation",
+    "filterLabel": "Filter",
     "filterOptions": {
       "TODOS": "Alle",
       "RARE_EARTHS": "Seltene Erden",
@@ -86,6 +86,7 @@
     "groups": {
       "lanthanide": "Lanthanid",
       "actinide": "Actinid"
-    }
+    },
+    "periodicClassification": "Periodische Klassifikation"
   }
 }
