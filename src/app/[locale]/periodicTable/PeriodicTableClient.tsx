@@ -17,17 +17,15 @@ export default function PeriodicTableClient() {
   }, [setSubtitle, t]);
 
   return (
+
     <Page title={t("title")}>
-      <div className="relative h-full flex flex-col">
-        {/* Filtro fixo no topo */}
-        <div className="fixed z-50 bg-white dark:bg-neutral-950 border-b border-zinc-200 dark:border-neutral-800">
+      <div className="flex flex-col h-full w-full">   
+
+        <div className="sticky top-0 z-50 bg-zinc-100 dark:bg-neutral-950">
           <PeriodicTableFilter />
         </div>
-        
-        {/* Conteúdo com scroll */}
-        <div className="flex-1 overflow-y-auto">
-          <PeriodicTableCards />
-        </div>
+       
+        <PeriodicTableCards />
       </div>
     </Page>
   );

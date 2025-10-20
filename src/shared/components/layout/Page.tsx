@@ -56,21 +56,16 @@ export default function Page({ title, children }: PageProps) {
 
       {/* ===== Main Content ===== */}
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Scrollable Area */}
+        {/* Header fixo no topo */}
+        <Header title={sectionTitle} />
+
+        {/* Scrollable Area - apenas o Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="flex min-h-full flex-col">
-            {/* Sticky Header */}
-            <Header title={sectionTitle} />
-
-            {/* Page Content */}
-            <div className="flex-1">
-              <Content title={title}>{children}</Content>
-            </div>
-
-            {/* Footer pinned if content is short */}
-            <Footer />
-          </div>
+          <Content title={title}>{children}</Content>
         </div>
+
+        {/* Footer fixo no fundo */}
+        <Footer />
       </div>
     </div>
   );
