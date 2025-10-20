@@ -62,7 +62,7 @@ export default function ElementDetailsPanel({
     <div
       className={`
         bg-white border-2 border-cyan-400 dark:border-white/35 dark:bg-neutral-800/90 
-        rounded-sm shadow min-w-[340px] max-w-[95vw]
+        rounded-sm shadow w-full max-w-[95vw] min-w-[280px] sm:min-w-[340px]
       `}
     >
       {/* Campo de busca */}
@@ -82,16 +82,16 @@ export default function ElementDetailsPanel({
 
       {/* Informações principais */}
       <div className="flex gap-2 px-4 py-1">
-        <div className="flex flex-col items-center justify-center min-w-[80px]">
-          <p className="text-4xl font-bold text-cyan-700 dark:text-cyan-200">
+        <div className="flex flex-col items-center justify-center min-w-[70px] sm:min-w-[80px]">
+          <p className="text-3xl sm:text-4xl font-bold text-cyan-700 dark:text-cyan-200">
             {elementToShow.symbol}
           </p>
-          <p className="text-sm text-gray-700 dark:text-zinc-100">
+          <p className="text-xs sm:text-sm text-gray-700 dark:text-zinc-100">
             {tElements(elementToShow.symbol)}
           </p>
         </div>
 
-        <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-zinc-800 dark:text-zinc-100 leading-tight">
+        <div className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] sm:text-sm text-zinc-800 dark:text-zinc-100 leading-tight">
           <div className="flex flex-col gap-y-1">
             {generalFields.map(
               (field: { label: string; value: string | number }) => (
