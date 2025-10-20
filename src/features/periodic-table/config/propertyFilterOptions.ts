@@ -48,9 +48,9 @@ export const periodicPropertyOptions: PeriodicPropertyOption[] = [
     getValue: (element) => parseNumericValue(element.atomicRadius),
     colorConfig: {
       hue: 210,
-      saturation: 45,
-      lightRange: [95, 45],
-      darkRange: [18, 60],
+      saturation: 55,
+      lightRange: [98, 40],
+      darkRange: [14, 65],
     },
   },
   {

@@ -2,13 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import {
-  Select,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { MultiSelect } from "@/components/ui/multi-select";
 import { usePeriodicTableStore } from "../store/periodicTableStore";
 import {
   periodicPropertyOptions,
@@ -24,39 +18,45 @@ export default function PeriodicTablePropertyFilter() {
     (state) => state.setActivePropertyFilter
   );
 
-  const handleChange = (value: string) => {
-    if (!value || value === "none") {
+  const multiSelectOptions = periodicPropertyOptions.map((option) => ({
+    label: option.unitKey
+      ? `${t(option.labelKey)} (${t(option.unitKey)})`
+      : t(option.labelKey),
+    value: option.id,
+  }));
+
+  const handleChange = (values: string[]) => {
+    if (!values.length) {
       setActiveProperty(null);
       return;
     }
 
-    setActiveProperty(value as PeriodicPropertyId);
+    const lastValue = values[values.length - 1] as PeriodicPropertyId;
+    setActiveProperty(lastValue);
   };
 
-  const selectValue = activeProperty ?? "none";
+  const selectedValues = activeProperty ? [activeProperty] : [];
 
   return (
     <div className="p-4">
       <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
         <strong>{t("periodicProperties.label")}</strong>
       </label>
-      <Select value={selectValue} onValueChange={handleChange}>
-        <SelectTrigger className="mt-2 w-full md:w-auto min-w-[240px]">
-          <SelectValue placeholder={t("periodicProperties.placeholder")} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="none">
-            {t("periodicProperties.clearOption")}
-          </SelectItem>
-          {periodicPropertyOptions.map((option) => (
-            <SelectItem key={option.id} value={option.id}>
-              {option.unitKey
-                ? `${t(option.labelKey)} (${t(option.unitKey)})`
-                : t(option.labelKey)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <MultiSelect
+        id="periodic-property-filter"
+        options={multiSelectOptions}
+        value={selectedValues}
+        defaultValue={selectedValues}
+        onValueChange={handleChange}
+        placeholder={t("periodicProperties.placeholder")}
+        maxCount={1}
+        className="w-auto mt-2"
+        customConfig={{
+          maxDisplayCount: 1,
+          allowSelectAll: false,
+          showCount: false,
+        }}
+      />
     </div>
   );
 }

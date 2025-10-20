@@ -41,7 +41,7 @@ export default function PeriodicTableCards() {
   return (
     <div className="relative overflow-x-auto w-full dark:bg-transparent dark:text-white">
       <div
-        className="flex flex-col items-center min-w-[1440px] mx-auto mt-3 relative"
+        className="flex flex-col items-center min-w-[1440px] mx-auto mt-1 relative"
         onMouseLeave={() => {
           if (highlightSource === "hover") {
             setHighlight(null, null);
@@ -51,8 +51,8 @@ export default function PeriodicTableCards() {
        
 
         {/* Painel de Detalhes */}
-        <div className="h-[90px]" />
-        <div className="w-full flex justify-center absolute top-[130px] left-0 z-40 pointer-events-none">
+        <div className="h-[40px]" />
+        <div className="w-full flex justify-center absolute top-[75px] left-0 z-40 pointer-events-none">
           <div className="pointer-events-auto max-w-[650px] w-full flex justify-center ml-[-300px]">
             <ElementDetailsPanel
               element={highlightedElement || defaultElement}
