@@ -50,7 +50,7 @@ export const periodicPropertyOptions: PeriodicPropertyOption[] = [
       hue: 210,
       saturation: 55,
       lightRange: [98, 40],
-      darkRange: [14, 65],
+      darkRange: [10, 72],
     },
   },
   {
@@ -61,7 +61,7 @@ export const periodicPropertyOptions: PeriodicPropertyOption[] = [
       hue: 160,
       saturation: 45,
       lightRange: [96, 46],
-      darkRange: [16, 58],
+      darkRange: [12, 66],
     },
   },
   {
@@ -73,7 +73,7 @@ export const periodicPropertyOptions: PeriodicPropertyOption[] = [
       hue: 285,
       saturation: 50,
       lightRange: [92, 42],
-      darkRange: [18, 60],
+      darkRange: [12, 68],
     },
   },
   {
@@ -85,7 +85,7 @@ export const periodicPropertyOptions: PeriodicPropertyOption[] = [
       hue: 30,
       saturation: 55,
       lightRange: [94, 50],
-      darkRange: [22, 64],
+      darkRange: [16, 70],
     },
   },
 ];
