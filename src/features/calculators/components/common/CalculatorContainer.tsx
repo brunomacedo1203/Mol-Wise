@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import { useTranslations } from "next-intl";
 import { CalculatorContainerProps } from "@/features/calculators/domain/types";
@@ -24,6 +24,28 @@ export default function CalculatorContainer({
 }: CalculatorContainerProps) {
   const t = useTranslations();
   const [collapsed, setCollapsed] = useState(!isKeyboardVisible);
+  const hasAppliedResponsiveCollapse = useRef(false);
+  const previousVisibility = useRef(isKeyboardVisible);
+
+  useEffect(() => {
+    if (previousVisibility.current !== isKeyboardVisible) {
+      setCollapsed(!isKeyboardVisible);
+      previousVisibility.current = isKeyboardVisible;
+    }
+  }, [isKeyboardVisible]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || hasAppliedResponsiveCollapse.current) {
+      return;
+    }
+
+    const isMobileViewport = window.matchMedia("(max-width: 639px)").matches;
+    if (isMobileViewport && !collapsed) {
+      hasAppliedResponsiveCollapse.current = true;
+      setCollapsed(true);
+      onKeyboardVisibilityChange?.(false);
+    }
+  }, [collapsed, onKeyboardVisibilityChange]);
 
   const { defaultPosition, handleDragStop, handleResizeStop } =
     useCalculatorPosition({

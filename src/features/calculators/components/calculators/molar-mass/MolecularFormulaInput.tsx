@@ -162,34 +162,7 @@ const MolecularFormulaInput = ({
   );
 
   // Handlers para permitir seleção de texto no input
-  const handleInputMouseDown = useCallback((e: React.MouseEvent) => {
-    // Impede que o evento se propague para o Rnd
-    e.stopPropagation();
-  }, []);
-
-  const handleInputMouseMove = useCallback((e: React.MouseEvent) => {
-    // Permite seleção de texto durante o arraste do mouse
-    e.stopPropagation();
-  }, []);
-
-  const handleInputClick = useCallback((e: React.MouseEvent) => {
-    // Impede que o clique se propague para o Rnd
-    e.stopPropagation();
-  }, []);
-
-  // Handlers para permitir seleção de texto no resultado
-  const handleResultMouseDown = useCallback((e: React.MouseEvent) => {
-    // Impede que o evento se propague para o Rnd
-    e.stopPropagation();
-  }, []);
-
-  const handleResultMouseMove = useCallback((e: React.MouseEvent) => {
-    // Permite seleção de texto durante o arraste do mouse
-    e.stopPropagation();
-  }, []);
-
-  const handleResultClick = useCallback((e: React.MouseEvent) => {
-    // Impede que o clique se propague para o Rnd
+  const stopPropagation = useCallback((e: React.SyntheticEvent) => {
     e.stopPropagation();
   }, []);
 
@@ -209,9 +182,12 @@ const MolecularFormulaInput = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           onPaste={handlePaste}
-          onMouseDown={handleInputMouseDown}
-          onMouseMove={handleInputMouseMove}
-          onClick={handleInputClick}
+          onMouseDown={stopPropagation}
+          onMouseMove={stopPropagation}
+          onClick={stopPropagation}
+          onTouchStart={stopPropagation}
+          onTouchMove={stopPropagation}
+          onPointerDown={stopPropagation}
           className={`molecular-formula-input border 
             ${
               errorMessage
@@ -247,9 +223,12 @@ const MolecularFormulaInput = ({
         dangerouslySetInnerHTML={
           resultHtml ? { __html: resultHtml } : undefined
         }
-        onMouseDown={handleResultMouseDown}
-        onMouseMove={handleResultMouseMove}
-        onClick={handleResultClick}
+        onMouseDown={stopPropagation}
+        onMouseMove={stopPropagation}
+        onClick={stopPropagation}
+        onTouchStart={stopPropagation}
+        onTouchMove={stopPropagation}
+        onPointerDown={stopPropagation}
       />
     </div>
   );
