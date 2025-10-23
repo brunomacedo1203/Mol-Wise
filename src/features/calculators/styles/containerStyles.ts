@@ -57,9 +57,9 @@ export const containerStyles = {
    * Configurações do Rnd
    */
   rnd: {
-    minWidth: 420,
+    minWidth: 400,
     maxWidth: 760,
-    defaultWidth: 460,
+    defaultWidth: 410,
     defaultHeight: 360,
     enable: {
       top: true,
