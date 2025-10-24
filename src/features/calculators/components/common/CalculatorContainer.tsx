@@ -26,9 +26,13 @@ export default function CalculatorContainer({
   const [collapsed, setCollapsed] = useState(!isKeyboardVisible);
   const hasAppliedResponsiveCollapse = useRef(false);
   const previousVisibility = useRef(isKeyboardVisible);
+  // Guarda a origem da última mudança de "collapsed" para evitar loops
+  const lastChangeSource = useRef<"none" | "user" | "external">("none");
 
   useEffect(() => {
     if (previousVisibility.current !== isKeyboardVisible) {
+      // Mudança originada externamente (ex.: store)
+      lastChangeSource.current = "external";
       setCollapsed(!isKeyboardVisible);
       previousVisibility.current = isKeyboardVisible;
     }
@@ -42,6 +46,8 @@ export default function CalculatorContainer({
     const isMobileViewport = window.matchMedia("(max-width: 639px)").matches;
     if (isMobileViewport && !collapsed) {
       hasAppliedResponsiveCollapse.current = true;
+      // Mudança forçada por responsividade (tratamos como externa)
+      lastChangeSource.current = "external";
       setCollapsed(true);
       onKeyboardVisibilityChange?.(false);
     }
@@ -54,12 +60,18 @@ export default function CalculatorContainer({
     });
 
   const handleKeyboardToggle = () => {
-    setCollapsed((prev) => {
-      const newValue = !prev;
-      onKeyboardVisibilityChange?.(!newValue);
-      return newValue;
-    });
+    // Marca como mudança do usuário e apenas alterna o estado
+    lastChangeSource.current = "user";
+    setCollapsed((prev) => !prev);
   };
+
+  // Efeito para notificar o pai somente quando a mudança veio do usuário
+  useEffect(() => {
+    if (lastChangeSource.current === "user") {
+      onKeyboardVisibilityChange?.(!collapsed);
+      lastChangeSource.current = "none";
+    }
+  }, [collapsed, onKeyboardVisibilityChange]);
 
   // Ajusta minWidth baseado no viewport para manter responsividade no mobile
   const [responsiveMinWidth, setResponsiveMinWidth] = useState(() => {
