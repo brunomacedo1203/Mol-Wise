@@ -61,9 +61,26 @@ export default function CalculatorContainer({
     });
   };
 
+  // Ajusta minWidth baseado no viewport para manter responsividade no mobile
+  const [responsiveMinWidth, setResponsiveMinWidth] = useState(() => {
+    if (typeof window === "undefined") return containerStyles.rnd.minWidth;
+    const isMobile = window.innerWidth < 640;
+    return isMobile ? 320 : containerStyles.rnd.minWidth;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 640;
+      setResponsiveMinWidth(isMobile ? 320 : containerStyles.rnd.minWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <Rnd
-      minWidth={containerStyles.rnd.minWidth}
+      minWidth={responsiveMinWidth}
       maxWidth={containerStyles.rnd.maxWidth}
       default={defaultPosition}
       bounds="#main-content-area"
@@ -72,17 +89,7 @@ export default function CalculatorContainer({
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
       // Evita que elementos interativos iniciem drag em dispositivos touch
-      cancel={useMemo(() => {
-        if (typeof window === "undefined") return undefined;
-        const mq = typeof window.matchMedia === "function" ? window.matchMedia("(pointer: coarse)") : null;
-        const isTouch =
-          "ontouchstart" in window ||
-          (navigator as any)?.maxTouchPoints > 0 ||
-          (mq ? mq.matches : false);
-        return isTouch
-          ? "input, textarea, select, button, [contenteditable=true], [role=combobox], .prevent-drag"
-          : undefined;
-      }, [])}
+      cancel="input, textarea, select, button, [contenteditable=true], [role=combobox], .prevent-drag"
     >
       <div className={containerStyles.root}>
         <CalculatorHeader title={title} subtitle={subtitle} onClose={onClose} />

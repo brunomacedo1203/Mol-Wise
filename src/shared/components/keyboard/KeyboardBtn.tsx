@@ -9,6 +9,7 @@ export interface KeyboardBtnProps {
   type?: "button" | "submit" | "reset";
   title?: string;
   noDefaultHover?: boolean; // <-- NOVA PROP
+  size?: "md" | "compact";
 }
 
 const KeyboardBtn = ({
@@ -19,15 +20,21 @@ const KeyboardBtn = ({
   type = "button",
   title,
   noDefaultHover = false,
+  size = "md",
 }: KeyboardBtnProps) => {
+  const sizeClasses =
+    size === "compact"
+      ? "min-w-[32px] min-h-[26px] px-1.5 py-0.5 text-[13px]"
+      : "min-w-[34px] min-h-[30px] px-1.5 py-1.5 text-sm";
+
   const estilosBase = [
-    "min-w-[34px] min-h-[30px] px-1.5 py-1.5",
+    sizeClasses,
     "flex items-center justify-center",
     "rounded-lg",
     "border border-neutral-300 bg-white text-neutral-900",
     "dark:bg-transparent dark:border-white/20 dark:text-white",
     "shadow-none",
-    "text-sm !font-medium",
+    "!font-medium",
     !noDefaultHover && "hover:bg-neutral-100 dark:hover:bg-white/5",
     "transition-colors duration-150 select-none",
     "active:translate-y-[1px] active:shadow-none",
