@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import { useTranslations } from "next-intl";
 import { CalculatorContainerProps } from "@/features/calculators/domain/types";
@@ -71,6 +71,18 @@ export default function CalculatorContainer({
       className={containerStyles.rnd.className}
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
+      // Evita que elementos interativos iniciem drag em dispositivos touch
+      cancel={useMemo(() => {
+        if (typeof window === "undefined") return undefined;
+        const mq = typeof window.matchMedia === "function" ? window.matchMedia("(pointer: coarse)") : null;
+        const isTouch =
+          "ontouchstart" in window ||
+          (navigator as any)?.maxTouchPoints > 0 ||
+          (mq ? mq.matches : false);
+        return isTouch
+          ? "input, textarea, select, button, [contenteditable=true], [role=combobox], .prevent-drag"
+          : undefined;
+      }, [])}
     >
       <div className={containerStyles.root}>
         <CalculatorHeader title={title} subtitle={subtitle} onClose={onClose} />
