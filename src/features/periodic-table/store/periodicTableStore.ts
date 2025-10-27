@@ -28,6 +28,9 @@ interface PeriodicTableState {
 
   searchValue: string;                  
   setSearchValue: (value: string) => void;
+
+  isFiltersPanelOpen: boolean;
+  setFiltersPanelOpen: (open: boolean) => void;
 }
 
 export const usePeriodicTableStore = create<PeriodicTableState>()(
@@ -55,6 +58,9 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
 
       searchValue: "",                            
       setSearchValue: (value) => set({ searchValue: value }), 
+
+      isFiltersPanelOpen: false,
+      setFiltersPanelOpen: (open) => set({ isFiltersPanelOpen: open }),
     }),
     {
       name: "molclass_periodic_table",

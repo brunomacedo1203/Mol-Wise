@@ -38,7 +38,7 @@ export default function PeriodicTablePropertyFilter() {
   const selectedValues = activeProperty ? [activeProperty] : [];
 
   return (
-    <div className="p-4">
+    <div className="p-4 space-y-2">
       <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
         <strong>{t("periodicProperties.label")}</strong>
       </label>
@@ -50,7 +50,7 @@ export default function PeriodicTablePropertyFilter() {
         onValueChange={handleChange}
         placeholder={t("periodicProperties.placeholder")}
         maxCount={1}
-        className="w-auto mt-2"
+        className="w-auto"
         customConfig={{
           maxDisplayCount: 1,
           allowSelectAll: false,

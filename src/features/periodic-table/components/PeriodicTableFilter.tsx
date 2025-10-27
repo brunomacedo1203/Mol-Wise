@@ -20,7 +20,7 @@ export default function PeriodicTableFilter() {
   );
 
   return (
-    <div className="p-4">
+    <div className="p-4 space-y-2">
       <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
         <strong>{t("periodicClassification")}</strong>
       </label>

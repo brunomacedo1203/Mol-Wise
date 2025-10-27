@@ -1,15 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Filter, ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 import PeriodicTableFilter from "../PeriodicTableFilter";
 import PeriodicTablePropertyFilter from "../PeriodicTablePropertyFilter";
+import { usePeriodicTableStore } from "../../store/periodicTableStore";
 
 export default function PeriodicTableFilters() {
   const t = useTranslations("periodicTable");
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = usePeriodicTableStore((state) => state.isFiltersPanelOpen);
+  const setIsOpen = usePeriodicTableStore(
+    (state) => state.setFiltersPanelOpen
+  );
 
   return (
     <div className="mb-0 border border-zinc-400 dark:border-zinc-700 rounded-2xl bg-background dark:bg-zinc-900">
@@ -45,9 +49,13 @@ export default function PeriodicTableFilters() {
 
       {isOpen && (
         <div className="px-4 ">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            <PeriodicTableFilter />
-            <PeriodicTablePropertyFilter />
+          <div className="grid grid-cols-1 gap-1 sm:gap-1 justify-items-center mx-auto md:[grid-template-columns:repeat(2,minmax(0,max-content))] xl:[grid-template-columns:repeat(3,minmax(0,max-content))] md:justify-center">
+            <div className="w-full max-w-md">
+              <PeriodicTableFilter />
+            </div>
+            <div className="w-full max-w-md">
+              <PeriodicTablePropertyFilter />
+            </div>
           </div>
         </div>
       )}
