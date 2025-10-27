@@ -34,7 +34,7 @@ export default function Header({
       <div className="flex flex-col max-w-[88%] md:max-w-[80%]">
         <h1
           className="
-            text-[15px] sm:text-base md:text-lg 
+            text-[15px] sm:text-base md:text-xl lg:text-2xl 
             font-bold text-zinc-900 dark:text-zinc-100 
             leading-tight truncate
           "
@@ -45,7 +45,7 @@ export default function Header({
         {subtitle && (
           <span
             className="
-              text-[11px] sm:text-[12px] md:text-xs 
+              text-[11px] sm:text-[12px] md:text-sm lg:text-base 
               text-zinc-500 dark:text-zinc-400 
               leading-snug truncate
             "
