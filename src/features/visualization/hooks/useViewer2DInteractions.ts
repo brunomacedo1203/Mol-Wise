@@ -6,6 +6,8 @@ import {
   MIN_ZOOM,
   MAX_ZOOM,
   WHEEL_PAN_SENSITIVITY,
+  TOUCH_MIN_DISTANCE,
+  TOUCH_MAX_DISTANCE,
 } from "../constants/viewer2d.constants";
 import { useVisualizationStore } from "../store/visualizationStore";
 import { getMoleculeKey } from "../utils/moleculeKey";
@@ -32,6 +34,19 @@ export function useViewer2DInteractions({
     y: 0,
     vb: null,
   });
+
+  // Estado para pinch-zoom (2 dedos)
+  const pinchRef = useRef<
+    | {
+        active: true;
+        startDistance: number;
+        startVB: ViewBox;
+        centerRelX: number;
+        centerRelY: number;
+        hasZoomed: boolean;
+      }
+    | { active: false }
+  >({ active: false });
 
   const lastInteractionRef = useRef<{
     type: string;
@@ -219,6 +234,40 @@ export function useViewer2DInteractions({
 
   const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     if (!vbRef.current) return;
+
+    // Pinch-zoom: quando 2 toques
+    if (e.touches.length === 2 && svgElRef.current && vbRef.current && vbInitialRef.current) {
+      const [t1, t2] = [e.touches[0], e.touches[1]];
+      const dx = t2.clientX - t1.clientX;
+      const dy = t2.clientY - t1.clientY;
+      const dist = Math.hypot(dx, dy);
+
+      // Ignora pinches muito pequenos ou exagerados (ruído)
+      if (dist < TOUCH_MIN_DISTANCE || dist > TOUCH_MAX_DISTANCE) {
+        pinchRef.current = { active: false };
+        return;
+      }
+
+      const rect = svgElRef.current.getBoundingClientRect();
+      const centerClientX = (t1.clientX + t2.clientX) / 2;
+      const centerClientY = (t1.clientY + t2.clientY) / 2;
+      const centerRelX = (centerClientX - rect.left) / rect.width;
+      const centerRelY = (centerClientY - rect.top) / rect.height;
+
+      pinchRef.current = {
+        active: true,
+        startDistance: dist,
+        startVB: { ...vbRef.current },
+        centerRelX,
+        centerRelY,
+        hasZoomed: false,
+      };
+      // enquanto pinch ativo, não consideramos drag com 1 dedo
+      setIsDragging(false);
+      return;
+    }
+
+    // Pan com 1 dedo
     setIsDragging(true);
     const t = e.touches[0];
     dragStartRef.current = {
@@ -231,6 +280,56 @@ export function useViewer2DInteractions({
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
+      // Pinch-zoom ativo (2 dedos)
+      if (
+        pinchRef.current.active &&
+        e.touches.length === 2 &&
+        svgElRef.current &&
+        vbRef.current &&
+        vbInitialRef.current
+      ) {
+        const [t1, t2] = [e.touches[0], e.touches[1]];
+        const dx = t2.clientX - t1.clientX;
+        const dy = t2.clientY - t1.clientY;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < TOUCH_MIN_DISTANCE || dist > TOUCH_MAX_DISTANCE) return;
+
+        const start = pinchRef.current.startDistance;
+        if (!start || start <= 0) return;
+
+        const scale = dist / start; // >1 amplia (zoom in)
+
+        const init = vbInitialRef.current;
+        const vb0 = pinchRef.current.startVB;
+        const aspect = init.height / init.width;
+
+        let newW = vb0.width / scale; // zoom in => W menor
+        const minW = init.width * MIN_ZOOM;
+        const maxW = init.width * MAX_ZOOM;
+        newW = Math.min(Math.max(newW, minW), maxW);
+        const newH = newW * aspect;
+
+        const relX = pinchRef.current.centerRelX;
+        const relY = pinchRef.current.centerRelY;
+        const dxW = (vb0.width - newW) * relX;
+        const dyH = (vb0.height - newH) * relY;
+
+        const next: ViewBox = {
+          minX: vb0.minX + dxW,
+          minY: vb0.minY + dyH,
+          width: newW,
+          height: newH,
+        };
+
+        const clamped = clampViewBox(next, vbInitialRef.current, contentBoundsRef.current);
+        vbRef.current = clamped;
+        writeViewBox(svgElRef.current, clamped);
+        pinchRef.current.hasZoomed = true;
+        return;
+      }
+
+      // Pan com 1 dedo
       if (
         !isDragging ||
         !dragStartRef.current.vb ||
@@ -263,11 +362,16 @@ export function useViewer2DInteractions({
 
   const handleTouchEnd = useCallback(() => {
     const wasDragging = isDragging;
+    const wasPinching = pinchRef.current.active && pinchRef.current.hasZoomed;
     setIsDragging(false);
+    pinchRef.current = { active: false };
+
     if (vbRef.current) {
       saveVB(vbRef.current);
-      
-      if (wasDragging) {
+
+      if (wasPinching) {
+        trackInteraction("zoom", "pinch_zoom");
+      } else if (wasDragging) {
         trackInteraction("pan", "touch_drag");
       }
     }
