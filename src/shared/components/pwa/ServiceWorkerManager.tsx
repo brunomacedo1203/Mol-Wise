@@ -22,7 +22,6 @@ export function ServiceWorkerManager() {
     }
 
     let workbox: Workbox | null = new Workbox(SW_URL, { scope: "/" });
-    let waitingListener: (() => void) | undefined;
 
     const register = async () => {
       try {
@@ -57,12 +56,10 @@ export function ServiceWorkerManager() {
           .catch((error) => console.error("[PWA] Failed to trigger skipWaiting", error));
       }
 
-      waitingListener?.();
+      cleanupListeners();
     };
 
-    register();
-
-    waitingListener = () => {
+    const cleanupListeners = () => {
       if (!workbox) {
         return;
       }
@@ -73,8 +70,10 @@ export function ServiceWorkerManager() {
       workbox = null;
     };
 
+    register();
+
     return () => {
-      waitingListener?.();
+      cleanupListeners();
     };
   }, []);
 
