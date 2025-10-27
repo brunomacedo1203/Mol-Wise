@@ -67,10 +67,10 @@ export function CompoundTable({ data: _data }: CompoundTableProps) {
   return (
     <div
       className={`
-        w-full max-w-8xl mx-auto my-10 px-4 md:px-8 py-6
+        w-full max-w-8xl mx-auto my-4 md:my-10 px-2 md:px-8 py-4 md:py-6
         border border-border dark:border-zinc-700
         rounded-xl shadow-md bg-background dark:bg-zinc-900
-        space-y-6
+        space-y-4 md:space-y-6
       `}
     >
       {/* Toolbar + Filtros basicos */}
@@ -98,39 +98,43 @@ export function CompoundTable({ data: _data }: CompoundTableProps) {
         />
       </div>
 
-      {/* Tabela */}
-      <div className="overflow-x-auto">
-        <Table className="min-w-full table-fixed">
-          <CompoundTableHeader
-            allColumns={allColumns}
-            visibleColumns={visibleColumns}
-            sortColumn={sortColumn}
-            sortOrder={sortOrder}
-            handleSort={handleSafeSort}
-            centerAlignedColumns={["solubilityNumeric"]}
-          />
-          <CompoundTableRows
-            paginatedData={paginatedData}
-            allColumns={allColumns}
-            visibleColumns={visibleColumns}
-            columnWidths={columnWidths}
-            getCellValue={getCellValueForWidth}
-            centerAlignedColumns={["solubilityNumeric"]}
-            t={t}
-          />
-        </Table>
+      {/* Tabela com scroll horizontal */}
+      <div className="overflow-x-auto -mx-2 md:mx-0">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-hidden">
+            <Table className="min-w-full table-auto md:table-fixed">
+              <CompoundTableHeader
+                allColumns={allColumns}
+                visibleColumns={visibleColumns}
+                sortColumn={sortColumn}
+                sortOrder={sortOrder}
+                handleSort={handleSafeSort}
+                centerAlignedColumns={["solubilityNumeric"]}
+              />
+              <CompoundTableRows
+                paginatedData={paginatedData}
+                allColumns={allColumns}
+                visibleColumns={visibleColumns}
+                columnWidths={columnWidths}
+                getCellValue={getCellValueForWidth}
+                centerAlignedColumns={["solubilityNumeric"]}
+                t={t}
+              />
+            </Table>
+          </div>
+        </div>
       </div>
 
       {/* Paginação */}
-      <div className="flex items-center justify-between pt-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between pt-2 gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
+          <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
             {t("compoundTable.rowsPerPage")}
           </span>
           <select
             value={_rowsPerPage}
             onChange={(e) => _setRowsPerPage(Number(e.target.value))}
-            className="border rounded px-2 py-1 text-sm bg-background dark:bg-zinc-800 dark:border-zinc-700"
+            className="border rounded px-2 py-1 text-xs sm:text-sm bg-background dark:bg-zinc-800 dark:border-zinc-700"
           >
             {[5, 10, 20, 50].map((v) => (
               <option key={v} value={v}>

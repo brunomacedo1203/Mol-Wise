@@ -10,9 +10,9 @@ export function useCompoundColumns() {
       const translatedText = t(translationKey);
       const [title, subtitle] = translatedText.split("\n");
       return (
-        <span className="block text-center leading-tight">
-          <div>{title}</div>
-          {subtitle && <div>{subtitle}</div>}
+        <span className="block text-center leading-[1.2] text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm">
+          <div className="whitespace-nowrap">{title}</div>
+          {subtitle && <div className="whitespace-nowrap">{subtitle}</div>}
         </span>
       );
     };
