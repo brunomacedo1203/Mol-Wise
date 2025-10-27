@@ -65,10 +65,13 @@ const CalculationHistory = ({
 
   return (
     <div
-      className="border-t border-gray-200 dark:border-gray-700"
+      className="border-t border-gray-200 dark:border-gray-700 prevent-drag"
       onMouseDown={stop}
       onMouseMove={stop}
       onClick={stop}
+      onTouchStart={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}
+      onTouchEnd={(e) => e.stopPropagation()}
     >
       {/* Header do Histórico */}
       <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800">
@@ -98,8 +101,8 @@ const CalculationHistory = ({
         role="log"
         aria-live="polite"
         aria-relevant="additions text"
-        className="overflow-y-auto"
-        style={listStyle}
+        className="overflow-y-auto overscroll-contain prevent-drag"
+        style={{ ...listStyle, touchAction: "pan-y" }}
       >
         {history.length === 0 ? (
           <div className="p-2 text-center text-gray-500 dark:text-gray-400 text-sm">
