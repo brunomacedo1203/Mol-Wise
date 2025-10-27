@@ -11,6 +11,7 @@ import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvid
 import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
 import AnalyticsManager from "@/shared/components/analytics/AnalyticsManager";
 import type { Metadata, Viewport } from "next";
+import { ServiceWorkerManager } from "@/shared/components/pwa/ServiceWorkerManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -104,6 +105,7 @@ export default async function LocaleLayout({
 
         {/* Scripts de analytics e Clarity condicionados ao consentimento */}
         <AnalyticsManager />
+        <ServiceWorkerManager />
 
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
