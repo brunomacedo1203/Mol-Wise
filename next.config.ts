@@ -19,7 +19,7 @@ const withPWA = withPWAInit({
   clientsClaim: true,
   customWorkerDir: "worker",
   fallbacks: {
-    document: "/offline",
+    document: "/en/offline",
   },
   runtimeCaching,
 });

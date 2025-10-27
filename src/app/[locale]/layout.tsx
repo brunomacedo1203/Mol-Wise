@@ -11,7 +11,7 @@ import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvid
 import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
 import AnalyticsManager from "@/shared/components/analytics/AnalyticsManager";
 import type { Metadata, Viewport } from "next";
-import { ServiceWorkerManager } from "@/shared/components/pwa/ServiceWorkerManager";
+import { PWARegister } from "@/app/_components/PWARegister";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,10 +52,6 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   applicationName: "Mol Class",
   manifest: "/manifest.webmanifest",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-  ],
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -105,7 +101,7 @@ export default async function LocaleLayout({
 
         {/* Scripts de analytics e Clarity condicionados ao consentimento */}
         <AnalyticsManager />
-        <ServiceWorkerManager />
+        <PWARegister />
 
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
@@ -122,4 +118,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import { useTranslations } from "next-intl";
 import { CalculatorContainerProps } from "@/features/calculators/domain/types";

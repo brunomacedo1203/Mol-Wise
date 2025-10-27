@@ -21,21 +21,7 @@ export function ServiceWorkerManager() {
       return;
     }
 
-    let workbox: Workbox | null = new Workbox(SW_URL, { scope: "/" });
-
-    const register = async () => {
-      try {
-        workbox?.addEventListener("waiting", handleWaiting);
-        workbox?.addEventListener("externalwaiting", handleWaiting);
-        workbox?.addEventListener("controlling", handleControlling);
-        await workbox?.register();
-        if (workbox) {
-          (window as typeof window & { __PWA_WORKBOX?: Workbox }).__PWA_WORKBOX = workbox;
-        }
-      } catch (error) {
-        console.error("[PWA] Failed to register service worker", error);
-      }
-    };
+    let workbox: Workbox | null = null;
 
     const handleControlling = () => {
       window.location.reload();
@@ -50,13 +36,27 @@ export function ServiceWorkerManager() {
         "Uma nova versão do Mol Class está disponível. Deseja atualizar agora?"
       );
 
-      if (shouldUpdate) {
-        workbox
-          .messageSkipWaiting()
-          .catch((error) => console.error("[PWA] Failed to trigger skipWaiting", error));
+      if (!shouldUpdate) {
+        return;
       }
 
-      cleanupListeners();
+      try {
+        workbox.messageSkipWaiting();
+      } catch (error: unknown) {
+        console.error("[PWA] Failed to trigger skipWaiting", error);
+      }
+    };
+
+    const register = async () => {
+      try {
+        workbox = new Workbox(SW_URL, { scope: "/" });
+        workbox.addEventListener("waiting", handleWaiting);
+        workbox.addEventListener("controlling", handleControlling);
+        await workbox.register();
+        (window as typeof window & { __PWA_WORKBOX?: Workbox }).__PWA_WORKBOX = workbox;
+      } catch (error: unknown) {
+        console.error("[PWA] Failed to register service worker", error);
+      }
     };
 
     const cleanupListeners = () => {
@@ -65,7 +65,6 @@ export function ServiceWorkerManager() {
       }
 
       workbox.removeEventListener("waiting", handleWaiting);
-      workbox.removeEventListener("externalwaiting", handleWaiting);
       workbox.removeEventListener("controlling", handleControlling);
       workbox = null;
     };
