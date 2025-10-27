@@ -16,16 +16,16 @@
   ],
   "screenshots": [
     {
-      "src": "/screenshots/home-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
       "src": "/screenshots/mobile-home.png",
-      "sizes": "360x640",
+      "sizes": "1024x1536",
       "type": "image/png",
       "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshots/home-wide.png",
+      "sizes": "1536x1024",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ],
   "icons": [
