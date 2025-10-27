@@ -18,6 +18,7 @@ const withPWA = withPWAInit({
   skipWaiting: false,
   clientsClaim: true,
   customWorkerDir: "worker",
+  buildExcludes: [/app-build-manifest\.json$/],
   fallbacks: {
     document: "/en/offline",
   },
