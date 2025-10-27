@@ -10,7 +10,7 @@ import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
 import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
 import AnalyticsManager from "@/shared/components/analytics/AnalyticsManager";
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,6 +47,30 @@ const themeScript = `
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+export const metadata: Metadata = {
+  applicationName: "Mol Class",
+  manifest: "/manifest.webmanifest",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Mol Class",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    icon: [
+      { url: "/icons/pwa-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/pwa-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/pwa-192.png" }],
+  },
+};
 
 export default async function LocaleLayout({
   children,
