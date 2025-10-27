@@ -121,6 +121,10 @@ export default function ElementDetailsPanel({
       {/* Configuração eletrônica e estados de oxidação */}
       <div className="px-4 pb-1 pt-1 text-sm text-zinc-800 dark:text-zinc-100 border-t border-cyan-200 dark:border-white/20">
         <div>
+            <div>
+              <span className="font-semibold">{t("element.oxidationStates")}:</span>{" "}
+              {elementToShow.oxidationStates}
+            </div>
           <span className="font-semibold">
             {t("element.electronConfiguration")}:
           </span>{" "}
@@ -130,10 +134,6 @@ export default function ElementDetailsPanel({
               __html: formatWithSup(elementToShow.electronConfiguration || ""),
             }}
           />
-        </div>
-        <div>
-          <span className="font-semibold">{t("element.oxidationStates")}:</span>{" "}
-          {elementToShow.oxidationStates}
         </div>
       </div>
     </div>

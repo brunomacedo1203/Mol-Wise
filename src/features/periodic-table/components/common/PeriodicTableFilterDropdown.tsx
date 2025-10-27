@@ -37,7 +37,7 @@ const PeriodicTableFilterDropdown: React.FC<
       customConfig={{
         maxDisplayCount: 1,
       }}
-      className="w-auto"
+      className="w-full"
     />
   );
 };

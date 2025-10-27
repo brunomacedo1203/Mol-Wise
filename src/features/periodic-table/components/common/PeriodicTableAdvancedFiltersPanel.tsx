@@ -49,7 +49,7 @@ export default function PeriodicTableFilters() {
 
       {isOpen && (
         <div className="px-4 ">
-          <div className="grid grid-cols-1 gap-1 sm:gap-1 justify-items-center mx-auto md:[grid-template-columns:repeat(2,minmax(0,max-content))] xl:[grid-template-columns:repeat(3,minmax(0,max-content))] md:justify-center">
+          <div className="grid grid-cols-1 gap-1 sm:gap-2 lg:gap-4 justify-items-center mx-auto md:[grid-template-columns:repeat(2,minmax(0,max-content))] xl:[grid-template-columns:repeat(3,minmax(0,max-content))] md:justify-center">
             <div className="w-full max-w-md">
               <PeriodicTableFilter />
             </div>

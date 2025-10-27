@@ -20,9 +20,9 @@ export default function PeriodicTableFilter() {
   );
 
   return (
-    <div className="p-4 space-y-2">
-      <label className="px-1 text-lg font-medium text-zinc-800 dark:text-zinc-200 block">
-        <strong>{t("periodicClassification")}</strong>
+    <div className="px-4 pt-2 pb-4 space-y-1">
+      <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">
+        {t("periodicClassification")}
       </label>
       <PeriodicTableFilterDropdown
         options={filterOptions}
