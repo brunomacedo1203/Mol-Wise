@@ -132,6 +132,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.19(tailwindcss@3.4.18)
+      '@types/minimatch':
+        specifier: 5.1.2
+        version: 5.1.2
       '@types/node':
         specifier: ^20
         version: 20.19.21
@@ -1540,9 +1543,8 @@ packages:
     resolution: {integrity: sha512-GF5g1vJmvKdWIWsE53XX7EDAyCaZ9p6gaYm1xhlXn5JjrY/NJrOfJN3fBxS3wyZpVh3QqKoMkS2WjFwxWMHOTw==}
     deprecated: This is a stub types definition. mathjs provides its own type definitions, so you do not need this installed.
 
-  '@types/minimatch@6.0.0':
-    resolution: {integrity: sha512-zmPitbQ8+6zNutpwgcQuLcsEpn/Cj54Kbn7L5pX0Os5kdWplB7xPgEh/g+SWOB/qmows2gpuCaPyduq8ZZRnxA==}
-    deprecated: This is a stub types definition. minimatch provides its own type definitions, so you do not need this installed.
+  '@types/minimatch@5.1.2':
+    resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
 
   '@types/node@20.19.21':
     resolution: {integrity: sha512-CsGG2P3I5y48RPMfprQGfy4JPRZ6csfC3ltBZSRItG3ngggmNY/qs2uZKp4p9VbrpqNNSMzUZNFZKzgOGnd/VA==}
@@ -5622,7 +5624,7 @@ snapshots:
 
   '@types/glob@7.2.0':
     dependencies:
-      '@types/minimatch': 6.0.0
+      '@types/minimatch': 5.1.2
       '@types/node': 20.19.21
 
   '@types/json-schema@7.0.15': {}
@@ -5633,9 +5635,7 @@ snapshots:
     dependencies:
       mathjs: 14.9.1
 
-  '@types/minimatch@6.0.0':
-    dependencies:
-      minimatch: 9.0.5
+  '@types/minimatch@5.1.2': {}
 
   '@types/node@20.19.21':
     dependencies:
