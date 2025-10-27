@@ -1,6 +1,16 @@
 import type { RuntimeCaching } from "workbox-build";
 
 const runtimeCaching: RuntimeCaching[] = [
+  // Ignora URLs internas do Next.js (evita erro 404 de app-build-manifest.json)
+  {
+    urlPattern: /^https:\/\/(www\.)?molclass\.com\/_next\/.*/i,
+    handler: "NetworkOnly",
+    options: {
+      cacheName: "next-internal-cache",
+    },
+  },
+
+  // Assets estáticos gerados pelo Next.js (JS, CSS, etc.)
   {
     urlPattern: ({ url }) => url.pathname.startsWith("/_next/static/"),
     handler: "CacheFirst",
@@ -13,14 +23,19 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [200] },
     },
   },
+
+  // Scripts e estilos externos
   {
-    urlPattern: ({ request }) => request.destination === "style" || request.destination === "script",
+    urlPattern: ({ request }) =>
+      request.destination === "style" || request.destination === "script",
     handler: "StaleWhileRevalidate",
     options: {
       cacheName: "static-resources",
       cacheableResponse: { statuses: [200] },
     },
   },
+
+  // Imagens otimizadas pelo Next.js
   {
     urlPattern: ({ url }) => url.pathname.startsWith("/_next/image"),
     handler: "StaleWhileRevalidate",
@@ -33,6 +48,8 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [200] },
     },
   },
+
+  // Imagens do site
   {
     urlPattern: ({ request }) => request.destination === "image",
     handler: "StaleWhileRevalidate",
@@ -45,6 +62,8 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [200] },
     },
   },
+
+  // Google Fonts
   {
     urlPattern: /^https:\/\/fonts\.(?:gstatic|googleapis)\.com\/.*/i,
     handler: "CacheFirst",
@@ -57,6 +76,8 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [0, 200] },
     },
   },
+
+  // Bibliotecas CDN
   {
     urlPattern: /^https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/3Dmol\/.*/i,
     handler: "CacheFirst",
@@ -69,6 +90,8 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [0, 200] },
     },
   },
+
+  // Dados de páginas renderizadas pelo Next.js
   {
     urlPattern: ({ url }) => url.pathname.startsWith("/_next/data/"),
     handler: "NetworkFirst",
@@ -82,6 +105,8 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [200] },
     },
   },
+
+  // API endpoints
   {
     urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
     handler: "NetworkFirst",
@@ -96,6 +121,8 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheableResponse: { statuses: [200] },
     },
   },
+
+  // Páginas (modo offline)
   {
     urlPattern: ({ request }) => request.mode === "navigate",
     handler: "NetworkFirst",
