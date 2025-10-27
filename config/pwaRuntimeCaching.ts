@@ -1,0 +1,114 @@
+import type { RuntimeCaching } from "workbox-build";
+
+const runtimeCaching: RuntimeCaching[] = [
+  {
+    urlPattern: ({ url }) => url.pathname.startsWith("/_next/static/"),
+    handler: "CacheFirst",
+    options: {
+      cacheName: "static-assets",
+      expiration: {
+        maxEntries: 64,
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+      },
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+  {
+    urlPattern: ({ request }) => request.destination === "style" || request.destination === "script",
+    handler: "StaleWhileRevalidate",
+    options: {
+      cacheName: "static-resources",
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+  {
+    urlPattern: ({ url }) => url.pathname.startsWith("/_next/image"),
+    handler: "StaleWhileRevalidate",
+    options: {
+      cacheName: "next-image",
+      expiration: {
+        maxEntries: 60,
+        maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+      },
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+  {
+    urlPattern: ({ request }) => request.destination === "image",
+    handler: "StaleWhileRevalidate",
+    options: {
+      cacheName: "image-assets",
+      expiration: {
+        maxEntries: 100,
+        maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+      },
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+  {
+    urlPattern: /^https:\/\/fonts\.(?:gstatic|googleapis)\.com\/.*/i,
+    handler: "CacheFirst",
+    options: {
+      cacheName: "google-fonts",
+      expiration: {
+        maxEntries: 30,
+        maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+      },
+      cacheableResponse: { statuses: [0, 200] },
+    },
+  },
+  {
+    urlPattern: /^https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/3Dmol\/.*/i,
+    handler: "CacheFirst",
+    options: {
+      cacheName: "cdn-libraries",
+      expiration: {
+        maxEntries: 10,
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+      },
+      cacheableResponse: { statuses: [0, 200] },
+    },
+  },
+  {
+    urlPattern: ({ url }) => url.pathname.startsWith("/_next/data/"),
+    handler: "NetworkFirst",
+    options: {
+      cacheName: "next-data",
+      networkTimeoutSeconds: 10,
+      expiration: {
+        maxEntries: 64,
+        maxAgeSeconds: 60 * 60 * 24, // 24 hours
+      },
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+  {
+    urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
+    handler: "NetworkFirst",
+    method: "GET",
+    options: {
+      cacheName: "api-responses",
+      networkTimeoutSeconds: 10,
+      expiration: {
+        maxEntries: 30,
+        maxAgeSeconds: 60 * 5, // 5 minutes
+      },
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+  {
+    urlPattern: ({ request }) => request.mode === "navigate",
+    handler: "NetworkFirst",
+    options: {
+      cacheName: "pages",
+      networkTimeoutSeconds: 10,
+      expiration: {
+        maxEntries: 32,
+        maxAgeSeconds: 60 * 60 * 24, // 24 hours
+      },
+      cacheableResponse: { statuses: [200] },
+    },
+  },
+];
+
+export default runtimeCaching;

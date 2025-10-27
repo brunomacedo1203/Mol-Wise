@@ -2,6 +2,7 @@ import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import withBundleAnalyzer from "@next/bundle-analyzer"; 
 import withPWAInit from "next-pwa";
+import runtimeCaching from "./config/pwaRuntimeCaching";
 
 // ⚙️ Ativa o bundle analyzer se a variável de ambiente ANALYZE=true
 const withAnalyzer = withBundleAnalyzer({
@@ -17,6 +18,10 @@ const withPWA = withPWAInit({
   skipWaiting: false,
   clientsClaim: true,
   customWorkerDir: "worker",
+  fallbacks: {
+    document: "/offline",
+  },
+  runtimeCaching,
 });
 
 const nextConfig: NextConfig = {
