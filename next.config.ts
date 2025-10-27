@@ -1,6 +1,8 @@
 import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import withBundleAnalyzer from "@next/bundle-analyzer"; 
+import withPWAInit from "next-pwa";
+import runtimeCaching from "./config/pwaRuntimeCaching";
 
 // ⚙️ Ativa o bundle analyzer se a variável de ambiente ANALYZE=true
 const withAnalyzer = withBundleAnalyzer({
@@ -8,6 +10,19 @@ const withAnalyzer = withBundleAnalyzer({
 });
 
 const withNextIntl = createNextIntlPlugin();
+
+const withPWA = withPWAInit({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: false,
+  skipWaiting: false,
+  clientsClaim: true,
+  customWorkerDir: "worker",
+  fallbacks: {
+    document: "/en/offline",
+  },
+  runtimeCaching,
+});
 
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
@@ -65,5 +80,5 @@ const nextConfig: NextConfig = {
   },
 };
 
-// Composição dos plugins: bundle analyzer + next-intl
-export default withAnalyzer(withNextIntl(nextConfig));
+// Composição dos plugins: bundle analyzer + next-intl + PWA
+export default withPWA(withAnalyzer(withNextIntl(nextConfig)));

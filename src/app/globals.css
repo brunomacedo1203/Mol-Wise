@@ -65,6 +65,17 @@
   background: #475569;
 }
 
+.property-card {
+  background-color: var(--property-card-bg-light, rgba(243, 244, 246, 1));
+}
+
+.dark .property-card {
+  background-color: var(
+    --property-card-bg-dark,
+    var(--property-card-bg-light, rgba(38, 38, 38, 0.9))
+  );
+}
+
 
 @layer base {
   :root {

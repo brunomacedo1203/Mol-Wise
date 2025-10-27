@@ -47,19 +47,33 @@ export function CompoundTableRows({
                 <TableCell
                   key={key}
                   className={
-                    "whitespace-normal break-words bg-white text-black dark:bg-zinc-900 dark:text-zinc-200" +
-                    (centerAlignedColumns.includes(key) ? " text-center" : "")
+                    "bg-white text-black dark:bg-zinc-900 dark:text-zinc-200 " +
+                    // Padding responsivo
+                    "px-1 py-2 sm:px-2 md:px-3 " +
+                    // Tamanhos responsivos de fonte - mais agressivo
+                    "text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm " +
+                    // Quebra de palavra e linha
+                    "break-words hyphens-auto leading-tight " +
+                    // Largura mínima
+                    "min-w-[60px] sm:min-w-[80px] md:min-w-0 " +
+                    (centerAlignedColumns.includes(key) ? "text-center" : "")
                   }
-                  style={{ width: `${columnWidths[key] || 100}px` }}
+                  style={{ 
+                    width: `${columnWidths[key] || 100}px`,
+                    maxWidth: `${columnWidths[key] || 100}px`
+                  }}
                 >
                   {key === "formula" ? (
                     <span
+                      className="inline-block max-w-full overflow-hidden"
                       dangerouslySetInnerHTML={{
                         __html: formatWithSub(getCellValue(compound, key)),
                       }}
                     />
                   ) : (
-                    getCellValue(compound, key)
+                    <span className="inline-block max-w-full overflow-hidden">
+                      {getCellValue(compound, key)}
+                    </span>
                   )}
                 </TableCell>
               ) : null
@@ -70,7 +84,7 @@ export function CompoundTableRows({
         <TableRow>
           <TableCell
             colSpan={allColumns.filter((col) => visibleColumns[col.key]).length}
-            className="text-center py-6 bg-white text-black dark:bg-zinc-900 dark:text-zinc-200"
+            className="text-center py-6 bg-white text-black dark:bg-zinc-900 dark:text-zinc-200 text-xs sm:text-sm md:text-base"
           >
             {t("compoundTable.noResults")}
           </TableCell>

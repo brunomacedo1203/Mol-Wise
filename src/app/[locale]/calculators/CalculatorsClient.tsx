@@ -38,9 +38,9 @@ export default function CalculatorsClient() {
 
     if (openCalculator) {
       const position = {
-        x: 100 + Math.random() * 100,
-        y: 100 + Math.random() * 100,
-        width: 750,
+        x: 100 + Math.random() * 80,
+        y: 100 + Math.random() * 80,
+        width: 460,
       };
       addCalculator(openCalculator as CalculatorType, position);
 

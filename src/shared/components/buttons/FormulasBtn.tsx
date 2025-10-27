@@ -12,18 +12,27 @@ const formulas = [
   { label: "CO₃", value: "CO3" },
 ];
 
+interface FormulasBtnProps {
+  onFormulaClick?: (value: string) => void;
+  size?: "md" | "compact";
+}
+
 export default function FormulasBtn({
   onFormulaClick,
-}: {
-  onFormulaClick?: (value: string) => void;
-}) {
+  size = "md",
+}: FormulasBtnProps) {
+  const buttonSizeClass =
+    size === "compact"
+      ? "!w-[44px] !h-[36px] !text-[1.02rem]"
+      : "!w-12 !h-10 !text-lg";
   return (
-    <div className="flex gap-2 justify-center flex-wrap py-2">
+    <div className="flex gap-1.5 justify-center flex-wrap py-1.5">
       {formulas.map((f) => (
         <KeyboardBtn
           key={f.label}
           onClick={() => onFormulaClick?.(f.value)}
-          className="!w-14 !h-12 text-xl"
+          size={size}
+          className={`${buttonSizeClass} leading-tight`}
         >
           {f.label}
         </KeyboardBtn>

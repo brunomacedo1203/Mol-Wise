@@ -4,7 +4,7 @@
     "subtitle": "বিস্তারিত দেখতে একটি নাম বা প্রতীক লিখুন",
     "description": "সমস্ত রাসায়নিক মৌল অন্বেষণ করুন, সম্পূর্ণ তথ্য এবং ইন্টারেক্টিভ ফিল্টারসহ।",
     "filterPlaceholder": "শ্রেণিবিন্যাস নির্বাচন করুন",
-    "filterLabel": "শ্রেণিবিন্যাস",
+    "filterLabel": "ফিল্টার",
     "filterOptions": {
       "TODOS": "সব",
       "RARE_EARTHS": "দুর্লভ মৃত্তিকা উপাদান",
@@ -86,6 +86,22 @@
     "groups": {
       "lanthanide": "ল্যান্থানাইড",
       "actinide": "অ্যাক্টিনাইড"
+    },
+    "periodicClassification": "আবর্ত শ্রেণীবিভাগ",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
     }
   }
 }

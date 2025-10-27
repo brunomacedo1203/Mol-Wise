@@ -31,7 +31,7 @@ const config = [
         },
       ],
       "react-hooks/exhaustive-deps": "warn",
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
     },
   },
 ];

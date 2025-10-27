@@ -2,7 +2,7 @@
   "home": {
     "title": "Mol Class",
     "welcome": "Bienvenue sur Mol Class !",
-    "subtitle": "Choisissez un outil dans la barre latérale pour commencer.",
+    "subtitle": "Explorez des outils tels que : Tableau périodique interactif, visualiseur de molécules 2D/3D, calculateurs et bien plus encore !",
     "description": "Ceci est le point de départ de Mol Class, où vous pouvez accéder à divers outils interactifs de chimie."
   }
 }

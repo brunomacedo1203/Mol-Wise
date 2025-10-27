@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 import type { Element } from "../domain/types/element";
 import type { PeriodicTableConfig } from "../domain/types/config";
 import { defaultConfig } from "../domain/types/config";
+import type { PeriodicPropertyId } from "../config/propertyFilterOptions";
 
 type HighlightSource = "hover" | "search" | "click" | null;
 
@@ -22,8 +23,14 @@ interface PeriodicTableState {
   filters: string[];
   setFilters: (filters: string[]) => void;
 
+  activePropertyFilter: PeriodicPropertyId | null;
+  setActivePropertyFilter: (property: PeriodicPropertyId | null) => void;
+
   searchValue: string;                  
   setSearchValue: (value: string) => void;
+
+  isFiltersPanelOpen: boolean;
+  setFiltersPanelOpen: (open: boolean) => void;
 }
 
 export const usePeriodicTableStore = create<PeriodicTableState>()(
@@ -46,8 +53,14 @@ export const usePeriodicTableStore = create<PeriodicTableState>()(
       filters: [],
       setFilters: (filters) => set({ filters }),
 
+      activePropertyFilter: null,
+      setActivePropertyFilter: (property) => set({ activePropertyFilter: property }),
+
       searchValue: "",                            
       setSearchValue: (value) => set({ searchValue: value }), 
+
+      isFiltersPanelOpen: false,
+      setFiltersPanelOpen: (open) => set({ isFiltersPanelOpen: open }),
     }),
     {
       name: "molclass_periodic_table",

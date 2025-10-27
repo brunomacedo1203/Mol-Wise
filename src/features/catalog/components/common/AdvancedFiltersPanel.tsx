@@ -122,11 +122,18 @@ export function AdvancedFiltersPanel({
   return (
     <div className="mb-2 border border-zinc-400 dark:border-zinc-700 rounded-lg bg-background dark:bg-zinc-900">
       <div
-        className={`px-4 py-2 ${
-          isOpen ? "border-b border-zinc-400 dark:border-zinc-700" : ""
-        }`}
+        className={`px-4 py-2 ${isOpen ? "border-b border-zinc-400 dark:border-zinc-700" : ""} cursor-pointer`}
+        role="button"
+        tabIndex={0}
+        onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onToggle();
+          }
+        }}
       >
-        <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4" />
             <h3 className="text-sm font-semibold">
@@ -138,7 +145,14 @@ export function AdvancedFiltersPanel({
               </Badge>
             )}
           </div>
-          <Button variant="ghost" size="sm" onClick={onToggle}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggle();
+            }}
+          >
             {isOpen ? (
               <ChevronUp className="h-4 w-4" />
             ) : (

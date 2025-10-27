@@ -29,11 +29,11 @@ import {
 } from "../events/molecule2DEvents";
 
 interface UseViewer2DRendererProps {
-  svgHostRef: React.RefObject<HTMLDivElement | null>;
-  svgElRef: React.RefObject<SVGSVGElement | null>;
-  vbRef: React.RefObject<ViewBox | null>;
-  vbInitialRef: React.RefObject<ViewBox | null>;
-  contentBoundsRef: React.RefObject<ViewBox | null>;
+  svgHostRef: React.MutableRefObject<HTMLDivElement | null>;
+  svgElRef: React.MutableRefObject<SVGSVGElement | null>;
+  vbRef: React.MutableRefObject<ViewBox | null>;
+  vbInitialRef: React.MutableRefObject<ViewBox | null>;
+  contentBoundsRef: React.MutableRefObject<ViewBox | null>;
   sdf: string | null;
   smiles: string | null;
 }

@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "chrome": {
+            "command": "node",
+            "args": [
+                "/mnt/c/Users/usuario/Documents/chrome-devtools-mcp/index.js"
+            ]
+        }
+    }
+}

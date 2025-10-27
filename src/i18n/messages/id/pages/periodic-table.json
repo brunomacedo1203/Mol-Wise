@@ -4,7 +4,7 @@
     "subtitle": "Masukkan nama atau simbol untuk melihat detail",
     "description": "Jelajahi semua unsur kimia dengan data lengkap dan filter interaktif.",
     "filterPlaceholder": "Pilih klasifikasi",
-    "filterLabel": "Klasifikasi",
+    "filterLabel": "Filter",
     "filterOptions": {
       "TODOS": "Semua",
       "RARE_EARTHS": "Logam Tanah Jarang",
@@ -86,6 +86,22 @@
     "groups": {
       "lanthanide": "Lantanida",
       "actinide": "Aktinida"
+    },
+    "periodicClassification": "Klasifikasi Periodik",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
     }
   }
 }

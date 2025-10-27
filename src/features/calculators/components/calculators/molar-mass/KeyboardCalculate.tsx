@@ -20,12 +20,12 @@ export default function KeyboardCalculate({
   onBackspace,
 }: KeyboardCalculateProps) {
   return (
-    <div className="flex flex-col items-center w-full    rounded-xl shadow">
+    <div className="flex flex-col items-center w-full">
       <div className="w-full flex justify-center">
-        <Keyboard onKeyPress={onKeyPress} />
+        <Keyboard onKeyPress={onKeyPress} size="compact" />
       </div>
       <div className="w-full flex justify-center">
-        <FormulasBtn onFormulaClick={onFormulaClick} />
+        <FormulasBtn onFormulaClick={onFormulaClick} size="compact" />
       </div>
       <div className="w-full flex justify-center">
         <OperatorsBtn

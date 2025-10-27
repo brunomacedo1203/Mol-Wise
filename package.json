@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@10.18.2",
   "name": "molclass",
   "version": "0.1.0",
   "private": true,
@@ -8,9 +9,9 @@
     "postbuild": "node generate-sitemap.cjs",
     "start": "next start",
     "lint": "next lint --fix",
-    "prebuild": "npm run lint",
-    "sitemap": "next-sitemap",
-    "analyze": "cross-env ANALYZE=true next build"
+    "prebuild": "pnpm run lint",
+    "analyze": "cross-env ANALYZE=true next build",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -26,7 +27,6 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tabler/icons-react": "^3.34.1",
     "@tanstack/react-table": "^8.21.3",
-    "@types/dompurify": "^3.0.5",
     "@types/mathjs": "^9.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -49,6 +49,7 @@
     "shadcn-ui": "^0.9.5",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "workbox-window": "^7.3.0",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -56,16 +57,18 @@
     "@next/bundle-analyzer": "^15.5.4",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
+    "@types/minimatch": "5.1.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "autoprefixer": "^10.4.14",
+    "chrome-devtools-mcp": "^0.9.0",
     "cross-env": "^10.0.0",
     "eslint": "^9.26.0",
     "eslint-config-next": "15.3.1",
-    "next-sitemap": "^4.2.3",
+    "next-pwa": "^5.6.0",
     "postcss": "^8.4.31",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss": "^3.3.0",

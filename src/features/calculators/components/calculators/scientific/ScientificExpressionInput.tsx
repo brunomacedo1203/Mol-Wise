@@ -98,6 +98,22 @@ const ScientificExpressionInput = ({
     },
     [onCursorPositionChange]
   );
+  
+  const handleInputTouchStart = useCallback(
+    (e: React.TouchEvent<HTMLInputElement>) => {
+      // Bloqueia o início de drag em dispositivos touch
+      e.stopPropagation();
+    },
+    []
+  );
+
+  const handleInputTouchMove = useCallback(
+    (e: React.TouchEvent<HTMLInputElement>) => {
+      // Permite seleção/rolagem dentro do input sem acionar drag
+      e.stopPropagation();
+    },
+    []
+  );
 
   return (
     <div className="flex flex-col w-full space-y-1">
@@ -113,6 +129,8 @@ const ScientificExpressionInput = ({
           onMouseDown={handleInputMouseDown}
           onMouseMove={handleInputMouseMove}
           onClick={handleInputClick}
+          onTouchStart={handleInputTouchStart}
+          onTouchMove={handleInputTouchMove}
           placeholder={placeholder}
           className={`w-full pt-2 pb-2 px-3 text-xl bg-white dark:bg-white/5 border rounded-xl shadow-sm transition-all duration-200 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/40 min-h-[3rem] ${
             errorMessage

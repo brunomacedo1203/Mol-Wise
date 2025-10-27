@@ -4,7 +4,7 @@
     "subtitle": "输入名称或符号以查看详细信息",
     "description": "探索所有化学元素，提供完整数据和交互式筛选。",
     "filterPlaceholder": "选择分类",
-    "filterLabel": "分类",
+    "filterLabel": "筛选",
     "filterOptions": {
       "TODOS": "全部",
       "RARE_EARTHS": "稀土",
@@ -86,6 +86,22 @@
     "groups": {
       "lanthanide": "镧系元素",
       "actinide": "锕系元素"
+    },
+    "periodicClassification": "周期分类",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
     }
   }
 }

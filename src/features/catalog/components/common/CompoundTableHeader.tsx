@@ -43,7 +43,15 @@ export function CompoundTableHeader({
               <TableHead
                 key={key}
                 className={cn(
-                  "cursor-pointer select-none font-bold break-words text-xs leading-tight px-2 bg-zinc-100 text-black dark:bg-zinc-800 dark:text-zinc-200",
+                  "cursor-pointer select-none font-bold leading-tight bg-zinc-100 text-black dark:bg-zinc-800 dark:text-zinc-200",
+                  // Padding responsivo
+                  "px-1 py-2 sm:px-2 md:px-3",
+                  // Tamanhos responsivos de fonte - mais agressivo
+                  "text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm",
+                  // Largura mínima para mobile
+                  "min-w-[60px] sm:min-w-[80px] md:min-w-0",
+                  // Quebra de palavra
+                  "break-words hyphens-auto",
                   key === "solubilityNumeric"
                     ? "text-right"
                     : centerAlignedColumns.includes(key) && "text-center"
@@ -54,36 +62,42 @@ export function CompoundTableHeader({
                 !tooltipText.startsWith("catalog.tableHeaderDescriptions") ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center gap-1">
-                        {typeof label === "string"
-                          ? label
-                          : extractLabelText(label)}
+                      <div className="flex items-center gap-0.5 sm:gap-1">
+                        <span className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm leading-tight">
+                          {typeof label === "string"
+                            ? label
+                            : extractLabelText(label)}
+                        </span>
                         {sortColumn === key ? (
                           sortOrder === "asc" ? (
-                            <ArrowUp className="w-3 h-3 flex-shrink-0" />
+                            <ArrowUp className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                           ) : (
-                            <ArrowDown className="w-3 h-3 flex-shrink-0" />
+                            <ArrowDown className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                           )
                         ) : (
-                          <ChevronsUpDown className="w-3 h-3 text-muted-foreground flex-shrink-0" />
+                          <ChevronsUpDown className="w-2 h-2 sm:w-3 sm:h-3 text-muted-foreground flex-shrink-0" />
                         )}
                       </div>
                     </TooltipTrigger>
-                    <TooltipContent side="bottom">{tooltipText}</TooltipContent>
+                    <TooltipContent side="bottom" className="text-xs">
+                      {tooltipText}
+                    </TooltipContent>
                   </Tooltip>
                 ) : (
-                  <div className="flex items-center gap-1">
-                    {typeof label === "string"
-                      ? label
-                      : extractLabelText(label)}
+                  <div className="flex items-center gap-0.5 sm:gap-1">
+                    <span className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm leading-tight">
+                      {typeof label === "string"
+                        ? label
+                        : extractLabelText(label)}
+                    </span>
                     {sortColumn === key ? (
                       sortOrder === "asc" ? (
-                        <ArrowUp className="w-3 h-3 flex-shrink-0" />
+                        <ArrowUp className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                       ) : (
-                        <ArrowDown className="w-3 h-3 flex-shrink-0" />
+                        <ArrowDown className="w-2 h-2 sm:w-3 sm:h-3 flex-shrink-0" />
                       )
                     ) : (
-                      <ChevronsUpDown className="w-3 h-3 text-muted-foreground flex-shrink-0" />
+                      <ChevronsUpDown className="w-2 h-2 sm:w-3 sm:h-3 text-muted-foreground flex-shrink-0" />
                     )}
                   </div>
                 )}

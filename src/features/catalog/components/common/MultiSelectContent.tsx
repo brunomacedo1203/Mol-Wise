@@ -24,6 +24,7 @@ interface MultiSelectContentProps {
   onToggleAll: () => void;
   onClear: () => void;
   onClose: () => void;
+  allowSelectAll?: boolean;
 }
 
 export function MultiSelectContent({
@@ -34,6 +35,7 @@ export function MultiSelectContent({
   onToggleAll,
   onClear,
   onClose,
+  allowSelectAll = true,
 }: MultiSelectContentProps) {
   const t = useTranslations();
   return (
@@ -45,23 +47,25 @@ export function MultiSelectContent({
       <CommandList>
         <CommandEmpty>{t("multiSelect.noResults")}</CommandEmpty>
         <CommandGroup>
-          <CommandItem
-            key="all"
-            onSelect={onToggleAll}
-            className="cursor-pointer"
-          >
-            <div
-              className={cn(
-                "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                selectedValues.length === options.length
-                  ? "bg-primary text-primary-foreground"
-                  : "opacity-50 [&_svg]:invisible"
-              )}
+          {allowSelectAll && (
+            <CommandItem
+              key="all"
+              onSelect={onToggleAll}
+              className="cursor-pointer"
             >
-              <CheckIcon className="h-4 w-4" />
-            </div>
-            <span>{t("multiSelect.selectAll")}</span>
-          </CommandItem>
+              <div
+                className={cn(
+                  "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                  selectedValues.length === options.length
+                    ? "bg-primary text-primary-foreground"
+                    : "opacity-50 [&_svg]:invisible"
+                )}
+              >
+                <CheckIcon className="h-4 w-4" />
+              </div>
+              <span>{t("multiSelect.selectAll")}</span>
+            </CommandItem>
+          )}
           {options.map((option) => {
             const isSelected = selectedValues.includes(option.value);
             return (

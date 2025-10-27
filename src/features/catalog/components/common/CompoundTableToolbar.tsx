@@ -35,7 +35,7 @@ export function CompoundTableToolbar({
   
   return (
     <div className="p-2 border border-zinc-400 dark:border-zinc-600 rounded-lg bg-background dark:bg-zinc-900">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-4">
         {/* Campo de busca - Esquerda */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700 dark:text-zinc-200">

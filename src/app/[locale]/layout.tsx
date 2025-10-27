@@ -10,6 +10,8 @@ import Script from "next/script";
 import { ThemeEffectProvider } from "@/shared/components/theme/ThemeEffectProvider";
 import CookieConsentBanner from "@/shared/components/cookies/CookieConsentBanner";
 import AnalyticsManager from "@/shared/components/analytics/AnalyticsManager";
+import type { Metadata, Viewport } from "next";
+import { PWARegister } from "@/app/_components/PWARegister";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,6 +49,26 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+export const metadata: Metadata = {
+  applicationName: "Mol Class",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Mol Class",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    icon: [
+      { url: "/icons/pwa-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/pwa-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/pwa-192.png" }],
+  },
+};
+
 export default async function LocaleLayout({
   children,
   params,
@@ -79,6 +101,7 @@ export default async function LocaleLayout({
 
         {/* Scripts de analytics e Clarity condicionados ao consentimento */}
         <AnalyticsManager />
+        <PWARegister />
 
         <ThemeEffectProvider>
           <NextIntlClientProvider locale={locale}>
@@ -90,3 +113,13 @@ export default async function LocaleLayout({
     </html>
   );
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
+};

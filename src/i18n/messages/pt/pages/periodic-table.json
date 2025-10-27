@@ -4,7 +4,7 @@
     "subtitle": "Digite um nome ou símbolo para ver detalhes",
     "description": "Explore todos os elementos químicos com dados completos e filtros interativos.",
     "filterPlaceholder": "Selecionar classificação(ões)",
-    "filterLabel": "Classificação",
+    "filterLabel": "Filtros",
     "filterOptions": {
       "TODOS": "Todos",
       "RARE_EARTHS": "Terra Rara",
@@ -86,6 +86,22 @@
     "groups": {
       "lanthanide": "Lantanóide",
       "actinide": "Actinóide"
+    },
+    "periodicClassification": "Classificação Periódica",
+    "periodicProperties": {
+      "label": "Propriedades Periódicas",
+      "placeholder": "Selecione uma propriedade",
+      "clearOption": "Sem propriedade",
+      "options": {
+        "atomicRadius": "Raio Atômico",
+        "electronegativity": "Eletronegatividade",
+        "electronAffinity": "Afinidade Eletrônica",
+        "ionizationEnergy": "Energia de Ionização"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
     }
   }
 }

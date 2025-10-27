@@ -12,6 +12,7 @@ import { useMultiSelectLogic } from "@/features/catalog/hooks/common/useMultiSel
 import { MultiSelectTrigger } from "@/features/catalog/components/common/MultiSelectTrigger";
 import { MultiSelectContent } from "@/features/catalog/components/common/MultiSelectContent";
 import type { CustomMultiSelectConfig } from "@/shared/store/multiSelectGlobalStore";
+import { useGlobalMultiSelect } from "@/shared/hooks/useGlobalMultiSelect";
 
 interface MultiSelectProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -74,6 +75,15 @@ export const MultiSelect = React.forwardRef<
       maxCount: customConfig?.maxDisplayCount || maxCount,
     });
 
+    const { config: globalConfig } = useGlobalMultiSelect(
+      componentId,
+      customConfig
+    );
+    const allowSelectAll =
+      globalConfig.allowSelectAll === undefined
+        ? true
+        : globalConfig.allowSelectAll;
+
     // Sincronizar com value quando mudar (componente controlado)
     React.useEffect(() => {
       if (value !== undefined) {
@@ -112,6 +122,7 @@ export const MultiSelect = React.forwardRef<
             onToggleAll={toggleAll}
             onClear={handleClear}
             onClose={() => setPopoverOpen(false)}
+            allowSelectAll={allowSelectAll}
           />
         </PopoverContent>
         {animation > 0 && currentSelectedValues.length > 0 && (

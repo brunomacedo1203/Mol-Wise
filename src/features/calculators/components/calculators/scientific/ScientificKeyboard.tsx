@@ -71,8 +71,8 @@ export default function ScientificKeyboard({
   ];
 
   return (
-    <div className="flex flex-col items-center w-full gap-0  rounded-xl shadow">
-      <div className="grid grid-cols-8 gap-1 w-[482px] mx-auto">
+    <div className="flex flex-col items-center w-full gap-1">
+      <div className="grid grid-cols-8 gap-1 w-full max-w-[380px] mx-auto">
         {fullKeyboardLayout.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
             {row.map((button) => {
@@ -104,7 +104,7 @@ export default function ScientificKeyboard({
                   <KeyboardBtn
                     key={button.value}
                     onClick={() => onKeyPress?.(keyPressValue)}
-                    className={`text-lg font-semibold ${
+                    className={`text-sm sm:text-base font-semibold ${
                       button.type === "operator"
                         ? "text-blue-600 dark:text-blue-400 font-bold"
                         : "text-gray-900 dark:text-white font-semibold"
@@ -119,31 +119,31 @@ export default function ScientificKeyboard({
         ))}
       </div>
 
-      <div className="flex gap-2 mt-1 items-center justify-center w-full px-4">
-        <KeyboardBtn onClick={onReset} className="bg-white w-10 h-10">
-          <ReloadIcon size={24} />
+      <div className="flex gap-1.5 mt-1 items-center justify-center w-full px-2">
+        <KeyboardBtn onClick={onReset} className="bg-white w-9 h-9">
+          <ReloadIcon size={20} />
         </KeyboardBtn>
         <KeyboardBtn
           onClick={() => onKeyPress("(")}
-          className="bg-white w-10 h-10 text-lg font-bold text-gray-900 dark:text-white"
+          className="bg-white w-9 h-9 text-base font-bold text-gray-900 dark:text-white"
         >
           (
         </KeyboardBtn>
         <KeyboardBtn
           onClick={onCalculate}
           noDefaultHover
-          className="!bg-teal-400 hover:!bg-teal-600 dark:bg-teal-500 dark:hover:bg-teal-700 text-black font-semibold text-xl w-34 h-10 px-6"
+          className="!bg-teal-400 hover:!bg-teal-600 dark:bg-teal-500 dark:hover:bg-teal-700 text-black font-semibold text-sm sm:text-base min-w-[112px] h-9 px-4"
         >
           {t("keyboard.calculate")}
         </KeyboardBtn>
         <KeyboardBtn
           onClick={() => onKeyPress(")")}
-          className="bg-white w-10 h-10 text-lg font-bold text-gray-900 dark:text-white"
+          className="bg-white w-9 h-9 text-base font-bold text-gray-900 dark:text-white"
         >
           )
         </KeyboardBtn>
-        <KeyboardBtn onClick={onBackspace} className="bg-white w-10 h-10">
-          <BackspaceIcon size={24} />
+        <KeyboardBtn onClick={onBackspace} className="bg-white w-9 h-9">
+          <BackspaceIcon size={20} />
         </KeyboardBtn>
       </div>
     </div>

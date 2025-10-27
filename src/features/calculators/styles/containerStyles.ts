@@ -8,9 +8,9 @@ export const containerStyles = {
    * Estilos do container principal
    */
   root: `
-    p-2 
-    rounded-2xl 
-    border border-zinc-200 shadow-xl
+    p-2
+    rounded-xl
+    border border-zinc-200 shadow-lg
     bg-white bg-opacity-90 dark:bg-neutral-800 dark:bg-opacity-80
     flex flex-col
     dark:border-white/20 dark:shadow-none
@@ -22,15 +22,15 @@ export const containerStyles = {
    * Estilos do cabeçalho
    */
   header: {
-    container: "mb-3 flex items-start justify-between w-full",
-    titleContainer: "flex-1 pl-6",
-    title: "py-2 text-3xl font-bold text-zinc-800 dark:text-zinc-100 text-center w-full",
-    subtitle: "text-[15px] text-zinc-600 dark:text-white/60 text-center block w-full",
+    container: "mb-2 flex items-start justify-between w-full",
+    titleContainer: "flex-1 pl-4",
+    title: "py-1.5 text-2xl font-semibold text-zinc-800 dark:text-zinc-100 text-center w-full",
+    subtitle: "text-sm text-zinc-600 dark:text-white/60 text-center block w-full",
 
     closeButton: `
-      ml-2 mt-1 p-2 rounded-full text-red-600
+      ml-1.5 mt-1 p-1.5 rounded-full text-red-600
       hover:bg-red-500 hover:text-white dark:hover:bg-red-600
-      shadow-lg border border-zinc-300 dark:border-red-800
+      shadow-md border border-zinc-300 dark:border-red-800
       transition focus:outline-none focus:ring-2 focus:ring-red-400
       transform hover:scale-110
     `,
@@ -50,17 +50,17 @@ export const containerStyles = {
    */
   keyboardToggle: {
     container: "w-full flex justify-center mt-2",
-    button: "text-base text-zinc-500 dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-white flex items-center gap-1",
+    button: "text-sm text-zinc-500 dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-white flex items-center gap-1",
   },
 
   /**
    * Configurações do Rnd
    */
   rnd: {
-    minWidth: 500,
-    maxWidth: 800,
-    defaultWidth: 525,
-    defaultHeight: 400,
+    minWidth: 380,
+    maxWidth: 760,
+    defaultWidth: 410,
+    defaultHeight: 360,
     enable: {
       top: true,
       right: true,

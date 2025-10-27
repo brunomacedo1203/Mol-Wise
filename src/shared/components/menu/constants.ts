@@ -23,14 +23,16 @@ export const SUBMENU_VARIANTS = {
 
 export const MENU_WIDTHS = {
   COLLAPSED: "w-16",
-  EXPANDED: "w-60",
+  EXPANDED: "w-[280px]",
 } as const;
 
 export const MENU_CLASSES = {
-  BASE: "sidebar relative flex flex-col h-full bg-zinc-100 dark:bg-neutral-900",
-  ITEM: "flex items-center px-2 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 gap-2 ",
+  BASE: "sidebar relative flex flex-col h-full bg-zinc-100 dark:bg-neutral-900 pr-1",
+
+  ITEM: "flex items-center px-2 py-2 pr-1 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 gap-2",
   ACTIVE_ITEM: "bg-zinc-100 dark:bg-zinc-900",
-  SUBMENU: "rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[160px] w-full mb-2",
-  SUBMENU_ITEM:  "flex items-center gap-2 w-full px-2 py-2 rounded-md text-sm mt-1 " +
-  " hover:bg-zinc-200 dark:hover:bg-zinc-600",
+  SUBMENU:
+    "rounded-xl border border-zinc-200 bg-white shadow-lg dark:bg-neutral-800 dark:border-neutral-700 min-w-[260px] max-w-[140px] w-auto mb-2",
+  SUBMENU_ITEM: "flex items-center gap-2 px-2 py-2 pr-1 rounded-md text-sm " +
+    " hover:bg-zinc-200 dark:hover:bg-zinc-600",
 } as const;

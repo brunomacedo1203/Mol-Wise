@@ -4,7 +4,7 @@
     "subtitle": "Enter a name or symbol to view details",
     "description": "Explore all chemical elements with complete data and interactive filters.",
     "filterPlaceholder": "Select classification(s)",
-    "filterLabel": "Classification",
+    "filterLabel": "Filters",
     "filterOptions": {
       "TODOS": "All",
       "RARE_EARTHS": "Rare Earth",
@@ -86,6 +86,22 @@
     "groups": {
       "lanthanide": "Lanthanide",
       "actinide": "Actinide"
+    },
+    "periodicClassification": "Periodic Classification",
+    "periodicProperties": {
+      "label": "Periodic Properties",
+      "placeholder": "Select a property",
+      "clearOption": "No property",
+      "options": {
+        "atomicRadius": "Atomic Radius",
+        "electronegativity": "Electronegativity",
+        "electronAffinity": "Electron Affinity",
+        "ionizationEnergy": "Ionization Energy"
+      },
+      "units": {
+        "picometers": "pm",
+        "electronvolt": "eV"
+      }
     }
   }
 }

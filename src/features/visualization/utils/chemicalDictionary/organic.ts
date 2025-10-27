@@ -1,4 +1,3 @@
-// src/features/visualization/utils/chemicalDictionary/organic.ts
 // 🌍 Dicionário multilíngue de compostos orgânicos
 
 export const ORGANIC_DICTIONARY: Record<
@@ -17,767 +16,137 @@ export const ORGANIC_DICTIONARY: Record<
     commonName?: string;
   }
 > = {
-  // 🔥 Hidrocarbonetos
-  // 🔥 Hidrocarbonetos (expandidos até C10 com traduções multilíngues)
-"metano": {
-  english: "methane",
-  french: "méthane",
-  german: "Methan",
-  spanish: "metano",
-  arabic: "ميثان",
-  hindi: "मीथेन",
-  russian: "метан",
-  chinese: "甲烷",
-  indonesian: "metana",
-  bengali: "মিথেন"
-},
-"etano": {
-  english: "ethane",
-  french: "éthane",
-  german: "Ethan",
-  spanish: "etano",
-  arabic: "إيثان",
-  hindi: "एथेन",
-  russian: "этан",
-  chinese: "乙烷",
-  indonesian: "etana",
-  bengali: "ইথেন"
-},
 
-"decano": {
-  english: "decane",
-  french: "décane",
-  german: "Decan",
-  spanish: "decano",
-  arabic: "ديكان",
-  hindi: "डिकेन",
-  russian: "декан",
-  chinese: "癸烷",
-  indonesian: "dekana",
-  bengali: "ডেকেন"
-},
-// 🌿 Hidrocarbonetos ramificados (principais isômeros e cadeias secundárias)
-"isobutano": {
-  english: "isobutane",
-  french: "isobutane",
-  german: "Isobutan",
-  spanish: "isobutano",
-  arabic: "إيزوبيوتان",
-  hindi: "आइसोब्यूटेन",
-  russian: "изобутан",
-  chinese: "异丁烷",
-  indonesian: "isobutana",
-  bengali: "আইসোবিউটেন"
-},
-"2-metilpropano": {
-  english: "2-methylpropane",
-  french: "2-méthylpropane",
-  german: "2-Methylpropan",
-  spanish: "2-metilpropano",
-  arabic: "2-ميثيل بروبان",
-  hindi: "2-मेथिलप्रोपेन",
-  russian: "2-метилпропан",
-  chinese: "2-甲基丙烷",
-  indonesian: "2-metilpropan",
-  bengali: "২-মিথাইলপ্রোপেন"
-},
-"isopentano": {
-  english: "isopentane",
-  french: "isopentane",
-  german: "Isopentan",
-  spanish: "isopentano",
-  arabic: "إيزوبنتان",
-  hindi: "आइसोपेंटेन",
-  russian: "изопентан",
-  chinese: "异戊烷",
-  indonesian: "isopentana",
-  bengali: "আইসোপেন্টেন"
-},
-"2-metilbutano": {
-  english: "2-methylbutane",
-  french: "2-méthylbutane",
-  german: "2-Methylbutan",
-  spanish: "2-metilbutano",
-  arabic: "2-ميثيل بيوتان",
-  hindi: "2-मेथिलब्यूटेन",
-  russian: "2-метилбутан",
-  chinese: "2-甲基丁烷",
-  indonesian: "2-metilbutana",
-  bengali: "২-মিথাইলবিউটেন"
-},
-"neopentano": {
-  english: "neopentane",
-  french: "néopentane",
-  german: "Neopentan",
-  spanish: "neopentano",
-  arabic: "نيو بنتان",
-  hindi: "नियोपेंटेन",
-  russian: "неопентан",
-  chinese: "新戊烷",
-  indonesian: "neopentana",
-  bengali: "নিওপেন্টেন"
-},
-"2,2-dimetilpropano": {
-  english: "2,2-dimethylpropane",
-  french: "2,2-diméthylpropane",
-  german: "2,2-Dimethylpropan",
-  spanish: "2,2-dimetilpropano",
-  arabic: "2,2-ثنائي ميثيل بروبان",
-  hindi: "2,2-डाइमिथाइलप्रोपेन",
-  russian: "2,2-диметилпропан",
-  chinese: "2,2-二甲基丙烷",
-  indonesian: "2,2-dimetilpropan",
-  bengali: "২,২-ডাইমিথাইলপ্রোপেন"
-},
-"isohexano": {
-  english: "isohexane",
-  french: "isohexane",
-  german: "Isohexan",
-  spanish: "isohexano",
-  arabic: "إيزوهيكسان",
-  hindi: "आइसोहेक्सेन",
-  russian: "изогексан",
-  chinese: "异己烷",
-  indonesian: "isoheksana",
-  bengali: "আইসোহেক্সেন"
-},
-"3-metilpentano": {
-  english: "3-methylpentane",
-  french: "3-méthylpentane",
-  german: "3-Methylpentan",
-  spanish: "3-metilpentano",
-  arabic: "3-ميثيل بنتان",
-  hindi: "3-मेथिलपेंटेन",
-  russian: "3-метилпентан",
-  chinese: "3-甲基戊烷",
-  indonesian: "3-metilpentana",
-  bengali: "৩-মিথাইলপেন্টেন"
-},
-"2,3-dimetilbutano": {
-  english: "2,3-dimethylbutane",
-  french: "2,3-diméthylbutane",
-  german: "2,3-Dimethylbutan",
-  spanish: "2,3-dimetilbutano",
-  arabic: "2,3-ثنائي ميثيل بيوتان",
-  hindi: "2,3-डाइमिथाइलब्यूटेन",
-  russian: "2,3-диметилбутан",
-  chinese: "2,3-二甲基丁烷",
-  indonesian: "2,3-dimetilbutana",
-  bengali: "২,৩-ডাইমিথাইলবিউটেন"
-},
-"isoheptano": {
-  english: "isoheptane",
-  french: "isoheptane",
-  german: "Isoheptan",
-  spanish: "isoheptano",
-  arabic: "إيزوهيبتان",
-  hindi: "आइसोहैपटेन",
-  russian: "изогептан",
-  chinese: "异庚烷",
-  indonesian: "isoheptana",
-  bengali: "আইসোহেপ্টেন"
-},
-"2,4-dimetilpentano": {
-  english: "2,4-dimethylpentane",
-  french: "2,4-diméthylpentane",
-  german: "2,4-Dimethylpentan",
-  spanish: "2,4-dimetilpentano",
-  arabic: "2,4-ثنائي ميثيل بنتان",
-  hindi: "2,4-डाइमिथाइलपेंटेन",
-  russian: "2,4-диметилпентан",
-  chinese: "2,4-二甲基戊烷",
-  indonesian: "2,4-dimetilpentana",
-  bengali: "২,৪-ডাইমিথাইলপেন্টেন"
-},
+  // 🌿 Hidrocarbonetos ramificados
+  "isobutano": { "english": "isobutane", "french": "isobutane", "german": "Isobutan", "spanish": "isobutano", "arabic": "إيزوبيوتان", "hindi": "आइसोब्यूटेन", "russian": "изобутан", "chinese": "异丁烷", "indonesian": "isobutana", "bengali": "আইসোবিউটেন" },
+  "2-metilpropano": { "english": "2-methylpropane", "french": "2-méthylpropane", "german": "2-Methylpropan", "spanish": "2-metilpropano", "arabic": "2-ميثيل بروبان", "hindi": "2-मेथिलप्रोपेन", "russian": "2-метилпропан", "chinese": "2-甲基丙烷", "indonesian": "2-metilpropan", "bengali": "২-মিথাইলপ্রোপেন" },
+  "isopentano": { "english": "isopentane", "french": "isopentane", "german": "Isopentan", "spanish": "isopentano", "arabic": "إيزوبنتان", "hindi": "आइसोपेंटेन", "russian": "изопентан", "chinese": "异戊烷", "indonesian": "isopentana", "bengali": "আইসোপেন্টেন" },
+  "2-metilbutano": { "english": "2-methylbutane", "french": "2-méthylbutane", "german": "2-Methylbutan", "spanish": "2-metilbutano", "arabic": "2-ميثيل بيوتان", "hindi": "2-मेथिलब्यूटेन", "russian": "2-метилбутан", "chinese": "2-甲基丁烷", "indonesian": "2-metilbutana", "bengali": "২-মিথাইলবিউটেন" },
+  "neopentano": { "english": "neopentane", "french": "néopentane", "german": "Neopentan", "spanish": "neopentano", "arabic": "نيو بنتان", "hindi": "नियोपेंटेन", "russian": "неопентан", "chinese": "新戊烷", "indonesian": "neopentana", "bengali": "নিওপেন্টেন" },
+  "2,2-dimetilpropano": { "english": "2,2-dimethylpropane", "french": "2,2-diméthylpropane", "german": "2,2-Dimethylpropan", "spanish": "2,2-dimetilpropano", "arabic": "2,2-ثنائي ميثيل بروبان", "hindi": "2,2-डाइमिथाइलप्रोपेन", "russian": "2,2-диметилпропан", "chinese": "2,2-二甲基丙烷", "indonesian": "2,2-dimetilpropan", "bengali": "২,২-ডাইমিথাইলপ্রোপেন" },
 
+  // 🔥 Alcenos
+  "eteno": { "english": "ethylene", "french": "éthylène", "german": "Ethen", "spanish": "eteno", "arabic": "إيثيلين", "hindi": "एथिलीन", "russian": "этилен", "chinese": "乙烯", "indonesian": "etilena", "bengali": "ইথিলিন" },
+  "propeno": { "english": "propene", "french": "propène", "german": "Propen", "spanish": "propeno", "arabic": "بروبيلين", "hindi": "प्रोपीन", "russian": "пропен", "chinese": "丙烯", "indonesian": "propena", "bengali": "প্রোপিন" },
+  "buteno": { "english": "butene", "french": "butène", "german": "Buten", "spanish": "buteno", "arabic": "بيوتين", "hindi": "ब्यूटीन", "russian": "бутен", "chinese": "丁烯", "indonesian": "butena", "bengali": "বিউটিন" },
 
-// 🔥 Alcenos correspondentes (C2–C10)
-"eteno": {
-  english: "ethylene",
-  french: "éthylène",
-  german: "Ethen",
-  spanish: "eteno",
-  arabic: "إيثيلين",
-  hindi: "एथिलीन",
-  russian: "этилен",
-  chinese: "乙烯",
-  indonesian: "etilena",
-  bengali: "ইথিলিন"
-},
+  // 🔥 Alcinos
+  "etino": { "english": "acetylene", "french": "acétylène", "german": "Ethin", "spanish": "etino", "arabic": "أسيتيلين", "hindi": "एसीटिलीन", "russian": "ацетилен", "chinese": "乙炔", "indonesian": "asetilena", "bengali": "অ্যাসিটিলিন" },
+  "propino": { "english": "propyne", "french": "propyne", "german": "Propin", "spanish": "propino", "arabic": "بروبين", "hindi": "प्रोपाइन", "russian": "пропин", "chinese": "丙炔", "indonesian": "propina", "bengali": "প্রোপাইন" },
 
-"propeno": {
-  english: "propene",
-  french: "propène",
-  german: "Propen",
-  spanish: "propeno",
-  arabic: "بروبيلين",
-  hindi: "प्रोपीन",
-  russian: "пропен",
-  chinese: "丙烯",
-  indonesian: "propena",
-  bengali: "প্রোপিন"
-},
-"buteno": {
-  english: "butene",
-  french: "butène",
-  german: "Buten",
-  spanish: "buteno",
-  arabic: "بيوتين",
-  hindi: "ब्यूटीन",
-  russian: "бутен",
-  chinese: "丁烯",
-  indonesian: "butena",
-  bengali: "বিউটিন"
-},
-"penteno": {
-  english: "pentene",
-  french: "pentène",
-  german: "Penten",
-  spanish: "penteno",
-  arabic: "بينتين",
-  hindi: "पेंटीन",
-  russian: "пентен",
-  chinese: "戊烯",
-  indonesian: "pentena",
-  bengali: "পেন্টিন"
-},
-"hexeno": {
-  english: "hexene",
-  french: "hexène",
-  german: "Hexen",
-  spanish: "hexeno",
-  arabic: "هكسين",
-  hindi: "हेक्सीन",
-  russian: "гексен",
-  chinese: "己烯",
-  indonesian: "heksena",
-  bengali: "হেক্সিন"
-},
-"hepteno": {
-  english: "heptene",
-  french: "heptène",
-  german: "Hepten",
-  spanish: "hepteno",
-  arabic: "هيبتين",
-  hindi: "हेप्टीन",
-  russian: "гептен",
-  chinese: "庚烯",
-  indonesian: "heptena",
-  bengali: "হেপ্টিন"
-},
-"octeno": {
-  english: "octene",
-  french: "octène",
-  german: "Octen",
-  spanish: "octeno",
-  arabic: "أوكتين",
-  hindi: "ऑक्टीन",
-  russian: "октен",
-  chinese: "辛烯",
-  indonesian: "oktena",
-  bengali: "অকটিন"
-},
-"noneno": {
-  english: "nonene",
-  french: "nonène",
-  german: "Nonen",
-  spanish: "noneno",
-  arabic: "نونين",
-  hindi: "नॉनीन",
-  russian: "нонен",
-  chinese: "壬烯",
-  indonesian: "nonena",
-  bengali: "নোনিন"
-},
-"deceno": {
-  english: "decene",
-  french: "décène",
-  german: "Decen",
-  spanish: "deceno",
-  arabic: "ديكين",
-  hindi: "डिसीन",
-  russian: "децен",
-  chinese: "癸烯",
-  indonesian: "dekena",
-  bengali: "ডেকেন"
-},
+  // 🌸 Aromáticos
+  "benzeno": { "english": "benzene", "french": "benzène", "german": "Benzol", "spanish": "benceno", "arabic": "البنزين", "hindi": "बेंजीन", "russian": "бензол", "chinese": "苯", "indonesian": "benzena", "bengali": "বেনজিন" },
+  "tolueno": { "english": "toluene", "french": "toluène", "german": "Toluol", "spanish": "tolueno", "arabic": "التولوين", "hindi": "टोल्यून", "russian": "толуол", "chinese": "甲苯", "indonesian": "toluena", "bengali": "টলুইন" },
+  "xileno": { "english": "xylene", "french": "xylène", "german": "Xylol", "spanish": "xileno", "arabic": "الزيلين", "hindi": "जाइलीन", "russian": "ксилол", "chinese": "二甲苯", "indonesian": "xilena", "bengali": "জাইলিন" },
+  "naftaleno": { "english": "naphthalene", "french": "naphtaline", "german": "Naphthalin", "spanish": "naftalina", "arabic": "النفثالين", "hindi": "नेफ्थलीन", "russian": "нафталин", "chinese": "萘", "indonesian": "naftalena", "bengali": "নাফথালিন" },
 
-// 🔥 Alcinos correspondentes (C2–C10)
-"etino": {
-  english: "acetylene",
-  french: "acétylène",
-  german: "Ethin",
-  spanish: "etino",
-  arabic: "أسيتيلين",
-  hindi: "एसीटिलीन",
-  russian: "ацетилен",
-  chinese: "乙炔",
-  indonesian: "asetilena",
-  bengali: "অ্যাসিটিলিন"
-},
-"propino": {
-  english: "propyne",
-  french: "propyne",
-  german: "Propin",
-  spanish: "propino",
-  arabic: "بروبين",
-  hindi: "प्रोपाइन",
-  russian: "пропин",
-  chinese: "丙炔",
-  indonesian: "propina",
-  bengali: "প্রোপাইন"
-},
-"butino": {
-  english: "butyne",
-  french: "butyne",
-  german: "Butin",
-  spanish: "butino",
-  arabic: "بيوتين",
-  hindi: "ब्यूटाइन",
-  russian: "бутин",
-  chinese: "丁炔",
-  indonesian: "butina",
-  bengali: "বিউটাইন"
-},
-"pentino": {
-  english: "pentyne",
-  french: "pentyne",
-  german: "Pentin",
-  spanish: "pentino",
-  arabic: "بينتين",
-  hindi: "पेंटाइन",
-  russian: "пентин",
-  chinese: "戊炔",
-  indonesian: "pentina",
-  bengali: "পেন্টাইন"
-},
-"hexino": {
-  english: "hexyne",
-  french: "hexyne",
-  german: "Hexin",
-  spanish: "hexino",
-  arabic: "هكساين",
-  hindi: "हेक्साइन",
-  russian: "гексин",
-  chinese: "己炔",
-  indonesian: "heksina",
-  bengali: "হেক্সাইন"
-},
-"heptino": {
-  english: "heptyne",
-  french: "heptyne",
-  german: "Heptin",
-  spanish: "heptino",
-  arabic: "هيبتاين",
-  hindi: "हेप्टाइन",
-  russian: "гептин",
-  chinese: "庚炔",
-  indonesian: "heptina",
-  bengali: "হেপ্টাইন"
-},
-"octino": {
-  english: "octyne",
-  french: "octyne",
-  german: "Octin",
-  spanish: "octino",
-  arabic: "أوكتاين",
-  hindi: "ऑक्टाइन",
-  russian: "октин",
-  chinese: "辛炔",
-  indonesian: "oktina",
-  bengali: "অকটাইন"
-},
-"nonino": {
-  english: "nonyne",
-  french: "nonyne",
-  german: "Nonin",
-  spanish: "nonino",
-  arabic: "نونين",
-  hindi: "नॉनाइन",
-  russian: "нонин",
-  chinese: "壬炔",
-  indonesian: "nonina",
-  bengali: "নোনাইন"
-},
-"decino": {
-  english: "decyne",
-  french: "decyne",
-  german: "Decin",
-  spanish: "decino",
-  arabic: "ديكاين",
-  hindi: "डिकाइन",
-  russian: "децин",
-  chinese: "癸炔",
-  indonesian: "dekina",
-  bengali: "ডেকাইন"
-},
-
-
-
-  "benzeno": {
-    english: "benzene",
-    french: "benzène",
-    german: "Benzol",
-    spanish: "benceno",
-    arabic: "البنزين",
-    hindi: "बेंजीन",
-    russian: "бензол",
-    chinese: "苯",
-    indonesian: "benzena",
-    bengali: "বেনজিন"
-  },
-  
-  "tolueno": {
-    english: "toluene",
-    french: "toluène",
-    german: "Toluol",
-    spanish: "tolueno",
-    arabic: "التولوين",
-    hindi: "टोल्यून",
-    russian: "толуол",
-    chinese: "甲苯",
-    indonesian: "toluena",
-    bengali: "টলুইন"
-  },
-  "xileno": {
-    english: "xylene",
-    french: "xylène",
-    german: "Xylol",
-    spanish: "xileno",
-    arabic: "الزيلين",
-    hindi: "जाइलीन",
-    russian: "ксилол",
-    chinese: "二甲苯",
-    indonesian: "xilena",
-    bengali: "জাইলিন"
-  },
-  "naftaleno": {
-    english: "naphthalene",
-    french: "naphtaline",
-    german: "Naphthalin",
-    spanish: "naftalina",
-    arabic: "النفثالين",
-    hindi: "नेफ्थलीन",
-    russian: "нафталин",
-    chinese: "萘",
-    indonesian: "naftalena",
-    bengali: "নাফথালিন"
-  },
-
-  // 🍶 Álcoois, fenóis e éteres
-  "metanol": {
-    english: "methanol",
-    french: "méthanol",
-    german: "Methanol",
-    spanish: "metanol",
-    arabic: "الميثانول",
-    hindi: "मेथनॉल",
-    russian: "метанол",
-    chinese: "甲醇",
-    indonesian: "metanol",
-    bengali: "মিথানল",
-    commonName: "álcool metílico"
-  },
-  "etanol": {
-    english: "ethanol",
-    french: "éthanol",
-    german: "Ethanol",
-    spanish: "etanol",
-    arabic: "الإيثانول",
-    hindi: "एथेनॉल",
-    russian: "этанол",
-    chinese: "乙醇",
-    indonesian: "etanol",
-    bengali: "ইথানল",
-    commonName: "álcool etílico"
-  },
-  "propanol": {
-    english: "propanol",
-    french: "propanol",
-    german: "Propanol",
-    spanish: "propanol",
-    arabic: "بروبانول",
-    hindi: "प्रोपानोल",
-    russian: "пропанол",
-    chinese: "丙醇",
-    indonesian: "propanol",
-    bengali: "প্রোপানল"
-  },
-  "glicerina": {
-    english: "glycerin",
-    french: "glycérine",
-    german: "Glyzerin",
-    spanish: "glicerina",
-    arabic: "الجلسرين",
-    hindi: "ग्लिसरीन",
-    russian: "глицерин",
-    chinese: "甘油",
-    indonesian: "gliserin",
-    bengali: "গ্লিসারিন",
-    commonName: "glicerol"
-  },
-  "fenol": {
-    english: "phenol",
-    french: "phénol",
-    german: "Phenol",
-    spanish: "fenol",
-    arabic: "الفينول",
-    hindi: "फिनोल",
-    russian: "фенол",
-    chinese: "苯酚",
-    indonesian: "fenol",
-    bengali: "ফেনল"
-  },
+  // 🍶 Álcoois
+  "metanol": { "english": "methanol", "french": "méthanol", "german": "Methanol", "spanish": "metanol", "arabic": "الميثانول", "hindi": "मेथनॉल", "russian": "метанол", "chinese": "甲醇", "indonesian": "metanol", "bengali": "মিথানল", "commonName": "álcool metílico" },
+  "etanol": { "english": "ethanol", "french": "éthanol", "german": "Ethanol", "spanish": "etanol", "arabic": "الإيثانول", "hindi": "एथेनॉल", "russian": "этанол", "chinese": "乙醇", "indonesian": "etanol", "bengali": "ইথানল", "commonName": "álcool etílico" },
+  "propanol": { "english": "propanol", "french": "propanol", "german": "Propanol", "spanish": "propanol", "arabic": "بروبانول", "hindi": "प्रोपानोल", "russian": "пропанол", "chinese": "丙醇", "indonesian": "propanol", "bengali": "প্রোপানল" },
+  "glicerina": { "english": "glycerin", "french": "glycérine", "german": "Glyzerin", "spanish": "glicerina", "arabic": "الجلسرين", "hindi": "ग्लिसरीन", "russian": "глицерин", "chinese": "甘油", "indonesian": "gliserin", "bengali": "গ্লিসারিন", "commonName": "glicerol" },
+  "fenol": { "english": "phenol", "french": "phénol", "german": "Phenol", "spanish": "fenol", "arabic": "الفينول", "hindi": "फिनोल", "russian": "фенол", "chinese": "苯酚", "indonesian": "fenol", "bengali": "ফেনল" },
 
   // 🧴 Aldeídos e cetonas
-  "formaldeído": {
-    english: "formaldehyde",
-    french: "formaldéhyde",
-    german: "Formaldehyd",
-    spanish: "formaldehído",
-    arabic: "الفورمالديهايد",
-    hindi: "फॉर्मल्डिहाइड",
-    russian: "формальдегид",
-    chinese: "甲醛",
-    indonesian: "formaldehida",
-    bengali: "ফরমালডিহাইড",
-    commonName: "metanal"
-  },
-  "acetona": {
-    english: "acetone",
-    french: "acétone",
-    german: "Aceton",
-    spanish: "acetona",
-    arabic: "الأسيتون",
-    hindi: "एसीटोन",
-    russian: "ацетон",
-    chinese: "丙酮",
-    indonesian: "aseton",
-    bengali: "অ্যাসিটোন",
-    commonName: "propanona"
-  },
-  "benzaldeído": {
-    english: "benzaldehyde",
-    french: "benzaldéhyde",
-    german: "Benzaldehyd",
-    spanish: "benzaldehído",
-    arabic: "بنزالديهيد",
-    hindi: "बेंज़ाल्डिहाइड",
-    russian: "бензальдегид",
-    chinese: "苯甲醛",
-    indonesian: "benzaldehida",
-    bengali: "বেনজালডিহাইড",
-    commonName: "cheiro de amêndoas"
-  },
+  "formaldeído": { "english": "formaldehyde", "french": "formaldéhyde", "german": "Formaldehyd", "spanish": "formaldehído", "arabic": "الفورمالديهايد", "hindi": "फॉर्मल्डिहाइड", "russian": "формальдегид", "chinese": "甲醛", "indonesian": "formaldehida", "bengali": "ফরমালডিহাইড", "commonName": "metanal" },
+  "acetona": { "english": "acetone", "french": "acétone", "german": "Aceton", "spanish": "acetona", "arabic": "الأسيتون", "hindi": "एसीटोन", "russian": "ацетон", "chinese": "丙酮", "indonesian": "aseton", "bengali": "অ্যাসিটোন", "commonName": "propanona" },
+  "benzaldeído": { "english": "benzaldehyde", "french": "benzaldéhyde", "german": "Benzaldehyd", "spanish": "benzaldehído", "arabic": "بنزالديهيد", "hindi": "बेंज़ाल्डिहाइड", "russian": "бензальдегид", "chinese": "苯甲醛", "indonesian": "benzaldehida", "bengali": "বেনজালডিহাইড", "commonName": "cheiro de amêndoas" },
 
-  // 🍋 Ácidos carboxílicos e ésteres
-  "ácido acético": {
-    english: "acetic acid",
-    french: "acide acétique",
-    german: "Essigsäure",
-    spanish: "ácido acético",
-    arabic: "حمض الخليك",
-    hindi: "एसिटिक एसिड",
-    russian: "уксусная кислота",
-    chinese: "乙酸",
-    indonesian: "asam asetat",
-    bengali: "অ্যাসিটিক অ্যাসিড",
-    commonName: "vinagre"
-  },
-  "ácido fórmico": {
-    english: "formic acid",
-    french: "acide formique",
-    german: "Ameisensäure",
-    spanish: "ácido fórmico",
-    arabic: "حمض النمل",
-    hindi: "फॉर्मिक एसिड",
-    russian: "муравьиная кислота",
-    chinese: "甲酸",
-    indonesian: "asam format",
-    bengali: "ফর্মিক অ্যাসিড"
-  },
-  "ácido cítrico": {
-    english: "citric acid",
-    french: "acide citrique",
-    german: "Zitronensäure",
-    spanish: "ácido cítrico",
-    arabic: "حمض الستريك",
-    hindi: "साइट्रिक एसिड",
-    russian: "лимонная кислота",
-    chinese: "柠檬酸",
-    indonesian: "asam sitrat",
-    bengali: "সাইট্রিক অ্যাসিড"
-  },
-  "ácido lático": {
-    english: "lactic acid",
-    french: "acide lactique",
-    german: "Milchsäure",
-    spanish: "ácido láctico",
-    arabic: "حمض اللبنيك",
-    hindi: "लैक्टिक एसिड",
-    russian: "молочная кислота",
-    chinese: "乳酸",
-    indonesian: "asam laktat",
-    bengali: "ল্যাকটিক অ্যাসিড"
-  },
-  "salicilato de metila": {
-    english: "methyl salicylate",
-    french: "salicylate de méthyle",
-    german: "Methylsalicylat",
-    spanish: "salicilato de metilo",
-    arabic: "ساليسيلات الميثيل",
-    hindi: "मेथिल सैलिसिलेट",
-    russian: "метилсалицилат",
-    chinese: "水杨酸甲酯",
-    indonesian: "metil salisilat",
-    bengali: "মিথাইল স্যালিসাইলেট",
-    commonName: "óleo de wintergreen"
-  },
+  // 🍋 Ácidos carboxílicos
+  "ácido acético": { "english": "acetic acid", "french": "acide acétique", "german": "Essigsäure", "spanish": "ácido acético", "arabic": "حمض الخليك", "hindi": "एसिटिक एसिड", "russian": "уксусная кислота", "chinese": "乙酸", "indonesian": "asam asetat", "bengali": "অ্যাসিটিক অ্যাসিড", "commonName": "vinagre" },
+  "ácido fórmico": { "english": "formic acid", "french": "acide formique", "german": "Ameisensäure", "spanish": "ácido fórmico", "arabic": "حمض النمل", "hindi": "फॉर्मिक एसिड", "russian": "муравьиная кислота", "chinese": "甲酸", "indonesian": "asam format", "bengali": "ফর্মিক অ্যাসিড" },
+  "ácido cítrico": { "english": "citric acid", "french": "acide citrique", "german": "Zitronensäure", "spanish": "ácido cítrico", "arabic": "حمض الستريك", "hindi": "साइट्रिक एसिड", "russian": "лимонная кислота", "chinese": "柠檬酸", "indonesian": "asam sitrat", "bengali": "সাইট্রিক অ্যাসিড" },
+  "ácido lático": { "english": "lactic acid", "french": "acide lactique", "german": "Milchsäure", "spanish": "ácido láctico", "arabic": "حمض اللبنيك", "hindi": "लैक्टिक एसिड", "russian": "молочная кислота", "chinese": "乳酸", "indonesian": "asam laktat", "bengali": "ল্যাকটিক অ্যাসিড" },
+  "ácido oleico": { "english": "oleic acid", "french": "acide oléique", "german": "Ölsäure", "spanish": "ácido oleico", "arabic": "حمض الأوليك", "hindi": "ओलिक एसिड", "russian": "олеиновая кислота", "chinese": "油酸", "indonesian": "asam oleat", "bengali": "অলিক অ্যাসিড" },
+  "ácido palmítico": { "english": "palmitic acid", "french": "acide palmitique", "german": "Palmitinsäure", "spanish": "ácido palmítico", "arabic": "حمض البالمتيك", "hindi": "पामिटिक एसिड", "russian": "пальмитиновая кислота", "chinese": "棕榈酸", "indonesian": "asam palmitat", "bengali": "পালমিটিক অ্যাসিড" },
+  "ácido esteárico": { "english": "stearic acid", "french": "acide stéarique", "german": "Stearinsäure", "spanish": "ácido esteárico", "arabic": "حمض الستياريك", "hindi": "स्टियरिक एसिड", "russian": "стеариновая кислота", "chinese": "硬脂酸", "indonesian": "asam stearat", "bengali": "স্টিয়ারিক অ্যাসিড" },
 
-  // 💨 Compostos halogenados e nitrados
-  "clorofórmio": {
-    english: "chloroform",
-    french: "chloroforme",
-    german: "Chloroform",
-    spanish: "cloroformo",
-    arabic: "الكلوروفورم",
-    hindi: "क्लोरोफॉर्म",
-    russian: "хлороформ",
-    chinese: "氯仿",
-    indonesian: "kloroform",
-    bengali: "ক্লোরোফর্ম",
-    commonName: "triclormetano"
-  },
-  "tetracloreto de carbono": {
-    english: "carbon tetrachloride",
-    french: "tétrachlorure de carbone",
-    german: "Tetrachlorkohlenstoff",
-    spanish: "tetracloruro de carbono",
-    arabic: "رباعي كلوريد الكربون",
-    hindi: "कार्बन टेट्राक्लोराइड",
-    russian: "четыреххлористый углерод",
-    chinese: "四氯化碳",
-    indonesian: "karbon tetraklorida",
-    bengali: "কার্বন টেট্রাক্লোরাইড"
-  },
-  "nitrobenzeno": {
-    english: "nitrobenzene",
-    french: "nitrobenzène",
-    german: "Nitrobenzol",
-    spanish: "nitrobenceno",
-    arabic: "نيتروبنزين",
-    hindi: "नाइट्रोबेंजीन",
-    russian: "нитробензол",
-    chinese: "硝基苯",
-    indonesian: "nitrobenzena",
-    bengali: "নাইট্রোবেঞ্জিন"
-  },
+  // 💨 Compostos halogenados
+  "clorofórmio": { "english": "chloroform", "french": "chloroforme", "german": "Chloroform", "spanish": "cloroformo", "arabic": "الكلوروفورم", "hindi": "क्लोरोफॉर्म", "russian": "хлороформ", "chinese": "氯仿", "indonesian": "kloroform", "bengali": "ক্লোরোফর্ম", "commonName": "triclormetano" },
+  "tetracloreto de carbono": { "english": "carbon tetrachloride", "french": "tétrachlorure de carbone", "german": "Tetrachlorkohlenstoff", "spanish": "tetracloruro de carbono", "arabic": "رباعي كلوريد الكربون", "hindi": "कार्बन टेट्राक्लोराइड", "russian": "четыреххлористый углерод", "chinese": "四氯化碳", "indonesian": "karbon tetraklorida", "bengali": "কার্বন টেট্রাক্লোরাইড" },
 
-  // 🧬 Aminas e amidas
-  "anilina": {
-    english: "aniline",
-    french: "aniline",
-    german: "Anilin",
-    spanish: "anilina",
-    arabic: "أنيلين",
-    hindi: "एनिलीन",
-    russian: "анилин",
-    chinese: "苯胺",
-    indonesian: "anilina",
-    bengali: "অ্যানিলিন"
-  },
-  "ureia": {
-    english: "urea",
-    french: "urée",
-    german: "Harnstoff",
-    spanish: "urea",
-    arabic: "اليوريا",
-    hindi: "यूरिया",
-    russian: "мочевина",
-    chinese: "尿素",
-    indonesian: "urea",
-    bengali: "ইউরিয়া"
-  },
+  // 🧬 Aminas
+  "anilina": { "english": "aniline", "french": "aniline", "german": "Anilin", "spanish": "anilina", "arabic": "أنيلين", "hindi": "एनिलीन", "russian": "анилин", "chinese": "苯胺", "indonesian": "anilina", "bengali": "অ্যানিলিন" },
+  "ureia": { "english": "urea", "french": "urée", "german": "Harnstoff", "spanish": "urea", "arabic": "اليوريا", "hindi": "यूरिया", "russian": "мочевина", "chinese": "尿素", "indonesian": "urea", "bengali": "ইউরিয়া" },
 
-  // 🍬 Açúcares e biomoléculas
-  "glicose": {
-    english: "glucose",
-    french: "glucose",
-    german: "Glukose",
-    spanish: "glucosa",
-    arabic: "الجلوكوز",
-    hindi: "ग्लूकोज",
-    russian: "глюкоза",
-    chinese: "葡萄糖",
-    indonesian: "glukosa",
-    bengali: "গ্লুকোজ"
-  },
-  "frutose": {
-    english: "fructose",
-    french: "fructose",
-    german: "Fruktose",
-    spanish: "fructosa",
-    arabic: "الفركتوز",
-    hindi: "फ्रुक्टोज़",
-    russian: "фруктоза",
-    chinese: "果糖",
-    indonesian: "fruktosa",
-    bengali: "ফ্রুক্টোজ"
-  },
-  "sacarose": {
-    english: "sucrose",
-    french: "saccharose",
-    german: "Saccharose",
-    spanish: "sacarosa",
-    arabic: "السكروز",
-    hindi: "सुक्रोज़",
-    russian: "сахароза",
-    chinese: "蔗糖",
-    indonesian: "sukrosa",
-    bengali: "সুক্রোজ"
-  },
+  // 🍬 Carboidratos
+  "glicose": { "english": "glucose", "french": "glucose", "german": "Glukose", "spanish": "glucosa", "arabic": "الجلوكوز", "hindi": "ग्लूकोज", "russian": "глюкоза", "chinese": "葡萄糖", "indonesian": "glukosa", "bengali": "গ্লুকোজ" },
+  "frutose": { "english": "fructose", "french": "fructose", "german": "Fruktose", "spanish": "fructosa", "arabic": "الفركتوز", "hindi": "फ्रुक्टोज़", "russian": "фруктоза", "chinese": "果糖", "indonesian": "fruktosa", "bengali": "ফ্রুক্টোজ" },
+  "sacarose": { "english": "sucrose", "french": "saccharose", "german": "Saccharose", "spanish": "sacarosa", "arabic": "السكروز", "hindi": "सुक्रोज़", "russian": "сахароза", "chinese": "蔗糖", "indonesian": "sukrosa", "bengali": "সুক্রোজ" },
+  "lactose": { "english": "lactose", "french": "lactose", "german": "Laktose", "spanish": "lactosa", "arabic": "اللاكتوز", "hindi": "लैक्टोज", "russian": "лактоза", "chinese": "乳糖", "indonesian": "laktosa", "bengali": "ল্যাকটোজ" },
+  "maltose": { "english": "maltose", "french": "maltose", "german": "Maltose", "spanish": "maltosa", "arabic": "المالتوز", "hindi": "माल्टोज", "russian": "мальтоза", "chinese": "麦芽糖", "indonesian": "maltosa", "bengali": "মাল্টোজ" },
+  "galactose": { "english": "galactose", "french": "galactose", "german": "Galaktose", "spanish": "galactosa", "arabic": "الجالاكتوز", "hindi": "गैलेक्टोज", "russian": "галактоза", "chinese": "半乳糖", "indonesian": "galaktosa", "bengali": "গ্যালাকটোজ" },
+  "ribose": { "english": "ribose", "french": "ribose", "german": "Ribose", "spanish": "ribosa", "arabic": "الريبوز", "hindi": "राइबोज", "russian": "рибоза", "chinese": "核糖", "indonesian": "ribosa", "bengali": "রাইবোজ" },
+  "desoxirribose": { "english": "deoxyribose", "french": "désoxyribose", "german": "Desoxyribose", "spanish": "desoxirribosa", "arabic": "ديوكسي ريبوز", "hindi": "डिऑक्सीराइबोज", "russian": "дезоксирибоза", "chinese": "脱氧核糖", "indonesian": "deoksiribosa", "bengali": "ডিঅক্সিরাইবোজ" },
+  "amido": { "english": "starch", "french": "amidon", "german": "Stärke", "spanish": "almidón", "arabic": "النشا", "hindi": "स्टार्च", "russian": "крахмал", "chinese": "淀粉", "indonesian": "pati", "bengali": "স্টার্চ" },
+  "celulose": { "english": "cellulose", "french": "cellulose", "german": "Zellulose", "spanish": "celulosa", "arabic": "السليلوز", "hindi": "सेल्युलोज", "russian": "целлюлоза", "chinese": "纤维素", "indonesian": "selulosa", "bengali": "সেলুলোজ" },
+  "glicogênio": { "english": "glycogen", "french": "glycogène", "german": "Glykogen", "spanish": "glucógeno", "arabic": "الجليكوجين", "hindi": "ग्लाइकोजन", "russian": "гликоген", "chinese": "糖原", "indonesian": "glikogen", "bengali": "গ্লাইকোজেন" },
 
-  // 🧴 Solventes e polímeros
-  "dimetilformamida": {
-    english: "dimethylformamide",
-    french: "diméthylformamide",
-    german: "Dimethylformamid",
-    spanish: "dimetilformamida",
-    arabic: "ثنائي ميثيل فورماميد",
-    hindi: "डाइमिथाइलफॉर्मामाइड",
-    russian: "диметилформамид",
-    chinese: "二甲基甲酰胺",
-    indonesian: "dimetilformamida",
-    bengali: "ডাইমিথাইলফরমামাইড",
-    commonName: "DMF"
-  },
-  "dimetilsulfóxido": {
-    english: "dimethyl sulfoxide",
-    french: "diméthylsulfoxyde",
-    german: "Dimethylsulfoxid",
-    spanish: "dimetilsulfóxido",
-    arabic: "ثنائي ميثيل سلفوكسيد",
-    hindi: "डाइमिथाइल सल्फॉक्साइड",
-    russian: "диметилсульфоксид",
-    chinese: "二甲基亚砜",
-    indonesian: "dimetil sulfoksida",
-    bengali: "ডাইমিথাইল সালফঅক্সাইড",
-    commonName: "DMSO"
-  },
-  "teflon": {
-    english: "polytetrafluoroethylene",
-    french: "polytétrafluoroéthylène",
-    german: "Polytetrafluorethylen",
-    spanish: "politetrafluoroetileno",
-    arabic: "بوليتترافلوروإيثيلين",
-    hindi: "पोलिटेट्राफ्लोरोएथिलीन",
-    russian: "политетрафторэтилен",
-    chinese: "聚四氟乙烯",
-    indonesian: "politetrafluoroetilena",
-    bengali: "পলিটেট্রাফ্লুরোইথিলিন",
-    commonName: "PTFE"
-  },
-    // 🧬 Biomoléculas, hormônios, neurotransmissores e enzimas
+  // 🌿 COMPOSTOS NATURAIS (Produtos Naturais e Metabólitos Secundários)
+
+  // Carotenoides e pigmentos
+  "bixina": { "english": "bixin", "french": "bixine", "german": "Bixin", "spanish": "bixina", "arabic": "بيكسين", "hindi": "बिक्सिन", "russian": "биксин", "chinese": "胭脂树橙", "indonesian": "biksin", "bengali": "বিক্সিন", "commonName": "urucum" },
+  "licopeno": { "english": "lycopene", "french": "lycopène", "german": "Lycopin", "spanish": "licopeno", "arabic": "الليكوبين", "hindi": "लाइकोपीन", "russian": "ликопин", "chinese": "番茄红素", "indonesian": "likopen", "bengali": "লাইকোপিন", "commonName": "tomate" },
+  "beta-caroteno": { "english": "beta-carotene", "french": "bêta-carotène", "german": "Beta-Carotin", "spanish": "beta-caroteno", "arabic": "بيتا كاروتين", "hindi": "बीटा-कैरोटीन", "russian": "бета-каротин", "chinese": "β-胡萝卜素", "indonesian": "beta-karoten", "bengali": "বিটা-ক্যারোটিন", "commonName": "cenoura" },
+  "luteína": { "english": "lutein", "french": "lutéine", "german": "Lutein", "spanish": "luteína", "arabic": "اللوتين", "hindi": "ल्यूटिन", "russian": "лютеин", "chinese": "叶黄素", "indonesian": "lutein", "bengali": "লুটেইন" },
+  "zeaxantina": { "english": "zeaxanthin", "french": "zéaxanthine", "german": "Zeaxanthin", "spanish": "zeaxantina", "arabic": "زياكسانثين", "hindi": "ज़ेक्सैंथिन", "russian": "зеаксантин", "chinese": "玉米黄质", "indonesian": "zeaksantin", "bengali": "জেয়াক্সান্থিন" },
+  "astaxantina": { "english": "astaxanthin", "french": "astaxanthine", "german": "Astaxanthin", "spanish": "astaxantina", "arabic": "أستازانثين", "hindi": "एस्टाज़ैन्थिन", "russian": "астаксантин", "chinese": "虾青素", "indonesian": "astaksantin", "bengali": "অ্যাস্টাক্সান্থিন" },
+  "clorofila": { "english": "chlorophyll", "french": "chlorophylle", "german": "Chlorophyll", "spanish": "clorofila", "arabic": "الكلوروفيل", "hindi": "क्लोरोफिल", "russian": "хлорофилл", "chinese": "叶绿素", "indonesian": "klorofil", "bengali": "ক্লোরোফিল" },
+  "antocianina": { "english": "anthocyanin", "french": "anthocyane", "german": "Anthocyan", "spanish": "antocianina", "arabic": "الأنثوسيانين", "hindi": "एंथोसायनिन", "russian": "антоциан", "chinese": "花青素", "indonesian": "antosianin", "bengali": "অ্যান্থোসায়ানিন" },
+
+  // Alcaloides
+  "cafeína": { "english": "caffeine", "french": "caféine", "german": "Koffein", "spanish": "cafeína", "arabic": "الكافيين", "hindi": "कैफीन", "russian": "кофеин", "chinese": "咖啡因", "indonesian": "kafein", "bengali": "ক্যাফেইন", "commonName": "café" },
+  "teobromina": { "english": "theobromine", "french": "théobromine", "german": "Theobromin", "spanish": "teobromina", "arabic": "الثيوبرومين", "hindi": "थियोब्रोमिन", "russian": "теобромин", "chinese": "可可碱", "indonesian": "teobromin", "bengali": "থিওব্রোমিন", "commonName": "cacau" },
+  "teofilina": { "english": "theophylline", "french": "théophylline", "german": "Theophyllin", "spanish": "teofilina", "arabic": "الثيوفيلين", "hindi": "थियोफिलिन", "russian": "теофиллин", "chinese": "茶碱", "indonesian": "teofilin", "bengali": "থিওফিলিন", "commonName": "chá" },
+  "nicotina": { "english": "nicotine", "french": "nicotine", "german": "Nikotin", "spanish": "nicotina", "arabic": "النيكوتين", "hindi": "निकोटीन", "russian": "никотин", "chinese": "尼古丁", "indonesian": "nikotin", "bengali": "নিকোটিন", "commonName": "tabaco" },
+  "morfina": { "english": "morphine", "french": "morphine", "german": "Morphin", "spanish": "morfina", "arabic": "المورفين", "hindi": "मॉर्फिन", "russian": "морфин", "chinese": "吗啡", "indonesian": "morfin", "bengali": "মরফিন", "commonName": "ópio" },
+  "codeína": { "english": "codeine", "french": "codéine", "german": "Codein", "spanish": "codeína", "arabic": "الكودايين", "hindi": "कोडीन", "russian": "кодеин", "chinese": "可待因", "indonesian": "kodein", "bengali": "কোডেইন" },
+  "quinina": { "english": "quinine", "french": "quinine", "german": "Chinin", "spanish": "quinina", "arabic": "الكينين", "hindi": "क्विनाइन", "russian": "хинин", "chinese": "奎宁", "indonesian": "kina", "bengali": "কুইনাইন", "commonName": "malária" },
+  "atropina": { "english": "atropine", "french": "atropine", "german": "Atropin", "spanish": "atropina", "arabic": "الأتروبين", "hindi": "एट्रोपिन", "russian": "атропин", "chinese": "阿托品", "indonesian": "atropin", "bengali": "অ্যাট্রোপিন", "commonName": "beladona" },
+  "capsaicina": { "english": "capsaicin", "french": "capsaïcine", "german": "Capsaicin", "spanish": "capsaicina", "arabic": "الكابسيسين", "hindi": "कैप्सैसिन", "russian": "капсаицин", "chinese": "辣椒素", "indonesian": "kapsaisin", "bengali": "ক্যাপসাইসিন", "commonName": "pimenta" },
+  "piperina": { "english": "piperine", "french": "pipérine", "german": "Piperin", "spanish": "piperina", "arabic": "البيبيرين", "hindi": "पिपेरिन", "russian": "пиперин", "chinese": "胡椒碱", "indonesian": "piperin", "bengali": "পিপেরিন", "commonName": "pimenta-do-reino" },
+  "estricnina": { "english": "strychnine", "french": "strychnine", "german": "Strychnin", "spanish": "estricnina", "arabic": "الإستركنين", "hindi": "स्ट्रीकनिन", "russian": "стрихнин", "chinese": "士的宁", "indonesian": "striknin", "bengali": "স্ট্রিকনিন" },
+
+  // Terpenos e óleos essenciais
+  "mentol": { "english": "menthol", "french": "menthol", "german": "Menthol", "spanish": "mentol", "arabic": "المنثول", "hindi": "मेन्थॉल", "russian": "ментол", "chinese": "薄荷醇", "indonesian": "mentol", "bengali": "মেনথল", "commonName": "hortelã" },
+  "limoneno": { "english": "limonene", "french": "limonène", "german": "Limonen", "spanish": "limoneno", "arabic": "الليمونين", "hindi": "लिमोनीन", "russian": "лимонен", "chinese": "柠檬烯", "indonesian": "limonen", "bengali": "লিমোনিন", "commonName": "limão" },
+  "pineno": { "english": "pinene", "french": "pinène", "german": "Pinen", "spanish": "pineno", "arabic": "البينين", "hindi": "पाइनीन", "russian": "пинен", "chinese": "蒎烯", "indonesian": "pinen", "bengali": "পাইনিন", "commonName": "pinho" },
+  "eucaliptol": { "english": "eucalyptol", "french": "eucalyptol", "german": "Eucalyptol", "spanish": "eucaliptol", "arabic": "الأوكاليبتول", "hindi": "यूकलिप्टोल", "russian": "эвкалиптол", "chinese": "桉叶油醇", "indonesian": "eukaliptol", "bengali": "ইউক্যালিপটল", "commonName": "eucalipto" },
+  "cânfora": { "english": "camphor", "french": "camphre", "german": "Kampfer", "spanish": "alcanfor", "arabic": "الكافور", "hindi": "कपूर", "russian": "камфора", "chinese": "樟脑", "indonesian": "kamper", "bengali": "কর্পূর" },
+  "linalol": { "english": "linalool", "french": "linalol", "german": "Linalool", "spanish": "linalol", "arabic": "الينالول", "hindi": "लिनालूल", "russian": "линалоол", "chinese": "芳樟醇", "indonesian": "linalol", "bengali": "লিনালুল", "commonName": "lavanda" },
+  "geraniol": { "english": "geraniol", "french": "géraniol", "german": "Geraniol", "spanish": "geraniol", "arabic": "الجيرانيول", "hindi": "जेरेनिओल", "russian": "гераниол", "chinese": "香叶醇", "indonesian": "geraniol", "bengali": "জেরানিওল", "commonName": "rosa" },
+  "citronelal": { "english": "citronellal", "french": "citronellal", "german": "Citronellal", "spanish": "citronelal", "arabic": "السترونيلال", "hindi": "सिट्रोनेलल", "russian": "цитронеллаль", "chinese": "香茅醛", "indonesian": "sitronelal", "bengali": "সিট্রোনেলাল", "commonName": "citronela" },
+
+  // Flavonoides
+  "quercetina": { "english": "quercetin", "french": "quercétine", "german": "Quercetin", "spanish": "quercetina", "arabic": "الكيرسيتين", "hindi": "क्वेरसेटिन", "russian": "кверцетин", "chinese": "槲皮素", "indonesian": "kuersetin", "bengali": "কোয়ার্সেটিন" },
+  "rutina": { "english": "rutin", "french": "rutine", "german": "Rutin", "spanish": "rutina", "arabic": "الروتين", "hindi": "रुटिन", "russian": "рутин", "chinese": "芦丁", "indonesian": "rutin", "bengali": "রুটিন" },
+  "catequina": { "english": "catechin", "french": "catéchine", "german": "Catechin", "spanish": "catequina", "arabic": "الكاتيكين", "hindi": "कैटेचिन", "russian": "катехин", "chinese": "儿茶素", "indonesian": "katekin", "bengali": "ক্যাটেচিন", "commonName": "chá verde" },
+  "hesperidina": { "english": "hesperidin", "french": "hespéridine", "german": "Hesperidin", "spanish": "hesperidina", "arabic": "الهسبريدين", "hindi": "हेस्पेरिडिन", "russian": "гесперидин", "chinese": "橙皮苷", "indonesian": "hesperidin", "bengali": "হেসপেরিডিন", "commonName": "laranja" },
+  "naringina": { "english": "naringin", "french": "naringine", "german": "Naringin", "spanish": "naringina", "arabic": "النارينجين", "hindi": "नारिंगिन", "russian": "нарингин", "chinese": "柚皮苷", "indonesian": "naringin", "bengali": "নারিঙ্গিন", "commonName": "toranja" },
+
+  // Compostos fenólicos
+  "resveratrol": { "english": "resveratrol", "french": "resvératrol", "german": "Resveratrol", "spanish": "resveratrol", "arabic": "الريسفيراترول", "hindi": "रेसवेराट्रोल", "russian": "ресвератрол", "chinese": "白藜芦醇", "indonesian": "resveratrol", "bengali": "রেসভেরাট্রল", "commonName": "uva" },
+  "curcumina": { "english": "curcumin", "french": "curcumine", "german": "Curcumin", "spanish": "curcumina", "arabic": "الكركمين", "hindi": "करक्यूमिन", "russian": "куркумин", "chinese": "姜黄素", "indonesian": "kurkumin", "bengali": "কারকিউমিন", "commonName": "açafrão" },
+  "ácido gálico": { "english": "gallic acid", "french": "acide gallique", "german": "Gallussäure", "spanish": "ácido gálico", "arabic": "حمض الغاليك", "hindi": "गैलिक एसिड", "russian": "галловая кислота", "chinese": "没食子酸", "indonesian": "asam galat", "bengali": "গ্যালিক অ্যাসিড" },
+  "ácido elágico": { "english": "ellagic acid", "french": "acide ellagique", "german": "Ellagsäure", "spanish": "ácido elágico", "arabic": "حمض الإيلاجيك", "hindi": "एलाजिक एसिड", "russian": "эллаговая кислота", "chinese": "鞣花酸", "indonesian": "asam elagat", "bengali": "এলাজিক অ্যাসিড", "commonName": "romã" },
+  "ácido cafeico": { "english": "caffeic acid", "french": "acide caféique", "german": "Kaffeesäure", "spanish": "ácido cafeico", "arabic": "حمض الكافيك", "hindi": "कैफिक एसिड", "russian": "кофейная кислота", "chinese": "咖啡酸", "indonesian": "asam kafeat", "bengali": "ক্যাফিক অ্যাসিড" },
+  "ácido ferúlico": { "english": "ferulic acid", "french": "acide férulique", "german": "Ferulasäure", "spanish": "ácido ferúlico", "arabic": "حمض الفيروليك", "hindi": "फेरुलिक एसिड", "russian": "феруловая кислота", "chinese": "阿魏酸", "indonesian": "asam ferulat", "bengali": "ফেরুলিক অ্যাসিড" },
+  "eugenol": { "english": "eugenol", "french": "eugénol", "german": "Eugenol", "spanish": "eugenol", "arabic": "الأوجينول", "hindi": "यूजेनॉल", "russian": "эвгенол", "chinese": "丁香酚", "indonesian": "eugenol", "bengali": "ইউজেনল", "commonName": "cravo" },
+  "vanilina": { "english": "vanillin", "french": "vanilline", "german": "Vanillin", "spanish": "vainillina", "arabic": "الفانيلين", "hindi": "वेनिलिन", "russian": "ванилин", "chinese": "香草醛", "indonesian": "vanilin", "bengali": "ভ্যানিলিন", "commonName": "baunilha" },
+
+  // Glicosídeos e saponinas
+  "digitoxina": { "english": "digitoxin", "french": "digitoxine", "german": "Digitoxin", "spanish": "digitoxina", "arabic": "الديجيتوكسين", "hindi": "डिजिटॉक्सिन", "russian": "дигитоксин", "chinese": "洋地黄毒苷", "indonesian": "digitoksin", "bengali": "ডিজিটক্সিন", "commonName": "dedaleira" },
+  "digoxina": { "english": "digoxin", "french": "digoxine", "german": "Digoxin", "spanish": "digoxina", "arabic": "الديجوكسين", "hindi": "डिजॉक्सिन", "russian": "дигоксин", "chinese": "地高辛", "indonesian": "digoksin", "bengali": "ডিজক্সিন" },
+  "salicina": { "english": "salicin", "french": "salicine", "german": "Salicin", "spanish": "salicina", "arabic": "الساليسين", "hindi": "सैलिसिन", "russian": "салицин", "chinese": "水杨苷", "indonesian": "salisin", "bengali": "স্যালিসিন", "commonName": "salgueiro" },
+
+  // Outros compostos naturais importantes
+  "ácido ascórbico": { "english": "ascorbic acid", "french": "acide ascorbique", "german": "Ascorbinsäure", "spanish": "ácido ascórbico", "arabic": "حمض الأسكوربيك", "hindi": "एस्कॉर्बिक एसिड", "russian": "аскорбиновая кислота", "chinese": "抗坏血酸", "indonesian": "asam askorbat", "bengali": "অ্যাসকরবিক অ্যাসিড", "commonName": "vitamina C" },
+  "retinol": { "english": "retinol", "french": "rétinol", "german": "Retinol", "spanish": "retinol", "arabic": "الريتينول", "hindi": "रेटिनॉल", "russian": "ретинол", "chinese": "视黄醇", "indonesian": "retinol", "bengali": "রেটিনল", "commonName": "vitamina A" },
+  "tocoferol": { "english": "tocopherol", "french": "tocophérol", "german": "Tocopherol", "spanish": "tocoferol", "arabic": "التوكوفيرول", "hindi": "टोकोफेरॉल", "russian": "токоферол", "chinese": "生育酚", "indonesian": "tokoferol", "bengali": "টোকোফেরল", "commonName": "vitamina E" },
+  "alicina": { "english": "allicin", "french": "allicine", "german": "Allicin", "spanish": "alicina", "arabic": "الأليسين", "hindi": "एलिसिन", "russian": "аллицин", "chinese": "大蒜素", "indonesian": "alisin", "bengali": "অ্যালিসিন", "commonName": "alho" },
+  "gingerol": { "english": "gingerol", "french": "gingérol", "german": "Gingerol", "spanish": "gingerol", "arabic": "الجينجيرول", "hindi": "जिंजरोल", "russian": "гингерол", "chinese": "姜辣素", "indonesian": "gingerol", "bengali": "জিঞ্জেরল", "commonName": "gengibre" },
+
+  // 🧬 Biomoléculas, hormônios, neurotransmissores e enzimas
   "oxitocina": { "english": "oxytocin", "french": "ocytocine", "german": "Oxytocin", "spanish": "oxitocina", "arabic": "الأوكسيتوسين", "hindi": "ऑक्सिटोसिन", "russian": "окситоцин", "chinese": "催产素", "indonesian": "oksitosin", "bengali": "অক্সিটোসিন" },
   "adrenalina": { "english": "adrenaline", "french": "adrénaline", "german": "Adrenalin", "spanish": "adrenalina", "arabic": "الأدرينالين", "hindi": "एड्रेनालिन", "russian": "адреналин", "chinese": "肾上腺素", "indonesian": "adrenalin", "bengali": "অ্যাড্রেনালিন" },
   "noradrenalina": { "english": "noradrenaline", "french": "noradrénaline", "german": "Noradrenalin", "spanish": "noradrenalina", "arabic": "نورأدرينالين", "hindi": "नॉरएड्रेनालिन", "russian": "норадреналин", "chinese": "去甲肾上腺素", "indonesian": "noradrenalin", "bengali": "নরঅ্যাড্রেনালিন" },
@@ -805,7 +174,7 @@ export const ORGANIC_DICTIONARY: Record<
   "lactase": { "english": "lactase", "french": "lactase", "german": "Laktase", "spanish": "lactasa", "arabic": "اللاكتاز", "hindi": "लैक्टेज़", "russian": "лактаза", "chinese": "乳糖酶", "indonesian": "laktase", "bengali": "ল্যাক্টেজ" },
   "pepsina": { "english": "pepsin", "french": "pepsine", "german": "Pepsin", "spanish": "pepsina", "arabic": "البيبسين", "hindi": "पेप्सिन", "russian": "пепсин", "chinese": "胃蛋白酶", "indonesian": "pepsin", "bengali": "পেপসিন" },
 
-  
+
   /* --- VARIAÇÕES DE DECANO (C10) - Originais --- */
   "1-metil-decano": { "english": "1-methyl-decane", "french": "1-méthyl-décane", "german": "1-Methyl-decan", "spanish": "1-metil-decano", "arabic": "1-ميثيل ديكان", "hindi": "1-मेथिल-डेकैन", "russian": "1-метилдекан", "chinese": "1-甲基癸烷", "indonesian": "1-metil-dekana", "bengali": "১-মিথাইল-ডেকেন" },
   "2-metil-decano": { "english": "2-methyl-decane", "french": "2-méthyl-décane", "german": "2-Methyl-decan", "spanish": "2-metil-decano", "arabic": "2-ميثيل ديكان", "hindi": "2-मेथिल-डेकैन", "russian": "2-метилдекан", "chinese": "2-甲基癸烷", "indonesian": "2-metil-dekana", "bengali": "২-মিথাইল-ডেকেন" },
@@ -844,7 +213,6 @@ export const ORGANIC_DICTIONARY: Record<
   "5-metil-decan-5-ol": { "english": "5-methyl-decan-5-ol", "french": "5-méthyl-décan-5-ol", "german": "5-Methyl-Decan-5-ol", "spanish": "5-metil-decan-5-ol", "arabic": "5-ميثيل ديكان-5-أول", "hindi": "5-मेथिल-डेकन-5-ओल", "russian": "5-метилдекан-5-ол", "chinese": "5-甲基癸醇-5", "indonesian": "5-metil-dekan-5-ol", "bengali": "৫-মিথাইল-ডেকان-৫-অল" },
   "1-metil-ciclohexano": { "english": "1-methylcyclohexane", "french": "1-méthylcyclohexane", "german": "1-Methylcyclohexan", "spanish": "1-metilciclohexano", "arabic": "1-ميثيل سيكلوهكسان", "hindi": "1-मेथिलसाइक्लोहेक्सेन", "russian": "1-метилциклогексан", "chinese": "1-甲基环己烷", "indonesian": "1-metilsikloheksana", "bengali": "১-মিথাইলসাইক্লোহেক্সেন" },
   "1-etil-ciclohexano": { "english": "1-ethylcyclohexane", "french": "1-éthylcyclohexane", "german": "1-Ethylcyclohexan", "spanish": "1-etilciclohexano", "arabic": "1-إيثيل سيكلوهكسان", "hindi": "1-एथिलसाइक्लोहेक्सेन", "russian": "1-этилциклогексан", "chinese": "1-乙基环己烷", "indonesian": "1-etilsikloheksana", "bengali": "১-ইথাইলসাইक्लोহেক্সেন" },
-  "ciclohexeno": { "english": "cyclohexene", "french": "cyclohexène", "german": "Cyclohexen", "spanish": "ciclohexeno", "arabic": "سيكلوهيكسين", "hindi": "साइक्लोहेक्सीन", "russian": "циклогексен", "chinese": "环己烯", "indonesian": "sikloheksena", "bengali": "সাইক্লোহেক্সিন" },
 
   /* --- VARIAÇÕES DE NONANO (C9) --- */
   "nonano": { "english": "nonane", "french": "nonane", "german": "Nonan", "spanish": "nonano", "arabic": "نونان", "hindi": "नोनेन", "russian": "нонан", "chinese": "壬烷", "indonesian": "nonana", "bengali": "নোনেন" },
@@ -923,6 +291,11 @@ export const ORGANIC_DICTIONARY: Record<
   "propan-1-ol": { "english": "propan-1-ol", "french": "propan-1-ol", "german": "Propan-1-ol", "spanish": "propan-1-ol", "arabic": "بروبان-1-أول", "hindi": "प्रोपेन-1-ओल", "russian": "пропан-1-ол", "chinese": "丙醇-1", "indonesian": "propan-1-ol", "bengali": "প্রোপান-১-অল" },
   "propan-2-ol": { "english": "propan-2-ol", "french": "propan-2-ol", "german": "Propan-2-ol", "spanish": "propan-2-ol", "arabic": "بروبان-2-أول", "hindi": "प्रोपेन-2-ओल", "russian": "пропан-2-ол", "chinese": "丙醇-2", "indonesian": "propan-2-ol", "bengali": "প্রোপান-২-অল" },
 
+  // Hidrocarbonetos (expandidos até C10 com traduções multilíngues)
+  "metano": { "english": "methane", "french": "méthane", "german": "Methan", "spanish": "metano", "arabic": "ميثان", "hindi": "मीथेन", "russian": "метан", "chinese": "甲烷", "indonesian": "metana", "bengali": "মিথেন" },
+  "etano": { "english": "ethane", "french": "éthane", "german": "Ethan", "spanish": "etano", "arabic": "إيثان", "hindi": "एथेन", "russian": "этан", "chinese": "乙烷", "indonesian": "etana", "bengali": "ইথেন" },
+
+
   /* --- ALDEÍDOS (al) E CETONAS (ona) --- */
   "propanal": { "english": "propanal", "french": "propanal", "german": "Propanal", "spanish": "propanal", "arabic": "بروبانال", "hindi": "प्रोपेनैल", "russian": "пропаналь", "chinese": "丙醛", "indonesian": "propanal", "bengali": "প্রোপানাল" },
   "propanona": { "english": "propanone", "french": "propanone", "german": "Propanon", "spanish": "propanona", "arabic": "بروبانون", "hindi": "प्रोपेनोन", "russian": "пропанон", "chinese": "丙酮", "indonesian": "propanon", "bengali": "প্রোপানোন" },
@@ -946,7 +319,8 @@ export const ORGANIC_DICTIONARY: Record<
   "ciclobutano": { "english": "cyclobutane", "french": "cyclobutane", "german": "Cyclobutan", "spanish": "ciclobutano", "arabic": "سيكلوبيوتان", "hindi": "साइक्लोब्यूटेन", "russian": "циклобутан", "chinese": "环丁烷", "indonesian": "siklobutana", "bengali": "সাইক্লোবিউটেন" },
   "ciclobuteno": { "english": "cyclobutene", "french": "cyclobutene", "german": "Cyclobuten", "spanish": "ciclobuteno", "arabic": "سيكلوبيوتين", "hindi": "साइक्लोब्यूटिन", "russian": "циклобутен", "chinese": "环丁烯", "indonesian": "siklobutena", "bengali": "সাইক্লোবিউটিন" },
   "ciclopentano": { "english": "cyclopentane", "french": "cyclopentane", "german": "Cyclopentan", "spanish": "ciclopentano", "arabic": "سيكلوبنتان", "hindi": "साइक्लोपेंटेन", "russian": "циклоपेंटेन", "chinese": "环戊烷", "indonesian": "siklopentana", "bengali": "সাইক্লোপেন্টেন" },
-  "ciclopenteno": { "english": "cyclopentene", "french": "cyclopentene", "german": "Cyclopenten", "spanish": "ciclopenteno", "arabic": "سيكلوبنتين", "hindi": "साइक्लोपेंटिन", "russian": "циклопентен", "chinese": "环戊烯", "indonesian": "siklopentena", "bengali": "সাইক্লোপেন্টিন" }
+  "ciclopenteno": { "english": "cyclopentene", "french": "cyclopentene", "german": "Cyclopenten", "spanish": "ciclopenteno", "arabic": "سيكلوبنتين", "hindi": "साइक्लोपेंटिन", "russian": "циклопентен", "chinese": "环戊烯", "indonesian": "siklopentena", "bengali": "সাইক্লোপেন্টিন" },
+  "ciclohexeno": { "english": "cyclohexene", "french": "cyclohexène", "german": "Cyclohexen", "spanish": "ciclohexeno", "arabic": "سيكلوهيكسين", "hindi": "साइक्लोहेक्सीन", "russian": "циклогексен", "chinese": "环己烯", "indonesian": "sikloheksena", "bengali": "সাইক্লোহেক্সিন" }
 
 
 };
