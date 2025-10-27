@@ -1,7 +1,16 @@
 import type { RuntimeCaching } from "workbox-build";
 
 const runtimeCaching: RuntimeCaching[] = [
-  // Ignora URLs internas do Next.js (evita erro 404 de app-build-manifest.json)
+  // 🚫 Evita interceptar o Microsoft Clarity (telemetria)
+  {
+    urlPattern: /^https:\/\/www\.clarity\.ms\/.*/i,
+    handler: "NetworkOnly",
+    options: {
+      cacheName: "clarity-tracking",
+    },
+  },
+
+  // 🚫 Ignora URLs internas do Next.js (evita erro 404 de app-build-manifest.json)
   {
     urlPattern: /^https:\/\/(www\.)?molclass\.com\/_next\/.*/i,
     handler: "NetworkOnly",
@@ -10,7 +19,7 @@ const runtimeCaching: RuntimeCaching[] = [
     },
   },
 
-  // Assets estáticos gerados pelo Next.js (JS, CSS, etc.)
+  // ⚙️ Assets estáticos gerados pelo Next.js (JS, CSS, etc.)
   {
     urlPattern: ({ url }) => url.pathname.startsWith("/_next/static/"),
     handler: "CacheFirst",
