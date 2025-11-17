@@ -1,147 +1,112 @@
-# 🧠 Prompt Base Universal para o Projeto Mol Class (CLI, IDE, IA)
+# 🧪 Mol Class – Educational Chemistry Platform
 
-Este prompt deve ser usado por qualquer ferramenta de assistente de código (ChatGPT, Copilot, Cursor, IDEs) como contexto principal para **entender o projeto Mol Class**, respeitar suas convenções, **evitar alucinações**, e **sugerir soluções padronizadas e seguras**.
+Mol Class is a web application built to help students and teachers explore chemistry concepts through interactive tools, calculators, and visualizations.
 
----
+It currently provides:
 
-## ✨ Visão Geral do Projeto
+- An interactive periodic table with category highlights and responsive details panels.
+- Chemical calculators (molar mass, scientific calculator, and foundations for more tools).
+- Molecular visualization components that support 2D/3D exploration.
+- A growing compound catalog for structured data browsing.
+- Internationalization for both Portuguese and English with a modern, accessible UI.
 
-O **Mol Class** é uma plataforma educacional web para cálculos e consultas em Química. Ela oferece:
-
-- Tabela periódica interativa
-- Calculadoras químicas (massa molar, diluição, etc.)
-- Visualização molecular 2D/3D
-- Internacionalização total (pt/en/...)
-- Interface moderna, responsiva e acessível
-
-Deploy oficial: `https://molclass.com`
+> The platform is continuously evolving; new chemistry tools are added regularly.
 
 ---
 
-## 🚀 Stack de Tecnologias
+## 🚀 Technology Stack
 
-| Camada              | Tecnologias                                           |
+| Layer               | Technologies                                           |
 | ------------------- | ----------------------------------------------------- |
-| Frontend            | Next.js 15 (App Router, i18n, SSR, Metadata dinâmico) |
-| UI/Estilo           | Tailwind CSS + shadcn/ui + Framer Motion              |
-| Linguagem           | TypeScript (tipagem estrita)                          |
-| Estado Global       | Zustand                                               |
-| Visual Químico      | OpenChemLib, Kekule.js, 3Dmol.js                      |
-| Internacionalização | `next-intl@4` com arquivos JSON localizados           |
-| Deploy              | Vercel (domínio customizado)                          |
+| Frontend            | Next.js 15 (App Router, i18n, SSR)                    |
+| UI/Styling          | Tailwind CSS + shadcn/ui + Framer Motion              |
+| Language            | TypeScript (strict typing)                            |
+| Global State        | Zustand                                               |
+| Internationalization| `next-intl@4`                                          |
+| PWA                 | `next-pwa` + Workbox                                   |
+| Deployment          | Vercel                                                |
 
 ---
 
-## ⚖️ Convenções Gerais
+## 📂 Architecture Overview
 
-### Diretórios
+The codebase follows a feature-oriented (domain-driven) structure:
 
-- Organização por **feature** (domain-driven):
+- `src/features/periodic-table` – interactive periodic table with search and highlights.
+- `src/features/calculators` – chemical calculators with modular containers and custom keyboards.
+- `src/features/visualization` – molecular visualization building blocks.
+- `src/features/catalog` – compound catalog foundation.
+- `src/features/shared` – shared UI pieces like headers, layout, keyboard, and global stores.
 
-  - `features/periodic-table`, `features/catalog`, `features/visualization`, etc.
+Other notable directories:
 
-- Cada feature possui:
+- `src/app` – routes, layouts, and pages (App Router with `[locale]/`).
+- `src/i18n` – message files and internationalization configuration.
+- `src/shared` and `src/components` – layout, header, footer, and other reusable UI parts.
+- `docs` – supporting guides (i18n, PWA setup, cookies, etc.).
 
-  - `components/`, `hooks/`, `store/`, `types/`, `utils/`, `constants/`, `events/`
+For deeper implementation guidance, see:
 
-### Linguagem e Estilo
+- `src/features/periodic-table/README.md`
+- `src/features/calculators/README.md`
+- Documentation files inside `docs/`
 
-- Sempre usar **TypeScript**. Nunca sugerir `any`.
-- Preferir `type` ao invés de `interface`, exceto para objetos extensíveis.
-- Imports devem usar alias `@/`
-- Preferir hooks e utils modulares por responsabilidade.
+---
 
-### ESLint (FlatConfig)
+## 🧩 Current Features
 
-```ts
-"@typescript-eslint/no-explicit-any": "warn",
-"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-"react-hooks/exhaustive-deps": "warn",
-```
+- **Periodic Table** (`src/features/periodic-table`): Cards with category emphasis, detail panel, internationalized search, and responsive navigation.
+- **Chemical Calculators** (`src/features/calculators`): Molar mass, scientific calculator, and a modular base for future tools with keyboard and container components.
+- **Molecular Visualization** (`src/features/visualization`): Components for rendering 2D/3D structures with animations and chemical data integration.
+- **Compound Catalog** (`src/features/catalog`): Foundation for listing, filtering, and extending the molecular dataset.
+- **Shared Elements** (`src/features/shared`): Header, layout, keyboard, buttons, and store logic that keep the UI and behavior consistent.
 
-Lint automático com:
+---
+
+## 🌐 Internationalization (i18n)
+
+The project uses `next-intl@4` with the App Router:
+
+- Messages live in `src/i18n/messages/pt.json` and `src/i18n/messages/en.json`.
+- Components fetch strings through `useTranslations()` with dedicated namespaces.
+- New features should support both Portuguese and English from the start.
+
+---
+
+## 🔧 Running the Project
+
+Requirements:
+
+- Node.js LTS
+- `pnpm` (the project declares `packageManager: "pnpm@..."`)
+
+Install dependencies:
 
 ```bash
-npm run lint
+pnpm install
 ```
 
-### Regras de Código
-
-- ❌ Proibido `any`
-- ❌ Proibido `console.log` em produção
-- ✅ Hooks no topo sempre
-- ✅ Preferir composção de componentes e hooks pequenos
-- ✅ Traduções via `useTranslations()` com chaves estruturadas
-
----
-
-## 🌐 Internacionalização (i18n)
-
-- Usamos `next-intl@4` com `App Router`
-- Locales em:
-
-  ```txt
-  src/i18n/messages/pt.json
-  src/i18n/messages/en.json
-  ```
-
-- Tradução automática de componentes com `useTranslations()`
-- Toda nova feature deve suportar idiomas com:
-
-```ts
-const t = useTranslations("calculator");
-t("title");
-```
-
----
-
-## 🔧 Comandos CLI
+Development server:
 
 ```bash
-npm install          # instalar dependências
-npm run dev          # rodar localmente
-npm run build        # build para produção
-npm run lint         # ESLint + autofix
+pnpm dev
 ```
 
----
-
-## 📂 Versionamento Git
-
-- Commits em padrão [Conventional Commits](https://www.conventionalcommits.org/):
+Production build:
 
 ```bash
-git commit -m "feat(catalog): add filter by solubility"
-git commit -m "fix(viewer2d): prevent overflow on large molecules"
+pnpm build
 ```
 
-- Branches devem ser nominais:
+Lint with auto-fix:
 
 ```bash
-feature/compound-search
-fix/translate-api-fallback
+pnpm lint
 ```
 
+Type checking:
+
+```bash
+pnpm typecheck
+```
 ---
-
-## 🚫 Regras Especiais para Assistentes de Código
-
-Estas regras são para Copilot, ChatGPT, Cursor, Cody e outras IAs:
-
-- ❌ Nunca usar `any`. Usar `unknown` ou `as Tipo` com validação.
-- ✅ Sempre usar imports absolutos com `@/`
-- ✅ Sempre seguir estrutura `features/` por domínio
-- ✅ Sugira sempre hooks reutilizáveis e helpers com testes unitários
-- ✅ Se sugerir comandos bash, usar `npm` (não `pnpm` nem `yarn`)
-- ✅ Componentes devem suportar modo escuro (`dark:`)
-- ✅ Toda função deve ser tipada
-
----
-
-## ✨ Observações Finais
-
-- Este projeto está em expansão constante
-- Sempre verificar `README.md` para overview atual
-- Sempre seguir a estrutura modular por feature
-
-> Esta é a fonte oficial de verdade para todo o comportamento esperado de assistentes de código (IA/CLI/IDE) no projeto Mol Class. Atualize este arquivo sempre que houver mudanças de padrão no projeto.
