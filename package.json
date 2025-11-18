@@ -8,14 +8,17 @@
     "build": "next build",
     "postbuild": "node generate-sitemap.cjs",
     "start": "next start",
-    "lint": "next lint --fix",
-    "prebuild": "pnpm run lint",
+    "lint": "next lint",
+    "prebuild": "pnpm run lint && pnpm run typecheck",
     "analyze": "cross-env ANALYZE=true next build",
     "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "pnpm exec eslint --fix"
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write",
+      "eslint --fix --cache"
+    ]
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -31,7 +34,6 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tabler/icons-react": "^3.34.1",
     "@tanstack/react-table": "^8.21.3",
-    "@types/mathjs": "^9.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -67,15 +69,20 @@
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "autoprefixer": "^10.4.14",
     "chrome-devtools-mcp": "^0.9.0",
     "cross-env": "^10.0.0",
     "eslint": "^9.26.0",
     "eslint-config-next": "15.3.1",
+    "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",
     "next-pwa": "^5.6.0",
     "postcss": "^8.4.31",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"

@@ -1,141 +1,116 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect } from "react";
-import { Element } from "../domain/types/element";
-import { formatWithSup } from "@/shared/utils/formatWithSup";
-import { useTranslations } from "next-intl";
-import { usePeriodicTableStore } from "../store/periodicTableStore";
-import { useElementSearch } from "../utils/elementSearch";
-import { getElementFields } from "../utils/elementFields";
-import { trackElementSearch } from "../events/searchEvents";
+import React, { useState, useEffect } from 'react'
+import { Element } from '../domain/types/element'
+import { formatWithSup } from '@/shared/utils/formatWithSup'
+import { useTranslations } from 'next-intl'
+import { usePeriodicTableStore } from '../store/periodicTableStore'
+import { useElementSearch } from '../utils/elementSearch'
+import { getElementFields } from '../utils/elementFields'
+import { trackElementSearch } from '../events/searchEvents'
 
 interface ElementDetailsPanelProps {
-  element: Element | null;
+  element: Element | null
 }
 
-export default function ElementDetailsPanel({
-  element,
-}: ElementDetailsPanelProps) {
-  const [search, setSearch] = useState("");
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
-    null
-  );
+export default function ElementDetailsPanel({ element }: ElementDetailsPanelProps) {
+  const [search, setSearch] = useState('')
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null)
 
-  const searchElement = useElementSearch();
-  const searchedElement = searchElement(search);
-  const elementToShow = searchedElement || element;
+  const searchElement = useElementSearch()
+  const searchedElement = searchElement(search)
+  const elementToShow = searchedElement || element
 
-  const t = useTranslations("periodicTable");
-  const tElements = useTranslations("elements");
-  const { setHighlight, setSearchValue } = usePeriodicTableStore();
+  const t = useTranslations('periodicTable')
+  const tElements = useTranslations('elements')
+  const { setHighlight, setSearchValue } = usePeriodicTableStore()
 
   // Aguarda o usuário parar de digitar por 500ms antes de enviar a busca
   const handleSearch = (value: string) => {
-    setSearch(value);
-    setSearchValue(value);
+    setSearch(value)
+    setSearchValue(value)
 
-    if (debounceTimer) clearTimeout(debounceTimer);
+    if (debounceTimer) clearTimeout(debounceTimer)
 
-    if (value.trim() !== "") {
+    if (value.trim() !== '') {
       const timer = setTimeout(() => {
         if (searchElement(value)) {
-          trackElementSearch({ search_term: value });
+          trackElementSearch({ search_term: value })
         }
-      }, 500);
-      setDebounceTimer(timer);
+      }, 500)
+      setDebounceTimer(timer)
     }
-  };
+  }
 
   useEffect(() => {
     if (searchedElement) {
-      setHighlight(searchedElement, "search");
+      setHighlight(searchedElement, 'search')
     } else {
-      setHighlight(null, null);
+      setHighlight(null, null)
     }
-  }, [searchedElement, setHighlight]);
+  }, [searchedElement, setHighlight])
 
-  if (!elementToShow) return null;
+  if (!elementToShow) return null
 
-  const { generalFields, extraFields } = getElementFields(elementToShow, t);
+  const electronConfigToDisplay =
+    elementToShow.electronConfigurationExtended ?? elementToShow.electronConfiguration ?? ''
+
+  const { generalFields, extraFields } = getElementFields(elementToShow, t)
 
   return (
     <div
-      className={`
-        bg-white border-2 border-cyan-400 dark:border-white/35 dark:bg-neutral-800/90 
-        rounded-sm shadow w-full max-w-[95vw] min-w-[280px] sm:min-w-[340px]
-      `}
+      className={`w-full min-w-[280px] max-w-[95vw] overflow-hidden rounded-2xl border-2 border-zinc-600 bg-white shadow dark:border-white/35 dark:bg-neutral-800/90 sm:min-w-[340px]`}
     >
       {/* Campo de busca */}
-      <div className="w-full px-4 pt-1 pb-1 bg-white border-b border-cyan-100 dark:border-white/20 dark:bg-neutral-800/90">
+      <div className="w-full border-b border-zinc-300 bg-white px-4 pb-1 pt-1 dark:border-white/20 dark:bg-neutral-800/90">
         <input
           type="text"
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder={t("subtitle")}
-          className={`
-            w-full px-2 py-1 h-10 border-cyan-500 rounded focus:outline-none focus:ring-2 focus:ring-cyan-300 
-            text-lg text-black bg-white dark:text-zinc-100 dark:bg-neutral-950/60 dark:border-white/20
-            placeholder:text-gray-400 dark:placeholder:text-zinc-500
-          `}
+          placeholder={t('subtitle')}
+          className={`h-10 w-full rounded-full border border-zinc-400 bg-zinc-100 px-2 py-1 text-center text-sm text-black placeholder:text-center placeholder:text-sm placeholder:text-black focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:placeholder:text-transparent dark:border-white/20 dark:bg-neutral-900/70 dark:text-zinc-100 dark:placeholder:text-white dark:focus:placeholder:text-transparent sm:text-base sm:placeholder:text-base sm:placeholder:text-black`}
         />
       </div>
 
       {/* Informações principais */}
-      <div className="flex gap-2 px-4 py-1">
-        <div className="flex flex-col items-center justify-center min-w-[70px] sm:min-w-[80px]">
-          <p className="text-3xl sm:text-4xl font-bold text-cyan-700 dark:text-cyan-200">
+      <div className="flex gap-1 px-1 py-1">
+        <div className="flex min-w-[70px] flex-col items-center justify-center sm:min-w-[80px]">
+          <p className="text-3xl font-bold text-cyan-700 dark:text-cyan-200 sm:text-4xl">
             {elementToShow.symbol}
           </p>
-          <p className="text-xs sm:text-sm text-gray-700 dark:text-zinc-100">
+          <p className="text-xs text-gray-700 dark:text-zinc-100 sm:text-sm">
             {tElements(elementToShow.symbol)}
           </p>
         </div>
 
-        <div className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] sm:text-sm text-zinc-800 dark:text-zinc-100 leading-tight">
+        <div className="grid flex-1 grid-cols-2 gap-x-3 gap-y-1 text-[11px] leading-tight text-zinc-800 dark:text-zinc-100 sm:text-sm">
           <div className="flex flex-col gap-y-1">
-            {generalFields.map(
-              (field: { label: string; value: string | number }) => (
-                <div key={field.label}>
-                  <span className="font-semibold">{field.label}:</span>{" "}
-                  {field.value}
-                </div>
-              )
-            )}
+            {generalFields.map((field: { label: string; value: string | number }) => (
+              <div key={field.label}>
+                <span className="font-semibold">{field.label}:</span> {field.value}
+              </div>
+            ))}
           </div>
           <div className="flex flex-col gap-y-1">
-            {extraFields.map(
-              (field: {
-                label: string;
-                value: string | number | undefined;
-              }) => (
-                <div key={field.label}>
-                  <span className="font-semibold">{field.label}:</span>{" "}
-                  {field.value ?? "-"}
-                </div>
-              )
-            )}
+            {extraFields.map((field: { label: string; value: string | number | undefined }) => (
+              <div key={field.label}>
+                <span className="font-semibold">{field.label}:</span> {field.value ?? '-'}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Configuração eletrônica e estados de oxidação */}
-      <div className="px-4 pb-1 pt-1 text-sm text-zinc-800 dark:text-zinc-100 border-t border-cyan-200 dark:border-white/20">
-        <div>
-            <div>
-              <span className="font-semibold">{t("element.oxidationStates")}:</span>{" "}
-              {elementToShow.oxidationStates}
-            </div>
-          <span className="font-semibold">
-            {t("element.electronConfiguration")}:
-          </span>{" "}
-          <span
-            className="break-words"
-            dangerouslySetInnerHTML={{
-              __html: formatWithSup(elementToShow.electronConfiguration || ""),
-            }}
-          />
-        </div>
+      <div className="border-t border-zinc-600 px-4 pb-1 pt-1 text-sm text-zinc-800 dark:border-white/20 dark:text-zinc-100">
+        <span className="font-semibold">{t('element.electronConfiguration')}:</span>{' '}
+        <span
+          className="break-words"
+          dangerouslySetInnerHTML={{
+            __html: formatWithSup(electronConfigToDisplay),
+          }}
+        />
       </div>
     </div>
-  );
+  )
 }
