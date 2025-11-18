@@ -59,21 +59,21 @@ export default function ElementDetailsPanel({ element }: ElementDetailsPanelProp
 
   return (
     <div
-      className={`w-full min-w-[280px] max-w-[95vw] rounded-sm border-2 border-cyan-400 bg-white shadow dark:border-white/35 dark:bg-neutral-800/90 sm:min-w-[340px]`}
+      className={`w-full min-w-[280px] max-w-[95vw] overflow-hidden rounded-2xl border-2 border-zinc-600 bg-white shadow dark:border-white/35 dark:bg-neutral-800/90 sm:min-w-[340px]`}
     >
       {/* Campo de busca */}
-      <div className="w-full border-b border-cyan-100 bg-white px-4 pb-1 pt-1 dark:border-white/20 dark:bg-neutral-800/90">
+      <div className="w-full border-b border-zinc-300 bg-white px-4 pb-1 pt-1 dark:border-white/20 dark:bg-neutral-800/90">
         <input
           type="text"
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder={t('subtitle')}
-          className={`h-10 w-full rounded border-cyan-500 bg-white px-2 py-1 text-lg text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-300 dark:border-white/20 dark:bg-neutral-950/60 dark:text-zinc-100 dark:placeholder:text-zinc-500`}
+          className={`h-10 w-full rounded-full border border-zinc-400 bg-zinc-100 px-2 py-1 text-center text-sm text-black placeholder:text-center placeholder:text-sm placeholder:text-black focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:placeholder:text-transparent dark:border-white/20 dark:bg-neutral-900/70 dark:text-zinc-100 dark:placeholder:text-white dark:focus:placeholder:text-transparent sm:text-base sm:placeholder:text-base sm:placeholder:text-black`}
         />
       </div>
 
       {/* Informações principais */}
-      <div className="flex gap-2 px-4 py-1">
+      <div className="flex gap-1 px-1 py-1">
         <div className="flex min-w-[70px] flex-col items-center justify-center sm:min-w-[80px]">
           <p className="text-3xl font-bold text-cyan-700 dark:text-cyan-200 sm:text-4xl">
             {elementToShow.symbol}
@@ -102,7 +102,7 @@ export default function ElementDetailsPanel({ element }: ElementDetailsPanelProp
       </div>
 
       {/* Configuração eletrônica e estados de oxidação */}
-      <div className="border-t border-cyan-200 px-4 pb-1 pt-1 text-sm text-zinc-800 dark:border-white/20 dark:text-zinc-100">
+      <div className="border-t border-zinc-600 px-4 pb-1 pt-1 text-sm text-zinc-800 dark:border-white/20 dark:text-zinc-100">
         <span className="font-semibold">{t('element.electronConfiguration')}:</span>{' '}
         <span
           className="break-words"
